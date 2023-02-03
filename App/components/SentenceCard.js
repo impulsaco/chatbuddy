@@ -3,7 +3,7 @@ import { View, TouchableOpacity, Button, Text, StyleSheet} from "react-native";
 import { Card } from "@rneui/themed";
 import { DraxProvider, DraxView } from 'react-native-drax';
 import { Configuration, OpenAIApi } from "openai";
-import { OPENAI_API_KEY } from "react-native-dotenv"
+import { OPENAI_API_KEY } from "@env"
 
 // Set up GPT3
 

@@ -1,6 +1,5 @@
 import {decode} from 'html-entities'
-import { GOOGLE_API_KEY } from "react-native-dotenv"
-
+import { OPENAI_API_KEY } from "@env"
 
 // Google Translate API one way 
 

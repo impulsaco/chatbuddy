@@ -1,4 +1,5 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import React from "react";
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import Logo from "../../assets/logo.svg"
 import Hamburger from "../../assets/hamburger.svg"
 import { DrawerActions } from '@react-navigation/native';

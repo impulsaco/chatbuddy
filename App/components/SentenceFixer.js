@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TextInput} from "react-native";
 import { Button } from "@rneui/themed"
 import { Configuration, OpenAIApi } from "openai";
 import 'react-native-url-polyfill/auto'
-import { OPENAI_API_KEY } from "react-native-dotenv"
+import { OPENAI_API_KEY } from "@env" 
 import googleTranslate from '../lib/googleTranslate';
 
 // Set up GPT3
