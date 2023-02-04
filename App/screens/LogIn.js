@@ -114,6 +114,7 @@ const LogIn = ({navigation, route}) => {
       email: email,
       password: password,
     })
+    navigation.navigate('Home')
 
     if (error) alert(error.message)
     setLoading(false)

@@ -127,6 +127,7 @@ const SaveSentence = ({ sentence,
     return (
         <View style={styles.buttonContainer}>
             { sentenceFix }
+            { sayButton }
             <SaveButton 
                 sentence={sentence} 
                 savedSentence={savedSentence} 
@@ -136,7 +137,6 @@ const SaveSentence = ({ sentence,
                 langCode={langCode}
                 sentenceSaidPercentage={sentenceSaidPercentage}
             />
-            { sayButton }
         </View>
     );
 };

@@ -1,4 +1,4 @@
-import { OPENAI_API_KEY } from "@env"
+import { GOOGLE_API_KEY } from "@env"
 
 // Google Translate API one way 
 
