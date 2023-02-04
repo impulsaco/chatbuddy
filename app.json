@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "say-app-expo",
-    "slug": "say-app-expo",
-    "version": "1.0.0",
+    "name": "say-app",
+    "slug": "say-app",
+    "version": "1.0.6",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -28,6 +28,21 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "impulsa-co",
+            "project": "say-app",
+            "authToken": "d7fcd09ecf8a4435a4c1d02650a46a57fffbf815b51f4492a265cd457bd634ab"
+          }
+        }
+      ]
+    },
+    "plugins": [
+      "sentry-expo"
+    ]
   }
 }
