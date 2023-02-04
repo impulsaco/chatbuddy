@@ -3,7 +3,8 @@ import React, { useState, useEffect } from 'react';
 //import { Button } from '@rneui/base';
 import Words from './screens/Words'
 import { NativeBaseProvider } from 'native-base';
-import 'react-native-gesture-handler';
+//import 'react-native-gesture-handler';
+import { Gesture, GestureHandlerRootView } from "react-native-gesture-handler";
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Header from './components/Header';
@@ -163,28 +164,30 @@ export default function App() {
   // transparent header: options={{headerTransparent: true}}
 
   return (
-    <NavigationContainer>
-    <NativeBaseProvider style={styles.container}>
-    <Header />
-    <Drawer.Navigator
-      screenOptions={{
-        header: ({ navigation, route }) => {
-          const title = getHeaderTitle(route.name);
-          return <Header title={title} navigation={navigation} />;
-        },
-        drawerPosition: 'left',
-        headerRight: () => <Header/>,
-        overlayColor: 'transparent',
-        headerTransparent: true,
-      }}
-    > 
-      <Drawer.Screen name="Home" component={Home}/>
-      <Drawer.Screen name="LogIn" component={LogIn} />
-      <Drawer.Screen name="Build" component={Words} />
-      <Drawer.Screen name="Phrasebook" component={Phrasebook} />
-    </Drawer.Navigator>
-    </NativeBaseProvider>
-    </NavigationContainer>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <NavigationContainer>
+        <NativeBaseProvider style={styles.container}>
+          <Header />
+          <Drawer.Navigator
+            screenOptions={{
+              header: ({ navigation, route }) => {
+                const title = getHeaderTitle(route.name);
+                return <Header title={title} navigation={navigation} />;
+              },
+              drawerPosition: 'left',
+              headerRight: () => <Header/>,
+              overlayColor: 'transparent',
+              headerTransparent: true,
+            }}
+          > 
+            <Drawer.Screen name="Home" component={Home}/>
+            <Drawer.Screen name="LogIn" component={LogIn} />
+            <Drawer.Screen name="Build" component={Words} />
+            <Drawer.Screen name="Phrasebook" component={Phrasebook} />
+          </Drawer.Navigator>
+        </NativeBaseProvider>
+      </NavigationContainer>
+    </GestureHandlerRootView>  
   );
   } catch (error) {
     Sentry.Native.captureException(error);
