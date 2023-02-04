@@ -3,8 +3,8 @@ import React, { useState, useEffect } from 'react';
 //import { Button } from '@rneui/base';
 import Words from './screens/Words'
 import { NativeBaseProvider } from 'native-base';
-//import 'react-native-gesture-handler';
-import { Gesture, GestureHandlerRootView } from "react-native-gesture-handler";
+import 'react-native-gesture-handler';
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Header from './components/Header';
