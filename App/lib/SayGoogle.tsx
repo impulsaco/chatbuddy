@@ -14,7 +14,7 @@ import TranscribedOutput from "./TranscribeOutput";
 import * as FileSystem from 'expo-file-system';
 
 
-export default ({sentenceWhisper, setSentenceWhisper, lang}) => {
+export default ({sentenceWhisper, setSentenceWhisper, langCode}) => {
   console.log("sentenceWhisper First is ", sentenceWhisper)
   const [recording, setRecording] = React.useState(false as any);
   const [recordingDone, setRecordingDone] = React.useState(false);
@@ -24,7 +24,7 @@ export default ({sentenceWhisper, setSentenceWhisper, lang}) => {
   const [interimTranscribedData] = React.useState("");
   const [isRecording, setIsRecording] = React.useState(false);
   const [isTranscribing, setIsTranscribing] = React.useState(false);
-  const [selectedLanguage, setSelectedLanguage] = React.useState(lang.toLowerCase());
+  const [selectedLanguage, setSelectedLanguage] = React.useState("english");
   const [selectedModel, setSelectedModel] = React.useState(1);
   const [transcribeTimeout, setTranscribeTimout] = React.useState(5);
   const [stopTranscriptionSession, setStopTranscriptionSession] =
@@ -270,8 +270,8 @@ export default ({sentenceWhisper, setSentenceWhisper, lang}) => {
     const filename = uri.split("/").pop();
     setLoading(true);
     const formData: any = new FormData();
-    formData.append("language", lang.toLowerCase());
-    formData.append("model_size", "tiny");
+    formData.append("language", langCode);
+    formData.append("model_size", "small");
     formData.append(
       "audio_data",
       {
@@ -305,7 +305,7 @@ export default ({sentenceWhisper, setSentenceWhisper, lang}) => {
         );*/
       })
       .catch(function (error) {
-        console.log("error : ", error);
+        console.log("error : error");
       });
 
     if (!stopTranscriptionSessionRef.current) {

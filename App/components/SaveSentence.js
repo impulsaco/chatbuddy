@@ -121,7 +121,7 @@ const SaveSentence = ({ sentence,
     }
 
     if (sentenceChecked===true) {
-        sayButton = <SayWhisper sentenceWhisper={sentenceWhisper} setSentenceWhisper={setSentenceWhisper} langCode={langCode}/>
+        sayButton = <SayWhisper sentenceWhisper={sentenceWhisper} setSentenceWhisper={setSentenceWhisper} lang={lang}/>
     }
 
     return (

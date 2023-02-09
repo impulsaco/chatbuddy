@@ -104,11 +104,15 @@ const PAGE_WIDTH = Dimensions.get('window').width;
 /// Fix home layout DONE
 /// Login flow - context 
 /// BUG: Login reset DONE
-/// BUG: Fix transcription language
-/// Fix button order, Save at the end upon successful Say!, Ready in gray at first
-/// BUG: ability to Ready new sentence
+/// BUG: Fix transcription language DONE
+/// Fix button order, Save at the end upon successful Say!, Ready in gray at first DONE
+/// BUG: ability to Ready new sentence DONE
 /// BUG: New language resets sentence
 /// Eliminate audio recording alert DONE
+/// AI speed recognition options:
+//// Deepgram -> API requires Node.js, doesn't work
+//// Google API -> requires Google Cloud function, confusing
+//// Amazon Speech to Text -> potential???
 /// Unfilled boxes styling 
 /// Wordset generation
 /// Add words DONE
