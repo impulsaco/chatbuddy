@@ -112,7 +112,8 @@ const PAGE_WIDTH = Dimensions.get('window').width;
 /// AI speed recognition options:
 //// Deepgram -> API requires Node.js, doesn't work
 //// Google API -> requires Google Cloud function, confusing
-//// Amazon Speech to Text -> potential???
+//// React Native Voice -> requires Expo ejection, risky for build
+//// Amazon Speech to Text -> potential??? Very complicated
 /// Unfilled boxes styling 
 /// Wordset generation
 /// Add words DONE

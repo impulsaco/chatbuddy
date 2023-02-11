@@ -12,9 +12,7 @@ const googleTranslateWord = async (word, lang) => {
     let toLang = lang; // translate to target language
     let translation = ""
 
-    const API_KEY = GOOGLE_API_KEY
-
-    let url = `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`;
+    let url = `https://translation.googleapis.com/language/translate/v2?key=${GOOGLE_API_KEY}`;
     url += '&q=' + encodeURI(word);
     url += `&source=${fromLang}`;
     url += `&target=${toLang}`;

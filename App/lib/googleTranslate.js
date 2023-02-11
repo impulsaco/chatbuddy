@@ -12,9 +12,7 @@ const googleTranslate = async (savedSentence, lang, setSentenceEn) => {
     let fromLang = lang;
     let toLang = 'en'; // translate to English
 
-    const API_KEY = GOOGLE_API_KEY
-
-    let url = `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`;
+    let url = `https://translation.googleapis.com/language/translate/v2?key=${GOOGLE_API_KEY}`;
     url += '&q=' + encodeURI(savedSentence);
     url += `&source=${fromLang}`;
     url += `&target=${toLang}`;

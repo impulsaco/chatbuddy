@@ -28,6 +28,7 @@ const Phrasebook = () => {
   const [session, setSession] = useState()
 
   useEffect(() => {
+
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session)
     })
@@ -35,10 +36,12 @@ const Phrasebook = () => {
     supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session)
     })
-  }, [])
+  }, [session])
+  
   // Fetch sentences based on session
 
   useEffect(() => {
+
     const fetchSentences = async () => {
         if (session) {
             const { data, error } = await supabase

@@ -8,8 +8,10 @@ import googleTranslate from '../lib/googleTranslate';
 
 // Set up GPT3
 
+const API_KEY = OPENAI_API_KEY;
+
 const configuration = new Configuration({
-  apiKey: OPENAI_API_KEY,
+  apiKey: API_KEY,
 });
 
 const openai = new OpenAIApi(configuration);
