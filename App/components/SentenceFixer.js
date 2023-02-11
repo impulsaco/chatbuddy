@@ -5,6 +5,7 @@ import { Configuration, OpenAIApi } from "openai";
 import 'react-native-url-polyfill/auto'
 import { OPENAI_API_KEY } from "@env" 
 import googleTranslate from '../lib/googleTranslate';
+import sentenceSpeak from '../lib/sentenceSpeak';
 
 // Set up GPT3
 
@@ -66,6 +67,7 @@ const SentenceFixer = ({ sentence,
           id++
         }
         setSentenceAnalyzed(sentenceAnalyzedTemp)
+        sentenceSpeak(input, langCode)
     }
 
     const fixSentence = () => {

@@ -5,12 +5,14 @@ import SentenceWord from '../components/SentenceWord';
 import SaveSentence from '../components/SaveSentence';
 import AnalyzeWord from '../components/AnalyzeWord';
 import Refresh from '../../assets/Refresh.svg';
+import sentenceSpeak from '../lib/sentenceSpeak';
+import Sound from '../../assets/Sound.svg';
 
 const Sentence = ({ words, setWords, forward, setForward, translations, setTranslations, lang, langCode}) => {
 
     // Set instructions and sentence placeholder
 
-    const [text, setText] = useState("Drag words here to build your sentence:")
+    const [text, setText] = useState("Build your sentence:")
 
     // Set translation placeholder
     const [sentenceEn, setSentenceEn] = useState(null)
@@ -72,6 +74,18 @@ const Sentence = ({ words, setWords, forward, setForward, translations, setTrans
             flexDirection: 'row',
             justifyContent: 'flex-end',
             paddingRight: 0,
+        },
+        topSentence: {
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+            padding: 10,
+        },
+        soundButton: {
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+            paddingRight: 20,
         },
         refreshContainer: {
             flex: 1,
@@ -209,6 +223,27 @@ const Sentence = ({ words, setWords, forward, setForward, translations, setTrans
         }
     }
 
+    const speakSentence = () => {
+        if (text==="Build your sentence:") {
+            return (
+                <View style={styles.soundButton}>
+                    <TouchableOpacity onPress={() => sentenceSpeak(text, "en-UK")}>
+                        <Sound/>
+                    </TouchableOpacity>
+                </View>
+            )
+        }
+        else {
+            return (
+                <View style={styles.soundButton}>
+                    <TouchableOpacity onPress={() => sentenceSpeak(text, langCode)}>
+                        <Sound/>
+                    </TouchableOpacity>
+                </View>
+            )
+        }
+    }
+
 
     return (
         <View>
@@ -243,7 +278,10 @@ const Sentence = ({ words, setWords, forward, setForward, translations, setTrans
                 </View>             
             </View>
             <View style={styles.textContainer}>
-                {setWhispered()}
+                <View style={styles.topSentence}>
+                    {speakSentence()}                  
+                    {setWhispered()}    
+                </View>
                 {sentenceTranslation()}
             </View>
             <ScrollView contentContainerStyle={styles.container}>

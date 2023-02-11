@@ -63,7 +63,7 @@ const SaveSentence = ({ sentence,
             setSentenceComplete(false);
             setSentenceChecked(false);
             console.log("you are missing words")
-            setText("Drag words here to build your sentence:");
+            setText("Build your sentence:");
             setSentenceEn("");
         }
     }
