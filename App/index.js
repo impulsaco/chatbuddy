@@ -109,15 +109,13 @@ const PAGE_WIDTH = Dimensions.get('window').width;
 /// BUG: ability to Ready new sentence DONE
 /// BUG: New language resets sentence
 /// Eliminate audio recording alert DONE
-/// AI speed recognition options:
-//// Deepgram -> API requires Node.js, doesn't work
-//// Google API -> requires Google Cloud function, confusing
-//// React Native Voice -> requires Expo ejection, risky for build
-//// Amazon Speech to Text -> potential??? Very complicated
+/// AI speed recognition options: DONE DONE DONE
+/// Hot startup container TODAY
 /// Unfilled boxes styling 
 /// Wordset generation
 /// Add words DONE
-/// User list of words with delete TODAY
+/// How to say text-to-speech DONE
+/// User list of words with delete 
 /// Different sentence structures
 /// Leveling and phrasebook completion
 /// GPT Chatbot
