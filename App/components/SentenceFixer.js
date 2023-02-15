@@ -70,10 +70,11 @@ const SentenceFixer = ({ sentence,
         sentenceSpeak(input, langCode)
     }
 
+    console.log("Sentence to send is ", sentence)
     const fixSentence = () => {
       openai.createCompletion({
         model: "text-davinci-003",
-        prompt: `Make a simple sentence in ${lang} using only these words: ${sentenceInput} Do not add new words like "some" or "delicious"`,
+        prompt: `Make a simple sentence in ${lang} using only these four words, keeping in mind the English translation: ${JSON.stringify(sentence)} Do not add any new words besides conjugations and particles.`,
         temperature: 0,
         max_tokens: 100,
       }).then(response => saveSentenceText(response.data.choices[0].text.trim()))
