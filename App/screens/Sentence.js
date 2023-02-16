@@ -182,6 +182,7 @@ const Sentence = ({
     const resetSentence = () => {
         setSentence(sentenceInit);
         setSentenceReady(false);
+        setText("Build your sentence:")
         console.log("sentenceReady is ", sentenceReady)
     }
 

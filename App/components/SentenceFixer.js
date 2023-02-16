@@ -63,7 +63,7 @@ const SentenceFixer = ({ sentence,
         let sentenceAnalyzedTemp = []
         let id = 0
         for (let i = 0; i < inputArray.length; i++) {
-          sentenceAnalyzedTemp.push({id: id, word: inputArray[i].replaceAll(".",""), said:false}); 
+          sentenceAnalyzedTemp.push({id: id, word: inputArray[i], said:false}); 
           id++
         }
         setSentenceAnalyzed(sentenceAnalyzedTemp)

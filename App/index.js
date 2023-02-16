@@ -115,7 +115,9 @@ const PAGE_WIDTH = Dimensions.get('window').width;
 /// Wordset generation
 /// Add words DONE
 /// How-to-say text-to-speech DONE
-/// Android select by tap
+/// Android select by tap DONE
+/// Android Bug: erase sentence on say!
+/// Android Bug: double menu
 /// User list of words with delete 
 /// Different sentence structures
 //// Separate words component, organize by type, language, and category
@@ -175,7 +177,6 @@ export default function App() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <NavigationContainer>
         <NativeBaseProvider style={styles.container}>
-          <Header />
           <Drawer.Navigator
             screenOptions={{
               header: ({ navigation, route }) => {
