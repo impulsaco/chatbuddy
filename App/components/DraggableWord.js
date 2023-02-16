@@ -9,6 +9,9 @@ const styles = StyleSheet.create({
     dragging: {
         opacity: 0.1,
     },
+    sentenceWord: {
+        borderColor: '#030303',
+    },
   })
 
 const DraggableWord = ({word, translations, sentence, setSentence, setForward}) => {
@@ -34,7 +37,7 @@ const DraggableWord = ({word, translations, sentence, setSentence, setForward}) 
 
     }
 
-    if (Platform.OS === 'ios') {
+    //if (Platform.OS === 'ios') {
         return (
             <DraxView
                 draggingStyle={styles.dragging}
@@ -52,15 +55,15 @@ const DraggableWord = ({word, translations, sentence, setSentence, setForward}) 
                     console.log(`received ${payload}`);
                 }}
             >
-                <WordCard style={[{borderColor: '#FFC107'}]}
-                    word = { word } 
+                <WordCard 
+                    word = { word } style={styles.sentenceWord}                    
                     translations = { translations }
                 />
             </DraxView>
         )
-    }
+    //}
 
-    else if (Platform.OS === 'android') {
+    /*else if (Platform.OS === 'android') {
         return (
             <TouchableOpacity onPress = {() => updateSentence(word)}>
                 <WordCard style={[{borderColor: '#FFC107'}]}
@@ -69,7 +72,7 @@ const DraggableWord = ({word, translations, sentence, setSentence, setForward}) 
                 />
             </TouchableOpacity>
         )
-    }
+    }*/
 
     
 }

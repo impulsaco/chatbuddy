@@ -116,8 +116,10 @@ const PAGE_WIDTH = Dimensions.get('window').width;
 /// Add words DONE
 /// How-to-say text-to-speech DONE
 /// Android select by tap DONE
-/// Android Bug: erase sentence on say!
-/// Android Bug: double menu
+/// Android Bug: erase sentence on say! DONE
+/// Android Bug: double menu DONE 
+/// Android Bug: identify no drag DONE
+/// Android: Move away from tab navigation
 /// User list of words with delete 
 /// Different sentence structures
 //// Separate words component, organize by type, language, and category

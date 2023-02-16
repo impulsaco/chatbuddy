@@ -260,10 +260,12 @@ saveWord()
     // tab router setup
     
     const [forward, setForward] = useState("");
-
+    
+    // Note: DraxProvider doesn't work on Android with Tab.Navigator
+    
     return (
         <GestureHandlerRootView style={styles.gestureRootViewStyle}>
-            <DraxProvider>
+            <DraxProvider> 
                 <View style={styles.gestureRootViewStyle}>
                     <LinearGradient 
                         colors={['#9F00B9', '#FFDC61']}

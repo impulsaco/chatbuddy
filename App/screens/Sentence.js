@@ -293,7 +293,7 @@ const Sentence = ({
                 </View>
                 {sentenceTranslation()}
             </View>
-            <ScrollView contentContainerStyle={styles.container}>
+            <View style={styles.container}>
                 {(sentence || []).map(
                     (word, index) => (
                         <SentenceWord 
@@ -308,7 +308,7 @@ const Sentence = ({
                         />
                     ))
                 }
-            </ScrollView>
+            </View>
         </View>
     )
 }
