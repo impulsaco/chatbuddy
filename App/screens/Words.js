@@ -92,6 +92,33 @@ export default ({ route }) => {
 
     const [userWords, setUserWords] = useState([])
 
+    // Set up state for sentence
+
+    const sentenceInit = [
+        {
+            "id": -1,
+            "type": "subject",
+            "word": "SUBJECT",
+        },
+        {
+            "id": -2,
+            "type": "verb",
+            "word": "VERB",
+        },
+        {
+            "id": -3,
+            "type": "adjective",
+            "word": "ADJECTIVE",
+        },
+        {
+            "id": -4,
+            "type": "noun",
+            "word": "NOUN",
+        }  
+    ]
+
+    const [sentence, setSentence] = useState(sentenceInit); // Sets the initial sentence state, will be modified on drag or tap
+
     // Retrieve session
 
   const [session, setSession] = useState()
@@ -178,9 +205,9 @@ saveWord()
             <DraxScrollView contentContainerStyle={styles.wordContainer}>
                 <AddWord type="noun" setUserWords={setUserWords} userWords={userWords} langCode={langCode}/> 
                 {userWords.filter ? userWords.filter(obj => {return obj.type === "noun"})
-                .map((word) => <DraggableWord key = {word.id} word={word} translations={translations}/>) : null}
+                .map((word) => <DraggableWord key = {word.id} word={word} translations={translations} sentence={sentence} setSentence={setSentence} setForward={setForward}/>) : null}
                 {words.filter(obj => {return obj.type === "noun"})
-                .map((word) => <DraggableWord key = {word.id} word={word} translations={translations}/>)}
+                .map((word) => <DraggableWord key = {word.id} word={word} translations={translations} sentence={sentence} setSentence={setSentence} setForward={setForward}/>)}
             </DraxScrollView>
         </View>
     )
@@ -190,9 +217,9 @@ saveWord()
             <DraxScrollView contentContainerStyle={styles.wordContainer}>
                 <AddWord type="verb" setUserWords={setUserWords} userWords={userWords} langCode={langCode}/>
                 {userWords.filter ? userWords.filter(obj => {return obj.type === "verb"})
-                .map((word) => <DraggableWord key = {word.id} word={word} translations={translations}/>) : null}
+                .map((word) => <DraggableWord key = {word.id} word={word} translations={translations} sentence={sentence} setSentence={setSentence} setForward={setForward}/>) : null}
                 {words.filter(obj => {return obj.type === "verb"})
-                .map((word) => <DraggableWord key = {word.id} word={word} translations={translations}/>)}
+                .map((word) => <DraggableWord key = {word.id} word={word} translations={translations} sentence={sentence} setSentence={setSentence} setForward={setForward}/>)}
             </DraxScrollView>
         </View>
     )
@@ -202,9 +229,9 @@ saveWord()
             <DraxScrollView contentContainerStyle={styles.wordContainer}>
                 <AddWord type="adjective" setUserWords={setUserWords} userWords={userWords} langCode={langCode}/>
                 {userWords.filter ? userWords.filter(obj => {return obj.type === "adjective"})
-                .map((word) => <DraggableWord key = {word.id} word={word} translations={translations}/>) : null}
+                .map((word) => <DraggableWord key = {word.id} word={word} translations={translations} sentence={sentence} setSentence={setSentence} setForward={setForward}/>) : null}
                 {words.filter(obj => {return obj.type === "adjective"})
-                .map((word) => <DraggableWord key = {word.id} word={word} translations={translations}/>)}
+                .map((word) => <DraggableWord key = {word.id} word={word} translations={translations} sentence={sentence} setSentence={setSentence} setForward={setForward}/>)}
             </DraxScrollView>
         </View>
     )
@@ -214,9 +241,9 @@ saveWord()
             <DraxScrollView contentContainerStyle={styles.wordContainer}>
                 <AddWord type="subject" setUserWords={setUserWords} userWords={userWords} langCode={langCode}/>
                 {userWords.filter ? userWords.filter(obj => {return obj.type === "subject"})
-                .map((word) => <DraggableWord key = {word.id} word={word} translations={translations}/>) : null}
+                .map((word) => <DraggableWord key = {word.id} word={word} translations={translations} sentence={sentence} setSentence={setSentence} setForward={setForward}/>) : null}
                 {words.filter(obj => {return obj.type === "subject"})
-                .map((word) => <DraggableWord key = {word.id} word={word} translations={translations}/>)}
+                .map((word) => <DraggableWord key = {word.id} word={word} translations={translations} sentence={sentence} setSentence={setSentence} setForward={setForward}/>)}
             </DraxScrollView>
         </View>
     )
@@ -253,6 +280,8 @@ saveWord()
                         setTranslations={setTranslations}
                         lang={lang}
                         langCode={langCode}
+                        sentence={sentence}
+                        setSentence={setSentence}
                     />
                     <Tab.Navigator
                     tabBar={props => <WordMenu {...props} forward={forward} setForward ={setForward}/>}

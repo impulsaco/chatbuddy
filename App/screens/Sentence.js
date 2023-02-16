@@ -8,7 +8,17 @@ import Refresh from '../../assets/Refresh.svg';
 import sentenceSpeak from '../lib/sentenceSpeak';
 import Sound from '../../assets/Sound.svg';
 
-const Sentence = ({ words, setWords, forward, setForward, translations, setTranslations, lang, langCode}) => {
+const Sentence = ({ 
+    words, 
+    setWords, 
+    forward, 
+    setForward, 
+    translations, 
+    setTranslations, 
+    lang, 
+    langCode, 
+    sentence, 
+    setSentence}) => {
 
     // Set instructions and sentence placeholder
 
@@ -48,8 +58,6 @@ const Sentence = ({ words, setWords, forward, setForward, translations, setTrans
             "word": "NOUN",
         }  
     ]
-
-    const [sentence, setSentence] = useState(sentenceInit); 
     
     const gestureRootViewStyle = { flex: 1 };
 

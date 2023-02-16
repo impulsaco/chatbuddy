@@ -110,13 +110,18 @@ const PAGE_WIDTH = Dimensions.get('window').width;
 /// BUG: New language resets sentence
 /// Eliminate audio recording alert DONE
 /// AI speed recognition options: DONE DONE DONE
-/// Hot startup container TODAY
+/// Hot startup container 
 /// Unfilled boxes styling 
 /// Wordset generation
 /// Add words DONE
-/// How to say text-to-speech DONE
+/// How-to-say text-to-speech DONE
+/// Android select by tap
 /// User list of words with delete 
 /// Different sentence structures
+//// Separate words component, organize by type, language, and category
+//// Phrase selection screen 
+//// Phrasebook by type
+/// Delete phrases
 /// Leveling and phrasebook completion
 /// GPT Chatbot
 /// GPT3 sentence coloring
