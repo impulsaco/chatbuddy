@@ -110,6 +110,7 @@ const PAGE_WIDTH = Dimensions.get('window').width;
 /// BUG: New language resets sentence
 /// Eliminate audio recording alert DONE
 /// AI speed recognition options: DONE DONE DONE
+/// Border for phrases, max-width
 /// Hot startup container 
 /// Unfilled boxes styling 
 /// Wordset generation
@@ -121,10 +122,13 @@ const PAGE_WIDTH = Dimensions.get('window').width;
 /// Android Bug: identify no drag DONE
 /// Android: Move away from tab navigation
 /// User list of words with delete 
+
 /// Different sentence structures
+//// Generate tabs dynamically DONE
 //// Separate words component, organize by type, language, and category
 //// Phrase selection screen 
 //// Phrasebook by type
+
 /// Delete phrases
 /// Leveling and phrasebook completion
 /// GPT Chatbot

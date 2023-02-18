@@ -4,7 +4,7 @@ import { Button } from "@rneui/themed";
 
 const TabRow = ({tab, setTab}) => {
 
-    const wordTypes = ["Subjects", "Verbs", "Adjectives", "Nouns"]
+    const wordTypes = ["subject", "verb", "adjective", "noun"]
 
     const tabs = ({ tab , setTab }) => {
         return <View style = {styles.container}>

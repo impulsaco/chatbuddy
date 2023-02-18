@@ -11,6 +11,8 @@ import Header from '../components/Header';
 import { LinearGradient } from 'expo-linear-gradient'
 import AddWord from '../components/AddWord';
 import { supabase } from '../lib/supabase';
+import RouteGenerator from '../lib/WordRoute';
+import WordRoute from '../lib/WordRoute';
 
 
 const PAGE_WIDTH = Dimensions.get('window').width;
@@ -22,24 +24,24 @@ export default ({ route }) => {
 
     const [translations, setTranslations] = useState(true)
 
-    // set up the tab navigator
+    // set up the tab navigator, for alternative navigation
 
-    const [tab, setTab] = useState("Subjects")
+    /* const [tab, setTab] = useState("subject")
 
     const page = () => {
         switch (tab) {
-            case 'Subjects':
-                return <SubjectRoute />
-            case 'Verbs':
-                return <VerbRoute/>
-            case 'Adjectives':
-                return <AdjectiveRoute />
-            case 'Nouns':
-                return <NounRoute />
+            case 'subject':
+                return <subjectRoute />
+            case 'verb':
+                return <verbRoute/>
+            case 'adjective':
+                return <adjectiveRoute />
+            case 'noun':
+                return <nounRoute />
             default:
-                return <SubjectRoute />
+                return <subjectRoute />
         }
-    }
+    } */
     
     // Set styles
     //const gestureRootViewStyle = { flex: 1 };
@@ -198,66 +200,9 @@ saveWord()
 
     const Tab = createMaterialTopTabNavigator();
 
-    // create word tab sliders filtered by type
-
-    const NounRoute = () => (
-        <View>
-            <DraxScrollView contentContainerStyle={styles.wordContainer}>
-                <AddWord type="noun" setUserWords={setUserWords} userWords={userWords} langCode={langCode}/> 
-                {userWords.filter ? userWords.filter(obj => {return obj.type === "noun"})
-                .map((word) => <DraggableWord key = {word.id} word={word} translations={translations} sentence={sentence} setSentence={setSentence} setForward={setForward}/>) : null}
-                {words.filter(obj => {return obj.type === "noun"})
-                .map((word) => <DraggableWord key = {word.id} word={word} translations={translations} sentence={sentence} setSentence={setSentence} setForward={setForward}/>)}
-            </DraxScrollView>
-        </View>
-    )
-
-    const VerbRoute = () => (
-        <View>
-            <DraxScrollView contentContainerStyle={styles.wordContainer}>
-                <AddWord type="verb" setUserWords={setUserWords} userWords={userWords} langCode={langCode}/>
-                {userWords.filter ? userWords.filter(obj => {return obj.type === "verb"})
-                .map((word) => <DraggableWord key = {word.id} word={word} translations={translations} sentence={sentence} setSentence={setSentence} setForward={setForward}/>) : null}
-                {words.filter(obj => {return obj.type === "verb"})
-                .map((word) => <DraggableWord key = {word.id} word={word} translations={translations} sentence={sentence} setSentence={setSentence} setForward={setForward}/>)}
-            </DraxScrollView>
-        </View>
-    )
-
-    const AdjectiveRoute = () => (
-        <View>
-            <DraxScrollView contentContainerStyle={styles.wordContainer}>
-                <AddWord type="adjective" setUserWords={setUserWords} userWords={userWords} langCode={langCode}/>
-                {userWords.filter ? userWords.filter(obj => {return obj.type === "adjective"})
-                .map((word) => <DraggableWord key = {word.id} word={word} translations={translations} sentence={sentence} setSentence={setSentence} setForward={setForward}/>) : null}
-                {words.filter(obj => {return obj.type === "adjective"})
-                .map((word) => <DraggableWord key = {word.id} word={word} translations={translations} sentence={sentence} setSentence={setSentence} setForward={setForward}/>)}
-            </DraxScrollView>
-        </View>
-    )
-
-    const SubjectRoute = () => (
-        <View>
-            <DraxScrollView contentContainerStyle={styles.wordContainer}>
-                <AddWord type="subject" setUserWords={setUserWords} userWords={userWords} langCode={langCode}/>
-                {userWords.filter ? userWords.filter(obj => {return obj.type === "subject"})
-                .map((word) => <DraggableWord key = {word.id} word={word} translations={translations} sentence={sentence} setSentence={setSentence} setForward={setForward}/>) : null}
-                {words.filter(obj => {return obj.type === "subject"})
-                .map((word) => <DraggableWord key = {word.id} word={word} translations={translations} sentence={sentence} setSentence={setSentence} setForward={setForward}/>)}
-            </DraxScrollView>
-        </View>
-    )
-
-   // const initialLayout = { width: Dimensions.get('window').width };
-
-    const renderScene = SceneMap({
-        nounScene: NounRoute,
-        verbScene: VerbRoute,
-        adjectiveScene: AdjectiveRoute,
-        subjectScene: SubjectRoute,
-      });
-
     // tab router setup
+
+    const RouteList = ["subject", "verb", "adjective", "noun"] // SHOULD BE SENT ON PHASE CHOICE
     
     const [forward, setForward] = useState("");
     
@@ -287,13 +232,15 @@ saveWord()
                     />
                     <Tab.Navigator
                     tabBar={props => <WordMenu {...props} forward={forward} setForward ={setForward}/>}
-                    initialRouteName={'Subjects'} 
+                    initialRouteName={'subject'} 
                     sceneContainerStyle={{backgroundColor: 'transparent'}}
                     >
-                        <Tab.Screen name="Subjects" component={SubjectRoute} />
-                        <Tab.Screen name="Verbs" component={VerbRoute} />
-                        <Tab.Screen name="Adjectives" component={AdjectiveRoute} />
-                        <Tab.Screen name="Nouns" component={NounRoute} />
+                        {RouteList.map((route) => (
+                        <Tab.Screen
+                        name={route}
+                        component={WordRoute(route, setUserWords, userWords, langCode, words, translations, sentence, setSentence, setForward)}
+                        />
+                    ))} 
                     </Tab.Navigator>
                 </View>
             </DraxProvider>

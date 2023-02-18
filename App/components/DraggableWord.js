@@ -23,15 +23,15 @@ const DraggableWord = ({word, translations, sentence, setSentence, setForward}) 
         newSentence[index] = wordTapped
         setSentence(newSentence)
         if (wordTapped.type === "subject") {
-            setForward("Verbs")
+            setForward("verb")
         }
 
         if (wordTapped.type === "verb") {
-            setForward("Adjectives")
+            setForward("adjective")
         }
 
         if (wordTapped.type === "adjective") {
-            setForward("Nouns")
+            setForward("noun")
         }
         
 

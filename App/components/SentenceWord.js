@@ -35,15 +35,15 @@ const SentenceWord = ({word, index, words, sentence, setSentence, forward, setFo
                 // NAVIGATE TO NEXT WORD SET
 
                 if (word.type === "subject") {
-                    setForward("Verbs")
+                    setForward("verb")
                 }
 
                 if (word.type === "verb") {
-                    setForward("Adjectives")
+                    setForward("adjective")
                 }
 
                 if (word.type === "adjective") {
-                    setForward("Nouns")
+                    setForward("noun")
                 }
 
                 console.log("received in SW ", payload);

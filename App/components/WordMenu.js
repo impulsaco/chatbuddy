@@ -19,7 +19,7 @@ const WordMenu = ({ state, navigation, forward, setForward }) => {
 
   // Sets color of icons if pressed
   const color = (pageName, currentIndex) => {
-    const nameArray = ['Subjects', 'Verbs', 'Adjectives', 'Nouns']
+    const nameArray = ['subject', 'verb', 'adjective', 'noun']
     if (currentIndex === nameArray.indexOf(pageName)) {
       return "#FBD470"
     }
@@ -30,10 +30,10 @@ const WordMenu = ({ state, navigation, forward, setForward }) => {
 
   // Used SVG to be able to change the color of the icons exported from Figma.
   const icon = (pageName, currentIndex) => {
-    if (pageName === 'Subjects') return <PersonIcon fill={color(pageName, currentIndex)} />
-    if (pageName === 'Verbs') return <RunnerIcon fill={color(pageName, currentIndex)} />
-    if (pageName === 'Adjectives') return <IdentityIcon fill={color(pageName, currentIndex)} />
-    if (pageName === 'Nouns') return <AppleIcon fill={color(pageName, currentIndex)} />
+    if (pageName === 'subject') return <PersonIcon fill={color(pageName, currentIndex)} />
+    if (pageName === 'verb') return <RunnerIcon fill={color(pageName, currentIndex)} />
+    if (pageName === 'adjective') return <IdentityIcon fill={color(pageName, currentIndex)} />
+    if (pageName === 'noun') return <AppleIcon fill={color(pageName, currentIndex)} />
     return pageName;
   }
 

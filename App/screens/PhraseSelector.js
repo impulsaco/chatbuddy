@@ -7,62 +7,31 @@ import { supabase } from '../lib/supabase';
 import createWordList from '../lib/createWordList';
 
 const PAGE_HEIGHT = Dimensions.get('window').height;
-
 const PAGE_WIDTH = Dimensions.get('window').width;
 
-function Home({navigation}) {
+function PhraseSelector({lang, langCode}) {
 
     // set up word lists  
-  
-    // create state with initial array
-    const [wordsKo, setWordsKo] = useState(createWordList('ko'));
-    const [wordsEs, setWordsEs] = useState(createWordList('es-MX'));
-
-    // Retrieve session
-      
-    const [session, setSession] = useState()
-      
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session)
-    })
-  
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session)
-    })
-
+    // create state with words
+    const [words, setWords] = useState(createWordList(langCode));
 
     const renderButtons = () => { 
-      
-        if (!session?.user) {
-          return (
-            <View>
-                <Button buttonStyle={{ backgroundColor: '#FFC107' }} onPress={() => navigation.navigate('LogIn', {session: session, setSession: setSession})}>Login</Button>
-            </View>
-            )
-        }
-
-        if (session?.user) {
-          return (
+        return (
             <View>
                 <View style={styles.textContainer}>
-                  <Text style={styles.mainText}>Choose a language</Text>
+                    <Text style={styles.mainText}>What sentence do you want to build?</Text>
                 </View>     
                 <View style={styles.buttonsContainer}>
-                  <View style={styles.buttonContainer}>
-                      <Button buttonStyle={{ backgroundColor: '#FFC107', marginRight: 30}} onPress={() => navigation.navigate('Build', {words: wordsKo, setWords: setWordsKo, lang: "Korean", langCode: "ko"})}>Korean</Button>            
-                      <Button buttonStyle={{ backgroundColor: '#FFC107' }} onPress={() => navigation.navigate('Build', {words: wordsEs, setWords: setWordsEs, lang: "Spanish", langCode: "es-MX"})}>Spanish</Button>
-                  </View>
-                  <View style={styles.phrasebookContainer}>
-                      <Button buttonStyle={{ backgroundColor: '#FFC107', width: 120}} onPress={() => navigation.navigate('Phrasebook')}>Phrasebook</Button>
-                  </View>
-                  <View style={styles.logOutContainer}>
-                      <Button buttonStyle={{ backgroundColor: '#FFC107' }} onPress={() => supabase.auth.signOut()}>Log Out</Button>
-                  </View>
+                    <View style={styles.phrasebookContainer}>
+                        <Button buttonStyle={{ backgroundColor: '#FFC107', width: 120}} onPress={() => navigation.navigate('Phrasebook')}>Phrasebook</Button>
+                    </View>
+                    <View style={styles.logOutContainer}>
+                        <Button buttonStyle={{ backgroundColor: '#FFC107' }} onPress={() => supabase.auth.signOut()}>Log Out</Button>
+                    </View>
                 </View>
             </View>
-          )
-        }
-      } 
+        )
+    } 
   
     return (
       <View style={styles.mainContainer}>
