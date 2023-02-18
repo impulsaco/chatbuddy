@@ -14,6 +14,7 @@ import Phrasebook from './screens/Phrasebook';
 import Home from './screens/Home';
 import { getHeaderTitle } from '@react-navigation/elements';
 import * as Sentry from 'sentry-expo';
+import PhraseSelector from './screens/PhraseSelector';
 
 Sentry.init({
   dsn: 'https://5a92132c278b42a79bb122eb9c511e43@o4504618398908416.ingest.sentry.io/4504618595713024',
@@ -197,6 +198,7 @@ export default function App() {
           > 
             <Drawer.Screen name="Home" component={Home}/>
             <Drawer.Screen name="LogIn" component={LogIn} />
+            <Drawer.Screen name="Choose" component={PhraseSelector} />
             <Drawer.Screen name="Build" component={Words} />
             <Drawer.Screen name="Phrasebook" component={Phrasebook} />
           </Drawer.Navigator>

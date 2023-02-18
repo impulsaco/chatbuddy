@@ -49,8 +49,8 @@ function Home({navigation}) {
                 </View>     
                 <View style={styles.buttonsContainer}>
                   <View style={styles.buttonContainer}>
-                      <Button buttonStyle={{ backgroundColor: '#FFC107', marginRight: 30}} onPress={() => navigation.navigate('Build', {words: wordsKo, setWords: setWordsKo, lang: "Korean", langCode: "ko"})}>Korean</Button>            
-                      <Button buttonStyle={{ backgroundColor: '#FFC107' }} onPress={() => navigation.navigate('Build', {words: wordsEs, setWords: setWordsEs, lang: "Spanish", langCode: "es-MX"})}>Spanish</Button>
+                      <Button buttonStyle={{ backgroundColor: '#FFC107', marginRight: 30}} onPress={() => navigation.navigate('Choose', {lang: "Korean", langCode: "ko"})}>Korean</Button>            
+                      <Button buttonStyle={{ backgroundColor: '#FFC107' }} onPress={() => navigation.navigate('Choose', {lang: "Spanish", langCode: "es-MX"})}>Spanish</Button>
                   </View>
                   <View style={styles.phrasebookContainer}>
                       <Button buttonStyle={{ backgroundColor: '#FFC107', width: 120}} onPress={() => navigation.navigate('Phrasebook')}>Phrasebook</Button>

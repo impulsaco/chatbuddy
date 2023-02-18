@@ -89,37 +89,16 @@ export default ({ route }) => {
     const setWords = route.params.setWords;
     const lang = route.params.lang;
     const langCode = route.params.langCode;
+    const sentenceInit = route.params.sentenceInit;
+
+    console.log("sentenceInit is", sentenceInit)
 
     // Load user words and set up state for it
 
     const [userWords, setUserWords] = useState([])
 
-    // Set up state for sentence
-
-    const sentenceInit = [
-        {
-            "id": -1,
-            "type": "subject",
-            "word": "SUBJECT",
-        },
-        {
-            "id": -2,
-            "type": "verb",
-            "word": "VERB",
-        },
-        {
-            "id": -3,
-            "type": "adjective",
-            "word": "ADJECTIVE",
-        },
-        {
-            "id": -4,
-            "type": "noun",
-            "word": "NOUN",
-        }  
-    ]
-
     const [sentence, setSentence] = useState(sentenceInit); // Sets the initial sentence state, will be modified on drag or tap
+      // SHOULD BE USEEFFECT FOR UPDATING
 
     // Retrieve session
 
@@ -135,7 +114,7 @@ export default ({ route }) => {
     })
   }, [])
 
-  // Fetch words based on session
+  // Fetch user-created words based on session
 
   let wordsLang
 
@@ -143,7 +122,7 @@ export default ({ route }) => {
     wordsLang = 'wordsKo'
   }
 
-  if (lang === "es") {
+  if (lang === "es-MX") {
     wordsLang = 'wordsEs'
   }
 

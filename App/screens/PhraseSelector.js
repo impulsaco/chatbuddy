@@ -9,24 +9,98 @@ import createWordList from '../lib/createWordList';
 const PAGE_HEIGHT = Dimensions.get('window').height;
 const PAGE_WIDTH = Dimensions.get('window').width;
 
-function PhraseSelector({lang, langCode}) {
+function PhraseSelector({navigation, route}) {
 
     // set up word lists  
     // create state with words
+
+
+    const lang = route.params.lang;
+    const langCode= route.params.langCode;
+
     const [words, setWords] = useState(createWordList(langCode));
+
+    console.log("route is", route)
+
+    console.log("langCode", langCode)
+    console.log("words", words)
+
+    // Set up state for sentence
+
+    const selfintroduction = [
+        {
+            "id": -1,
+            "type": "subject",
+            "word": "SUBJECT",
+        },
+        {
+            "id": -2,
+            "type": "verb",
+            "word": "VERB",
+        },
+        {
+            "id": -3,
+            "type": "noun",
+            "word": "NOUN",
+        }  
+    ]
+
+    const basic = [
+        {
+            "id": -1,
+            "type": "subject",
+            "word": "SUBJECT",
+        },
+        {
+            "id": -2,
+            "type": "verb",
+            "word": "VERB",
+        },
+        {
+            "id": -3,
+            "type": "noun",
+            "word": "NOUN",
+        }  
+    ]
+    
+    const anything = [
+        {
+            "id": -1,
+            "type": "subject",
+            "word": "SUBJECT",
+        },
+        {
+            "id": -2,
+            "type": "verb",
+            "word": "VERB",
+        },
+        {
+            "id": -3,
+            "type": "adjective",
+            "word": "ADJECTIVE",
+        },
+        {
+            "id": -4,
+            "type": "noun",
+            "word": "NOUN",
+        }  
+    ]
 
     const renderButtons = () => { 
         return (
             <View>
                 <View style={styles.textContainer}>
-                    <Text style={styles.mainText}>What sentence do you want to build?</Text>
+                    <Text style={styles.mainText}>What do you want to say?</Text>
                 </View>     
                 <View style={styles.buttonsContainer}>
                     <View style={styles.phrasebookContainer}>
-                        <Button buttonStyle={{ backgroundColor: '#FFC107', width: 120}} onPress={() => navigation.navigate('Phrasebook')}>Phrasebook</Button>
+                        <Button buttonStyle={{ backgroundColor: '#FFC107', width: 200}} onPress={() => navigation.navigate('Build', {words: words, setWords: setWords, lang: lang, langCode: langCode, sentenceInit: selfintroduction})}>Self-introduction</Button>
                     </View>
-                    <View style={styles.logOutContainer}>
-                        <Button buttonStyle={{ backgroundColor: '#FFC107' }} onPress={() => supabase.auth.signOut()}>Log Out</Button>
+                    <View style={styles.phrasebookContainer}>
+                        <Button buttonStyle={{ backgroundColor: '#FFC107', width: 200}} onPress={() => navigation.navigate('Build', {words: words, setWords: setWords, lang: lang, langCode: langCode, sentenceInit: basic})}>Basic sentence</Button>
+                    </View>
+                    <View style={styles.phrasebookContainer}>
+                        <Button buttonStyle={{ backgroundColor: '#FFC107', width: 200}} onPress={() => navigation.navigate('Build', {words: words, setWords: setWords, lang: lang, langCode: langCode, sentenceInit: anything})}>Anything!</Button>
                     </View>
                 </View>
             </View>
@@ -115,4 +189,4 @@ function PhraseSelector({lang, langCode}) {
     },      
   })
 
-export default Home
+export default PhraseSelector
