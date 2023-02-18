@@ -20,11 +20,6 @@ function PhraseSelector({navigation, route}) {
 
     const [words, setWords] = useState(createWordList(langCode));
 
-    console.log("route is", route)
-
-    console.log("langCode", langCode)
-    console.log("words", words)
-
     // Set up state for sentence
 
     const selfintroduction = [
@@ -94,10 +89,10 @@ function PhraseSelector({navigation, route}) {
                 </View>     
                 <View style={styles.buttonsContainer}>
                     <View style={styles.phrasebookContainer}>
-                        <Button buttonStyle={{ backgroundColor: '#FFC107', width: 200}} onPress={() => navigation.navigate('Build', {words: words, setWords: setWords, lang: lang, langCode: langCode, sentenceInit: selfintroduction})}>Self-introduction</Button>
+                        <Button buttonStyle={{ backgroundColor: '#FFC107', width: 200}} onPress={() => navigation.navigate('Build', {words: words, setWords: setWords, lang: lang, langCode: langCode, sentenceInit: selfintroduction})}>Introduce myself</Button>
                     </View>
                     <View style={styles.phrasebookContainer}>
-                        <Button buttonStyle={{ backgroundColor: '#FFC107', width: 200}} onPress={() => navigation.navigate('Build', {words: words, setWords: setWords, lang: lang, langCode: langCode, sentenceInit: basic})}>Basic sentence</Button>
+                        <Button buttonStyle={{ backgroundColor: '#FFC107', width: 200}} onPress={() => navigation.navigate('Build', {words: words, setWords: setWords, lang: lang, langCode: langCode, sentenceInit: basic})}>Describe people and things</Button>
                     </View>
                     <View style={styles.phrasebookContainer}>
                         <Button buttonStyle={{ backgroundColor: '#FFC107', width: 200}} onPress={() => navigation.navigate('Build', {words: words, setWords: setWords, lang: lang, langCode: langCode, sentenceInit: anything})}>Anything!</Button>
@@ -124,7 +119,7 @@ function PhraseSelector({navigation, route}) {
   const styles = StyleSheet.create({
     topContainer: {
       flex: 1,
-      paddingTop: PAGE_HEIGHT/10,
+      paddingTop: PAGE_HEIGHT/10,      
     },
     linearGradient: {
       position: 'absolute',
@@ -158,6 +153,7 @@ function PhraseSelector({navigation, route}) {
     mainText: {
       fontSize: 54,
       color: "white",
+      textAlign: 'center',
      },
     buttonsContainer: {
       display: 'flex',

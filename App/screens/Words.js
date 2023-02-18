@@ -90,8 +90,9 @@ export default ({ route }) => {
     const lang = route.params.lang;
     const langCode = route.params.langCode;
     const sentenceInit = route.params.sentenceInit;
+    const routeList = sentenceInit.map(item => item.type);
 
-    console.log("sentenceInit is", sentenceInit)
+    console.log("routeList", routeList)
 
     // Load user words and set up state for it
 
@@ -99,6 +100,10 @@ export default ({ route }) => {
 
     const [sentence, setSentence] = useState(sentenceInit); // Sets the initial sentence state, will be modified on drag or tap
       // SHOULD BE USEEFFECT FOR UPDATING
+
+    useEffect(() => {
+        setSentence(sentenceInit)
+    }, [sentenceInit])
 
     // Retrieve session
 
@@ -180,8 +185,6 @@ saveWord()
     const Tab = createMaterialTopTabNavigator();
 
     // tab router setup
-
-    const RouteList = ["subject", "verb", "adjective", "noun"] // SHOULD BE SENT ON PHASE CHOICE
     
     const [forward, setForward] = useState("");
     
@@ -198,6 +201,7 @@ saveWord()
                     />
                     <Header />
                     <Sentence 
+                        sentenceInit={sentenceInit}
                         words={words} 
                         setWords={setWords} 
                         forward={forward} 
@@ -214,7 +218,7 @@ saveWord()
                     initialRouteName={'subject'} 
                     sceneContainerStyle={{backgroundColor: 'transparent'}}
                     >
-                        {RouteList.map((route) => (
+                        {routeList.map((route) => (
                         <Tab.Screen
                         name={route}
                         component={WordRoute(route, setUserWords, userWords, langCode, words, translations, sentence, setSentence, setForward)}

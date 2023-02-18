@@ -9,6 +9,7 @@ import sentenceSpeak from '../lib/sentenceSpeak';
 import Sound from '../../assets/Sound.svg';
 
 const Sentence = ({ 
+    sentenceInit,
     words, 
     setWords, 
     forward, 
@@ -33,31 +34,6 @@ const Sentence = ({
     // Sentence analyzed
 
     const [sentenceAnalyzed, setSentenceAnalyzed] = useState([])
-
-    // Set initial empty sentence
-
-    const sentenceInit = [
-        {
-            "id": -1,
-            "type": "subject",
-            "word": "SUBJECT",
-        },
-        {
-            "id": -2,
-            "type": "verb",
-            "word": "VERB",
-        },
-        {
-            "id": -3,
-            "type": "adjective",
-            "word": "ADJECTIVE",
-        },
-        {
-            "id": -4,
-            "type": "noun",
-            "word": "NOUN",
-        }  
-    ]
     
     const gestureRootViewStyle = { flex: 1 };
 
@@ -65,6 +41,7 @@ const Sentence = ({
         container: {
             flexDirection: 'row',
             flexWrap: 'wrap',
+            justifyContent: 'space-evenly',
             paddingLeft: 10,
         },
         topContainer: {
