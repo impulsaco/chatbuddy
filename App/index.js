@@ -127,8 +127,8 @@ const PAGE_WIDTH = Dimensions.get('window').width;
 /// Different sentence structures
 //// Generate tabs dynamically DONE
 //// Separate words component, organize by type, language, and category
-//// Phrase selection screen 
-//// Phrasebook by type
+//// Phrase selection screen DONE
+//// Phrasebook by type 
 
 /// Delete phrases
 /// Leveling and phrasebook completion

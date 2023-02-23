@@ -31,20 +31,18 @@ const SentenceWord = ({word, index, words, sentence, setSentence, forward, setFo
             // on drop, update states and re-render:
             onReceiveDragDrop={({ dragged: { payload } }) => {
                 console.log("word box type is ", word.type)
+                console.log("sentence is", sentence)
 
+                const wordList = sentence.map(item => item.type);
                 // NAVIGATE TO NEXT WORD SET
 
-                if (word.type === "subject") {
-                    setForward("verb")
+                if (wordList.includes(word.type)) {
+                    let index = wordList.indexOf((word.type))
+                    if (wordList.length() > index) {
+                        setForward(wordList[index + 1])
+                    }                    
                 }
 
-                if (word.type === "verb") {
-                    setForward("adjective")
-                }
-
-                if (word.type === "adjective") {
-                    setForward("noun")
-                }
 
                 console.log("received in SW ", payload);
                 if (payload.type === word.type) {

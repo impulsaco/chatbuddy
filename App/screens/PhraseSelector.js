@@ -4,7 +4,11 @@ import 'react-native-gesture-handler';
 import { LinearGradient } from 'expo-linear-gradient'
 import { Button } from '@rneui/themed'
 import { supabase } from '../lib/supabase';
-import createWordList from '../lib/createWordList';
+import freeformList from '../wordsets/freeformList';
+import introductionList from '../wordsets/introductionList';
+import hobbiesList from '../wordsets/hobbiesList';
+import basicList from '../wordsets/basicList';
+import familyList from '../wordsets/familyList';
 
 const PAGE_HEIGHT = Dimensions.get('window').height;
 const PAGE_WIDTH = Dimensions.get('window').width;
@@ -15,71 +19,16 @@ function PhraseSelector({navigation, route}) {
     // create state with words
 
 
-    const lang = route.params.lang;
-    const langCode= route.params.langCode;
+    const [lang, setLang] = useState(route.params.lang)
+    const [langCode, setLangCode] = useState(route.params.langCode)
 
-    const [words, setWords] = useState(createWordList(langCode));
+    useEffect(() => {
+        setLang(route.params.lang)
+        setLangCode(route.params.langCode)
+    }, [route.params])
 
-    // Set up state for sentence
 
-    const selfintroduction = [
-        {
-            "id": -1,
-            "type": "subject",
-            "word": "SUBJECT",
-        },
-        {
-            "id": -2,
-            "type": "verb",
-            "word": "VERB",
-        },
-        {
-            "id": -3,
-            "type": "noun",
-            "word": "NOUN",
-        }  
-    ]
-
-    const basic = [
-        {
-            "id": -1,
-            "type": "subject",
-            "word": "SUBJECT",
-        },
-        {
-            "id": -2,
-            "type": "verb",
-            "word": "VERB",
-        },
-        {
-            "id": -3,
-            "type": "noun",
-            "word": "NOUN",
-        }  
-    ]
-    
-    const anything = [
-        {
-            "id": -1,
-            "type": "subject",
-            "word": "SUBJECT",
-        },
-        {
-            "id": -2,
-            "type": "verb",
-            "word": "VERB",
-        },
-        {
-            "id": -3,
-            "type": "adjective",
-            "word": "ADJECTIVE",
-        },
-        {
-            "id": -4,
-            "type": "noun",
-            "word": "NOUN",
-        }  
-    ]
+    // Set up state for sentence   
 
     const renderButtons = () => { 
         return (
@@ -89,13 +38,16 @@ function PhraseSelector({navigation, route}) {
                 </View>     
                 <View style={styles.buttonsContainer}>
                     <View style={styles.phrasebookContainer}>
-                        <Button buttonStyle={{ backgroundColor: '#FFC107', width: 200}} onPress={() => navigation.navigate('Build', {words: words, setWords: setWords, lang: lang, langCode: langCode, sentenceInit: selfintroduction})}>Introduce myself</Button>
+                        <Button buttonStyle={{ backgroundColor: '#FFC107', width: 200}} onPress={() => navigation.navigate('Build', {wordSet: introductionList, lang: lang, langCode: langCode})}>Introduce myself</Button>
                     </View>
                     <View style={styles.phrasebookContainer}>
-                        <Button buttonStyle={{ backgroundColor: '#FFC107', width: 200}} onPress={() => navigation.navigate('Build', {words: words, setWords: setWords, lang: lang, langCode: langCode, sentenceInit: basic})}>Describe people and things</Button>
+                        <Button buttonStyle={{ backgroundColor: '#FFC107', width: 200}} onPress={() => navigation.navigate('Build', {wordSet: familyList, lang: lang, langCode: langCode})}>My family</Button>
                     </View>
                     <View style={styles.phrasebookContainer}>
-                        <Button buttonStyle={{ backgroundColor: '#FFC107', width: 200}} onPress={() => navigation.navigate('Build', {words: words, setWords: setWords, lang: lang, langCode: langCode, sentenceInit: anything})}>Anything!</Button>
+                        <Button buttonStyle={{ backgroundColor: '#FFC107', width: 200}} onPress={() => navigation.navigate('Build', {wordSet: hobbiesList, lang: lang, langCode: langCode})}>Hobbies</Button>
+                    </View>
+                    <View style={styles.phrasebookContainer}>
+                        <Button buttonStyle={{ backgroundColor: '#FFC107', width: 200}} onPress={() => navigation.navigate('Build', {wordSet: freeformList, lang: lang, langCode: langCode})}>Anything!</Button>
                     </View>
                 </View>
             </View>

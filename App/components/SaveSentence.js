@@ -62,7 +62,6 @@ const SaveSentence = ({ sentence,
         else {
             setSentenceComplete(false);
             setSentenceChecked(false);
-            console.log("you are missing words")
             setText("Build your sentence:");
             setSentenceEn("");
         }

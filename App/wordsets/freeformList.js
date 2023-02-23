@@ -2,11 +2,36 @@ import React, { useState } from 'react';
 
 // create words dataset
 
-const createWordList = (lang) => {
+const freeformList = (lang) => {
 
   var idCounter = 0;
 
-  // English versions:
+  // Sentence structure: subject + verb + adjective + noun
+
+  const sentenceStructure = [
+    {
+        "id": -1,
+        "type": "subject",
+        "word": "SUBJECT",
+    },
+    {
+        "id": -2,
+        "type": "verb",
+        "word": "VERB",
+    },
+    {
+        "id": -3,
+        "type": "adjective",
+        "word": "ADJECTIVE",
+    },
+    {
+        "id": -4,
+        "type": "noun",
+        "word": "NOUN",
+    }  
+]
+
+  // English set
 
   var nounsEng = ["person", "water", "air", "ring", "animal", "art", "flag", "boat", "kiss", "bed", "field", "sky", "ribbon", "food", "rope", "finger", "money", "school", "flower", "fruit", "grain", "man", "hour", "church", "book", "light", "hand", "map", "table", "world", "woman", "music", "nose", "snow", "paper", "umbrella", "parka", "cake", "hair", "pizza", "door", "clock", "rock", "salt", "chair", "hat", "floor", "cup", "earth", "tiger", "tower", "window", "wind"]
 
@@ -19,7 +44,7 @@ const createWordList = (lang) => {
 
   if (lang === 'es-MX') {
 
-    // Spanish
+    // Spanish set
 
     var nounsEs = ['persona', 'agua', 'aire', 'anillo', 'animal', 'arte', 'bandera', 'barco', 'beso', 'cama', 'campo', 'cielo', 'cinta', 'comida', 'cuerda', 'dedo', 'dinero', 'escuela', 'flor', 'fruta', 'grano', 'hombre', 'hora', 'iglesia', 'libro', 'luz', 'mano', 'mapa', 'mesa', 'mundo', 'mujer', 'musica', 'nariz', 'nieve', 'papel', 'paraguas', 'parka', 'pastel', 'pelo', 'pizza', 'puerta', 'reloj', 'roca', 'sal', 'silla', 'sombrero', 'suelo', 'taza', 'tierra', 'tigre', 'torre', 'ventana', 'viento']
 
@@ -51,13 +76,13 @@ const createWordList = (lang) => {
       idCounter++;   
     }
 
-    return initialWordsEs;
+    return ["freeform", sentenceStructure, initialWordsEs];
 
   }
 
   if (lang === 'ko') {
 
-    // Korean
+    // Korean set
 
     var nounsKo = ['사람', '물', '공기', '반지', '동물', '예술', '깃발', '배', '키스', '침대', '들판', '하늘', '리본', '음식', '줄', '손가락', '돈', '학교', '꽃', '과일', '곡물', '남자', '시간', '교회', '책', '빛', '손', '지도', '테이블', '세계', '여자', '음악', '코', '눈', '종이', '우산', '패딩조끼', '케이크', '머리', '피자', '문', '시계', '바위', '소금', '의자', '모자', '바닥', '컵', '지구', '호랑이', '탑', '창문', '바람']
 
@@ -90,8 +115,8 @@ const createWordList = (lang) => {
       idCounter++;   
     }
 
-    return initialWordsKo;
+    return ["freeform", sentenceStructure, initialWordsKo];;
   }
 }
 
-export default createWordList;
+export default freeformList;

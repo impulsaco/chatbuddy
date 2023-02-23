@@ -11,7 +11,6 @@ import Header from '../components/Header';
 import { LinearGradient } from 'expo-linear-gradient'
 import AddWord from '../components/AddWord';
 import { supabase } from '../lib/supabase';
-import RouteGenerator from '../lib/WordRoute';
 import WordRoute from '../lib/WordRoute';
 
 
@@ -51,7 +50,6 @@ export default ({ route }) => {
             flex: 1,
             flexDirection: 'column',
             justifyContent: 'center',
-            //alignItems: 'center',
             display: 'flex',
         },
         wordContainer: {
@@ -85,14 +83,22 @@ export default ({ route }) => {
       })
     
     // Import params
-    const words = route.params.words;
-    const setWords = route.params.setWords;
+    
+    const wordSet = route.params.wordSet;
     const lang = route.params.lang;
     const langCode = route.params.langCode;
-    const sentenceInit = route.params.sentenceInit;
-    const routeList = sentenceInit.map(item => item.type);
 
-    console.log("routeList", routeList)
+    // set up word lists based on choice
+
+    const createWordList = wordSet(langCode)
+
+    const [words, setWords] = useState(createWordList[2]);
+    
+    const sentenceInit = createWordList[1];
+
+    const sentenceType = createWordList[0];
+
+    const routeList = sentenceInit.map(item => item.type);
 
     // Load user words and set up state for it
 
@@ -103,7 +109,8 @@ export default ({ route }) => {
 
     useEffect(() => {
         setSentence(sentenceInit)
-    }, [sentenceInit])
+        setWords(createWordList[2])
+    }, [route.params])
 
     // Retrieve session
 
@@ -155,9 +162,6 @@ export default ({ route }) => {
   // Update words in backend
 
   async function saveWord() {
-    console.log("user is ", session.user.id)
-
-    console.log("userWords is ", userWords)
 
     if (langCode === "ko") {
         const { error } = await supabase

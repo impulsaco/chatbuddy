@@ -4,7 +4,7 @@ import 'react-native-gesture-handler';
 import { LinearGradient } from 'expo-linear-gradient'
 import { Button } from '@rneui/themed'
 import { supabase } from '../lib/supabase';
-import createWordList from '../lib/createWordList';
+import createWordList from '../wordsets/freeformList';
 
 const PAGE_HEIGHT = Dimensions.get('window').height;
 
