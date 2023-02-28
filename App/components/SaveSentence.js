@@ -87,12 +87,12 @@ const SaveSentence = ({ sentence,
 
     let sentenceFix
 
-    if (sentenceComplete===false) {
+    /*if (sentenceComplete===false) {
         sentenceFix = 
             <View>
                 <Button buttonStyle={{ backgroundColor: '#B7B7B7' }} onPress={ () => {alert("Add a few more words :) ") } }>Ready</Button>
             </View>
-    }
+    }*/
 
     if (sentenceComplete===true) {
         sentenceFix = <SentenceFixer 

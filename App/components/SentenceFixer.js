@@ -80,11 +80,17 @@ const SentenceFixer = ({ sentence,
       }).then(response => saveSentenceText(response.data.choices[0].text.trim()))
     } 
 
-    return (
+    useEffect(() => {
+      fixSentence()
+    }, [sentence])
+
+    
+
+/*    return (
           <View style={styles.buttons}>
             <Button buttonStyle={{ backgroundColor: '#FFC107' }} onPress={fixSentence}>Ready</Button>
           </View>
-    )
+    )*/
 }
 
 const styles = StyleSheet.create({

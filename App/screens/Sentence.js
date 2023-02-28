@@ -233,6 +233,13 @@ const Sentence = ({
 
     return (
         <View>
+            <View style={styles.textContainer}>
+                <View style={styles.topSentence}>
+                    {speakSentence()}                  
+                    {setWhispered()}    
+                </View>
+                {sentenceTranslation()}
+            </View>
             <View style={styles.topContainer}>
                 <View style={styles.buttonContainer}>
                     <SaveSentence 
@@ -262,13 +269,6 @@ const Sentence = ({
                         <Refresh/>
                     </TouchableOpacity>    
                 </View>             
-            </View>
-            <View style={styles.textContainer}>
-                <View style={styles.topSentence}>
-                    {speakSentence()}                  
-                    {setWhispered()}    
-                </View>
-                {sentenceTranslation()}
             </View>
             <View style={styles.container}>
                 {(sentence || []).map(

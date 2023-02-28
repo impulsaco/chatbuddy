@@ -126,9 +126,28 @@ const PAGE_WIDTH = Dimensions.get('window').width;
 
 /// Different sentence structures
 //// Generate tabs dynamically DONE
-//// Separate words component, organize by type, language, and category
+//// Separate words component, organize by type, language, and category DONE
 //// Phrase selection screen DONE
-//// Phrasebook by type 
+//// Phrasebook by type DONE
+
+// Design update
+/// Background color DONE
+/// Automatic ready DONE
+/// Automatic ready refresh bug -- make unready
+/// New button/sentence menu 
+/// Separate sentence line and instructions
+/// New wordtype menu
+/// Tap wordbox to change tabs
+/// Order: sentence to top DONE
+/// Add microphone
+/// Recording and saving modal
+/// Tabs
+/// Translations icon
+/// Shuffle button
+/// New add word button
+/// Play back recording
+/// Other icons
+/// Check width bug
 
 /// Delete phrases
 /// Leveling and phrasebook completion

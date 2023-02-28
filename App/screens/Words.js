@@ -199,7 +199,7 @@ saveWord()
             <DraxProvider> 
                 <View style={styles.gestureRootViewStyle}>
                     <LinearGradient 
-                        colors={['#9F00B9', '#FFDC61']}
+                        colors={['#319CFF', '#319CFF']}
                         locations={[0, .99]}
                         style={styles.linearGradient}
                     />
