@@ -7,7 +7,6 @@ import AppleIcon from '../../assets/apple.svg'
 
 const WordMenu = ({ state, navigation, forward, setForward }) => {
 
-
   // Move forward if new word entered
 
   useEffect(() => {
@@ -20,7 +19,7 @@ const WordMenu = ({ state, navigation, forward, setForward }) => {
   // Sets color of icons if pressed
   const color = (pageName, currentIndex) => {
     
-    const nameArray = ['subject', 'verb', 'adjective', 'noun']
+    const nameArray = state.routeNames
     if (currentIndex === nameArray.indexOf(pageName)) {
       return "#FBD470"
     }

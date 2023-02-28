@@ -38,7 +38,9 @@ const SentenceWord = ({word, index, words, sentence, setSentence, forward, setFo
 
                 if (wordList.includes(word.type)) {
                     let index = wordList.indexOf((word.type))
-                    if (wordList.length() > index) {
+                    console.log("wordList.length", wordList.length)
+                    console.log("index", index)
+                    if ((index + 1) < (wordList.length)) {                                            
                         setForward(wordList[index + 1])
                     }                    
                 }
