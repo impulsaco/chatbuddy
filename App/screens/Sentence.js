@@ -23,7 +23,11 @@ const Sentence = ({
 
     // Set instructions and sentence placeholder
 
-    const [text, setText] = useState("Build your sentence:")
+    let starterText = "Drag and drop words to build your sentence:"
+
+    const [text, setText] = useState(starterText)
+
+    const [sentenceText, setSentenceText] = useState("")
 
     // Set translation placeholder
     const [sentenceEn, setSentenceEn] = useState(null)
@@ -39,20 +43,28 @@ const Sentence = ({
 
     const styles = StyleSheet.create({
         container: {
+            alignItems: 'center',
+        },
+        wordsContainer: {
             flexDirection: 'row',
             flexWrap: 'wrap',
             justifyContent: 'space-evenly',
             paddingLeft: 10,
         },
         topContainer: {
+            display: 'flex',
             flexDirection: 'row',
-            justifyContent: 'space-between',
+            justifyContent: 'space-evenly',
             alignItems: 'center',
+            distributeContent: 'evenly',
+            padding: 0,
+            width: 321,
         },
         buttonContainer: {
             flex: 4,
             flexDirection: 'row',
             justifyContent: 'flex-end',
+            marginRight: 20,
         },
         switchContainer: {
             flex: 1,
@@ -70,13 +82,19 @@ const Sentence = ({
             flexDirection: 'row',
             justifyContent: 'center',
             alignItems: 'center',
-            paddingRight: 20,
+            marginRight: 10,
         },
         refreshContainer: {
             flex: 1,
             flexDirection: 'row',
             justifyContent: 'flex-end',
             paddingRight: 10,
+        },
+        sentenceContainer: {
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            padding: 20,
         },
         textContainer: {
             flexDirection: 'column',
@@ -156,12 +174,17 @@ const Sentence = ({
 
     // reset sentence
 
-    const resetSentence = () => {
+    const resetSentence = () => {        
         setSentence(sentenceInit);
         setSentenceReady(false);
-        setText("Build your sentence:")
+        setText(starterText)
+        setSentenceText("")
         console.log("sentenceReady is ", sentenceReady)
     }
+
+    useEffect(() => {
+        resetSentence()
+    }, [sentenceReady])
 
     // Check if sentence has been said and is understood enough to save
     const [sentenceSaidPercentage, setSentenceSaidPercentage] = useState(0);
@@ -199,7 +222,7 @@ const Sentence = ({
     const setWhispered = () => {
         if (sentenceWhisper == "no whisper yet") {
             return (
-                <Text style={styles.text}>{text}</Text>
+                <Text style={styles.text}>{sentenceText}</Text>
             )
         }
         else {
@@ -209,42 +232,47 @@ const Sentence = ({
         }
     }
 
+    const sentenceLine = () => {
+        return (
+            <View
+                style={{
+                    borderBottomColor: 'white',                    
+                    borderBottomWidth: 1,
+                    height: 45,
+                    width: 271,
+                }}
+            />
+        )
+    }
+
     const speakSentence = () => {
-        if (text==="Build your sentence:") {
-            return (
-                <View style={styles.soundButton}>
-                    <TouchableOpacity onPress={() => sentenceSpeak(text, "en-UK")}>
-                        <Sound/>
-                    </TouchableOpacity>
-                </View>
-            )
-        }
-        else {
-            return (
-                <View style={styles.soundButton}>
-                    <TouchableOpacity onPress={() => sentenceSpeak(text, langCode)}>
-                        <Sound/>
-                    </TouchableOpacity>
-                </View>
-            )
-        }
+        return (
+            <View style={styles.soundButton}>
+                <TouchableOpacity onPress={() => sentenceSpeak(sentenceText, langCode)}>
+                    <Sound/>
+                </TouchableOpacity>
+            </View>
+        )
     }
 
 
     return (
-        <View>
-            <View style={styles.textContainer}>
+        <View style={styles.container}>
+            <View style={styles.sentenceContainer}>
                 <View style={styles.topSentence}>
-                    {speakSentence()}                  
                     {setWhispered()}    
                 </View>
                 {sentenceTranslation()}
+                {sentenceLine()}
+                <View style={styles.textContainer}><Text style={styles.text}>{text}</Text></View>                
             </View>
             <View style={styles.topContainer}>
+                {speakSentence()}                  
                 <View style={styles.buttonContainer}>
                     <SaveSentence 
                         sentence={sentence} 
                         setText={setText} 
+                        setSentenceText={setSentenceText}
                         setSentenceEn={setSentenceEn} 
                         sentenceEn={sentenceEn}
                         sentenceWhisper={sentenceWhisper}
@@ -270,7 +298,7 @@ const Sentence = ({
                     </TouchableOpacity>    
                 </View>             
             </View>
-            <View style={styles.container}>
+            <View style={styles.wordsContainer}>
                 {(sentence || []).map(
                     (word, index) => (
                         <SentenceWord 

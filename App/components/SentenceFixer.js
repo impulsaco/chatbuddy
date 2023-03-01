@@ -22,6 +22,7 @@ const openai = new OpenAIApi(configuration);
 
 const SentenceFixer = ({ sentence, 
                         setText, 
+                        setSentenceText,
                         setSavedSentence, 
                         setSentenceChecked, 
                         setSentenceEn, 
@@ -57,7 +58,7 @@ const SentenceFixer = ({ sentence,
     const saveSentenceText = (input) => {
         setSentenceChecked(true)
         setSavedSentence(input)
-        setText(input)
+        setSentenceText(input)
         googleTranslate(input, langCode, setSentenceEn)
         let inputArray = input.split(" ")
         let sentenceAnalyzedTemp = []

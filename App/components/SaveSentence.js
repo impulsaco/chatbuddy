@@ -1,4 +1,4 @@
-import { View, StyleSheet } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { Button } from "@rneui/themed";
 import Draggable from 'react-native-draggable';
 import React, { useState, useEffect } from 'react';
@@ -6,6 +6,8 @@ import SentenceTest from "./SentenceTest";
 import SentenceFixer from "./SentenceFixer";
 import SaveButton from "./SaveButton";
 import SayWhisper from "../whisper/SayWhisper";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import Microphone from "../../assets/microphone.svg";
 
 const styles = StyleSheet.create({
     buttonContainer: {
@@ -16,17 +18,29 @@ const styles = StyleSheet.create({
         position: 'relative',
     }
     , button: {
-        size: 'md', 
-        backgroundColor: 'yellow',
-        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'row',
         justifyContent: 'center',
-        marginTop: 50,
-        elevation: 3,
+        alignItems: 'center',
+        padding: 10,
+
+        width: 152,
+        height: 35,
+
+        backgroundColor: "rgba(255, 255, 255, 0.5)",
+        borderRadius: 10,
+    }
+    , buttonText: {
+        color: "#FFFFFF",
+        fontSize: 17,
+        height: 20,
+        width: 50
     }
 })
 
 const SaveSentence = ({ sentence, 
                         setText, 
+                        setSentenceText,
                         setSentenceEn, 
                         sentenceEn, 
                         sentenceWhisper, 
@@ -85,19 +99,42 @@ const SaveSentence = ({ sentence,
         concatSentence()
     }, [sentence])
 
-    let sentenceFix
+//    let sentenceFix
 
     /*if (sentenceComplete===false) {
         sentenceFix = 
             <View>
                 <Button buttonStyle={{ backgroundColor: '#B7B7B7' }} onPress={ () => {alert("Add a few more words :) ") } }>Ready</Button>
             </View>
-    }*/
+    }
 
     if (sentenceComplete===true) {
-        sentenceFix = <SentenceFixer 
+        console.log("Sentence is complete")
+        
+    } */
+    
+    // Say! button
+
+    let sayButton
+
+    if (sentenceChecked===false) {
+        console.log("Sentence is not checked")
+        sayButton = 
+            <View>
+                <TouchableOpacity>
+                    <View style={styles.button}>
+                        <Microphone fill={"#FFFFFF"} width={20} height={20} marginRight={10} />
+                        <Text style={styles.buttonText}>Say it!</Text>                        
+                    </View>
+                </TouchableOpacity>
+            </View>
+    }
+
+    if (sentenceChecked===true) {
+        sayButton = <SentenceFixer 
                         sentence={sentence} 
                         setText={setText} 
+                        setSentenceText={setSentenceText}
                         setSavedSentence={setSavedSentence} 
                         setSentenceChecked={setSentenceChecked}
                         setSentenceEn={setSentenceEn}
@@ -106,36 +143,12 @@ const SaveSentence = ({ sentence,
                         sentenceAnalyzed={sentenceAnalyzed}
                         setSentenceAnalyzed={setSentenceAnalyzed}
                     />
-    }
-    
-    // Say! button
-
-    let sayButton
-
-    if (sentenceChecked===false) {
-        sayButton = 
-            <View>
-                <Button buttonStyle={{ backgroundColor: '#B7B7B7' }} onPress={ () => {alert("Add a few more words :) ") } }>Say it!</Button>
-            </View>
-    }
-
-    if (sentenceChecked===true) {
-        sayButton = <SayWhisper sentenceWhisper={sentenceWhisper} setSentenceWhisper={setSentenceWhisper} lang={lang}/>
+        //sayButton = <SayWhisper sentenceWhisper={sentenceWhisper} setSentenceWhisper={setSentenceWhisper} lang={lang}/>
     }
 
     return (
         <View style={styles.buttonContainer}>
-            { sentenceFix }
-            { sayButton }
-            <SaveButton 
-                sentence={sentence} 
-                savedSentence={savedSentence} 
-                sentenceChecked={sentenceChecked}
-                setSentenceChecked={setSentenceChecked}
-                sentenceEn={sentenceEn}
-                langCode={langCode}
-                sentenceSaidPercentage={sentenceSaidPercentage}
-            />
+            { sayButton }            
         </View>
     );
 };

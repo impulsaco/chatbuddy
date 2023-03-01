@@ -134,6 +134,9 @@ const PAGE_WIDTH = Dimensions.get('window').width;
 /// Background color DONE
 /// Automatic ready DONE
 /// Automatic ready refresh bug -- make unready
+//// sentenceComplete & sentenceReady = true -> "say" button activates. 
+//// refresh -> sentenceComplete = false -> "say" button becomes gray again.
+//// new word comes in -> sentenceComplete = true but sentenceReady = false -> "say" button becomes "ready" button 
 /// New button/sentence menu 
 /// Separate sentence line and instructions
 /// New wordtype menu
