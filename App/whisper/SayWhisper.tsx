@@ -11,7 +11,11 @@ import FormData from "form-data";
 import axios from "axios";
 import Mode from './Mode';
 import TranscribedOutput from "./TranscribeOutput";
+import { OPENAI_API_KEY } from "@env";
 import * as FileSystem from 'expo-file-system';
+import { TouchableOpacity } from "react-native-gesture-handler";
+import Microphone from "../../assets/microphone.svg";
+
 
 
 export default ({sentenceWhisper, setSentenceWhisper, lang}) => {
@@ -40,6 +44,8 @@ export default ({sentenceWhisper, setSentenceWhisper, lang}) => {
 
   const selectedModelRef = React.useRef(selectedModel);
   selectedModelRef.current = selectedModel;
+
+  const API_KEY = OPENAI_API_KEY;
 
   const supportedLanguages = [
     "english",
@@ -265,39 +271,42 @@ export default ({sentenceWhisper, setSentenceWhisper, lang}) => {
   }
 
   async function transcribeRecording() {
+
+    const url = 'https://api.openai.com/v1/audio/transcriptions';
+    const token = API_KEY;
+    // const fileUri = '/path/to/file/openai.mp3';
+    const modelName = 'whisper-1';
+
     const uri = recording.getURI();
     const filetype = uri.split(".").pop();
     const filename = uri.split("/").pop();
     setLoading(true);
     const formData: any = new FormData();
-    formData.append("language", lang.toLowerCase());
-    formData.append("model_size", "tiny");
+    //formData.append("language", lang.toLowerCase());
+    // formData.append("model_size", "tiny");
     formData.append(
-      "audio_data",
+      "file",
       {
         uri,
-        type: `audio/${filetype}`,
         name: filename,
-      },
-      "temp_recording"
-    );
+        type: "audio/wav"
+      });
+    formData.append('model', modelName)
     console.log("formData sent is", formData)
-    axios({
-      url: "https://backendsay-wkdnx77abq-uw.a.run.app/transcribe", // IMPORTANT! must equal current server
-      method: "POST",
-      data: formData,
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "multipart/form-data",
-      },
-    })
+
+    axios.post(url, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${API_KEY}`
+        }
+      })
       .then(function (response) {
-        console.log("response.data :", response.data);
+        console.log("response is :", response.data);
         setTranscribedData((oldData: any) => [...oldData, response.data]);
         setLoading(false);
         setIsTranscribing(false);
         setRecordingDone(false)
-        setSentenceWhisper(response.data) // Sets the sentence check to be shown
+        setSentenceWhisper(response.data.text) // Sets the sentence check to be shown
         console.log("sentenceWhisper in Response is ", sentenceWhisper)
         /*intervalRef.current = setInterval(
           transcribeInterim,
@@ -315,7 +324,14 @@ export default ({sentenceWhisper, setSentenceWhisper, lang}) => {
   return (
     <View style={styles.container}>
         {!isRecording && !isTranscribing && !recordingDone && (
-          <Button buttonStyle={{ backgroundColor: '#FFC107' }} onPress={startRecording} title="Say it!" />
+          <View>
+            <TouchableOpacity>
+              <View style={styles.button}>
+                  <Microphone fill={"#FFFFFF"} width={20} height={20} marginRight={10} />
+                  <Text style={styles.buttonText}>Say it!</Text>                        
+              </View>
+            </TouchableOpacity>
+          </View>
         )}
         {(isRecording || isTranscribing) && !recordingDone && (
           <Button
@@ -384,6 +400,22 @@ const styles = StyleSheet.create({
     margin: 16,
   },
   button: {
-    margin: 16,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+
+    width: 152,
+    height: 35,
+
+    backgroundColor: "rgba(255, 255, 255, 0.5)",
+    borderRadius: 10,
   },
+  buttonText: {
+    color: "#FFFFFF",
+    fontSize: 17,
+    height: 20,
+    width: 50
+  }
 });

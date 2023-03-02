@@ -4,8 +4,10 @@ import { Button } from "@rneui/themed"
 import { Configuration, OpenAIApi } from "openai";
 import 'react-native-url-polyfill/auto'
 import { OPENAI_API_KEY } from "@env" 
-import googleTranslate from '../lib/googleTranslate';
-import sentenceSpeak from '../lib/sentenceSpeak';
+import googleTranslate from './googleTranslate';
+import sentenceSpeak from './sentenceSpeak';
+
+// Uses GPT to fix sentence
 
 // Set up GPT3
 
@@ -32,6 +34,8 @@ const SentenceFixer = ({ sentence,
                         setSentenceAnalyzed,
                       }) => {
 
+
+    console.log("CALLING FIXER")
     console.log("within fixer, sentence is ", sentence)
 
     var sentenceFixInit = ""
@@ -83,33 +87,8 @@ const SentenceFixer = ({ sentence,
 
     useEffect(() => {
       fixSentence()
-    }, [sentence])
+    }, [])
 
-    
-
-/*    return (
-          <View style={styles.buttons}>
-            <Button buttonStyle={{ backgroundColor: '#FFC107' }} onPress={fixSentence}>Ready</Button>
-          </View>
-    )*/
 }
-
-const styles = StyleSheet.create({
-    buttons: {
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-      paddingTop: 0,
-      paddingBottom: 0,
-    },
-    button: {
-      backgroundColor: 'white',
-    },
-    text: {
-        fontSize: 14,
-        color: 'white',
-        paddingTop: 0,
-    }
-})
 
 export default SentenceFixer

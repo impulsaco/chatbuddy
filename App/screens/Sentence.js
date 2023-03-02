@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Switch } from "@rneui/themed";
 import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from "react-native";
 import SentenceWord from '../components/SentenceWord';
-import SaveSentence from '../components/SaveSentence';
+import SayItButton from '../components/SayItButton';
 import AnalyzeWord from '../components/AnalyzeWord';
 import Refresh from '../../assets/Refresh.svg';
 import sentenceSpeak from '../lib/sentenceSpeak';
@@ -23,7 +23,7 @@ const Sentence = ({
 
     // Set instructions and sentence placeholder
 
-    let starterText = "Drag and drop words to build your sentence:"
+    let starterText = "Drag and drop words into the boxes below:"
 
     const [text, setText] = useState(starterText)
 
@@ -105,6 +105,7 @@ const Sentence = ({
         text: {
             fontSize: 20,
             color: 'white',
+            textAlign: 'center',            
         },
         translationText: {
             fontSize: 16,
@@ -202,6 +203,8 @@ const Sentence = ({
         }
       }, [sentenceWhisper])
 
+    // set Text based on whispered
+
     const analyzeSentence = () => {
         return (
             <View style={styles.sentenceAnalyzed}>
@@ -216,9 +219,6 @@ const Sentence = ({
             </View>
         )
     }
-    
-    // set Text based on whispered
-
     const setWhispered = () => {
         if (sentenceWhisper == "no whisper yet") {
             return (
@@ -269,7 +269,7 @@ const Sentence = ({
             <View style={styles.topContainer}>
                 {speakSentence()}                  
                 <View style={styles.buttonContainer}>
-                    <SaveSentence 
+                    <SayItButton 
                         sentence={sentence} 
                         setText={setText} 
                         setSentenceText={setSentenceText}
