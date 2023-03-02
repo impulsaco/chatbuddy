@@ -9,6 +9,7 @@ import sentenceSpeak from '../lib/sentenceSpeak';
 import Sound from '../../assets/Sound.svg';
 import SentenceTest from '../lib/SentenceTest';
 import SentenceFixer from '../lib/SentenceFixer';
+import SayModal from '../components/SayModal';
 
 const Sentence = ({ 
     sentenceInit,
@@ -37,6 +38,10 @@ const Sentence = ({
     // Create Whisper sentence
     const [sentenceWhisper, setSentenceWhisper] = useState("no whisper yet")
 
+    // Say/recording modal setup
+
+    const [sayVisible, setSayVisible] = useState(false);
+
     // Sentence analyzed
 
     const [sentenceAnalyzed, setSentenceAnalyzed] = useState([])
@@ -46,6 +51,7 @@ const Sentence = ({
     // Automatic completion checker
 
     const [sentenceReady, setSentenceReady] = useState(false);
+    const [sentenceFixed, setSentenceFixed] = useState(false);
     const [savedSentence, setSavedSentence] = useState("");
 
     // Sentence Test (to see if all necessary boxes are filled)
@@ -60,6 +66,7 @@ const Sentence = ({
         console.log("sentence to send to fix is ", sentence)
         if (sentenceReady === true) {
             SentenceFixer(sentence, 
+                setSentenceFixed,
                 setSentenceText,
                 setSavedSentence, 
                 setSentenceEn, 
@@ -95,12 +102,9 @@ const Sentence = ({
         setText(starterText)
         setSentenceText("")
         setSentenceEn("")
+        setSentenceFixed(false)
         console.log("sentenceReady is ", sentenceReady)
     }
-
-    /*useEffect(() => {
-        resetSentence()
-    }, [])*/
 
     // Check if sentence has been said and is understood enough to save
     const [sentenceSaidPercentage, setSentenceSaidPercentage] = useState(0);
@@ -183,9 +187,10 @@ const Sentence = ({
             </View>
             <View style={styles.topContainer}>
                 {speakSentence()}                  
-                <View style={styles.buttonContainer}>
+                <TouchableOpacity style={styles.buttonContainer} onPress={() => setSayVisible(true)}>
                     <SayItButton 
                         sentence={sentence} 
+                        sentenceFixed={sentenceFixed}
                         setText={setText} 
                         setSentenceText={setSentenceText}
                         setSentenceEn={setSentenceEn} 
@@ -198,8 +203,9 @@ const Sentence = ({
                         setSentenceAnalyzed={setSentenceAnalyzed}
                         sentenceSaidPercentage={sentenceSaidPercentage}
                         sentenceReady={sentenceReady}
-                        />
-                </View>
+                    />
+                </TouchableOpacity>
+                <SayModal sayVisible={sayVisible} setSayVisible={setSayVisible}/>
                 <View style={styles.switchContainer}>
                     <Switch
                         value={translations}

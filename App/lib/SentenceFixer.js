@@ -22,7 +22,8 @@ const openai = new OpenAIApi(configuration);
 
 // SHOULD ONLY RUN WHEN READY
 
-const SentenceFixer = (sentence, 
+const SentenceFixer = (sentence,
+                        setSentenceFixed, 
                         setSentenceText,
                         setSavedSentence, 
                         setSentenceEn, 
@@ -61,6 +62,7 @@ const SentenceFixer = (sentence,
         }
         setSentenceAnalyzed(sentenceAnalyzedTemp)
         sentenceSpeak(input, langCode)
+        setSentenceFixed(true)
     }
 
     console.log("Sentence to send is ", sentence)

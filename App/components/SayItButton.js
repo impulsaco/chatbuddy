@@ -13,6 +13,7 @@ import Microphone from "../../assets/microphone.svg";
 // Launches Say It! modal
 
 const SayItButton = ({ sentence, 
+                        sentenceFixed,
                         setText, 
                         setSentenceText,
                         setSentenceEn, 
@@ -27,41 +28,14 @@ const SayItButton = ({ sentence,
                         sentenceReady
                     }) => {
 
-    /*useEffect(() => {
-            alert("Your sentence is " + savedSentence)
-    })*/
-
     // state for keeping track of sentence building process
-    const [sentenceComplete, setSentenceComplete] = useState(false);
-    const [savedSentence, setSavedSentence] = useState("");
-    const [sentenceChecked, setSentenceChecked] = useState(false);
 
-    /* // check to see if sentence is complete
-    
-    const concatSentence = () => {
-        if (sentenceComplete===true) {
-            var midSentence = "";
-            for (let i = 0; i < sentence.length; i++) {
-                if (sentence[i].id >= 0) {
-                    midSentence = midSentence.concat(sentence[i].word, " ");
-                }
-            }
-            setSavedSentence(midSentence);
-            console.log("savedSentence IS ", savedSentence);
-        }
-    }
-
-    useEffect(() => {
-        sentenceTest()
-        concatSentence()
-    }, [sentence]) */
-    
     // Say! button
 
     let sayButton
     let sentenceFix
 
-    if (sentenceComplete===false) {
+    if (sentenceFixed===false) {
         console.log("Sentence is not checked")
         sayButton = 
             <View>
@@ -74,7 +48,7 @@ const SayItButton = ({ sentence,
             </View>        
     }
 
-    if (sentenceComplete===true) {
+    if (sentenceFixed===true) {
         console.log("Sentence TO SEND is ", sentence)
         //SentenceFixer(sentence, setSentenceText, setSentenceEn, setSentenceWhisper, setSentenceAnalyzed, sentenceAnalyzed, sentenceSaidPercentage, sentenceReady)
          sayButton = 
