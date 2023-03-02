@@ -38,10 +38,11 @@ const SaveButton = ({sentence, savedSentence, sentenceChecked, setSentenceChecke
 
         if (error) alert(error.message)
 
-        setSentenceChecked(false)
+        // setSentenceChecked(false)
     }
+   // if (sentenceChecked===true && sentenceSaidPercentage>.1) { // Allow save if sentence is checked and user has said at least 10% of the sentence
 
-    if (sentenceChecked===true && sentenceSaidPercentage>.1) { // Allow save if sentence is checked and user has said at least 10% of the sentence
+    if (sentenceSaidPercentage>.1) { // Allow save if sentence is checked and user has said at least 10% of the sentence
         return (
             <Button buttonStyle={{ backgroundColor: '#FFC107' }} onPress={saveSentence}>Save</Button>
         )

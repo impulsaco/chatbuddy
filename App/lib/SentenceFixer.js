@@ -22,17 +22,14 @@ const openai = new OpenAIApi(configuration);
 
 // SHOULD ONLY RUN WHEN READY
 
-const SentenceFixer = ({ sentence, 
-                        setText, 
+const SentenceFixer = (sentence, 
                         setSentenceText,
                         setSavedSentence, 
-                        setSentenceChecked, 
                         setSentenceEn, 
                         lang, 
                         langCode,
-                        sentenceAnalyzed,
                         setSentenceAnalyzed,
-                      }) => {
+                      ) => {
 
 
     console.log("CALLING FIXER")
@@ -50,17 +47,8 @@ const SentenceFixer = ({ sentence,
 
     console.log("sentenceFixInit is ", sentenceFixInit)
 
-    const [sentenceInput, setSentenceInput] = useState();
-    
-    useEffect(() => {
-      setSentenceInput(sentenceFixInit)
-    }, [sentenceFixInit])
-  
-    console.log("sentenceInput is ", sentenceInput)
-
     // Save sentence and translation to state
     const saveSentenceText = (input) => {
-        setSentenceChecked(true)
         setSavedSentence(input)
         setSentenceText(input)
         googleTranslate(input, langCode, setSentenceEn)
@@ -84,10 +72,7 @@ const SentenceFixer = ({ sentence,
         max_tokens: 100,
       }).then(response => saveSentenceText(response.data.choices[0].text.trim()))
     } 
-
-    useEffect(() => {
-      fixSentence()
-    }, [])
+    fixSentence()
 
 }
 

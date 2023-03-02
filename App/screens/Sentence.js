@@ -7,6 +7,8 @@ import AnalyzeWord from '../components/AnalyzeWord';
 import Refresh from '../../assets/Refresh.svg';
 import sentenceSpeak from '../lib/sentenceSpeak';
 import Sound from '../../assets/Sound.svg';
+import SentenceTest from '../lib/SentenceTest';
+import SentenceFixer from '../lib/SentenceFixer';
 
 const Sentence = ({ 
     sentenceInit,
@@ -41,126 +43,38 @@ const Sentence = ({
     
     const gestureRootViewStyle = { flex: 1 };
 
-    const styles = StyleSheet.create({
-        container: {
-            alignItems: 'center',
-        },
-        wordsContainer: {
-            flexDirection: 'row',
-            flexWrap: 'wrap',
-            justifyContent: 'space-evenly',
-            paddingLeft: 10,
-        },
-        topContainer: {
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-evenly',
-            alignItems: 'center',
-            distributeContent: 'evenly',
-            padding: 0,
-            width: 321,
-        },
-        buttonContainer: {
-            flex: 4,
-            flexDirection: 'row',
-            justifyContent: 'flex-end',
-            marginRight: 20,
-        },
-        switchContainer: {
-            flex: 1,
-            flexDirection: 'row',
-            justifyContent: 'flex-end',
-            paddingRight: 0,
-        },
-        topSentence: {
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-            padding: 10,
-        },
-        soundButton: {
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginRight: 10,
-        },
-        refreshContainer: {
-            flex: 1,
-            flexDirection: 'row',
-            justifyContent: 'flex-end',
-            paddingRight: 10,
-        },
-        sentenceContainer: {
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            padding: 20,
-        },
-        textContainer: {
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            padding: 10,
-        },
-        text: {
-            fontSize: 20,
-            color: 'white',
-            textAlign: 'center',            
-        },
-        translationText: {
-            fontSize: 16,
-            marginTop: 5,
-            color: '#B7B7B7',
-        },
-        item: {
-            flexDirection: 'row',
-            flexWrap: 'wrap',
-            width: '33%'
-        },
-        draggable: {
-            width: 100,
-            height: 100,
-            backgroundColor: 'blue',
-        },
-        dragging: {
-            opacity: 0.1,
-        },
-        sentenceAnalyzed: {
-            flexDirection: 'row',
-        },
-      })
-
     // Automatic completion checker
 
     const [sentenceReady, setSentenceReady] = useState(false);
     const [savedSentence, setSavedSentence] = useState("");
 
-    const sentenceTest = () => {
-        // check to see three main boxes are full
-        if ((sentence.some((element) => ((element.type==="noun") && (element.id >= 0)))) &&
-        (sentence.some((element) => (element.type==="verb") && (element.id >= 0))) &&
-        (sentence.some((element) => (element.type==="subject") && (element.id >= 0))))
-        {
-            console.log("sentence is complete")
-            setSentenceReady(true);
-        }
-        else {
-            console.log("you are missing words")
-        }
+    // Sentence Test (to see if all necessary boxes are filled)
+
+    useEffect(() => {
+        SentenceTest(sentence, setSentenceReady)        
+    }, [sentence])
+
+    // Sentence GPT fix (build with chosen words)
+
+    const sentenceFix = (sentence) => {
+        console.log("sentence to send to fix is ", sentence)
+        if (sentenceReady === true) {
+            SentenceFixer(sentence, 
+                setSentenceText,
+                setSavedSentence, 
+                setSentenceEn, 
+                lang, 
+                langCode,
+                setSentenceAnalyzed)
+        } 
     }
 
-    const concatSentence = () => {
-        if (sentenceReady===true) {
-            var midSentence = "";
-            for (let i = 0; i < sentence.length; i++) {
-                if (sentence[i].id >= 0) {
-                    midSentence = midSentence.concat(sentence[i].word, " ");
-                }
-            }
-            setSavedSentence(midSentence);
-            alert("you have completed sentence ", midSentence);
-        }
-    }
+    //sentenceFix(sentence)
+    useEffect(() => {
+       sentenceFix(sentence)       
+    }, [sentenceReady])
+
+    // Translate sentence
 
     const sentenceTranslation = () => {
         if (translations===true) {
@@ -180,12 +94,13 @@ const Sentence = ({
         setSentenceReady(false);
         setText(starterText)
         setSentenceText("")
+        setSentenceEn("")
         console.log("sentenceReady is ", sentenceReady)
     }
 
-    useEffect(() => {
+    /*useEffect(() => {
         resetSentence()
-    }, [sentenceReady])
+    }, [])*/
 
     // Check if sentence has been said and is understood enough to save
     const [sentenceSaidPercentage, setSentenceSaidPercentage] = useState(0);
@@ -317,5 +232,94 @@ const Sentence = ({
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        alignItems: 'center',
+    },
+    wordsContainer: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'space-evenly',
+        paddingLeft: 10,
+    },
+    topContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
+        distributeContent: 'evenly',
+        padding: 0,
+        width: 321,
+    },
+    buttonContainer: {
+        flex: 4,
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        marginRight: 20,
+    },
+    switchContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        paddingRight: 0,
+    },
+    topSentence: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 10,
+    },
+    soundButton: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: 10,
+    },
+    refreshContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        paddingRight: 10,
+    },
+    sentenceContainer: {
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 20,
+    },
+    textContainer: {
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 10,
+    },
+    text: {
+        fontSize: 20,
+        color: 'white',
+        textAlign: 'center',            
+    },
+    translationText: {
+        fontSize: 16,
+        marginTop: 5,
+        color: '#B7B7B7',
+    },
+    item: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        width: '33%'
+    },
+    draggable: {
+        width: 100,
+        height: 100,
+        backgroundColor: 'blue',
+    },
+    dragging: {
+        opacity: 0.1,
+    },
+    sentenceAnalyzed: {
+        flexDirection: 'row',
+    },
+  })
 
 export default Sentence;
