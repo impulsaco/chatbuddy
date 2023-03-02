@@ -15,10 +15,11 @@ import { OPENAI_API_KEY } from "@env";
 import * as FileSystem from 'expo-file-system';
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Microphone from "../../assets/microphone.svg";
+import BigMike from "../../assets/bigMike.svg";
 
 
 
-export default ({sentenceWhisper, setSentenceWhisper, lang}) => {
+export default ({sentenceWhisper, setSentenceWhisper, lang, setTopText, setBottomText}) => {
   console.log("sentenceWhisper First is ", sentenceWhisper)
   const [recording, setRecording] = React.useState(false as any);
   const [recordingDone, setRecordingDone] = React.useState(false);
@@ -168,7 +169,8 @@ export default ({sentenceWhisper, setSentenceWhisper, lang}) => {
           allowsRecordingIOS: true,
           playsInSilentModeIOS: true,
         });
-        // alert("Starting recording..");
+        setTopText("Hit the stop button when done:")
+        setBottomText("Recording...")
         const RECORDING_OPTIONS_PRESET_LOW_QUALITY: any = {
           android: {
             extension: ".mp4",
@@ -281,6 +283,8 @@ export default ({sentenceWhisper, setSentenceWhisper, lang}) => {
     const filetype = uri.split(".").pop();
     const filename = uri.split("/").pop();
     setLoading(true);
+    setBottomText("Analyzing...")
+    setTopText("Please wait...")
     const formData: any = new FormData();
     //formData.append("language", lang.toLowerCase());
     // formData.append("model_size", "tiny");
@@ -325,27 +329,23 @@ export default ({sentenceWhisper, setSentenceWhisper, lang}) => {
     <View style={styles.container}>
         {!isRecording && !isTranscribing && !recordingDone && (
           <View>
-            <TouchableOpacity>
-              <View style={styles.button}>
-                  <Microphone fill={"#FFFFFF"} width={20} height={20} marginRight={10} />
-                  <Text style={styles.buttonText}>Say it!</Text>                        
-              </View>
+            <TouchableOpacity onPress={startRecording} >
+              <BigMike/>                  
             </TouchableOpacity>
           </View>
         )}
         {(isRecording || isTranscribing) && !recordingDone && (
-          <Button
+          <View>
+            <TouchableOpacity
             onPress={stopRecording}
-            disabled={stopTranscriptionSessionRef.current}
-            title="Done!"
-            buttonStyle={{ backgroundColor: 'red' }}
-          />
+            disabled={stopTranscriptionSessionRef.current}            
+            style={styles.stopContainer}
+            >
+              <Text style = {styles.stopText}></Text>
+              <View style = {styles.stopButton}></View>
+            </TouchableOpacity>
+          </View>
         )}
-        {/*recordingDone && (
-          <Button title="Transcribe" buttonStyle={{ backgroundColor: '#FFC107' }} onPress={() => transcribeRecording()} />
-        )*/}
-        
-        {/*getRecordingLines()*/}
 
       { isLoading !== false ? (
         <ActivityIndicator
@@ -411,6 +411,25 @@ const styles = StyleSheet.create({
 
     backgroundColor: "rgba(255, 255, 255, 0.5)",
     borderRadius: 10,
+  },
+  stopContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+    width: 152,
+  },
+  stopButton: {
+    backgroundColor: "red",
+    borderRadius: 2,
+    width: 40,
+    height: 40,
+  },
+  stopText: {
+    color: "white",
+    fontSize: 20,
+    paddingRight: 10,
   },
   buttonText: {
     color: "#FFFFFF",

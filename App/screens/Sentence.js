@@ -205,7 +205,12 @@ const Sentence = ({
                         sentenceReady={sentenceReady}
                     />
                 </TouchableOpacity>
-                <SayModal sayVisible={sayVisible} setSayVisible={setSayVisible}/>
+                <SayModal sayVisible={sayVisible} 
+                        setSayVisible={setSayVisible}
+                        sentenceWhisper={sentenceWhisper}
+                        setSentenceWhisper={setSentenceWhisper}
+                        lang={lang}
+                />
                 <View style={styles.switchContainer}>
                     <Switch
                         value={translations}

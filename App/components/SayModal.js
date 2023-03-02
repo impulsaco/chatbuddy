@@ -5,11 +5,12 @@ import Close from '../../assets/close.svg'
 import googleTranslateWord from '../lib/googleTranslateWord';
 import { supabase } from '../lib/supabase';
 import BigMike from "../../assets/bigMike.svg"
+import SayWhisper from '../whisper/SayWhisper';
 
 const PAGE_HEIGHT = Dimensions.get('window').height;
 const PAGE_WIDTH = Dimensions.get('window').width;
 
-const SayModal = ({ sayVisible, setSayVisible }) => {
+const SayModal = ({ sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisper, lang}) => {
 
     console.log("sayVisible is", sayVisible)
 
@@ -36,7 +37,13 @@ const SayModal = ({ sayVisible, setSayVisible }) => {
                     </View>
                     
                     <TouchableOpacity style={styles.mikeContainer}>
-                        <BigMike/>
+                        <SayWhisper 
+                        sentenceWhisper={sentenceWhisper} 
+                        setSentenceWhisper={setSentenceWhisper} 
+                        lang={lang}
+                        setTopText={setTopText}
+                        setBottomText={setBottomText}
+                    />
                     </TouchableOpacity>
 
                     <View style={styles.bigTextContainer}>
