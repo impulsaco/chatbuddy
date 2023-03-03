@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { View, TouchableOpacity, TextInput, Modal, Text, StyleSheet, Dimensions} from "react-native";
-import Plus from '../../assets/Plus.svg'
 import Close from '../../assets/close.svg'
-import googleTranslateWord from '../lib/googleTranslateWord';
 import { supabase } from '../lib/supabase';
-import BigMike from "../../assets/bigMike.svg"
-import SaveBanner from "../../assets/saveBanner.svg"
 import SayWhisper from '../whisper/SayWhisper';
 import SaveButton from './SaveButton';
 import AudioPlayback from "../../assets/audioPlayback.svg"
 import MicrophonePlayback from "../../assets/microphonePlayback.svg"
 import Playback from "../../assets/playback.svg"
 import sentenceSpeak from '../lib/sentenceSpeak';
+import playRecording from '../lib/playRecording';
 
 const PAGE_HEIGHT = Dimensions.get('window').height;
 const PAGE_WIDTH = Dimensions.get('window').width;
@@ -24,17 +21,30 @@ const SayModal = ({ sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisp
     // Create variables for modal
 
     const [topText, setTopText] = useState('Push the record button to practice your sentence!');
+
     const [bottomText, setBottomText] = useState('Say it!');
 
-    const [saySuccess, setSaySuccess] = useState(true); // temporary testing
+    const [saySuccess, setSaySuccess] = useState(false); // temporary testing
 
-    const [attempted, setAttempted] = useState(true);
+    const [attempted, setAttempted] = useState(false);
 
+    const [recordingUri, setRecordingUri] = useState(null);
+
+    const [successVisible, setSuccessVisible] = useState(false);
+
+    // Sets success upon 50% of sentence said
     useEffect (() => {
+        console.log("attempted is ", attempted)
+        console.log("sentenceSaidPercentage is ", sentenceSaidPercentage)
         if (sentenceSaidPercentage > 0.5) {
             setSaySuccess(true);
         }
     }, [sentenceSaidPercentage])
+
+    useEffect (() => {
+        console.log("attempted is HERE ", attempted)
+        console.log("sentenceSaidPercentage is HERE ", sentenceSaidPercentage)        
+    }, [attempted])
 
     
     // Set message on success
@@ -49,86 +59,102 @@ const SayModal = ({ sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisp
         }                                  
       }, [saySuccess, lang]);
 
-    // Recording modal
-    if (attempted===false) {
-        return (
-            <View>
-                <Modal visible={sayVisible} transparent={true}>
-                    <View style={styles.modalContainer}> 
-                        <View style={styles.topContainer}>
-                            <TouchableOpacity onPress={() => setSayVisible(false)}>
-                                <Close/>
-                            </TouchableOpacity>                        
-                        </View>
-                        <View style={styles.smallTextContainer}>
-                            <Text style={styles.smallText}>{topText}</Text>
-                        </View>
-                        
-                        <TouchableOpacity style={styles.mikeContainer}>
-                            <SayWhisper 
-                            sentenceWhisper={sentenceWhisper} 
-                            setSentenceWhisper={setSentenceWhisper} 
-                            lang={lang}
-                            setTopText={setTopText}
-                            setBottomText={setBottomText}
-                        />
-                        </TouchableOpacity>
-    
-                        <View style={styles.bigTextContainer}>
-                            <Text style={styles.bigText}>{bottomText}</Text>
-                        </View>                                        
-                    </View>
-                </Modal>
-            </View>
-        );
+    const close = () => {
+        setSayVisible(false);
+        setAttempted(false);
+        setSaySuccess(false);
+        setTopText('Push the record button to practice your sentence!');
+        setBottomText('Say it!');
     }
+
+    // Logic for which modal renders
+    useEffect(() => {
+        if (attempted && saySuccess) {
+          setSuccessVisible(true);
+          setSayVisible(false);
+        } else {
+          setSuccessVisible(false);
+        }
+      }, [attempted, saySuccess]);
+
 
     // Output modal
 
-    /// If sentence said successfully    
+    /// Modals   
 
-    if (attempted === true) {
-        return (
-            <View>
-                <Modal visible={sayVisible} transparent={true}>
-                    <View style={[styles.modalContainer, { height: PAGE_HEIGHT/2.5,} ]}> 
-                        <View style={styles.topContainer}>
-                            <TouchableOpacity onPress={() => setSayVisible(false)}>
-                                <Close/>
-                            </TouchableOpacity>                        
-                        </View>
-                        <View style={styles.smallTextContainer}>
-                            <Text style={styles.smallText}>{topText}</Text>
-                        </View>
-                        <View style={styles.playbackContainer}>
-                            <TouchableOpacity style={styles.playbackButton} onPress={() => sentenceSpeak(sentenceText, langCode)}>
-                                <AudioPlayback/>
-                                <Text style={styles.playbackText}>We said</Text>
-                                <Playback/>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.playbackButton}>
-                                <MicrophonePlayback/>
-                                <Text style={styles.playbackText}>You said</Text>
-                                <Playback/>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={styles.buttonsContainer}>    
-                            <SaveButton/>                                        
-                            <View style={styles.grayButton}>
-                                <Text style={[styles.smallText, { paddingLeft: 10} ]}>Continue without saving</Text>
-                            </View>                                
-                        </View>                                               
+    console.log("attempted is ", attempted)
+    console.log("saySuccess is ", saySuccess)
+    console.log("sayVisible is ", sayVisible)
+   
+    return (
+        <View style={styles.container}>
+            <Modal visible={sayVisible} transparent={true}>
+                <View style={styles.modalContainer}> 
+                    <View style={styles.topContainer}>
+                        <TouchableOpacity onPress={() => close()}>
+                            <Close/>
+                        </TouchableOpacity>                        
                     </View>
-                </Modal>
-            </View>
-        );
-    }
-    
+                    <View style={styles.smallTextContainer}>
+                        <Text style={styles.smallText}>{topText}</Text>
+                    </View>
+                    
+                    <TouchableOpacity style={styles.mikeContainer}>
+                        <SayWhisper 
+                        sentenceWhisper={sentenceWhisper} 
+                        setSentenceWhisper={setSentenceWhisper} 
+                        lang={lang}
+                        setTopText={setTopText}
+                        setBottomText={setBottomText}
+                        setRecordingUri={setRecordingUri}
+                        setAttempted={setAttempted}
+                    />
+                    </TouchableOpacity>
+
+                    <View style={styles.bigTextContainer}>
+                        <Text style={styles.bigText}>{bottomText}</Text>
+                    </View>                                        
+                </View>
+            </Modal>
+            <Modal visible={saySuccess} transparent={true}>
+                <View style={[styles.modalContainer, { height: PAGE_HEIGHT/2.5,} ]}> 
+                    <View style={styles.topContainer}>
+                        <TouchableOpacity onPress={() => setSayVisible(false)}>
+                            <Close/>
+                        </TouchableOpacity>                        
+                    </View>
+                    <View style={styles.smallTextContainer}>
+                        <Text style={styles.smallText}>{topText}</Text>
+                    </View>
+                    <View style={styles.playbackContainer}>
+                        <TouchableOpacity style={styles.playbackButton} onPress={() => sentenceSpeak(sentenceText, langCode)}>
+                            <AudioPlayback/>
+                            <Text style={styles.playbackText}>We said</Text>
+                            <Playback/>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.playbackButton} onPress={() => playRecording(recordingUri)}>
+                            <MicrophonePlayback/>
+                            <Text style={styles.playbackText}>You said</Text>
+                            <Playback/>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.buttonsContainer}>    
+                        <SaveButton/>                                        
+                        <View style={styles.grayButton}>
+                            <Text style={[styles.smallText, { paddingLeft: 10} ]}>Continue without saving</Text>
+                        </View>                                
+                    </View>                                               
+                </View>
+            </Modal>
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
     container: {
-        width : '100%'
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
     },  
     smallText: {
         fontSize: 14,

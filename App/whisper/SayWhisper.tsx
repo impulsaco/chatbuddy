@@ -19,7 +19,7 @@ import BigMike from "../../assets/bigMike.svg";
 
 
 
-export default ({sentenceWhisper, setSentenceWhisper, lang, setTopText, setBottomText}) => {
+export default ({sentenceWhisper, setSentenceWhisper, lang, setTopText, setBottomText, setRecordingUri, setAttempted}) => {
   console.log("sentenceWhisper First is ", sentenceWhisper)
   const [recording, setRecording] = React.useState(false as any);
   const [recordingDone, setRecordingDone] = React.useState(false);
@@ -215,6 +215,8 @@ export default ({sentenceWhisper, setSentenceWhisper, lang, setTopText, setBotto
     console.log("Stopping recording..");
     //setRecording(undefined);
     console.log("recording is ", recording);
+    console.log("recording uri is ", recording.getURI());
+    setRecordingUri(recording.getURI());
     await recording.stopAndUnloadAsync();
     const uri = recording.getURI();
     const getFileSize = async uri => {
@@ -311,6 +313,7 @@ export default ({sentenceWhisper, setSentenceWhisper, lang, setTopText, setBotto
         setIsTranscribing(false);
         setRecordingDone(false)
         setSentenceWhisper(response.data.text) // Sets the sentence check to be shown
+        setAttempted(true)
         console.log("sentenceWhisper in Response is ", sentenceWhisper)
         /*intervalRef.current = setInterval(
           transcribeInterim,
