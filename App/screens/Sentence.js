@@ -112,14 +112,20 @@ const Sentence = ({
     // check whispered sentence against sentence
     useEffect(() => {
         console.log("sentenceWhisper in Sentence is ", sentenceWhisper)
+        console.log("sentenceSaidPercentage in Sentence is ", sentenceSaidPercentage)
+        console.log("sentenceAnalyzed in Sentence is ", sentenceAnalyzed)
+        let interimCount = 0
         for (let i = 0; i < sentenceAnalyzed.length; i++) {
             let interimState = [...sentenceAnalyzed]
             if (sentenceWhisper.includes(sentenceAnalyzed[i].word)) {
+                console.log("sentenceWhisper includes ", sentenceAnalyzed[i].word)
+                console.log("adding 1 to interimPercentage which is currently ", interimCount)
                 interimState[i].said = true
                 setSentenceAnalyzed(interimState)
-                setSentenceSaidPercentage((sentenceSaidPercentage + 1) / sentenceAnalyzed.length)
+                interimCount++                
             }
         }
+        setSentenceSaidPercentage(interimCount / sentenceAnalyzed.length)
       }, [sentenceWhisper])
 
     // set Text based on whispered
@@ -187,10 +193,11 @@ const Sentence = ({
             </View>
             <View style={styles.topContainer}>
                 {speakSentence()}                  
-                <TouchableOpacity style={styles.buttonContainer} onPress={() => setSayVisible(true)}>
+                <TouchableOpacity style={styles.buttonContainer}>
                     <SayItButton 
                         sentence={sentence} 
                         sentenceFixed={sentenceFixed}
+                        setSayVisible={setSayVisible}
                         setText={setText} 
                         setSentenceText={setSentenceText}
                         setSentenceEn={setSentenceEn} 
@@ -205,11 +212,15 @@ const Sentence = ({
                         sentenceReady={sentenceReady}
                     />
                 </TouchableOpacity>
-                <SayModal sayVisible={sayVisible} 
+                <SayModal 
+                        sayVisible={sayVisible} 
                         setSayVisible={setSayVisible}
                         sentenceWhisper={sentenceWhisper}
                         setSentenceWhisper={setSentenceWhisper}
                         lang={lang}
+                        langCode={langCode}
+                        sentenceSaidPercentage={sentenceSaidPercentage}
+                        sentenceText={sentenceText}
                 />
                 <View style={styles.switchContainer}>
                     <Switch

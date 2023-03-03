@@ -15,6 +15,7 @@ import Microphone from "../../assets/microphone.svg";
 const SayItButton = ({ sentence, 
                         sentenceFixed,
                         setText, 
+                        setSayVisible,
                         setSentenceText,
                         setSentenceEn, 
                         sentenceEn, 
@@ -53,7 +54,7 @@ const SayItButton = ({ sentence,
         //SentenceFixer(sentence, setSentenceText, setSentenceEn, setSentenceWhisper, setSentenceAnalyzed, sentenceAnalyzed, sentenceSaidPercentage, sentenceReady)
          sayButton = 
          <View>
-             <TouchableOpacity>
+             <TouchableOpacity onPress={() => setSayVisible(true)}>
                  <View style={styles.buttonReady}>
                      <Microphone fill={"#FFFFFF"} width={20} height={20} marginRight={10} />
                      <Text style={styles.buttonText}>Say it!</Text>                        

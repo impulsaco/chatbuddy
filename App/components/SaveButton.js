@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TextInput} from "react-native";
+import { View, Text, StyleSheet, Dimensions} from "react-native";
 import { Button } from "@rneui/themed"
 import { supabase, supabaseUrl} from '../lib/supabase';
 import googleTranslate from '../lib/googleTranslate';
+import SaveBanner from "../../assets/saveBanner.svg"
+
+const PAGE_HEIGHT = Dimensions.get('window').height;
+const PAGE_WIDTH = Dimensions.get('window').width;
 
 
 const SaveButton = ({sentence, savedSentence, sentenceChecked, setSentenceChecked, sentenceEn, langCode, sentenceSaidPercentage}) => {
@@ -40,19 +44,34 @@ const SaveButton = ({sentence, savedSentence, sentenceChecked, setSentenceChecke
 
         // setSentenceChecked(false)
     }
-   // if (sentenceChecked===true && sentenceSaidPercentage>.1) { // Allow save if sentence is checked and user has said at least 10% of the sentence
 
-    if (sentenceSaidPercentage>.1) { // Allow save if sentence is checked and user has said at least 10% of the sentence
-        return (
-            <Button buttonStyle={{ backgroundColor: '#FFC107' }} onPress={saveSentence}>Save</Button>
-        )
-    }
+    return (
+        <View style={styles.saveButton}>
+            <SaveBanner/>
+            <Text style={[styles.smallText, { paddingLeft: 10} ]}>Save it!</Text>
+        </View>
+    )
 
-    else {
-        return (
-            <Button buttonStyle={{ backgroundColor: '#B7B7B7' }}>Save</Button>
-        )
-    }
 }
+
+const styles = StyleSheet.create({
+    saveButton: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        padding: 10,
+        width: PAGE_WIDTH*.5,
+
+        backgroundColor: "#2E92F0",
+        borderRadius: 10,
+    },
+    smallText: {
+        fontSize: 14,
+        textAlign: 'center',
+        color: '#FFFFFF',        
+    },
+})
+
 
 export default SaveButton
