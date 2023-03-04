@@ -36,16 +36,12 @@ const SayModal = ({ sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisp
 
     // Sets success upon 50% of sentence said
     useEffect (() => {
-        console.log("attempted is ", attempted)
-        console.log("sentenceSaidPercentage is ", sentenceSaidPercentage)
         if (sentenceSaidPercentage > 0.5) {
             setSaySuccess(true);
         }
     }, [sentenceSaidPercentage])
 
     useEffect (() => {
-        console.log("attempted is HERE ", attempted)
-        console.log("sentenceSaidPercentage is HERE ", sentenceSaidPercentage)        
     }, [attempted])
 
     
@@ -83,10 +79,6 @@ const SayModal = ({ sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisp
     // Output modal
 
     /// Modals   
-
-    console.log("attempted is ", attempted)
-    console.log("saySuccess is ", saySuccess)
-    console.log("sayVisible is ", sayVisible)
    
     return (
         <View style={styles.container}>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Switch } from "@rneui/themed";
-import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, ScrollView, StyleSheet, Dimensions } from "react-native";
 import SentenceWord from '../components/SentenceWord';
 import SayItButton from '../components/SayItButton';
 import AnalyzeWord from '../components/AnalyzeWord';
@@ -10,6 +10,9 @@ import Sound from '../../assets/Sound.svg';
 import SentenceTest from '../lib/SentenceTest';
 import SentenceFixer from '../lib/SentenceFixer';
 import SayModal from '../components/SayModal';
+
+const PAGE_HEIGHT = Dimensions.get('window').height;
+const PAGE_WIDTH = Dimensions.get('window').width;
 
 const Sentence = ({ 
     sentenceInit,
@@ -99,6 +102,7 @@ const Sentence = ({
     const resetSentence = () => {        
         setSentence(sentenceInit);
         setSentenceReady(false);
+        setSentenceWhisper("no whisper yet")
         setText(starterText)
         setSentenceText("")
         setSentenceEn("")
@@ -272,7 +276,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         distributeContent: 'evenly',
         padding: 0,
-        width: 321,
+        width: PAGE_WIDTH*0.8,
     },
     buttonContainer: {
         flex: 4,
@@ -281,7 +285,7 @@ const styles = StyleSheet.create({
         marginRight: 20,
     },
     switchContainer: {
-        flex: 1,
+        flex: 0.1,
         flexDirection: 'row',
         justifyContent: 'flex-end',
         paddingRight: 0,

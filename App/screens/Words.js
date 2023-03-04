@@ -218,7 +218,7 @@ saveWord()
                         setSentence={setSentence}
                     />
                     <Tab.Navigator
-                    tabBar={props => <WordMenu {...props} forward={forward} setForward ={setForward}/>}
+                    tabBar={props => <WordMenu {...props} forward={forward} setForward ={setForward} words={words} sentence={sentence} setSentence={setSentence}/>}
                     initialRouteName={'subject'} 
                     sceneContainerStyle={{backgroundColor: 'transparent'}}
                     >

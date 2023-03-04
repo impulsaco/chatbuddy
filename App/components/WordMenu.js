@@ -4,8 +4,9 @@ import PersonIcon from '../../assets/person.svg'
 import RunnerIcon from '../../assets/runner.svg'
 import IdentityIcon from '../../assets/identity.svg'
 import AppleIcon from '../../assets/apple.svg'
+import SentenceWord from './SentenceWord';
 
-const WordMenu = ({ state, navigation, forward, setForward }) => {
+const WordMenu = ({ state, navigation, forward, setForward, words, sentence, setSentence}) => {
 
   // Move forward if new word entered
 
@@ -30,16 +31,17 @@ const WordMenu = ({ state, navigation, forward, setForward }) => {
 
   // Used SVG to be able to change the color of the icons exported from Figma.
   const icon = (pageName, currentIndex) => {
-    if (pageName === 'subject') return <PersonIcon fill={color(pageName, currentIndex)} />
+    /*if (pageName === 'subject') return <PersonIcon fill={color(pageName, currentIndex)} />
     if (pageName === 'verb') return <RunnerIcon fill={color(pageName, currentIndex)} />
     if (pageName === 'adjective') return <IdentityIcon fill={color(pageName, currentIndex)} />
     if (pageName === 'noun') return <AppleIcon fill={color(pageName, currentIndex)} />
-    return pageName;
+    return pageName;*/
+    return <View></View>
   }
 
-  const tabButton = (route, index) => {
+  const tabButton = (word, index) => {
     const isFocused = state.index === index; // Checks if the current page is the same as the page in the array 
-    return (
+    return (      
     <Pressable
         key={`wordmenu-${index}`}
         style={styles.button}
@@ -47,27 +49,52 @@ const WordMenu = ({ state, navigation, forward, setForward }) => {
         onPress={() => {
             const event = navigation.emit({
             type: 'tabPress',
-            target: route.key,
+            target: word.key,
             canPreventDefault: true,
             });
 
             if (!isFocused && !event.defaultPrevented) {
             // The `merge: true` option makes sure that the params inside the tab screen are preserved
 
-            navigation.navigate({ name: route.name, merge: true });
+            navigation.navigate({ name: word.type, merge: true });
             }
         }}
         >
-        { icon(route.name, state.index) }
+        { icon(word.type, state.index) }
+        <SentenceWord 
+          key={index} 
+          word={word} 
+          index={index} 
+          words={words} 
+          sentence={sentence} 
+          setSentence={setSentence}
+          forward={forward} 
+          setForward={setForward}
+        />
         </Pressable>
     )
   }
 
+  /*{(sentence || []).map(
+    (word, index) => (
+        <SentenceWord 
+            key={index} 
+            word={word} 
+            index={index} 
+            words={words} 
+            sentence={sentence} 
+            setSentence={setSentence}
+            forward={forward} 
+            setForward={setForward}
+        />
+    ))
+}*/
+
   return <View style={styles.container}>
-    {state.routes.map(
-      (route, index) => {
+    {(sentence || []).map(
+      (word, index) => {
         return (
-          tabButton(route, index)
+          tabButton(word, index)
         )
       }
     )}         
