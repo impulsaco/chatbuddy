@@ -222,11 +222,11 @@ saveWord()
                     initialRouteName={'subject'} 
                     sceneContainerStyle={{backgroundColor: 'transparent'}}
                     >
-                        {routeList.map((route) => (
-                        <Tab.Screen
-                        name={route}
-                        component={WordRoute(route, setUserWords, userWords, langCode, words, translations, sentence, setSentence, setForward)}
-                        />
+                    {routeList.map((route) => (
+                    <Tab.Screen
+                    name={route}
+                    component={WordRoute(route, setUserWords, userWords, langCode, words, translations, sentence, setSentence, setForward)}
+                    />
                     ))} 
                     </Tab.Navigator>
                 </View>

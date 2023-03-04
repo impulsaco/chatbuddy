@@ -13,6 +13,7 @@ import familyList from '../wordsets/familyList';
 const PAGE_HEIGHT = Dimensions.get('window').height;
 const PAGE_WIDTH = Dimensions.get('window').width;
 
+
 function PhraseSelector({navigation, route}) {
 
     // set up word lists  
@@ -57,7 +58,7 @@ function PhraseSelector({navigation, route}) {
     return (
       <View style={styles.mainContainer}>
         <LinearGradient 
-        colors={['#9F00B9', '#FFDC61']}
+        colors={['#319CFF', '#319CFF']}
         locations={[0, .99]}
         style={styles.linearGradient}
         />

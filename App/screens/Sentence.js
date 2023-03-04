@@ -239,22 +239,6 @@ const Sentence = ({
                     </TouchableOpacity>    
                 </View>             
             </View>
-            <View style={styles.wordsContainer}>
-                {(sentence || []).map(
-                    (word, index) => (
-                        <SentenceWord 
-                            key={index} 
-                            word={word} 
-                            index={index} 
-                            words={words} 
-                            sentence={sentence} 
-                            setSentence={setSentence}
-                            forward={forward} 
-                            setForward={setForward}
-                        />
-                    ))
-                }
-            </View>
         </View>
     )
 }
@@ -262,12 +246,6 @@ const Sentence = ({
 const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
-    },
-    wordsContainer: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        justifyContent: 'space-evenly',
-        paddingLeft: 10,
     },
     topContainer: {
         display: 'flex',

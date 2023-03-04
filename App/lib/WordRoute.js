@@ -1,8 +1,11 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Dimensions } from 'react-native';
 import { DraxProvider, DraxScrollView } from 'react-native-drax';
 import DraggableWord from '../components/DraggableWord';
 import AddWord from '../components/AddWord';
+
+const PAGE_HEIGHT = Dimensions.get('window').height;
+const PAGE_WIDTH = Dimensions.get('window').width;
 
 /// JUST MAKE ONE, THEN MAP ONTO TAB NAVIGATOR
 
@@ -24,9 +27,14 @@ const styles = StyleSheet.create({
   wordContainer: {
       flexDirection: 'row',
       flexWrap: 'wrap',
+
       justifyContent: 'flex-start',
-      backgroundColor: 'rgba(0, 0, 0, 0)',
+      backgroundColor: 'rgba(242, 242, 242, 0.5)',
+
+      height: PAGE_HEIGHT*.8,
+      width: PAGE_WIDTH,
       paddingLeft: 10,
+      borderRadius: 10,
   },
 });
 
