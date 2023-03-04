@@ -32,6 +32,8 @@ const SayModal = ({ sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisp
 
     const [successVisible, setSuccessVisible] = useState(false);
 
+    const [playSound, setPlaySound] = useState(null);
+
     // Sets success upon 50% of sentence said
     useEffect (() => {
         console.log("attempted is ", attempted)
@@ -108,6 +110,7 @@ const SayModal = ({ sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisp
                         setBottomText={setBottomText}
                         setRecordingUri={setRecordingUri}
                         setAttempted={setAttempted}
+                        setPlaySound={setPlaySound}
                     />
                     </TouchableOpacity>
 
@@ -119,7 +122,7 @@ const SayModal = ({ sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisp
             <Modal visible={saySuccess} transparent={true}>
                 <View style={[styles.modalContainer, { height: PAGE_HEIGHT/2.5,} ]}> 
                     <View style={styles.topContainer}>
-                        <TouchableOpacity onPress={() => setSayVisible(false)}>
+                        <TouchableOpacity onPress={() => setSaySuccess(false)}>
                             <Close/>
                         </TouchableOpacity>                        
                     </View>

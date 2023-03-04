@@ -19,7 +19,7 @@ import BigMike from "../../assets/bigMike.svg";
 
 
 
-export default ({sentenceWhisper, setSentenceWhisper, lang, setTopText, setBottomText, setRecordingUri, setAttempted}) => {
+export default ({sentenceWhisper, setSentenceWhisper, lang, setTopText, setBottomText, setRecordingUri, setAttempted, setPlaySound}) => {
   console.log("sentenceWhisper First is ", sentenceWhisper)
   const [recording, setRecording] = React.useState(false as any);
   const [recordingDone, setRecordingDone] = React.useState(false);
@@ -35,6 +35,7 @@ export default ({sentenceWhisper, setSentenceWhisper, lang, setTopText, setBotto
   const [stopTranscriptionSession, setStopTranscriptionSession] =
     React.useState(false);
   const [isLoading, setLoading] = React.useState(false);
+  const [sound, setSound] = React.useState(null); // for audio playback
   const intervalRef: any = React.useRef(null);
 
   const stopTranscriptionSessionRef = React.useRef(stopTranscriptionSession);
@@ -216,7 +217,19 @@ export default ({sentenceWhisper, setSentenceWhisper, lang, setTopText, setBotto
     //setRecording(undefined);
     console.log("recording is ", recording);
     console.log("recording uri is ", recording.getURI());
+    // for audio playback
+    setPlaySound(
+      async function playSound() {
+        console.log('Loading Sound');
+        const { sound } = await Audio.Sound.createAsync({ uri: recording });
+        setSound(sound);
+    
+        console.log('Playing Sound');
+        await sound.playAsync();
+      }
+    )
     setRecordingUri(recording.getURI());
+    // audio playback code ends here
     await recording.stopAndUnloadAsync();
     const uri = recording.getURI();
     const getFileSize = async uri => {
