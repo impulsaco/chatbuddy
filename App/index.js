@@ -133,22 +133,32 @@ const PAGE_WIDTH = Dimensions.get('window').width;
 // Design update
 /// Background color DONE
 /// Automatic ready DONE
-/// Automatic ready refresh bug -- make unready
+/// Automatic ready refresh bug -- make unready DONE
 //// sentenceComplete & sentenceReady = true -> "say" button activates. 
 //// refresh -> sentenceComplete = false -> "say" button becomes gray again.
 //// new word comes in -> sentenceComplete = true but sentenceReady = false -> "say" button becomes "ready" button 
-/// New button/sentence menu 
-/// Separate sentence line and instructions
-/// New wordtype menu
-/// Tap wordbox to change tabs
+
+// Modal DONE DONE DONE
+/// Make modal DONE
+/// Separate sentence line and instructions DONE
+/// Shift buttons to modal DONE
 /// Order: sentence to top DONE
-/// Add microphone
-/// Recording and saving modal
-/// Tabs
+/// Recording and saving modal DONE
+/// Add microphone DONE
+/// Play back recording DONE
+
+// Tabs
+/// Delete icons DONE
+/// Tap wordbox to change tabs DONE
+/// Wordbox navigation DONE
+/// Words background DONE
+/// Dynamic tab background
+
+// Other
+/// Fewer words
 /// Translations icon
 /// Shuffle button
 /// New add word button
-/// Play back recording
 /// Other icons
 /// Check width bug
 

@@ -20,9 +20,8 @@ const WordMenu = ({ state, navigation, forward, setForward, words, sentence, set
     }
   }, [forward]) 
 
-  // Sets color of icons if pressed
+  // Sets background color of tabs if pressed
   const color = (pageName, currentIndex) => {
-    
     const nameArray = state.routeNames
     if (currentIndex === nameArray.indexOf(pageName)) {
       return 'rgba(242, 242, 242, 0.5)'
@@ -32,27 +31,10 @@ const WordMenu = ({ state, navigation, forward, setForward, words, sentence, set
     }
   }
 
-  // Used SVG to be able to change the color of the icons exported from Figma.
-  const icon = (pageName, currentIndex) => {
-    /*if (pageName === 'subject') return <PersonIcon fill={color(pageName, currentIndex)} />
-    if (pageName === 'verb') return <RunnerIcon fill={color(pageName, currentIndex)} />
-    if (pageName === 'adjective') return <IdentityIcon fill={color(pageName, currentIndex)} />
-    if (pageName === 'noun') return <AppleIcon fill={color(pageName, currentIndex)} />
-    return pageName;*/
-    return <View></View>
-  }
-
-
-  const [backgroundColor, setBackgroundColor] = useState('rgba(0, 0, 0, 0)')
-
-  useEffect((pageName, currentIndex) => {
-    setBackgroundColor(color(pageName, currentIndex))
-  }, [state.index])
-
   const tabButton = (word, index) => {
     const isFocused = state.index === index; // Checks if the current page is the same as the page in the array 
     return (   
-    <View style={[styles.wordContainer, {backgroundColor: backgroundColor}]}>
+    <View style={[styles.wordContainer, {backgroundColor: color(word.type, state.index)}]}>
       <Pressable
           key={`wordmenu-${index}`}
           style={styles.button}
@@ -67,11 +49,10 @@ const WordMenu = ({ state, navigation, forward, setForward, words, sentence, set
               if (!isFocused && !event.defaultPrevented) {
               // The `merge: true` option makes sure that the params inside the tab screen are preserved
 
-              navigation.navigate({ name: word.type, merge: true });
+              navigation.navigate({ name: word.type, merge: true });              
               }
           }}
           >
-          { icon(word.type, state.index) }
           <SentenceWord 
             key={index} 
             word={word} 
@@ -80,7 +61,7 @@ const WordMenu = ({ state, navigation, forward, setForward, words, sentence, set
             sentence={sentence} 
             setSentence={setSentence}
             forward={forward} 
-            setForward={setForward}
+            setForward={setForward}            
           />
         </Pressable>
       </View>
@@ -113,22 +94,28 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0)',
-    width: PAGE_WIDTH*.7,
-    height: PAGE_HEIGHT*.1,
+    height: PAGE_HEIGHT*.07,
+    width: PAGE_WIDTH*.7,    
     padding: 10,
+
+    borderColor: "red",
+    borderWidth: 1,
   },
   wordContainer:
   {
-    //backgroundColor: ,
     justifyContent: 'center',
     alignItems: 'center',
-    height: PAGE_HEIGHT*.1,
+    height: PAGE_HEIGHT*.07,
     width: PAGE_WIDTH*.2,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
+    borderColor: "black",
+    borderWidth: 1,
 
   },
   button: {
+    borderColor: "white",
+    borderWidth: 1,
     padding: 10
   },
 });

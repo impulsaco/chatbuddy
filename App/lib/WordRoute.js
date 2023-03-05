@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
       justifyContent: 'flex-start',
       backgroundColor: 'rgba(242, 242, 242, 0.5)',
 
-      height: PAGE_HEIGHT*.8,
+      height: PAGE_HEIGHT*.4,
       width: PAGE_WIDTH,
       paddingLeft: 10,
       borderRadius: 10,
