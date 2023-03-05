@@ -4,6 +4,7 @@ import { Button } from "@rneui/themed"
 import { supabase, supabaseUrl} from '../lib/supabase';
 import googleTranslate from '../lib/googleTranslate';
 import SaveBanner from "../../assets/saveBanner.svg"
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const PAGE_HEIGHT = Dimensions.get('window').height;
 const PAGE_WIDTH = Dimensions.get('window').width;
@@ -14,6 +15,8 @@ const SaveButton = ({sentence, savedSentence, sentenceChecked, setSentenceChecke
     // Retrieve user session
 
     const [session, setSession] = useState()
+
+    const [sentenceSaved, setSentenceSaved] = useState(false)
 
     useEffect(() => {
         supabase.auth.getSession().then(({ data: { session } }) => {
@@ -42,15 +45,50 @@ const SaveButton = ({sentence, savedSentence, sentenceChecked, setSentenceChecke
 
         if (error) alert(error.message)
 
-        // setSentenceChecked(false)
+        setSentenceSaved(true)
     }
 
+    const saveBanner = () => {
+        if (sentenceSaved === false) {
+            return (
+                <TouchableOpacity style={styles.saveButton} onPress={() => saveSentence()}>
+                    <SaveBanner/>
+                    <Text style={[styles.smallText, { paddingLeft: 10} ]}>Save it!</Text>
+                </TouchableOpacity>
+            )
+        }
+        else {
+            return (
+                <TouchableOpacity style={styles.saveButton}>
+                    <SaveBanner style={[{fill: 'white'}]}/>
+                    <Text style={[styles.smallText, { paddingLeft: 10} ]}>Saved!</Text>
+                </TouchableOpacity>                
+            )
+        }
+    }
+    
+        
+
     return (
-        <View style={styles.saveButton}>
-            <SaveBanner/>
-            <Text style={[styles.smallText, { paddingLeft: 10} ]}>Save it!</Text>
-        </View>
+        <View>
+            {saveBanner()}
+        </View>        
     )
+    /*    } 
+        else {
+            return (
+                <TouchableOpacity style={styles.saveButton} onPress={() => saveSentence()}>
+                    <SaveBanner style={[{fill: 'white'}]}/>
+                    <Text style={[styles.smallText, { paddingLeft: 10} ]}>Saved!</Text>
+                </TouchableOpacity>
+            )
+        }
+    }*/
+
+    //saveButton()
+    /*useEffect (() => {
+        saveButton()
+    }, [sentenceSaved])*/
 
 }
 
