@@ -107,7 +107,7 @@ const Sentence = ({
         setSentenceText(" ")
         setSentenceEn(" ")
         setSentenceFixed(false)
-        console.log("sentenceReady is ", sentenceReady)
+        setForward(sentenceInit[0].type)
     }
 
     // Check if sentence has been said and is understood enough to save
@@ -122,8 +122,6 @@ const Sentence = ({
         for (let i = 0; i < sentenceAnalyzed.length; i++) {
             let interimState = [...sentenceAnalyzed]
             if (sentenceWhisper.includes(sentenceAnalyzed[i].word)) {
-                console.log("sentenceWhisper includes ", sentenceAnalyzed[i].word)
-                console.log("adding 1 to interimPercentage which is currently ", interimCount)
                 interimState[i].said = true
                 setSentenceAnalyzed(interimState)
                 interimCount++                

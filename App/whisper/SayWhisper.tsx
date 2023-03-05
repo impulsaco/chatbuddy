@@ -4,22 +4,26 @@ import {
   StyleSheet,
   View,
   ActivityIndicator,
+  Dimensions
 } from "react-native";
 import { Button } from "@rneui/themed"
 import { Audio } from "expo-av";
 import FormData from "form-data";
 import axios from "axios";
 import Mode from './Mode';
+import sentenceSpeak from '../lib/sentenceSpeak';
 import TranscribedOutput from "./TranscribeOutput";
 import { OPENAI_API_KEY } from "@env";
 import * as FileSystem from 'expo-file-system';
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Microphone from "../../assets/microphone.svg";
 import BigMike from "../../assets/bigMike.svg";
+import Sound from '../../assets/Sound.svg';
 
+const PAGE_HEIGHT = Dimensions.get('window').height;
+const PAGE_WIDTH = Dimensions.get('window').width;
 
-
-export default ({sentenceWhisper, setSentenceWhisper, lang, setTopText, setBottomText, setRecordingUri, setAttempted, setPlaySound}) => {
+export default ({sentenceWhisper, setSentenceWhisper, lang, langCode, setTopText, setBottomText, setRecordingUri, setAttempted, setPlaySound, sentenceText}) => {
   console.log("sentenceWhisper First is ", sentenceWhisper)
   const [recording, setRecording] = React.useState(false as any);
   const [recordingDone, setRecordingDone] = React.useState(false);
@@ -344,7 +348,10 @@ export default ({sentenceWhisper, setSentenceWhisper, lang, setTopText, setBotto
   return (
     <View style={styles.container}>
         {!isRecording && !isTranscribing && !recordingDone && (
-          <View>
+          <View style={styles.middleContainer}>
+            <TouchableOpacity style={styles.playBack} onPress={() => sentenceSpeak(sentenceText, langCode)}>                
+              <Sound/>                
+            </TouchableOpacity> 
             <TouchableOpacity onPress={startRecording} >
               <BigMike/>                  
             </TouchableOpacity>
@@ -427,6 +434,16 @@ const styles = StyleSheet.create({
 
     backgroundColor: "rgba(255, 255, 255, 0.5)",
     borderRadius: 10,
+  },
+  middleContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    width: PAGE_WIDTH,
+    paddingRight: PAGE_WIDTH*.2,
+  },
+  playBack: {
+    marginRight: PAGE_WIDTH*.1,
   },
   stopContainer: {
     display: 'flex',
