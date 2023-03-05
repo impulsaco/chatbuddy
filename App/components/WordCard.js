@@ -1,17 +1,24 @@
 import React from "react";
-import { View, TouchableOpacity, Button, Text, StyleSheet} from "react-native";
-import { Card } from "@rneui/themed";
-import { DraxProvider, DraxView } from 'react-native-drax';
+import { View, TouchableOpacity, Button, Text, StyleSheet, Dimensions} from "react-native";
+
+const PAGE_HEIGHT = Dimensions.get('window').height;
+const PAGE_WIDTH = Dimensions.get('window').width;
 
 const WordCard = ( {word, translations} ) => {
 
+    // Toggles word translations
     const WordTranslations = () => {
-        if (translations === true) {
+        if (translations === true && word.id >= 0) {
             return (
                 <Text style={styles.textLight}>{word.translation}</Text>
             )
         }
-        else {
+        else if (translations === false && word.id >= 0) {
+            return (
+                <Text style={styles.textLight}>{" "}</Text>
+            )
+        }
+        else if (word.id < 0) {
             return (
                 null
             )
@@ -40,13 +47,15 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 10,
         position: 'relative',
-        width: 72,
-        height: 54,
+        width: PAGE_WIDTH*.18,
+        height: PAGE_HEIGHT*.06,
         margin: 10,
+        
     }, 
     text: {
-        fontSize: 12,
+        fontSize: 13,
         height: 13,
+        fontWeight: '500',
         display: 'flex',
         alignItems: 'center',
         textAlign: 'center',
@@ -54,13 +63,13 @@ const styles = StyleSheet.create({
         
     },
     textLight: {
-        fontSize: 10,
-        height: 13,
+        fontSize: 13,
+        height: 15,
         display: 'flex',
         alignItems: 'center',
         textAlign: 'center',
         color: '#B7B7B7',
-        marginTop: 10,
+        marginTop: PAGE_HEIGHT*.008,
         
     },
 })

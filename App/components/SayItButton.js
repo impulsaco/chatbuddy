@@ -37,7 +37,6 @@ const SayItButton = ({ sentence,
     let sentenceFix
 
     if (sentenceFixed===false) {
-        console.log("Sentence is not checked")
         sayButton = 
             <View>
                 <TouchableOpacity>
@@ -50,8 +49,6 @@ const SayItButton = ({ sentence,
     }
 
     if (sentenceFixed===true) {
-        console.log("Sentence TO SEND is ", sentence)
-        //SentenceFixer(sentence, setSentenceText, setSentenceEn, setSentenceWhisper, setSentenceAnalyzed, sentenceAnalyzed, sentenceSaidPercentage, sentenceReady)
          sayButton = 
          <View>
              <TouchableOpacity onPress={() => setSayVisible(true)}>

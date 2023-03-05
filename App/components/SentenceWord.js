@@ -7,7 +7,6 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 const SentenceWord = ({word, index, words, sentence, setSentence, forward, setForward}) => {
 
     const tapNavigation = (type) => {
-        console.log("word type is ", type)
         setForward(type)
     }
 
@@ -60,13 +59,11 @@ const SentenceWord = ({word, index, words, sentence, setSentence, forward, setFo
                     }
                 }}
             >
-                        <TouchableOpacity style={styles.receiver} onPress={() => {tapNavigation(word.type)}}>
-
-                <WordCard
-                    word = { word } style={styles.sentenceWord}
-                />
-                        </TouchableOpacity>
-
+                <TouchableOpacity style={styles.receiver} onPress={() => {tapNavigation(word.type)}}>
+                    <WordCard
+                        word = { word } style={styles.sentenceWord}
+                    />
+                </TouchableOpacity>
             </DraxView>
     )
 }

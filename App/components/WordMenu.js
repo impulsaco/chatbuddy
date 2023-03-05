@@ -95,11 +95,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0)',
     height: PAGE_HEIGHT*.07,
-    width: PAGE_WIDTH*.7,    
+    width: PAGE_WIDTH,    
     padding: 10,
-
-    borderColor: "red",
-    borderWidth: 1,
   },
   wordContainer:
   {
@@ -109,13 +106,8 @@ const styles = StyleSheet.create({
     width: PAGE_WIDTH*.2,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    borderColor: "black",
-    borderWidth: 1,
-
   },
   button: {
-    borderColor: "white",
-    borderWidth: 1,
     padding: 10
   },
 });

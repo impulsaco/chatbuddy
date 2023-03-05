@@ -29,14 +29,14 @@ const Sentence = ({
 
     // Set instructions and sentence placeholder
 
-    let starterText = "Drag and drop words into the boxes below:"
+    let starterText = "Drag words into their appropriate box below"
 
     const [text, setText] = useState(starterText)
 
-    const [sentenceText, setSentenceText] = useState("")
+    const [sentenceText, setSentenceText] = useState(" ")
 
     // Set translation placeholder
-    const [sentenceEn, setSentenceEn] = useState(null)
+    const [sentenceEn, setSentenceEn] = useState(" ")
 
     // Create Whisper sentence
     const [sentenceWhisper, setSentenceWhisper] = useState("no whisper yet")
@@ -93,7 +93,7 @@ const Sentence = ({
             )
         }
         else {
-            return null
+            return <Text style={styles.translationText}>{" "}</Text>
         }
     }
 
@@ -104,8 +104,8 @@ const Sentence = ({
         setSentenceReady(false);
         setSentenceWhisper("no whisper yet")
         setText(starterText)
-        setSentenceText("")
-        setSentenceEn("")
+        setSentenceText(" ")
+        setSentenceEn(" ")
         setSentenceFixed(false)
         console.log("sentenceReady is ", sentenceReady)
     }
@@ -195,7 +195,7 @@ const Sentence = ({
                 {sentenceLine()}
                 <View style={styles.textContainer}><Text style={styles.text}>{text}</Text></View>                
             </View>
-            <View style={styles.topContainer}>
+            <View style={styles.bottomContainer}>
                 {speakSentence()}                  
                 <TouchableOpacity style={styles.buttonContainer}>
                     <SayItButton 
@@ -247,13 +247,13 @@ const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
     },
-    topContainer: {
+    bottomContainer: {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-evenly',
         alignItems: 'center',
         distributeContent: 'evenly',
-        padding: 0,
+        paddingBottom: PAGE_HEIGHT*0.05,
         width: PAGE_WIDTH*0.8,
     },
     buttonContainer: {

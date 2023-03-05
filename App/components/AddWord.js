@@ -71,7 +71,7 @@ const AddWord = ({ type, setUserWords, userWords, langCode }) => {
     return (
         <View>
             <View style={styles.container}>
-                <TouchableOpacity style={styles.wordCard} onPress={() => setModalVisible(true)} >
+                <TouchableOpacity style={styles.plusCard} onPress={() => setModalVisible(true)} >
                     <Plus/>
                 </TouchableOpacity>
             </View>
@@ -108,18 +108,18 @@ const styles = StyleSheet.create({
     container: {
         width : '100%'
     },  
-    wordCard: {
+    plusCard: {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
         paddingHorizontal: 0,
         paddingVertical: 0,
         borderColor: '#58AFFF',
-        backgroundColor: '#F3F3F3',
+        backgroundColor: 'white',
         borderWidth: 1,
         borderRadius: 10,
         position: 'relative',
-        width: 72,
+        width: PAGE_WIDTH*.3,
         height: 54,
         margin: 10,
     }, 
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
         height: 30,
         alignItems: 'center',
         textAlign: 'center',
-        color: "#000000"
+        color: "white"
     },
     lightText: {
         fontSize: 25,
@@ -180,10 +180,10 @@ const styles = StyleSheet.create({
         top: PAGE_HEIGHT/3,
         left: PAGE_WIDTH/10,
 
-        backgroundColor: "#FFEBAD",
-        borderColor: "#FFC107",
-        borderWidth: 1,
-        borderRadius: 12
+        backgroundColor: "#121212",
+        borderColor: "#2E93F2",
+        borderWidth: 2,
+        borderRadius: 20
     },
     topContainer: {
         display: "flex",

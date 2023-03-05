@@ -44,43 +44,6 @@ export default ({ route }) => {
     
     // Set styles
     //const gestureRootViewStyle = { flex: 1 };
-
-    const styles = StyleSheet.create({
-        gestureRootViewStyle: {
-            flex: 1,
-            flexDirection: 'column',
-            justifyContent: 'center',
-            display: 'flex',
-        },
-        wordContainer: {
-            flexDirection: 'row',
-            flexWrap: 'wrap',
-            justifyContent: 'flex-start',
-            backgroundColor: 'rgba(0, 0, 0, 0)',
-            paddingLeft: 10,
-        },
-        item: {
-            flexDirection: 'row',
-            flexWrap: 'wrap',
-            width: '33%'
-        },
-        draggable: {
-            width: 100,
-            height: 100,
-            backgroundColor: 'blue',
-        },
-        dragging: {
-            opacity: 0.1,
-        },
-
-        linearGradient: {
-            position: 'absolute',
-            height: PAGE_HEIGHT,
-            left: 0,
-            right: 0,
-            top: 0,    
-        },
-      })
     
     // Import params
     
@@ -234,3 +197,40 @@ saveWord()
         </GestureHandlerRootView>
     )
 }
+
+const styles = StyleSheet.create({
+    gestureRootViewStyle: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        display: 'flex',
+    },
+    wordContainer: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'flex-start',
+        backgroundColor: 'rgba(0, 0, 0, 0)',
+        paddingLeft: 10,
+    },
+    item: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        width: '33%'
+    },
+    draggable: {
+        width: 100,
+        height: 100,
+        backgroundColor: 'blue',
+    },
+    dragging: {
+        opacity: 0.1,
+    },
+
+    linearGradient: {
+        position: 'absolute',
+        height: PAGE_HEIGHT,
+        left: 0,
+        right: 0,
+        top: 0,    
+    },
+  })
