@@ -191,7 +191,7 @@ const SayModal = ({ sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisp
             <Modal visible={sayPartly} transparent={true}>
                 <View style={[styles.modalContainer, { height: PAGE_HEIGHT/2.5,} ]}> 
                     <View style={styles.topContainer}>
-                        <TouchableOpacity onPress={() => setSaySuccess(false)}>
+                        <TouchableOpacity onPress={() => close()}>
                             <Close/>
                         </TouchableOpacity>                        
                     </View>

@@ -102,9 +102,11 @@ const Sentence = ({
         } 
     }
     
-    useEffect(() => {    
-       sentenceFix(sentence)       
-    }, [sentenceReady])
+    useEffect(() => {
+        if (sentence[0].id >= 0) {
+            sentenceFix(sentence)
+        }           
+    }, [sentenceReady, sentence]) //solution to loading, add sentence to tracking?
 
     // Translate sentence
 
