@@ -82,7 +82,7 @@ const Sentence = ({
     //sentenceFix(sentence)
     useEffect(() => {
        sentenceFix(sentence)       
-    }, [sentenceReady])
+    }, [sentenceReady, sentence])
 
     // Translate sentence
 
@@ -191,7 +191,6 @@ const Sentence = ({
                 </View>
                 {sentenceTranslation()}
                 {sentenceLine()}
-                <View style={styles.textContainer}><Text style={styles.text}>{text}</Text></View>                
             </View>
             <View style={styles.bottomContainer}>
                 {speakSentence()}                  
@@ -237,6 +236,7 @@ const Sentence = ({
                     </TouchableOpacity>    
                 </View>             
             </View>
+            <View style={styles.textContainer}><Text style={styles.text}>{text}</Text></View>                
         </View>
     )
 }
@@ -251,8 +251,9 @@ const styles = StyleSheet.create({
         justifyContent: 'space-evenly',
         alignItems: 'center',
         distributeContent: 'evenly',
-        paddingBottom: PAGE_HEIGHT*0.05,
+        paddingBottom: PAGE_HEIGHT*0.03,
         width: PAGE_WIDTH*0.8,
+
     },
     buttonContainer: {
         flex: 4,
@@ -295,6 +296,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         padding: 10,
+        width: PAGE_WIDTH*0.8,
+        paddingBottom: PAGE_HEIGHT*0.03,
+
     },
     text: {
         fontSize: 20,

@@ -25,9 +25,41 @@ const WordCard = ( {word, translations} ) => {
         }
     }
 
+    // Sets word type color
+
+    const borderColor = (type) => {
+        if (type === "noun") {
+            return "#FFC107"
+        }
+        else if (type === "verb") {
+            return "#4CAF50" 
+        }
+        else if (type === "adjective") {
+            return "#FF5722"
+        }
+        else if (type === "subject") {
+            return "#2196F3"
+        }
+    }
+
+    const backgroundColor = (type) => {
+        if (type === "noun") {
+            return "#FFF3E0"
+        }
+        else if (type === "verb") {
+            return "#E8F5E9" 
+        }
+        else if (type === "adjective") {
+            return "#FFE0B2"
+        }
+        else if (type === "subject") {
+            return "#E3F2FD"
+        }
+    }
+
     return (
         <View style={{width : '100%'}}>
-            <TouchableOpacity style={styles.wordCard}>
+            <TouchableOpacity style={[styles.wordCard, {borderColor: borderColor(word.type), backgroundColor: backgroundColor(word.type)} ]}> 
                 <Text style={styles.text}>{word.word}</Text>
                 {WordTranslations()}
             </TouchableOpacity>
@@ -42,9 +74,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         paddingHorizontal: 0,
         paddingVertical: 0,
-        borderColor: '#FFC107',
         backgroundColor: '#FFFFFF',
-        borderWidth: 1,
+        borderWidth: 2,
         borderRadius: 10,
         position: 'relative',
         width: PAGE_WIDTH*.18,
