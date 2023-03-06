@@ -29,6 +29,8 @@ const SayModal = ({ sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisp
 
     const [sayPartly, setSayPartly] = useState(false);
 
+    const [sayNone, setSayNone] = useState(false);
+
     const [attempted, setAttempted] = useState(false);
 
     const [recordingUri, setRecordingUri] = useState(null);
@@ -37,13 +39,19 @@ const SayModal = ({ sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisp
 
     // Sets success upon 50% of sentence said
     useEffect (() => {
-        if (sentenceSaidPercentage > 0.5 && sentenceSaidPercentage < 1) {
+        if (sentenceSaidPercentage > 0 && sentenceSaidPercentage < 1) {
+            console.log("partly said!")
             setSayPartly(true);
         }
         if (sentenceSaidPercentage === 1) {
-            console.log("partly said!")
+            console.log("all said!")
             setSaySuccess(true);
         }
+        if (sentenceSaidPercentage === 0 && attempted) {
+            console.log("none said!")
+            setSayNone(true);
+        }
+
     }, [sentenceSaidPercentage])
 
     useEffect (() => {
@@ -54,6 +62,7 @@ const SayModal = ({ sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisp
         setAttempted(false);
         setSaySuccess(false);
         setSayPartly(false);
+        setSayNone(false);
         setTopText('Push the record button to practice your sentence!');
         setBottomText('Say it!');
     }
@@ -63,6 +72,7 @@ const SayModal = ({ sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisp
         setAttempted(false);
         setSaySuccess(false);
         setSayPartly(false);
+        setSayNone(false);
         setTopText('Push the record button to practice your sentence!');
         setBottomText('Say it!');
     }
@@ -72,32 +82,45 @@ const SayModal = ({ sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisp
         if (attempted && saySuccess) {
             setSayVisible(false);
             setSayPartly(false)
+            setSayNone(false)
             if (lang === "Spanish") {
-                setTopText("¡Felicidades! We understood everything :) Save it to your phrasebook?")
+                setTopText("¡Felicidades! 🚀 We understood everything :) Save it to your phrasebook?")
               }  
               if (lang === "Korean") {
-                setTopText("축하해요! We understood everything :) Save it to your phrasebook?")
+                setTopText("축하해요! 🚀 We understood everything :) Save it to your phrasebook?")
               }  
         } 
         else if (attempted && sayPartly) {
             setSayVisible(false);
             setSaySuccess(false);
+            setSayNone(false)
             if (lang === "Spanish") {
                 setTopText(
                     <Text>
-                      ¡Bien! We understood the words in{" "}<Text style={{ color: "#8CFF98" }}>green</Text>. Save it or keep practicing?
+                      ¡Bien! 👏 We understood the words in{" "}<Text style={{ color: "#8CFF98" }}>green</Text>. Save it or keep practicing?
                     </Text>
                 )
               }  
               if (lang === "Korean") {
                 setTopText(
                     <Text>
-                      축하해요! We understood the words in{" "}<Text style={{ color: "#8CFF98" }}>green</Text>. Save it or keep practicing?
+                      축하해요! 👏 We understood the words in{" "}<Text style={{ color: "#8CFF98" }}>green</Text>. Save it or keep practicing?
                     </Text>                
                 )
               }  
-        }        
-      }, [attempted, saySuccess, sayPartly]);
+        }
+        else if (attempted && sayNone) {
+            setSayVisible(false);
+            setSaySuccess(false);
+            setSayPartly(false)
+            if (lang === "Spanish") {
+                setTopText("¡Disculpa! 🫠 We couldn't understand you. Keep trying?")
+              }  
+              if (lang === "Korean") {
+                setTopText(("죄송합니다! 🫠 We couldn't understand you. Keep trying?"))
+              }  
+        }            
+      }, [attempted, saySuccess, sayPartly, sayNone]);
 
 
     // Output modal
@@ -159,9 +182,9 @@ const SayModal = ({ sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisp
                     </View>
                     <View style={styles.buttonsContainer}>    
                         <SaveButton/>                                        
-                        <View style={styles.grayButton}>
+                        <TouchableOpacity style={styles.grayButton} onPress={() => close()}>
                             <Text style={[styles.smallText, { paddingLeft: 10} ]}>Continue without saving</Text>
-                        </View>                                
+                        </TouchableOpacity>                                
                     </View>                                               
                 </View>
             </Modal>
@@ -192,6 +215,38 @@ const SayModal = ({ sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisp
                         <TouchableOpacity style={styles.grayButton} onPress={() => keepImproving()}>
                             <Text style={[styles.smallText, { paddingLeft: 10} ]}>Keep improving</Text>
                         </TouchableOpacity>                                
+                    </View>                                               
+                </View>
+            </Modal>
+            <Modal visible={sayNone} transparent={true}>
+                <View style={[styles.modalContainer, { height: PAGE_HEIGHT/2.5,} ]}> 
+                    <View style={styles.topContainer}>
+                        <TouchableOpacity onPress={() => setSaySuccess(false)}>
+                            <Close/>
+                        </TouchableOpacity>                        
+                    </View>
+                    <View style={styles.smallTextContainer}>
+                        <Text style={styles.smallText}>{topText}</Text>
+                    </View>
+                    <View style={styles.playbackContainer}>
+                        <TouchableOpacity style={styles.playbackButton} onPress={() => sentenceSpeak(sentenceText, langCode)}>
+                            <AudioPlayback/>
+                            <Text style={styles.playbackText}>We said</Text>
+                            <Playback/>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.playbackButton} onPress={() => playRecording(recordingUri)}>
+                            <MicrophonePlayback/>
+                            <Text style={styles.playbackText}>You said</Text>
+                            <Playback/>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.buttonsContainer}>    
+                        <TouchableOpacity style={styles.blueButton} onPress={() => keepImproving()}>
+                            <Text style={[styles.smallText, { paddingLeft: 10} ]}>Try again</Text>
+                        </TouchableOpacity>
+                        <View style={styles.grayButton} onPress={() => close()}>
+                            <Text style={[styles.smallText, { paddingLeft: 10} ]}>Back to builder</Text>
+                        </View>                                                                                           
                     </View>                                               
                 </View>
             </Modal>
@@ -310,6 +365,17 @@ const styles = StyleSheet.create({
         width: PAGE_WIDTH*.5,
 
         backgroundColor: "#8B8B8B",
+        borderRadius: 10,
+    },
+    blueButton: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        padding: 10,
+        width: PAGE_WIDTH*.5,
+
+        backgroundColor: "#2E92F0",
         borderRadius: 10,
     },
 })
