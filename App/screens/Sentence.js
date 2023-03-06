@@ -59,15 +59,20 @@ const Sentence = ({
 
     // Clear top sentence if re-entering sentence screen (e.g. when choosing new language)
 
-    useEffect(() => {        
-        if (sentence === sentenceInit) {
+    useEffect(() => {           
+        if (sentenceReady === false) {
             setSentenceText(" ")
             setSentenceAnalyzed([])
             setSentenceEn(" ")
             setSentenceFixed(false)
             setForward(sentenceInit[0].type)
         }
-    }, [sentence])
+    }, [sentenceReady])
+
+    // Reset sentence structure if changed
+
+    //useEffect(() => {
+
 
     // Sentence Test (to see if all necessary boxes are filled)
 
@@ -75,9 +80,16 @@ const Sentence = ({
         SentenceTest(sentence, setSentenceReady)        
     }, [sentence])
 
+    useEffect(() => {
+        console.log("sentenceReady is NOW ", sentenceReady)
+    }, [sentenceReady])
+
+
     // Sentence GPT fix (build with chosen words)
 
+    // Prevent sentenceFix from running on initial load
     const sentenceFix = (sentence) => {
+        console.log("sentenceReady FIXER is ", sentenceReady)
         if (sentenceReady === true && sentence !== sentenceInit) {
             SentenceFixer(sentence, 
                 setSentenceFixed,
@@ -89,11 +101,10 @@ const Sentence = ({
                 setSentenceAnalyzed)
         } 
     }
-
-    //sentenceFix(sentence)
-    useEffect(() => {
+    
+    useEffect(() => {    
        sentenceFix(sentence)       
-    }, [sentenceReady, sentence])
+    }, [sentenceReady])
 
     // Translate sentence
 

@@ -57,9 +57,9 @@ export default ({ route }) => {
 
     const [words, setWords] = useState(createWordList[2]);
     
-    const [sentenceInit, setSentenceInit] = useState(createWordList[1]);
+    const sentenceInit = createWordList[1];
 
-    const sentenceType = createWordList[0];
+    const [sentenceType, setSentenceType] = useState(createWordList[0]);
 
     const routeList = sentenceInit.map(item => item.type);
 
@@ -70,8 +70,11 @@ export default ({ route }) => {
     const [sentence, setSentence] = useState(sentenceInit); // Sets the initial sentence state, will be modified on drag or tap
       // SHOULD BE USEEFFECT FOR UPDATING
 
+
     useEffect(() => {
         setSentence(sentenceInit)
+        setSentenceType(createWordList[0])
+        //setSentenceInit(createWordList[1])
         setWords(createWordList[2])
     }, [route.params])
 
