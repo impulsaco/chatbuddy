@@ -4,19 +4,12 @@ import 'react-native-gesture-handler';
 import { LinearGradient } from 'expo-linear-gradient'
 import { Button } from '@rneui/themed'
 import { supabase } from '../lib/supabase';
-import createWordList from '../wordsets/freeformList';
 
 const PAGE_HEIGHT = Dimensions.get('window').height;
 
 const PAGE_WIDTH = Dimensions.get('window').width;
 
 function Home({navigation}) {
-
-    // set up word lists  
-  
-    // create state with initial array
-    const [wordsKo, setWordsKo] = useState(createWordList('ko'));
-    const [wordsEs, setWordsEs] = useState(createWordList('es-MX'));
 
     // Retrieve session
       

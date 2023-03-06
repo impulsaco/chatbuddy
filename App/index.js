@@ -146,21 +146,32 @@ const PAGE_WIDTH = Dimensions.get('window').width;
 /// Recording and saving modal DONE
 /// Add microphone DONE
 /// Play back recording DONE
+/// Partial success result DONE
 
 // Tabs
 /// Delete icons DONE
 /// Tap wordbox to change tabs DONE
 /// Wordbox navigation DONE
 /// Words background DONE
-/// Dynamic tab background
+/// Dynamic tab background DONE
+/// Switch instructions and buttons DONE
+/// Color boxes DONE
+/// Tab alternative
+
+// Bugs
+/// Previous sentence bug DONE
+/// Automatic ready bug DONE
+/// Handle null audio
+/// Handle no pronunciation
 
 // Other
-/// Fewer words
+/// Fewer words DONE (shifted to three per row)
 /// Translations icon
-/// Shuffle button
-/// New add word button
+/// Shuffle button DONE (not activated yet)
+/// Activate shuffle button
+/// New add word button DONE
 /// Other icons
-/// Check width bug
+/// Check width bug 
 
 /// Delete phrases
 /// Leveling and phrasebook completion

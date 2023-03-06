@@ -17,6 +17,7 @@ const SentenceTest = (sentence, setSentenceReady) => {
         }
         else {
             console.log("you are missing words")
+            setSentenceReady(false)
         }
     }
 

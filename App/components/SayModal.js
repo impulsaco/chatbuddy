@@ -49,29 +49,6 @@ const SayModal = ({ sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisp
     useEffect (() => {
     }, [attempted])
 
-    
-    // Set message on success
-    /*useEffect(() => {
-        if (attempted && saySuccess) {
-            setSayVisible(false);
-            // setSaySuccess(true);
-            setSayPartly(false)
-        } 
-        else if (attempted && sayPartly) {
-            setSayVisible(false);
-            setSaySuccess(false);
-            // setSayPartly(true);
-        }  
-        if (attempted === true) {
-          if (lang === "Spanish") {
-            setTopText("¡Felicidades! We understood you :) Save it to your phrasebook?")
-          }  
-          if (lang === "Korean") {
-            setTopText("축하해요! We understood you :) Save it to your phrasebook?")
-          }  
-        }                                  
-      }, [saySuccess, attempted, lang]);*/
-
     const close = () => {
         setSayVisible(false);
         setAttempted(false);
@@ -239,7 +216,7 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        width: PAGE_WIDTH*.4,
+        width: PAGE_WIDTH*.45,
     },
     bigText: {
         fontSize: 25,

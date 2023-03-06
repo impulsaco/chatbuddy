@@ -13,13 +13,13 @@ const PAGE_WIDTH = Dimensions.get('window').width;
 const WordRoute = (type, setUserWords, userWords, langCode, words, translations, sentence, setSentence, setForward) => {
   return () => (
     <View style={styles.wordContainer}>
-      <DraxScrollView contentContainerStyle={styles.dragContainer}>          
-        <ShuffleWords type={type} setUserWords={setUserWords} userWords={userWords} langCode={langCode}/>
-        <AddWord type={type} setUserWords={setUserWords} userWords={userWords} langCode={langCode}/>
+      <DraxScrollView contentContainerStyle={styles.dragContainer}>                  
         {userWords.filter ? userWords.filter(obj => {return obj.type === type})
           .map((word) => <DraggableWord key={word.id} word={word} translations={translations} sentence={sentence} setSentence={setSentence} setForward={setForward}/>) : null}
         {words.filter(obj => {return obj.type === type})
           .map((word) => <DraggableWord key={word.id} word={word} translations={translations} sentence={sentence} setSentence={setSentence} setForward={setForward}/>)}
+        <ShuffleWords type={type} setUserWords={setUserWords} userWords={userWords} langCode={langCode}/>
+        <AddWord type={type} setUserWords={setUserWords} userWords={userWords} langCode={langCode}/>
       </DraxScrollView>
     </View>
   );

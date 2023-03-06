@@ -57,7 +57,7 @@ export default ({ route }) => {
 
     const [words, setWords] = useState(createWordList[2]);
     
-    const sentenceInit = createWordList[1];
+    const [sentenceInit, setSentenceInit] = useState(createWordList[1]);
 
     const sentenceType = createWordList[0];
 

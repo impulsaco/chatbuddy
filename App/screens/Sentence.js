@@ -29,7 +29,7 @@ const Sentence = ({
 
     // Set instructions and sentence placeholder
 
-    let starterText = "Drag words into their appropriate box below"
+    let starterText = "Drag words into their appropriate box below:"
 
     const [text, setText] = useState(starterText)
 
@@ -57,6 +57,18 @@ const Sentence = ({
     const [sentenceFixed, setSentenceFixed] = useState(false);
     const [savedSentence, setSavedSentence] = useState("");
 
+    // Clear top sentence if re-entering sentence screen (e.g. when choosing new language)
+
+    useEffect(() => {        
+        if (sentence === sentenceInit) {
+            setSentenceText(" ")
+            setSentenceAnalyzed([])
+            setSentenceEn(" ")
+            setSentenceFixed(false)
+            setForward(sentenceInit[0].type)
+        }
+    }, [sentence])
+
     // Sentence Test (to see if all necessary boxes are filled)
 
     useEffect(() => {
@@ -66,8 +78,7 @@ const Sentence = ({
     // Sentence GPT fix (build with chosen words)
 
     const sentenceFix = (sentence) => {
-        console.log("sentence to send to fix is ", sentence)
-        if (sentenceReady === true) {
+        if (sentenceReady === true && sentence !== sentenceInit) {
             SentenceFixer(sentence, 
                 setSentenceFixed,
                 setSentenceText,
@@ -115,9 +126,7 @@ const Sentence = ({
 
     // check whispered sentence against sentence
     useEffect(() => {
-        console.log("sentenceWhisper in Sentence is ", sentenceWhisper)
-        console.log("sentenceSaidPercentage in Sentence is ", sentenceSaidPercentage)
-        console.log("sentenceAnalyzed in Sentence is ", sentenceAnalyzed)
+        console.log("sentenceWhisper in Sentence is ", sentenceWhisper)        
         let interimCount = 0
         for (let i = 0; i < sentenceAnalyzed.length; i++) {
             let interimState = [...sentenceAnalyzed]

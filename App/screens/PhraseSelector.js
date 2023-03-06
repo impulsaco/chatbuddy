@@ -16,9 +16,9 @@ const PAGE_WIDTH = Dimensions.get('window').width;
 
 function PhraseSelector({navigation, route}) {
 
-    // set up word lists  
-    // create state with words
+    // Set up word lists 
 
+    // create state with words
 
     const [lang, setLang] = useState(route.params.lang)
     const [langCode, setLangCode] = useState(route.params.langCode)
@@ -101,7 +101,7 @@ function PhraseSelector({navigation, route}) {
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
-      width: PAGE_WIDTH,
+      width: PAGE_WIDTH*.8,
     },
     mainText: {
       fontSize: 54,

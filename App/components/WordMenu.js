@@ -20,11 +20,11 @@ const WordMenu = ({ state, navigation, forward, setForward, words, sentence, set
     }
   }, [forward]) 
 
-  // Sets background color of tabs if pressed
+  // Sets background color of tabs if pressed (disabled for now)
   const color = (pageName, currentIndex) => {
     const nameArray = state.routeNames
     if (currentIndex === nameArray.indexOf(pageName)) {
-      return 'rgba(242, 242, 242, 0.5)'
+      return 'rgba(0, 0, 0, 0)'
     }
     else {
       return 'rgba(0, 0, 0, 0)'
@@ -97,6 +97,7 @@ const styles = StyleSheet.create({
     height: PAGE_HEIGHT*.07,
     width: PAGE_WIDTH,    
     padding: 10,
+    marginBottom: PAGE_HEIGHT*.01,
   },
   wordContainer:
   {
