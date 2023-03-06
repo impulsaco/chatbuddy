@@ -1,5 +1,6 @@
-import { StyleSheet, Dimensions} from 'react-native';
+import { StyleSheet, Dimensions, View, Text, Image, TouchableOpacity} from 'react-native';
 import React, { useState, useEffect } from 'react';
+import Icon from 'react-native-vector-icons/Ionicons';
 //import { Button } from '@rneui/base';
 import Words from './screens/Words'
 import { NativeBaseProvider } from 'native-base';
@@ -15,6 +16,8 @@ import Home from './screens/Home';
 import { getHeaderTitle } from '@react-navigation/elements';
 import * as Sentry from 'sentry-expo';
 import PhraseSelector from './screens/PhraseSelector';
+import AppIntroSlider from 'react-native-app-intro-slider';
+import NewLogo from './../assets/newLogo.svg'
 
 Sentry.init({
   dsn: 'https://5a92132c278b42a79bb122eb9c511e43@o4504618398908416.ingest.sentry.io/4504618595713024',
@@ -162,7 +165,7 @@ const PAGE_WIDTH = Dimensions.get('window').width;
 /// Previous sentence bug DONE
 /// Automatic ready bug DONE
 /// Handle null audio
-/// Handle no pronunciation
+/// Handle no pronunciation DONE
 
 // Other
 /// Fewer words DONE (shifted to three per row)
@@ -203,52 +206,136 @@ const PAGE_WIDTH = Dimensions.get('window').width;
 
 const Drawer = createDrawerNavigator();
 
+const slides = [
+  {
+    key: 1,
+    title: 'Choose the words you want to learn',
+    text: 'No more memorizing useless vocab',
+    image: require('./../assets/sliderImage1.png'),
+    backgroundColor: '#3499FE',
+  },
+  {
+    key: 2,
+    title: 'Drag and drop to build a sentence',
+    text: 'AI will help you build it',
+    image: require('./../assets/sliderImage2.png'),
+    backgroundColor: '#3499FE',
+  },
+  {
+    key: 3,
+    title: 'Instant feedback on your pronunciation',
+    text: 'Know you will be understood',
+    image: require('./../assets/sliderImage3.png'),
+    backgroundColor: '#3499FE',
+  },
+  {
+    key: 4,
+    title: 'Build your own personal phrasebook',
+    text: 'Save sentences to use in daily life and travel',
+    image: require('./../assets/sliderImage4.png'),
+    backgroundColor: '#3499FE',
+  }
+];
+
 // add linear gradient to navigation container 
 export default function App() {
+
+  /*this.state = {
+    showRealApp: false
+  }*/
+
+  const [showRealApp, setShowRealApp] = useState(false)
+
+  console.log('showRealApp: ', showRealApp)
+
+  const renderItem = ({ item }) => {
+    return (
+      <View style={styles.slide}>
+        <NewLogo style={styles.logo}/>
+        <Text style={styles.title}>{item.title}</Text>
+        <Image source={item.image} />
+        <Text style={styles.text}>{item.text}</Text>
+      </View>
+    );
+  }
+
+  const onDone = () => {
+    // User finished the introduction. Show real app through
+    // navigation or simply by controlling state
+    console.log('onDone running!')
+    setShowRealApp(true);
+  }  
+
+  const renderDoneButton = () => {
+    //"rgba(255, 255, 255, .9)"
+    return (
+      <TouchableOpacity onPress={() => onDone()}>
+        <View style={styles.buttonCircle}>
+          <Icon
+            name="md-checkmark"
+            color='black'
+            size={24}
+          />
+        </View>
+      </TouchableOpacity>
+    );
+  };
 
   try {
     // your code SENTRY
 
   const [session, setSession] = useState()
 
+  /*useEffect(() => {    
+    onDone()
+  }, [])*/
+
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session)
+      session ? setShowRealApp(true) : null
     })
 
     supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session)
+      session ? setShowRealApp(true) : null
     })
   }, [])
 
   // transparent header: options={{headerTransparent: true}}
 
-  return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <NavigationContainer>
-        <NativeBaseProvider style={styles.container}>
-          <Drawer.Navigator
-            screenOptions={{
-              header: ({ navigation, route }) => {
-                const title = getHeaderTitle(route.name);
-                return <Header title={title} navigation={navigation} />;
-              },
-              drawerPosition: 'left',
-              headerRight: () => <Header/>,
-              overlayColor: 'transparent',
-              headerTransparent: true,
-            }}
-          > 
-            <Drawer.Screen name="Home" component={Home}/>
-            <Drawer.Screen name="LogIn" component={LogIn} />
-            <Drawer.Screen name="Choose" component={PhraseSelector} />
-            <Drawer.Screen name="Build" component={Words} />
-            <Drawer.Screen name="Phrasebook" component={Phrasebook} />
-          </Drawer.Navigator>
-        </NativeBaseProvider>
-      </NavigationContainer>
-    </GestureHandlerRootView>  
-  );
+  if (showRealApp || session) {
+    return (
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <NavigationContainer>
+          <NativeBaseProvider style={styles.container}>
+            <Drawer.Navigator
+              screenOptions={{
+                header: ({ navigation, route }) => {
+                  const title = getHeaderTitle(route.name);
+                  return <Header title={title} navigation={navigation} />;
+                },
+                drawerPosition: 'left',
+                headerRight: () => <Header/>,
+                overlayColor: 'transparent',
+                headerTransparent: true,
+              }}
+            > 
+              <Drawer.Screen name="Home" component={Home}/>
+              <Drawer.Screen name="LogIn" component={LogIn} />
+              <Drawer.Screen name="Choose" component={PhraseSelector} />
+              <Drawer.Screen name="Build" component={Words} />
+              <Drawer.Screen name="Phrasebook" component={Phrasebook} />
+            </Drawer.Navigator>
+          </NativeBaseProvider>
+        </NavigationContainer>
+      </GestureHandlerRootView>  
+    );
+  } 
+  else {
+    return <AppIntroSlider renderItem={renderItem} data={slides} onDone={onDone} renderDoneButton={renderDoneButton}/>;
+  }  
+
   } catch (error) {
     Sentry.Native.captureException(error);
   }
@@ -279,5 +366,49 @@ const styles = StyleSheet.create({
     right: PAGE_WIDTH/2,
     zIndex: 1,
   },
+  buttonCircle: {
+    width: 40,
+    height: 40,
+    backgroundColor: 'rgba(0, 0, 0, .2)',
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  // styling for intro slides 
+  title: {
+    fontSize: 36,
+    color: 'white',
+    textAlign: 'center',
+    display: 'flex',
+    alignItems: 'center',
+    fontWeight: '500',
+    width: PAGE_WIDTH/1.5,
+    marginBottom: PAGE_HEIGHT/10,
+    marginTop: PAGE_HEIGHT/30,
+  },
+  logo: {
+    position: 'absolute',
+    top: PAGE_HEIGHT/10,    
+  },
+  text: {
+    color: 'white',
+    textAlign: 'center',
+    display: 'flex',
+    marginTop: PAGE_HEIGHT/20,
+    alignItems: 'center',
+    width: PAGE_WIDTH/1.5,
+    fontWeight: '400',
+    fontSize: 26,
+  },
+  slide: {
+    backgroundColor: '#3499FE',
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column',    
+    height: PAGE_HEIGHT,
+    width: PAGE_WIDTH,
+
+  }
 
 })

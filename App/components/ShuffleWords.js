@@ -5,6 +5,7 @@ import { Button } from "@rneui/themed"
 import Close from '../../assets/close.svg'
 import googleTranslateWord from '../lib/googleTranslateWord';
 import { supabase } from '../lib/supabase';
+import { Alert } from 'react-native';
 
 const PAGE_HEIGHT = Dimensions.get('window').height;
 const PAGE_WIDTH = Dimensions.get('window').width;
@@ -14,11 +15,11 @@ const AddWord = () => {
 
     return (
         <View>
-            <View style={styles.container}>
-                <TouchableOpacity style={styles.shuffleCard} >
+            <TouchableOpacity style={styles.container} onPress={() => Alert.alert("Coming soon!", "Shuffle will be ready next version :)")}>
+                <View style={styles.shuffleCard}>
                     <Shuffle/>
-                </TouchableOpacity>
-            </View>
+                </View>
+            </TouchableOpacity>
         </View>
     );
 };

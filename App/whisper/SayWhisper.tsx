@@ -458,7 +458,7 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     width: 40,
     height: 40,
-    marginRight: PAGE_WIDTH*.02,
+    marginRight: PAGE_WIDTH*.03,
   },
   stopText: {
     color: "white",
