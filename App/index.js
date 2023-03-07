@@ -166,6 +166,7 @@ const PAGE_WIDTH = Dimensions.get('window').width;
 /// Automatic ready bug DONE
 /// Handle null audio
 /// Handle no pronunciation DONE
+/// Handle two correct pronunciations in a row
 
 // Other
 /// Fewer words DONE (shifted to three per row)
@@ -211,28 +212,28 @@ const slides = [
     key: 1,
     title: 'Choose the words you want to learn',
     text: 'No more memorizing useless vocab',
-    image: require('./../assets/sliderImage1.png'),
+    image: require('./../assets/SliderImage1.svg'),
     backgroundColor: '#3499FE',
   },
   {
     key: 2,
     title: 'Drag and drop to build a sentence',
     text: 'AI will help you build it',
-    image: require('./../assets/sliderImage2.png'),
+    image: require('./../assets/SliderImage2.svg'),
     backgroundColor: '#3499FE',
   },
   {
     key: 3,
     title: 'Instant feedback on your pronunciation',
     text: 'Know you will be understood',
-    image: require('./../assets/sliderImage3.png'),
+    image: require('./../assets/SliderImage3.svg'),
     backgroundColor: '#3499FE',
   },
   {
     key: 4,
     title: 'Build your own personal phrasebook',
     text: 'Save sentences to use in daily life and travel',
-    image: require('./../assets/sliderImage4.png'),
+    image: require('./../assets/SliderImage4.svg'),
     backgroundColor: '#3499FE',
   }
 ];

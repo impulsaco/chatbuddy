@@ -39,6 +39,7 @@ const SayModal = ({ sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisp
 
     // Sets success upon 50% of sentence said
     useEffect (() => {
+        console.log("sentenceSaidPercentage", sentenceSaidPercentage)
         if (sentenceSaidPercentage > 0 && sentenceSaidPercentage < 1) {
             console.log("partly said!")
             setSayPartly(true);
@@ -52,7 +53,7 @@ const SayModal = ({ sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisp
             setSayNone(true);
         }
 
-    }, [sentenceSaidPercentage])
+    }, [sentenceSaidPercentage, attempted, recordingUri, sentenceWhisper])
 
     useEffect (() => {
     }, [attempted])
@@ -221,7 +222,7 @@ const SayModal = ({ sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisp
             <Modal visible={sayNone} transparent={true}>
                 <View style={[styles.modalContainer, { height: PAGE_HEIGHT/2.5,} ]}> 
                     <View style={styles.topContainer}>
-                        <TouchableOpacity onPress={() => setSaySuccess(false)}>
+                        <TouchableOpacity onPress={() => close()}>
                             <Close/>
                         </TouchableOpacity>                        
                     </View>
