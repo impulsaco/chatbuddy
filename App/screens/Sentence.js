@@ -43,7 +43,7 @@ const Sentence = ({
 
     // Say/recording modal setup
 
-    const [sayVisible, setSayVisible] = useState(false);
+    const [sayVisible, setSayVisible] = useState("none");
 
     // Sentence analyzed
 
@@ -135,11 +135,12 @@ const Sentence = ({
     }
 
     // Check if sentence has been said and is understood enough to save
-    const [sentenceSaidPercentage, setSentenceSaidPercentage] = useState(0);
+    const [sentenceSaidPercentage, setSentenceSaidPercentage] = useState(0); 
 
     // check whispered sentence against sentence
     useEffect(() => {
-        console.log("sentenceWhisper in Sentence is ", sentenceWhisper)        
+        console.log("sentenceWhisper in Sentence is ", sentenceWhisper)  
+        console.log("sentenceAnalyzed in Sentence is ", sentenceAnalyzed)      
         let interimCount = 0
         for (let i = 0; i < sentenceAnalyzed.length; i++) {
             let interimState = [...sentenceAnalyzed]
@@ -150,7 +151,7 @@ const Sentence = ({
             }
         }
         setSentenceSaidPercentage(interimCount / sentenceAnalyzed.length)
-      }, [sentenceWhisper])
+      }, [sentenceWhisper]) //DOES NOT UPDATE WHEN SENTENCE SAID STAYS THE SAME!
 
     // set Text based on whispered
 
@@ -220,6 +221,7 @@ const Sentence = ({
                     <SayItButton 
                         sentence={sentence} 
                         sentenceFixed={sentenceFixed}
+                        sayVisible={sayVisible}
                         setSayVisible={setSayVisible}
                         setText={setText} 
                         setSentenceText={setSentenceText}

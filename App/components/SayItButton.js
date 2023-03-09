@@ -15,6 +15,7 @@ import Microphone from "../../assets/microphone.svg";
 const SayItButton = ({ sentence, 
                         sentenceFixed,
                         setText, 
+                        sayVisible,
                         setSayVisible,
                         setSentenceText,
                         setSentenceEn, 

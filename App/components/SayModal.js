@@ -17,6 +17,7 @@ const PAGE_WIDTH = Dimensions.get('window').width;
 const SayModal = ({ sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisper, lang, langCode, sentenceSaidPercentage, sentenceText}) => {
 
     useEffect(() => {
+        console.log("sayVisible is", sayVisible) // testing
     }, [sayVisible])
 
     // Create variables for modal
@@ -37,26 +38,33 @@ const SayModal = ({ sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisp
 
     const [playSound, setPlaySound] = useState(null);
 
+    const [closeVisible, setCloseVisible] = useState(true); // to prevent premature recording end
+
     // Sets success upon 50% of sentence said
     useEffect (() => {
         console.log("sentenceSaidPercentage", sentenceSaidPercentage)
+        console.log("saySuccess is ", saySuccess)
+        console.log("sayVisible is", sayVisible)
         if (sentenceSaidPercentage > 0 && sentenceSaidPercentage < 1) {
-            console.log("partly said!")
             setSayPartly(true);
+            setSaySuccess(false);
+            setSayNone(false);
         }
         if (sentenceSaidPercentage === 1) {
-            console.log("all said!")
             setSaySuccess(true);
+            setSayNone(false);
+            setSayPartly(false);
         }
         if (sentenceSaidPercentage === 0 && attempted) {
-            console.log("none said!")
             setSayNone(true);
+            setSaySuccess(false);
+            setSayPartly(false);
         }
 
     }, [sentenceSaidPercentage, attempted, recordingUri, sentenceWhisper])
 
     useEffect (() => {
-    }, [attempted])
+    }, [attempted, sayNone, sayPartly, saySuccess, sayVisible])
 
     const close = () => {
         setSayVisible(false);
@@ -64,6 +72,7 @@ const SayModal = ({ sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisp
         setSaySuccess(false);
         setSayPartly(false);
         setSayNone(false);
+        //setSentenceWhisper("no whisper yet");
         setTopText('Push the record button to practice your sentence!');
         setBottomText('Say it!');
     }
@@ -80,10 +89,13 @@ const SayModal = ({ sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisp
 
     // Logic for which modal renders
     useEffect(() => {
+        console.log("UPDATE!", saySuccess, sayPartly, sayNone, attempted)
         if (attempted && saySuccess) {
-            setSayVisible(false);
+            // setSayVisible(false);
             setSayPartly(false)
             setSayNone(false)
+            console.log("saySuccess HERE is ", saySuccess)
+            console.log("attempted HERE is ", attempted)
             if (lang === "Spanish") {
                 setTopText("¡Felicidades! 🚀 We understood everything :) Save it to your phrasebook?")
               }  
@@ -92,6 +104,7 @@ const SayModal = ({ sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisp
               }  
         } 
         else if (attempted && sayPartly) {
+            // setAttempted(false);
             setSayVisible(false);
             setSaySuccess(false);
             setSayNone(false)
@@ -111,6 +124,7 @@ const SayModal = ({ sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisp
               }  
         }
         else if (attempted && sayNone) {
+            // setAttempted(false);
             setSayVisible(false);
             setSaySuccess(false);
             setSayPartly(false)
@@ -121,7 +135,25 @@ const SayModal = ({ sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisp
                 setTopText(("죄송합니다! 🫠 We couldn't understand you. Keep trying?"))
               }  
         }            
-      }, [attempted, saySuccess, sayPartly, sayNone]);
+      }, [attempted, saySuccess, sayPartly, sayNone, sentenceSaidPercentage]);
+
+    const closeButton = () => {
+        if (closeVisible) {
+            return (
+                <TouchableOpacity onPress={() => close()}>
+                    <Close/>
+                </TouchableOpacity> 
+            )
+        }
+        else {
+            return (
+                <View/>
+            )
+        }
+    }
+
+    useEffect(() => {
+    }, [closeVisible])
 
 
     // Output modal
@@ -133,9 +165,7 @@ const SayModal = ({ sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisp
             <Modal visible={sayVisible} transparent={true}>
                 <View style={styles.modalContainer}> 
                     <View style={styles.topContainer}>
-                        <TouchableOpacity onPress={() => close()}>
-                            <Close/>
-                        </TouchableOpacity>                        
+                        {closeButton()}                        
                     </View>
                     <View style={styles.smallTextContainer}>
                         <Text style={styles.smallText}>{topText}</Text>
@@ -151,7 +181,9 @@ const SayModal = ({ sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisp
                             setRecordingUri={setRecordingUri}
                             setAttempted={setAttempted}
                             setPlaySound={setPlaySound}
-                            sentenceText={sentenceText}
+                            sentenceText={sentenceText}     
+                            closeVisible={closeVisible}                       
+                            setCloseVisible={setCloseVisible}
                         />
                         </TouchableOpacity>                    
                     <View style={styles.bigTextContainer}>
@@ -159,12 +191,10 @@ const SayModal = ({ sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisp
                     </View>                                        
                 </View>
             </Modal>
-            <Modal visible={saySuccess} transparent={true}>
+            <Modal visible={saySuccess && !sayVisible} transparent={true}>
                 <View style={[styles.modalContainer, { height: PAGE_HEIGHT/2.5,} ]}> 
                     <View style={styles.topContainer}>
-                        <TouchableOpacity onPress={() => close()}>
-                            <Close/>
-                        </TouchableOpacity>                        
+                        {closeButton()}                       
                     </View>
                     <View style={styles.smallTextContainer}>
                         <Text style={styles.smallText}>{topText}</Text>
@@ -189,7 +219,7 @@ const SayModal = ({ sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisp
                     </View>                                               
                 </View>
             </Modal>
-            <Modal visible={sayPartly} transparent={true}>
+            <Modal visible={sayPartly && !sayVisible} transparent={true}>
                 <View style={[styles.modalContainer, { height: PAGE_HEIGHT/2.5,} ]}> 
                     <View style={styles.topContainer}>
                         <TouchableOpacity onPress={() => close()}>
@@ -219,7 +249,7 @@ const SayModal = ({ sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisp
                     </View>                                               
                 </View>
             </Modal>
-            <Modal visible={sayNone} transparent={true}>
+            <Modal visible={sayNone && !sayVisible} transparent={true}>
                 <View style={[styles.modalContainer, { height: PAGE_HEIGHT/2.5,} ]}> 
                     <View style={styles.topContainer}>
                         <TouchableOpacity onPress={() => close()}>

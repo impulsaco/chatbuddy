@@ -18,6 +18,10 @@ import * as Sentry from 'sentry-expo';
 import PhraseSelector from './screens/PhraseSelector';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import NewLogo from './../assets/newLogo.svg'
+import SliderImage1 from './../assets/SliderImage1.svg'
+import SliderImage2 from './../assets/SliderImage2.svg'
+import SliderImage3 from './../assets/SliderImage3.svg'
+import SliderImage4 from './../assets/SliderImage4.svg'
 
 Sentry.init({
   dsn: 'https://5a92132c278b42a79bb122eb9c511e43@o4504618398908416.ingest.sentry.io/4504618595713024',
@@ -166,6 +170,7 @@ const PAGE_WIDTH = Dimensions.get('window').width;
 /// Automatic ready bug DONE
 /// Handle null audio
 /// Handle no pronunciation DONE
+/// Handle close before end recording
 /// Handle two correct pronunciations in a row
 
 // Other
@@ -212,28 +217,28 @@ const slides = [
     key: 1,
     title: 'Choose the words you want to learn',
     text: 'No more memorizing useless vocab',
-    image: require('./../assets/SliderImage1.svg'),
+    image: <SliderImage1/>,
     backgroundColor: '#3499FE',
   },
   {
     key: 2,
     title: 'Drag and drop to build a sentence',
     text: 'AI will help you build it',
-    image: require('./../assets/SliderImage2.svg'),
+    image: <SliderImage2/>,
     backgroundColor: '#3499FE',
   },
   {
     key: 3,
     title: 'Instant feedback on your pronunciation',
     text: 'Know you will be understood',
-    image: require('./../assets/SliderImage3.svg'),
+    image: <SliderImage3/>,
     backgroundColor: '#3499FE',
   },
   {
     key: 4,
     title: 'Build your own personal phrasebook',
     text: 'Save sentences to use in daily life and travel',
-    image: require('./../assets/SliderImage4.svg'),
+    image: <SliderImage4/>,
     backgroundColor: '#3499FE',
   }
 ];
@@ -254,7 +259,7 @@ export default function App() {
       <View style={styles.slide}>
         <NewLogo style={styles.logo}/>
         <Text style={styles.title}>{item.title}</Text>
-        <Image source={item.image} />
+        {item.image}
         <Text style={styles.text}>{item.text}</Text>
       </View>
     );

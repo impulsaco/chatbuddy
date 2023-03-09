@@ -23,8 +23,21 @@ import Sound from '../../assets/Sound.svg';
 const PAGE_HEIGHT = Dimensions.get('window').height;
 const PAGE_WIDTH = Dimensions.get('window').width;
 
-export default ({sentenceWhisper, setSentenceWhisper, lang, langCode, setTopText, setBottomText, setRecordingUri, setAttempted, setPlaySound, sentenceText}) => {
-  console.log("sentenceWhisper First is ", sentenceWhisper)
+export default ({
+  sentenceWhisper, 
+  setSentenceWhisper, 
+  lang, 
+  langCode, 
+  setTopText, 
+  setBottomText, 
+  setRecordingUri, 
+  setAttempted, 
+  setPlaySound, 
+  sentenceText,
+  closeVisible,
+  setCloseVisible
+}) => {
+  console.log("sentenceWhisper before new is ", sentenceWhisper)
   const [recording, setRecording] = React.useState(false as any);
   const [recordingDone, setRecordingDone] = React.useState(false);
   const [recordings, setRecordings] = React.useState([]);
@@ -165,7 +178,7 @@ export default ({sentenceWhisper, setSentenceWhisper, lang, langCode, setTopText
     setTranscribeTimout(newTimeout);
   }
 
-  async function startRecording() {
+  async function startRecording() {    
     try {
       console.log("Requesting permissions..");
       const permission = await Audio.requestPermissionsAsync();
@@ -215,8 +228,14 @@ export default ({sentenceWhisper, setSentenceWhisper, lang, langCode, setTopText
     } catch (err) {
       console.error(" Failed to start recording", err);
     }
-  }
-  async function stopRecording() {
+  }  
+
+  React.useEffect(() => {
+    console.log("close UseEffect")
+    console.log("closeVisible is ", closeVisible)
+  }, [closeVisible])
+
+  async function stopRecording() {    
     console.log("Stopping recording..");
     //setRecording(undefined);
     console.log("recording is ", recording);
@@ -331,6 +350,7 @@ export default ({sentenceWhisper, setSentenceWhisper, lang, langCode, setTopText
         setRecordingDone(false)
         setSentenceWhisper(response.data.text) // Sets the sentence check to be shown
         setAttempted(true)
+        setCloseVisible(true)
         console.log("sentenceWhisper in Response is ", sentenceWhisper)
         /*intervalRef.current = setInterval(
           transcribeInterim,
@@ -352,7 +372,7 @@ export default ({sentenceWhisper, setSentenceWhisper, lang, langCode, setTopText
             <TouchableOpacity style={styles.playBack} onPress={() => sentenceSpeak(sentenceText, langCode)}>                
               <Sound/>                
             </TouchableOpacity> 
-            <TouchableOpacity onPress={startRecording} >
+            <TouchableOpacity onPress={() => {setCloseVisible(false); startRecording()} } >
               <BigMike/>                  
             </TouchableOpacity>
           </View>
@@ -360,7 +380,7 @@ export default ({sentenceWhisper, setSentenceWhisper, lang, langCode, setTopText
         {(isRecording || isTranscribing) && !recordingDone && (
           <View>
             <TouchableOpacity
-            onPress={stopRecording}
+            onPress={() => stopRecording()}
             disabled={stopTranscriptionSessionRef.current}            
             style={styles.stopContainer}
             >
