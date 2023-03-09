@@ -14,7 +14,7 @@ import Sound from '../../assets/Sound.svg'
 const PAGE_HEIGHT = Dimensions.get('window').height;
 const PAGE_WIDTH = Dimensions.get('window').width;
 
-const SayModal = ({ sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisper, lang, langCode, sentenceSaidPercentage, sentenceText}) => {
+const SayModal = ({ sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisper, lang, langCode, sentenceSaidPercentage, setSentenceSaidPercentage, sentenceText}) => {
 
     useEffect(() => {
         console.log("sayVisible is", sayVisible) // testing
@@ -25,12 +25,6 @@ const SayModal = ({ sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisp
     const [topText, setTopText] = useState('Push the record button to practice your sentence!');
 
     const [bottomText, setBottomText] = useState('Say it!');
-
-    const [saySuccess, setSaySuccess] = useState(false); 
-
-    const [sayPartly, setSayPartly] = useState(false);
-
-    const [sayNone, setSayNone] = useState(false);
 
     const [attempted, setAttempted] = useState(false);
 
@@ -43,58 +37,43 @@ const SayModal = ({ sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisp
     // Sets success upon 50% of sentence said
     useEffect (() => {
         console.log("sentenceSaidPercentage", sentenceSaidPercentage)
-        console.log("saySuccess is ", saySuccess)
         console.log("sayVisible is", sayVisible)
-        if (sentenceSaidPercentage > 0 && sentenceSaidPercentage < 1) {
-            setSayPartly(true);
-            setSaySuccess(false);
-            setSayNone(false);
+        if (sentenceSaidPercentage > 0 && sentenceSaidPercentage < 1 && attempted) {        
+            setSayVisible("partly");
         }
-        if (sentenceSaidPercentage === 1) {
-            setSaySuccess(true);
-            setSayNone(false);
-            setSayPartly(false);
+        if (sentenceSaidPercentage === 1 && attempted) {
+            setSayVisible("success");
         }
         if (sentenceSaidPercentage === 0 && attempted) {
-            setSayNone(true);
-            setSaySuccess(false);
-            setSayPartly(false);
+            setSayVisible("none");
         }
 
-    }, [sentenceSaidPercentage, attempted, recordingUri, sentenceWhisper])
+    }, [sentenceSaidPercentage, attempted, recordingUri, sentenceWhisper, sayVisible])
 
     useEffect (() => {
-    }, [attempted, sayNone, sayPartly, saySuccess, sayVisible])
+    }, [attempted, sayVisible])
 
     const close = () => {
-        setSayVisible(false);
+        setSayVisible("invisible");
         setAttempted(false);
-        setSaySuccess(false);
-        setSayPartly(false);
-        setSayNone(false);
+        setSentenceSaidPercentage(0);
+        setSentenceWhisper("no whisper yet");
         //setSentenceWhisper("no whisper yet");
         setTopText('Push the record button to practice your sentence!');
         setBottomText('Say it!');
     }
 
     const keepImproving = () => {
-        setSayVisible(true);
-        setAttempted(false);
-        setSaySuccess(false);
-        setSayPartly(false);
-        setSayNone(false);
+        setSayVisible("record");
+        setAttempted(false);        
         setTopText('Push the record button to practice your sentence!');
         setBottomText('Say it!');
     }
 
     // Logic for which modal renders
     useEffect(() => {
-        console.log("UPDATE!", saySuccess, sayPartly, sayNone, attempted)
-        if (attempted && saySuccess) {
-            // setSayVisible(false);
-            setSayPartly(false)
-            setSayNone(false)
-            console.log("saySuccess HERE is ", saySuccess)
+        console.log("UPDATE!", attempted, sayVisible)
+        if (attempted && (sayVisible==="success")) {
             console.log("attempted HERE is ", attempted)
             if (lang === "Spanish") {
                 setTopText("¡Felicidades! 🚀 We understood everything :) Save it to your phrasebook?")
@@ -103,11 +82,8 @@ const SayModal = ({ sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisp
                 setTopText("축하해요! 🚀 We understood everything :) Save it to your phrasebook?")
               }  
         } 
-        else if (attempted && sayPartly) {
-            // setAttempted(false);
-            setSayVisible(false);
-            setSaySuccess(false);
-            setSayNone(false)
+        else if (attempted && (sayVisible==="partly")) {
+            setAttempted(false);            
             if (lang === "Spanish") {
                 setTopText(
                     <Text>
@@ -123,11 +99,8 @@ const SayModal = ({ sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisp
                 )
               }  
         }
-        else if (attempted && sayNone) {
-            // setAttempted(false);
-            setSayVisible(false);
-            setSaySuccess(false);
-            setSayPartly(false)
+        else if (attempted && (sayVisible==="none")) {
+            setAttempted(false);            
             if (lang === "Spanish") {
                 setTopText("¡Disculpa! 🫠 We couldn't understand you. Keep trying?")
               }  
@@ -135,7 +108,7 @@ const SayModal = ({ sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisp
                 setTopText(("죄송합니다! 🫠 We couldn't understand you. Keep trying?"))
               }  
         }            
-      }, [attempted, saySuccess, sayPartly, sayNone, sentenceSaidPercentage]);
+      }, [attempted, sentenceSaidPercentage, sayVisible]);
 
     const closeButton = () => {
         if (closeVisible) {
@@ -162,7 +135,7 @@ const SayModal = ({ sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisp
    
     return (
         <View style={styles.container}>
-            <Modal visible={sayVisible} transparent={true}>
+            <Modal visible={(sayVisible==="record")} transparent={true}>
                 <View style={styles.modalContainer}> 
                     <View style={styles.topContainer}>
                         {closeButton()}                        
@@ -191,7 +164,7 @@ const SayModal = ({ sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisp
                     </View>                                        
                 </View>
             </Modal>
-            <Modal visible={saySuccess && !sayVisible} transparent={true}>
+            <Modal visible={(sayVisible==="success")} transparent={true}>
                 <View style={[styles.modalContainer, { height: PAGE_HEIGHT/2.5,} ]}> 
                     <View style={styles.topContainer}>
                         {closeButton()}                       
@@ -219,7 +192,7 @@ const SayModal = ({ sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisp
                     </View>                                               
                 </View>
             </Modal>
-            <Modal visible={sayPartly && !sayVisible} transparent={true}>
+            <Modal visible={(sayVisible==="partly")} transparent={true}>
                 <View style={[styles.modalContainer, { height: PAGE_HEIGHT/2.5,} ]}> 
                     <View style={styles.topContainer}>
                         <TouchableOpacity onPress={() => close()}>
@@ -249,7 +222,7 @@ const SayModal = ({ sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisp
                     </View>                                               
                 </View>
             </Modal>
-            <Modal visible={sayNone && !sayVisible} transparent={true}>
+            <Modal visible={(sayVisible==="none")} transparent={true}>
                 <View style={[styles.modalContainer, { height: PAGE_HEIGHT/2.5,} ]}> 
                     <View style={styles.topContainer}>
                         <TouchableOpacity onPress={() => close()}>

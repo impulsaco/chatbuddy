@@ -52,7 +52,7 @@ const SayItButton = ({ sentence,
     if (sentenceFixed===true) {
          sayButton = 
          <View>
-             <TouchableOpacity onPress={() => setSayVisible(true)}>
+             <TouchableOpacity onPress={() => setSayVisible("record")}>
                  <View style={styles.buttonReady}>
                      <Microphone fill={"#FFFFFF"} width={20} height={20} marginRight={10} />
                      <Text style={styles.buttonText}>Say it!</Text>                        

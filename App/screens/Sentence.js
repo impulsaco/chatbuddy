@@ -43,7 +43,7 @@ const Sentence = ({
 
     // Say/recording modal setup
 
-    const [sayVisible, setSayVisible] = useState("none");
+    const [sayVisible, setSayVisible] = useState("invisible");
 
     // Sentence analyzed
 
@@ -169,6 +169,12 @@ const Sentence = ({
             </View>
         )
     }
+
+    // EDIT THIS IF YOU WANT WORD TO STAY GREEN WHEN CLOSE MODAL
+    useEffect(() => {
+        analyzeSentence()
+    }, [sentenceAnalyzed, sayVisible])
+
     const setWhispered = () => {
         if (sentenceWhisper == "no whisper yet") {
             return (
@@ -245,6 +251,7 @@ const Sentence = ({
                         lang={lang}
                         langCode={langCode}
                         sentenceSaidPercentage={sentenceSaidPercentage}
+                        setSentenceSaidPercentage={setSentenceSaidPercentage}
                         sentenceText={sentenceText}
                 />
                 <View style={styles.switchContainer}>
