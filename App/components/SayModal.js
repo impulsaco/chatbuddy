@@ -315,7 +315,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         height: PAGE_HEIGHT/3,
         width: PAGE_WIDTH*.8,
-        top: PAGE_HEIGHT/4,
+        top: PAGE_HEIGHT/3.5,
         left: PAGE_WIDTH/10,
 
         backgroundColor: "#121212",

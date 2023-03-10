@@ -168,10 +168,12 @@ const PAGE_WIDTH = Dimensions.get('window').width;
 // Bugs
 /// Previous sentence bug DONE
 /// Automatic ready bug DONE
-/// Handle null audio
+/// Handle null audio?
 /// Handle no pronunciation DONE
-/// Handle close before end recording
-/// Handle two correct pronunciations in a row
+/// Handle close before end recording DONE
+/// Handle two correct pronunciations in a row DONE
+/// Handle change of words DONE DONE DONE
+/// Render slider images DONE
 
 // Other
 /// Fewer words DONE (shifted to three per row)
@@ -179,7 +181,7 @@ const PAGE_WIDTH = Dimensions.get('window').width;
 /// Shuffle button DONE (not activated yet)
 /// Activate shuffle button
 /// New add word button DONE
-/// Other icons
+/// Refresh icon
 /// Check width bug 
 
 /// Delete phrases
@@ -292,9 +294,6 @@ export default function App() {
 
   const [session, setSession] = useState()
 
-  /*useEffect(() => {    
-    onDone()
-  }, [])*/
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -308,7 +307,7 @@ export default function App() {
     })
   }, [])
 
-  // transparent header: options={{headerTransparent: true}}
+  // transparent header: options={{headerTransparent: true}}  
 
   if (showRealApp || session) {
     return (
@@ -319,7 +318,7 @@ export default function App() {
               screenOptions={{
                 header: ({ navigation, route }) => {
                   const title = getHeaderTitle(route.name);
-                  return <Header title={title} navigation={navigation} />;
+                  return <Header title={title} navigation={navigation}/>;
                 },
                 drawerPosition: 'left',
                 headerRight: () => <Header/>,

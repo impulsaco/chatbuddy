@@ -23,11 +23,13 @@ const AnalyzeWord= ({ word, id }) => {
 const styles = StyleSheet.create({
     ifSaid: {
         color: '#8CFF98',
-        fontSize: 20,
+        fontSize: 36,
+        textAlign: 'center',
     },
     ifNotSaid: {
         color: 'white',
-        fontSize: 20,
+        fontSize: 36,
+        textAlign: 'center',
     },
 });
 

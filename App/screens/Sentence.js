@@ -10,6 +10,8 @@ import Sound from '../../assets/Sound.svg';
 import SentenceTest from '../lib/SentenceTest';
 import SentenceFixer from '../lib/SentenceFixer';
 import SayModal from '../components/SayModal';
+import TranslationOn from '../../assets/translationOn.svg';
+import TranslationOff from '../../assets/translationOff.svg';
 
 const PAGE_HEIGHT = Dimensions.get('window').height;
 const PAGE_WIDTH = Dimensions.get('window').width;
@@ -178,7 +180,7 @@ const Sentence = ({
     const setWhispered = () => {
         if (sentenceWhisper == "no whisper yet") {
             return (
-                <Text style={styles.text}>{sentenceText}</Text>
+                <Text style={styles.sentenceText}>{sentenceText}</Text>
             )
         }
         else {
@@ -194,7 +196,7 @@ const Sentence = ({
                 style={{
                     borderBottomColor: 'white',                    
                     borderBottomWidth: 1,
-                    height: 45,
+                    height: 20,
                     width: 271,
                 }}
             />
@@ -209,6 +211,29 @@ const Sentence = ({
                 </TouchableOpacity>
             </View>
         )
+    }
+
+    const toggleTranslations = () => {
+        if (translations === true) {
+            setTranslations(false)
+        }
+        else {
+            setTranslations(true)
+        }
+    }
+
+    const translationButton = () => {
+        console.log("translations is ", translations)
+        if (translations === true) {
+            return (
+                <TranslationOn/>
+            )
+        }
+        else if (translations === false) {
+            return (
+                <TranslationOff/>
+            )
+        }
     }
 
 
@@ -254,13 +279,20 @@ const Sentence = ({
                         setSentenceSaidPercentage={setSentenceSaidPercentage}
                         sentenceText={sentenceText}
                 />
-                <View style={styles.switchContainer}>
-                    <Switch
+                <TouchableOpacity style={styles.switchContainer} onPress={() => toggleTranslations()}>
+                    {translationButton()
+                    /*
+                    <Switch 
                         value={translations}
-                        color={'#FFC107'}
-                        onValueChange={(value) => setTranslations(value)}
-                    />
-                </View> 
+                        onValueChange={() => toggleTranslations()}
+                        trackColor={{ false: "#767577", true: "#f4f3f4" }}
+                        thumbColor={translations ? "#2E93F2" : "#f4f3f4"}
+                        ios_backgroundColor="#3e3e3e"
+                    /> 
+                    */
+                    }
+                    
+                </TouchableOpacity> 
                 <View style={styles.refreshContainer}>
                     <TouchableOpacity onPress={() => resetSentence()}>
                         <Refresh/>
@@ -290,7 +322,7 @@ const styles = StyleSheet.create({
         flex: 4,
         flexDirection: 'row',
         justifyContent: 'flex-end',
-        marginRight: 20,
+        marginRight: 0,
     },
     switchContainer: {
         flex: 0.1,
@@ -321,6 +353,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         padding: 20,
+        paddingTop: 40,
     },
     textContainer: {
         flexDirection: 'column',
@@ -336,8 +369,13 @@ const styles = StyleSheet.create({
         color: 'white',
         textAlign: 'center',            
     },
+    sentenceText: {
+        fontSize: 36,
+        color: 'white',
+        textAlign: 'center',            
+    },
     translationText: {
-        fontSize: 16,
+        fontSize: 20,
         marginTop: 5,
         color: '#B7B7B7',
     },
