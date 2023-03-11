@@ -223,7 +223,6 @@ const Sentence = ({
     }
 
     const translationButton = () => {
-        console.log("translations is ", translations)
         if (translations === true) {
             return (
                 <TranslationOn/>

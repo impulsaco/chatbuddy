@@ -20,7 +20,6 @@ const Header = (navigation) => {
   }, [navigation, login])
   
   navigation = navigation.navigation
-  console.log("login: ", login)
   const header = () => {
     if (login === true) {
       return (
@@ -36,10 +35,10 @@ const Header = (navigation) => {
     }
   }
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={() => navigation.navigate('Home')}>
       <Logo />
         {header()}                            
-    </View>
+    </TouchableOpacity>
   )
 }
 

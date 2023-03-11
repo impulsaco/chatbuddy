@@ -57,7 +57,7 @@ export default ({ route }) => {
 
     const [words, setWords] = useState(createWordList[2]);
     
-    const sentenceInit = createWordList[1];
+    const [sentenceInit, setSentenceInit] = useState(createWordList[1]);
 
     const [sentenceType, setSentenceType] = useState(createWordList[0]);
 
@@ -70,11 +70,11 @@ export default ({ route }) => {
     const [sentence, setSentence] = useState(sentenceInit); // Sets the initial sentence state, will be modified on drag or tap
       // SHOULD BE USEEFFECT FOR UPDATING
 
-
+    // Updates word boxes to load on choose phrase structure
     useEffect(() => {
-        setSentence(sentenceInit)
+        setSentence(createWordList[1])
         setSentenceType(createWordList[0])
-        //setSentenceInit(createWordList[1])
+        setSentenceInit(createWordList[1])
         setWords(createWordList[2])
     }, [route.params])
 
@@ -231,9 +231,10 @@ const styles = StyleSheet.create({
 
     linearGradient: {
         position: 'absolute',
-        height: PAGE_HEIGHT,
+        height: PAGE_HEIGHT*1.5,
         left: 0,
         right: 0,
-        top: 0,    
+        top: 0,  
+        
     },
   })

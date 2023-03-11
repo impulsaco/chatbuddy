@@ -83,7 +83,7 @@ const Phrasebook = () => {
                     />
                 </View> 
                 <DraxProvider>
-                    <View>
+                    <View style={styles.scrollLimit}>
                         <DraxScrollView style={styles.sentenceContainer}>
                             {sentences.map((sentence) => <SentenceCard 
                             key = {sentence.id} 
@@ -108,6 +108,10 @@ const styles = StyleSheet.create({
     //alignItems: 'center',
     display: 'flex',
 },
+scrollLimit: {
+    height: PAGE_HEIGHT - 200,
+    width: PAGE_WIDTH,
+},
 sentenceContainer: {
     flexDirection: 'column',
     justifyContent: 'center',
@@ -115,7 +119,7 @@ sentenceContainer: {
     display: 'flex',
     padding: 10,
     width: PAGE_WIDTH,
-    height: PAGE_HEIGHT,
+    //height: PAGE_HEIGHT,
 },
  topContent: {
   flex: 1,

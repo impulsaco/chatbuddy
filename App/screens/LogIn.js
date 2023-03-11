@@ -244,7 +244,7 @@ mt20: {
  },
  linearGradient: {
     position: 'absolute',
-    height: PAGE_HEIGHT,
+    height: PAGE_HEIGHT*1.5,
     left: 0,
     right: 0,
     top: 0,    

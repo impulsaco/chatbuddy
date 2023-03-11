@@ -11,6 +11,10 @@ const PAGE_WIDTH = Dimensions.get('window').width;
 
 const WordMenu = ({ state, navigation, forward, setForward, words, sentence, setSentence}) => {
 
+
+  useEffect(() => {
+  }, [sentence])
+
   // Move forward if new word entered
 
   useEffect(() => {

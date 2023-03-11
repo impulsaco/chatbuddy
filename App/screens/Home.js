@@ -47,7 +47,7 @@ function Home({navigation}) {
 
         if (session?.user) {
           return (
-            <View>
+            <View style={styles.container}>
                 <View style={styles.textContainer}>
                   <Text style={styles.mainText}>What would you like to learn?</Text>
                 </View>     
@@ -95,13 +95,23 @@ function Home({navigation}) {
   }
 
   const styles = StyleSheet.create({
+    container: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: 10,
+      width: PAGE_WIDTH,
+      height: PAGE_HEIGHT,
+
+    },
     topContainer: {
       flex: 1,
       paddingTop: PAGE_HEIGHT/10,
     },
     linearGradient: {
       position: 'absolute',
-      height: PAGE_HEIGHT,
+      height: PAGE_HEIGHT*1.5,
       left: 0,
       right: 0,
       top: 0,    
@@ -171,7 +181,7 @@ function Home({navigation}) {
       justifyContent: 'center',
       alignItems: 'center',
       width: PAGE_WIDTH,
-      height: PAGE_HEIGHT*.8
+      height: PAGE_HEIGHT
   },
     textContainer: {
       flexDirection: 'row',
@@ -189,14 +199,17 @@ function Home({navigation}) {
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
-      padding: 10
+      padding: 10,    
+
     },
     buttonContainer: {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
       flexDirection: 'row',
-      padding: 10
+      padding: 10,
+      paddingBottom: PAGE_HEIGHT*.1,
+      
     },
     phrasebookContainer: {
       display: 'flex',
