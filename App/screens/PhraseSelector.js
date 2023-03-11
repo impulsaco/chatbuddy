@@ -1,4 +1,4 @@
-import { View, StyleSheet, Dimensions, Text} from 'react-native';
+import { View, StyleSheet, Dimensions, Text, TouchableOpacity} from 'react-native';
 import React, { useState, useEffect} from 'react';
 import 'react-native-gesture-handler';
 import { LinearGradient } from 'expo-linear-gradient'
@@ -39,17 +39,25 @@ function PhraseSelector({navigation, route}) {
                 </View>     
                 <View style={styles.buttonsContainer}>
                     <View style={styles.phrasebookContainer}>
-                        <Button buttonStyle={{ backgroundColor: '#FFC107', width: 200}} onPress={() => navigation.navigate('Build', {wordSet: introductionList, lang: lang, langCode: langCode})}>Introduce myself</Button>
+                        <TouchableOpacity style={styles.phrasebookButton} onPress={() => navigation.navigate('Build', {wordSet: introductionList, lang: lang, langCode: langCode})}>
+                          <Text style={styles.buttonText}>Introduce myself 👋</Text>
+                        </TouchableOpacity>
                     </View>
                     <View style={styles.phrasebookContainer}>
-                        <Button buttonStyle={{ backgroundColor: '#FFC107', width: 200}} onPress={() => navigation.navigate('Build', {wordSet: familyList, lang: lang, langCode: langCode})}>My family</Button>
+                        <TouchableOpacity style={styles.phrasebookButton} onPress={() => navigation.navigate('Build', {wordSet: familyList, lang: lang, langCode: langCode})}>
+                          <Text style={styles.buttonText}>My family 🏡</Text>
+                        </TouchableOpacity>
                     </View>
                     <View style={styles.phrasebookContainer}>
-                        <Button buttonStyle={{ backgroundColor: '#FFC107', width: 200}} onPress={() => navigation.navigate('Build', {wordSet: hobbiesList, lang: lang, langCode: langCode})}>Hobbies</Button>
+                        <TouchableOpacity style={styles.phrasebookButton} onPress={() => navigation.navigate('Build', {wordSet: hobbiesList, lang: lang, langCode: langCode})}>
+                          <Text style={styles.buttonText}>Hobbies 🎨</Text>
+                        </TouchableOpacity>
                     </View>
                     <View style={styles.phrasebookContainer}>
-                        <Button buttonStyle={{ backgroundColor: '#FFC107', width: 200}} onPress={() => navigation.navigate('Build', {wordSet: freeformList, lang: lang, langCode: langCode})}>Anything!</Button>
-                    </View>
+                        <TouchableOpacity style={styles.phrasebookButton} onPress={() => navigation.navigate('Build', {wordSet: freeformList, lang: lang, langCode: langCode})}>
+                          <Text style={styles.buttonText}>Anything 🤯</Text>
+                        </TouchableOpacity>
+                    </View>                    
                 </View>
             </View>
         )
@@ -122,12 +130,28 @@ function PhraseSelector({navigation, route}) {
       flexDirection: 'row',
       padding: 10
     },
+    buttonText: {
+      fontSize: 16,
+      color: "black"
+    },
     phrasebookContainer: {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
       flexDirection: 'row',
-      padding: 10
+    },
+    phrasebookButton: {
+      display: 'flex',
+      flex: 2,
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: 10,
+      backgroundColor: 'white',
+      borderRadius: 10,
+      width: PAGE_WIDTH*.45,
+      height: PAGE_HEIGHT*.05,
+      margin: 10
     },
     logOutContainer: {
       display: 'flex',

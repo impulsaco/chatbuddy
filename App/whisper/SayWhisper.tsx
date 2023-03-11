@@ -240,6 +240,10 @@ export default ({
     //setRecording(undefined);
     console.log("recording is ", recording);
     console.log("recording uri is ", recording.getURI());
+
+    // resets for audio playback
+    Audio.setAudioModeAsync({ allowsRecordingIOS: false })
+
     // for audio playback
     setPlaySound(
       async function playSound() {
@@ -320,6 +324,7 @@ export default ({
     const uri = recording.getURI();
     const filetype = uri.split(".").pop();
     const filename = uri.split("/").pop();
+    const prompt = `Transcription of spoken ${lang}`
     setLoading(true);
     setBottomText("Analyzing...")
     setTopText("Please wait...")
@@ -334,6 +339,7 @@ export default ({
         type: "audio/wav"
       });
     formData.append('model', modelName)
+    formData.append('prompt', prompt)
     console.log("formData sent is", formData)
 
     axios.post(url, formData, {
