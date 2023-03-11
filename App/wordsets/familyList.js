@@ -98,6 +98,38 @@ const familyList = (lang) => {
 
     return ["family", sentenceStructure, initialWordsKo];;
   }
+
+  if (lang === 'bg') {
+
+    // Bulgarian set
+
+    var nounsBg = ["Майка", "Баща", "Дъщеря", "Син", "Момче", "Момиче", "Баба", "Дядо", "Леля", "Чичо", "Кузин/Кузън", "Сестра", "Брат", "Внук/Внучка", "Внуче/Внуко"]
+
+    var verbsBg = ["Имам", "Съм", "Ще бъда"]
+
+    var subjectsBg = ['Аз', 'Ти', 'Ние', 'Те', 'Той', 'Тя']
+
+    const initialWordsBg = [];
+
+    // add words to initial array Bulgarian
+    for (var i=0; i<nounsBg.length; i++) {
+      initialWordsBg.push({id: idCounter, word: nounsBg[i], type:"noun", translation: nounsEng[i]});
+      idCounter++;  
+    }
+
+    for (var i=0; i<verbsBg.length; i++) {
+      initialWordsBg.push({id: idCounter, word: verbsBg[i], type:"verb", translation: verbsEng[i]}); 
+      idCounter++;   
+    }
+
+    for (var i=0; i<subjectsBg.length; i++) {
+      initialWordsBg.push({id: idCounter, word: subjectsBg[i], type:"subject", translation: subjectsEng[i]}); 
+      idCounter++;   
+    }
+
+    return ["family", sentenceStructure, initialWordsBg];;
+
+  }
 }
 
 export default familyList;

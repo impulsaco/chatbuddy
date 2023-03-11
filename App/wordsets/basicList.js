@@ -102,6 +102,40 @@ const basicList = (lang) => {
 
     return ["basic", sentenceStructure, initialWordsKo];;
   }
+
+  if (lang === 'bg') {
+
+    // Bulgarian set
+
+    // Bulgarian set
+
+    var nounsBg = ['човек', 'вода', 'въздух', 'пръстен', 'животно', 'изкуство', 'знаме', 'кораб', 'целувка', 'легло', 'поле', 'небе', 'лента', 'храна', 'връв', 'пръст', 'пари', 'училище', 'цвете', 'плод', 'зърно', 'мъж', 'час', 'църква', 'книга', 'светлина', 'ръка', 'карта', 'маса', 'светът', 'жена', 'музика', 'нос', 'сняг', 'хартия', 'чадър', 'палто', 'торта', 'коса', 'пица', 'врата', 'часовник', 'камък', 'сол', 'стол', 'шапка', 'земя', 'чаша', 'земя', 'тигър', 'крепост', 'прозорец', 'ветер']
+
+    var verbsBg = ['бъда', 'бивам', 'имам', 'обичам', 'правя', 'казвам', 'отивам', 'виждам', 'мога', 'искам', 'нося', 'зная', 'донеса', 'трябва', 'прибирам', 'има', 'говоря', 'търся', 'викам', 'минавам', 'подигам', 'хващам', 'оставям', 'намирам', 'влизам', 'запазвам', 'харесвам', 'имам значение', 'играя', 'поддържам', 'поглеждам', 'качвам', 'се нуждая', 'случвам', 'предлагам', 'искам', 'позволявам', 'поставям', 'пробвам', 'последвам', 'чувствам', 'обслужвам', 'случвам се', 'завършвам', 'опитвам се', 'резултат', 'бързам']
+
+    var subjectsBg = ["аз","ти","той","те","ние","тя","кой","те","мени","той","някой","тя","ние","някакво","нищо","всяко нещо","самият той","всичко","някой","тези сами","всички","самата тя","всяка една","аз самият си","всеки"]
+
+    const initialWordsBg = [];
+
+    // add words to initial array Bulgarian
+    for (var i=0; i<nounsBg.length; i++) {
+      initialWordsBg.push({id: idCounter, word: nounsBg[i], type:"noun", translation: nounsEng[i]});
+      idCounter++;  
+    }
+
+    for (var i=0; i<verbsBg.length; i++) {
+      initialWordsBg.push({id: idCounter, word: verbsBg[i], type:"verb", translation: verbsEng[i]}); 
+      idCounter++;   
+    }
+
+    for (var i=0; i<subjectsBg.length; i++) {
+      initialWordsBg.push({id: idCounter, word: subjectsBg[i], type:"subject", translation: subjectsEng[i]}); 
+      idCounter++;   
+    }
+
+    return ["basic", sentenceStructure, initialWordsBg];;
+
+  }
 }
 
 export default basicList;

@@ -98,6 +98,13 @@ const SayModal = ({ sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisp
                     </Text>                
                 )
               }  
+              if (lang === "Bulgarian") {
+                setTopText(
+                    <Text>
+                      Честито! 👏 We understood the words in{" "}<Text style={{ color: "#8CFF98" }}>green</Text>. Save it or keep practicing?
+                    </Text>                
+                )
+              } 
         }
         else if (attempted && (sayVisible==="none")) {
             setAttempted(false);            
@@ -106,6 +113,9 @@ const SayModal = ({ sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisp
               }  
               if (lang === "Korean") {
                 setTopText(("죄송합니다! 🫠 We couldn't understand you. Keep trying?"))
+              } 
+              if (lang === "Bulgarian") {
+                setTopText(("съжалявам! 🫠 We couldn't understand you. Keep trying?"))
               }  
         }            
       }, [attempted, sentenceSaidPercentage, sayVisible]);
@@ -248,9 +258,9 @@ const SayModal = ({ sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisp
                         <TouchableOpacity style={styles.blueButton} onPress={() => keepImproving()}>
                             <Text style={[styles.smallText, { paddingLeft: 10} ]}>Try again</Text>
                         </TouchableOpacity>
-                        <View style={styles.grayButton} onPress={() => close()}>
+                        <TouchableOpacity style={styles.grayButton} onPress={() => close()}>
                             <Text style={[styles.smallText, { paddingLeft: 10} ]}>Back to builder</Text>
-                        </View>                                                                                           
+                        </TouchableOpacity>                                                                                           
                     </View>                                               
                 </View>
             </Modal>

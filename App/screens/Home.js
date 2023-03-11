@@ -60,17 +60,21 @@ function Home({navigation}) {
                     <TouchableOpacity style={styles.languageBox} onPress={() => navigation.navigate('Choose', {lang: "Spanish", langCode: "es-MX"})}>
                       <Text style={styles.buttonText}>Spanish</Text>
                       <SpanishFlag width={55}/>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.languageBox} onPress={() => navigation.navigate('Choose', {lang: "Bulgarian", langCode: "bg"})}>
+                      <Text style={styles.buttonText}>Bulgarian</Text>
+                      <BulgarianFlag width={55}/>
                     </TouchableOpacity>                      
                   </View>
                   <View style={styles.lowerContainer}> 
                     <View style={styles.phrasebookContainer}>                    
                         <TouchableOpacity style={styles.phrasebookButton} onPress={() => navigation.navigate('Phrasebook')}>
-                          <Text style={styles.buttonText}>My phrases</Text>
+                          <Text style={styles.longButtonText}>My phrases</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.logOutContainer}>
                         <TouchableOpacity style={styles.logoutButton} onPress={() => supabase.auth.signOut()}>
-                          <Text style={[styles.buttonText, {color: "white"}]}>Log out</Text>
+                          <Text style={[styles.longButtonText, {color: "white"}]}>Log out</Text>
                         </TouchableOpacity>                      
                     </View>
                   </View>
@@ -132,8 +136,13 @@ function Home({navigation}) {
     },
     buttonText: {
       fontSize: 16,
-      color: "black"
-    },            
+      color: "black",
+      paddingBottom: 10,
+    }, 
+    longButtonText: {
+      fontSize: 16,
+      color: "black",
+    },           
     languageBox: {
       display: 'flex',
       flexDirection: 'column',
@@ -142,7 +151,7 @@ function Home({navigation}) {
       padding: 10,
       backgroundColor: 'white',
       borderRadius: 10,
-      width: PAGE_WIDTH*.2,
+      width: PAGE_WIDTH*.22,
       height: PAGE_HEIGHT*.1,
       margin: 10
     },

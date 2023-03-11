@@ -98,6 +98,38 @@ const hobbiesList = (lang) => {
 
     return ["hobbies", sentenceStructure, initialWordsKo];;
   }
+
+  if (lang === 'bg') {
+
+    // Bulgarian set
+
+    var nounsBg = ["Китара", "Тенис", "Живопис", "Писане", "Печене", "Готвене", "Риболов", "Къмпинг", "Ски", "Йога", "Бягане", "Книги", "Шах", "Планински преход", "Колоездене", "Бадминтон", "Волейбол", "Танци", "Пеене"]
+
+    var subjectsBg = ['Аз', 'Ти', 'Ние', 'Те', 'Той', 'Тя']
+
+    var verbsBg = ["Свиря", "Харесвам", "Упражнявам", "Чета", "Ходя на"]
+
+    const initialWordsBg = [];
+
+    // add words to initial array Bulgarian
+    for (var i=0; i<nounsBg.length; i++) {
+      initialWordsBg.push({id: idCounter, word: nounsBg[i], type:"noun", translation: nounsEng[i]});
+      idCounter++;  
+    }
+
+    for (var i=0; i<verbsBg.length; i++) {
+      initialWordsBg.push({id: idCounter, word: verbsBg[i], type:"verb", translation: verbsEng[i]}); 
+      idCounter++;   
+    }
+
+    for (var i=0; i<subjectsBg.length; i++) {
+      initialWordsBg.push({id: idCounter, word: subjectsBg[i], type:"subject", translation: subjectsEng[i]}); 
+      idCounter++;   
+    }
+
+    return ["hobbies", sentenceStructure, initialWordsBg];;
+
+  }
 }
 
 export default hobbiesList;

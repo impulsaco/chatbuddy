@@ -98,6 +98,38 @@ const introductionList = (lang) => {
 
     return ["introduction", sentenceStructure, initialWordsKo];;
   }
+
+  if (lang === 'bg') {
+
+    // Bulgarian set
+
+    var nounsBg = ["Студент", "Писател", "Разработчик", "Дизайнер", "Изследовател", "Адвокат", "Учител", "Инженер", "Художник", "Учен", "Доктор", "Журналист"]
+
+    var subjectsBg = ['Аз', 'Ти', 'Ние', 'Те', 'Той', 'Тя']
+
+    var verbsBg = ["Бъда", "Искам да бъда", "Уча"]
+
+    const initialWordsBg = [];
+
+    // add words to initial array Bulgarian
+    for (var i=0; i<nounsBg.length; i++) {
+      initialWordsBg.push({id: idCounter, word: nounsBg[i], type:"noun", translation: nounsEng[i]});
+      idCounter++;  
+    }
+
+    for (var i=0; i<verbsBg.length; i++) {
+      initialWordsBg.push({id: idCounter, word: verbsBg[i], type:"verb", translation: verbsEng[i]}); 
+      idCounter++;   
+    }
+
+    for (var i=0; i<subjectsBg.length; i++) {
+      initialWordsBg.push({id: idCounter, word: subjectsBg[i], type:"subject", translation: subjectsEng[i]}); 
+      idCounter++;   
+    }
+
+    return ["hobbies", sentenceStructure, initialWordsBg];;
+
+  }
 }
 
 export default introductionList;
