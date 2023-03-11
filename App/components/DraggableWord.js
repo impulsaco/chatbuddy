@@ -22,7 +22,21 @@ const DraggableWord = ({word, translations, sentence, setSentence, setForward}) 
         let index = sentence.findIndex(item => item.type === wordTapped.type)
         newSentence[index] = wordTapped
         setSentence(newSentence)
-        if (wordTapped.type === "subject") {
+
+        const wordList = sentence.map(item => item.type);
+        // NAVIGATE TO NEXT WORD SET
+        console.log("wordList Android is ", wordList)
+
+        if (wordList.includes(wordTapped.type)) {
+            let wordListIndex = wordList.indexOf((wordTapped.type))
+            console.log("wordList.length Android", wordList.length)
+            console.log("index Android", wordListIndex)
+            if ((wordListIndex + 1) < (wordList.length)) {                                            
+                setForward(wordList[index + 1])
+            }                    
+        }
+
+        /*if (wordTapped.type === "subject") {
             setForward("verb")
         }
 
@@ -32,7 +46,7 @@ const DraggableWord = ({word, translations, sentence, setSentence, setForward}) 
 
         if (wordTapped.type === "adjective") {
             setForward("noun")
-        }
+        }*/
         
 
     }

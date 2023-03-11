@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     }, 
     text: {
         fontSize: 13,
-        height: 13,
+        height: 17,
         fontWeight: '500',
         display: 'flex',
         alignItems: 'center',

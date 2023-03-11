@@ -31,6 +31,7 @@ const SentenceWord = ({word, index, words, sentence, setSentence, forward, setFo
                     console.log("sentence is", sentence)
 
                     const wordList = sentence.map(item => item.type);
+                    
                     // NAVIGATE TO NEXT WORD SET
 
                     if (wordList.includes(word.type)) {
