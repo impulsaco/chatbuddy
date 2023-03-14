@@ -211,10 +211,10 @@ export default ({
           android: {
             extension: ".mp4",
             outputFormat: Audio.RECORDING_OPTION_ANDROID_OUTPUT_FORMAT_MPEG_4,
-            audioEncoder: Audio.RECORDING_OPTION_ANDROID_AUDIO_ENCODER_AAC,
-            sampleRate: 44100,
+            audioEncoder: Audio.RECORDING_OPTION_ANDROID_AUDIO_ENCODER_AMR_NB,
+            sampleRate: 10000,
             numberOfChannels: 2,
-            bitRate: 128000,
+            bitRate: 3000,
           },
           ios: {
             extension: ".wav",
@@ -351,7 +351,7 @@ export default ({
     // formData.append("model_size", "tiny");
     let type
     if (Platform.OS === 'android') {
-      type = 'mp4'
+      type = 'audio/mp4'
     } else {
       type = 'audio/wav'
     }
@@ -361,7 +361,7 @@ export default ({
       {
         uri,
         name: filename,
-        //type: type,
+        type: type
       });
     formData.append('model', modelName)
     formData.append('prompt', prompt)
