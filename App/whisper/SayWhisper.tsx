@@ -15,10 +15,11 @@ import sentenceSpeak from '../lib/sentenceSpeak';
 import TranscribedOutput from "./TranscribeOutput";
 import { OPENAI_API_KEY } from "@env";
 import * as FileSystem from 'expo-file-system';
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { TouchableOpacity } from "react-native";
 import Microphone from "../../assets/microphone.svg";
 import BigMike from "../../assets/bigMike.svg";
 import Sound from '../../assets/Sound.svg';
+import { Platform } from "react-native";
 
 const PAGE_HEIGHT = Dimensions.get('window').height;
 const PAGE_WIDTH = Dimensions.get('window').width;
@@ -178,7 +179,24 @@ export default ({
     setTranscribeTimout(newTimeout);
   }
 
-  async function startRecording() {    
+  async function startRecording() {   
+    console.log("recording starting")
+    
+    /*
+
+    // To request permissions at start: 
+    useEffect(() => {
+    const requestPermission = async () => {
+      const { status } = await Audio.requestPermissionsAsync();
+      if (status !== 'granted') {
+        // Handle permission denied
+        console.log('Permission denied');
+      }
+    };
+    requestPermission();
+    }, []);
+    */
+
     try {
       console.log("Requesting permissions..");
       const permission = await Audio.requestPermissionsAsync();
@@ -193,10 +211,10 @@ export default ({
           android: {
             extension: ".mp4",
             outputFormat: Audio.RECORDING_OPTION_ANDROID_OUTPUT_FORMAT_MPEG_4,
-            audioEncoder: Audio.RECORDING_OPTION_ANDROID_AUDIO_ENCODER_AMR_NB,
-            sampleRate: 10000,
+            audioEncoder: Audio.RECORDING_OPTION_ANDROID_AUDIO_ENCODER_AAC,
+            sampleRate: 44100,
             numberOfChannels: 2,
-            bitRate: 3000,
+            bitRate: 128000,
           },
           ios: {
             extension: ".wav",
@@ -331,12 +349,19 @@ export default ({
     const formData: any = new FormData();
     //formData.append("language", lang.toLowerCase());
     // formData.append("model_size", "tiny");
+    let type
+    if (Platform.OS === 'android') {
+      type = 'mp4'
+    } else {
+      type = 'audio/wav'
+    }
+
     formData.append(
       "file",
       {
         uri,
         name: filename,
-        type: "audio/wav"
+        //type: type,
       });
     formData.append('model', modelName)
     formData.append('prompt', prompt)

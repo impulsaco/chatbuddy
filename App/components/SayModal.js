@@ -153,22 +153,22 @@ const SayModal = ({ sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisp
                     <View style={styles.smallTextContainer}>
                         <Text style={styles.smallText}>{topText}</Text>
                     </View>                                              
-                        <TouchableOpacity style={styles.mikeContainer}>
-                            <SayWhisper 
-                            sentenceWhisper={sentenceWhisper} 
-                            setSentenceWhisper={setSentenceWhisper} 
-                            lang={lang}
-                            langCode={langCode}
-                            setTopText={setTopText}
-                            setBottomText={setBottomText}
-                            setRecordingUri={setRecordingUri}
-                            setAttempted={setAttempted}
-                            setPlaySound={setPlaySound}
-                            sentenceText={sentenceText}     
-                            closeVisible={closeVisible}                       
-                            setCloseVisible={setCloseVisible}
-                        />
-                        </TouchableOpacity>                    
+                    <TouchableOpacity style={styles.mikeContainer}>                    
+                        <SayWhisper 
+                        sentenceWhisper={sentenceWhisper} 
+                        setSentenceWhisper={setSentenceWhisper} 
+                        lang={lang}
+                        langCode={langCode}
+                        setTopText={setTopText}
+                        setBottomText={setBottomText}
+                        setRecordingUri={setRecordingUri}
+                        setAttempted={setAttempted}
+                        setPlaySound={setPlaySound}
+                        sentenceText={sentenceText}     
+                        closeVisible={closeVisible}                       
+                        setCloseVisible={setCloseVisible}
+                    />
+                    </TouchableOpacity>                    
                     <View style={styles.bigTextContainer}>
                         <Text style={styles.bigText}>{bottomText}</Text>
                     </View>                                        
