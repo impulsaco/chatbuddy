@@ -102,6 +102,9 @@ const styles = StyleSheet.create({
 
         backgroundColor: "rgba(255, 255, 255, 0.5)",
         borderRadius: 10,
+
+        borderColor: "#FFC107",
+        borderWidth: 3,
     }, 
     buttonText: {
         color: "#FFFFFF",

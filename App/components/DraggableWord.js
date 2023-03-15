@@ -18,6 +18,7 @@ const DraggableWord = ({word, translations, sentence, setSentence, setForward}) 
     
     // sentence updater for on tap change for Android
     updateSentence = (wordTapped) => {
+        console.log("tapped!", wordTapped)
         let newSentence = [...sentence]
         let index = sentence.findIndex(item => item.type === wordTapped.type)
         newSentence[index] = wordTapped
@@ -34,20 +35,7 @@ const DraggableWord = ({word, translations, sentence, setSentence, setForward}) 
             if ((wordListIndex + 1) < (wordList.length)) {                                            
                 setForward(wordList[index + 1])
             }                    
-        }
-
-        /*if (wordTapped.type === "subject") {
-            setForward("verb")
-        }
-
-        if (wordTapped.type === "verb") {
-            setForward("adjective")
-        }
-
-        if (wordTapped.type === "adjective") {
-            setForward("noun")
-        }*/
-        
+        } 
 
     }
 

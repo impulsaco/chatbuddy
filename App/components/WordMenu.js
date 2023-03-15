@@ -28,7 +28,7 @@ const WordMenu = ({ state, navigation, forward, setForward, words, sentence, set
   const color = (pageName, currentIndex) => {
     const nameArray = state.routeNames
     if (currentIndex === nameArray.indexOf(pageName)) {
-      return 'rgba(0, 0, 0, 0)'
+      return 'rgba(242, 242, 242, 0.5)'
     }
     else {
       return 'rgba(0, 0, 0, 0)'
@@ -91,6 +91,7 @@ const styles = StyleSheet.create({
   container:
   {
     alignItems: 'center',
+    height: PAGE_HEIGHT*.07,
   },
   buttonsContainer: {
     flexDirection: 'row',
@@ -102,6 +103,7 @@ const styles = StyleSheet.create({
     width: PAGE_WIDTH,    
     padding: 10,
     marginBottom: PAGE_HEIGHT*.01,
+
   },
   wordContainer:
   {

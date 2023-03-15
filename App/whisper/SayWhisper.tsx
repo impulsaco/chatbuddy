@@ -4,7 +4,9 @@ import {
   StyleSheet,
   View,
   ActivityIndicator,
-  Dimensions
+  Dimensions,
+  TouchableOpacity,
+  Platform
 } from "react-native";
 import { Button } from "@rneui/themed"
 import { Audio } from "expo-av";
@@ -15,11 +17,9 @@ import sentenceSpeak from '../lib/sentenceSpeak';
 import TranscribedOutput from "./TranscribeOutput";
 import { OPENAI_API_KEY } from "@env";
 import * as FileSystem from 'expo-file-system';
-import { TouchableOpacity } from "react-native";
 import Microphone from "../../assets/microphone.svg";
 import BigMike from "../../assets/bigMike.svg";
 import Sound from '../../assets/Sound.svg';
-import { Platform } from "react-native";
 
 const PAGE_HEIGHT = Dimensions.get('window').height;
 const PAGE_WIDTH = Dimensions.get('window').width;
@@ -179,24 +179,7 @@ export default ({
     setTranscribeTimout(newTimeout);
   }
 
-  async function startRecording() {   
-    console.log("recording starting")
-    
-    /*
-
-    // To request permissions at start: 
-    useEffect(() => {
-    const requestPermission = async () => {
-      const { status } = await Audio.requestPermissionsAsync();
-      if (status !== 'granted') {
-        // Handle permission denied
-        console.log('Permission denied');
-      }
-    };
-    requestPermission();
-    }, []);
-    */
-
+  async function startRecording() {    
     try {
       console.log("Requesting permissions..");
       const permission = await Audio.requestPermissionsAsync();
@@ -332,70 +315,124 @@ export default ({
     console.log("transcribeInterim called");
   }
 
-  async function transcribeRecording() {
+  
+  if (Platform.OS === "android") {
+    async function transcribeRecording() {
 
-    const url = 'https://api.openai.com/v1/audio/transcriptions';
-    const token = API_KEY;
-    // const fileUri = '/path/to/file/openai.mp3';
-    const modelName = 'whisper-1';
-
-    const uri = recording.getURI();
-    const filetype = uri.split(".").pop();
-    const filename = uri.split("/").pop();
-    const prompt = `Transcription of spoken ${lang}`
-    setLoading(true);
-    setBottomText("Analyzing...")
-    setTopText("Please wait...")
-    const formData: any = new FormData();
-    //formData.append("language", lang.toLowerCase());
-    // formData.append("model_size", "tiny");
-    let type
-    if (Platform.OS === 'android') {
-      type = 'audio/mp4'
-    } else {
-      type = 'audio/wav'
-    }
-
-    formData.append(
-      "file",
-      {
-        uri,
-        name: filename,
-        type: type
-      });
-    formData.append('model', modelName)
-    formData.append('prompt', prompt)
-    console.log("formData sent is", formData)
-
-    axios.post(url, formData, {
+      const uri = recording.getURI();
+      const filetype = uri.split(".").pop();
+      const filename = uri.split("/").pop();
+      setLoading(true);    
+      setBottomText("Analyzing...")
+      setTopText("Please wait...")
+      const formData: any = new FormData();
+      formData.append("language", lang.toLowerCase());
+      formData.append("model_size", "tiny");
+      formData.append(
+        "audio_data",
+        {
+          uri,
+          type: `audio/${filetype}`,
+          name: filename,
+        },
+        "temp_recording"
+      );
+      console.log("formData sent is", formData)
+      axios({
+        url: "https://backendsay-wkdnx77abq-uw.a.run.app/transcribe", // IMPORTANT! must equal current server
+        method: "POST",
+        data: formData,
         headers: {
-          'Content-Type': 'multipart/form-data',
-          'Authorization': `Bearer ${API_KEY}`
-        }
+          Accept: "application/json",
+          "content-type": "multipart/form-data",
+        },
       })
-      .then(function (response) {
-        console.log("response is :", response.data);
-        setTranscribedData((oldData: any) => [...oldData, response.data]);
-        setLoading(false);
-        setIsTranscribing(false);
-        setRecordingDone(false)
-        setSentenceWhisper(response.data.text) // Sets the sentence check to be shown
-        setAttempted(true)
-        setCloseVisible(true)
-        console.log("sentenceWhisper in Response is ", sentenceWhisper)
-        /*intervalRef.current = setInterval(
-          transcribeInterim,
-          transcribeTimeout * 1000
-        );*/
-      })
-      .catch(function (error) {
-        console.log("error : ", error);
-      });
-
-    if (!stopTranscriptionSessionRef.current) {
-      setIsRecording(true);
+        .then(function (response) {
+          console.log("response is :", response.data);
+          setTranscribedData((oldData: any) => [...oldData, response.data]);
+          setLoading(false);
+          setIsTranscribing(false);
+          setRecordingDone(false)
+          setSentenceWhisper(response.data) // Sets the sentence check to be shown
+          setAttempted(true)
+          setCloseVisible(true)
+          console.log("sentenceWhisper in Response is ", sentenceWhisper)
+          /*intervalRef.current = setInterval(
+            transcribeInterim,
+            transcribeTimeout * 1000
+          );*/
+        })
+        .catch(function (error) {
+          console.log("error : ", error);
+        });
+  
+      if (!stopTranscriptionSessionRef.current) {
+        setIsRecording(true);
+      }
     }
   }
+
+  if (Platform.OS === "ios") {
+    async function transcribeRecording() {
+
+      const url = 'https://api.openai.com/v1/audio/transcriptions';
+      const token = API_KEY;
+      // const fileUri = '/path/to/file/openai.mp3';
+      const modelName = 'whisper-1';
+  
+      const uri = recording.getURI();
+      const filetype = uri.split(".").pop();
+      const filename = uri.split("/").pop();
+      const prompt = `Transcription of spoken ${lang}`
+      setLoading(true);
+      setBottomText("Analyzing...")
+      setTopText("Please wait...")
+      const formData: any = new FormData();
+      //formData.append("language", lang.toLowerCase());
+      // formData.append("model_size", "tiny");
+      formData.append(
+        "file",
+        {
+          uri,
+          name: filename,
+          type: "audio/wav"
+        });
+      formData.append('model', modelName)
+      formData.append('prompt', prompt)
+      console.log("formData sent is", formData)
+  
+      axios.post(url, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': `Bearer ${API_KEY}`
+          }
+        })
+        .then(function (response) {
+          console.log("response is :", response.data);
+          setTranscribedData((oldData: any) => [...oldData, response.data]);
+          setLoading(false);
+          setIsTranscribing(false);
+          setRecordingDone(false)
+          setSentenceWhisper(response.data.text) // Sets the sentence check to be shown
+          setAttempted(true)
+          setCloseVisible(true)
+          console.log("sentenceWhisper in Response is ", sentenceWhisper)
+          /*intervalRef.current = setInterval(
+            transcribeInterim,
+            transcribeTimeout * 1000
+          );*/
+        })
+        .catch(function (error) {
+          console.log("error : ", error);
+        });
+  
+      if (!stopTranscriptionSessionRef.current) {
+        setIsRecording(true);
+      }
+    }
+  }
+
+  
   return (
     <View style={styles.container}>
         {!isRecording && !isTranscribing && !recordingDone && (
