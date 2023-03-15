@@ -40,7 +40,9 @@ function Home({navigation}) {
         if (!session?.user) {
           return (
             <View>
-                <Button buttonStyle={{ backgroundColor: '#FFC107' }} onPress={() => navigation.navigate('LogIn', {session: session, setSession: setSession})}>Login</Button>
+                <TouchableOpacity style={styles.phrasebookButton} onPress={() => navigation.navigate('LogIn', {session: session, setSession: setSession})}> 
+                  <Text>Login</Text>
+                </TouchableOpacity>
             </View>
             )
         }
