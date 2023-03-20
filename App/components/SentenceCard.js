@@ -30,9 +30,9 @@ const SentenceCard = ( {sentence, translation, translations} ) => {
             )
         }
     }
-
+    // You are a language tutor in Spanish. Users will use a sentence from a phrasebook, and you must respond in a realistic way that uses basic beginner-level vocabulary for them to practice receiving responses
     const gptResponse = (sentence) => {
-        console.log("sentence  in GPT3 is ", sentence)
+        console.log("sentence  in GPT-4 is ", sentence)
         openai.createCompletion({
           model: "text-davinci-003",
           prompt: `Respond to the following sentence, in the language you identify: ${sentence}`,

@@ -10,8 +10,8 @@ const PAGE_HEIGHT = Dimensions.get('window').height;
 const PAGE_WIDTH = Dimensions.get('window').width;
 
 
-const SaveButton = ({sentence, savedSentence, sentenceChecked, setSentenceChecked, sentenceEn, langCode, sentenceSaidPercentage}) => {
-
+const SaveButton = ({sentence, savedSentence, sentenceEn, langCode}) => {
+    
     // Retrieve user session
 
     const [session, setSession] = useState()
@@ -28,7 +28,7 @@ const SaveButton = ({sentence, savedSentence, sentenceChecked, setSentenceChecke
         })
     }, [])
 
-    async function saveSentence() {
+    async function saveSentence() {        
 
         const { error } = await supabase
         .from('sentences')

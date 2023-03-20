@@ -141,9 +141,11 @@ const PAGE_WIDTH = Dimensions.get('window').width;
 /// Background color DONE
 /// Automatic ready DONE
 /// Automatic ready refresh bug -- make unready DONE
-//// sentenceComplete & sentenceReady = true -> "say" button activates. 
-//// refresh -> sentenceComplete = false -> "say" button becomes gray again.
-//// new word comes in -> sentenceComplete = true but sentenceReady = false -> "say" button becomes "ready" button 
+/// Refresh icon DONE
+/// New login page 
+/// New choose language page
+/// Translations icon DONE
+
 
 // Modal DONE DONE DONE
 /// Make modal DONE
@@ -174,21 +176,38 @@ const PAGE_WIDTH = Dimensions.get('window').width;
 /// Handle two correct pronunciations in a row DONE
 /// Handle change of words DONE DONE DONE
 /// Render slider images DONE
+/// Menu visible without login DONE
+/// Responsive width bug 
+
+// App Store
+/// New phrases
+/// Romanization
+/// Better instructions
+/// Phrasebook category & counters
+/// Phrase playback & practice modal
+/// Sentry bugs
+/// Easy UX tweaks
+/// Update to GPT 3.5, tweak prompt (limits)
+/// Payment for more phrases?
+/// Saved words
+/// GPT3 sentence coloring 
+/// Delete words
+/// Delete phrases
+/// Activate shuffle button
+
+// Lower priority 
+/// New word boxes?
+/// New "full modal"?
+/// Phrase categories sliders
+
+
 
 // Other
 /// Fewer words DONE (shifted to three per row)
-/// Translations icon
 /// Shuffle button DONE (not activated yet)
-/// Activate shuffle button
 /// New add word button DONE
-/// Refresh icon
-/// Check width bug 
 
-/// Delete phrases
-/// Leveling and phrasebook completion
-/// GPT Chatbot
-/// GPT3 sentence coloring
-/// Recording playback
+/// Recording playback DONE
 /// Debugging/clean up
 
 // Deployment

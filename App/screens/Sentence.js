@@ -268,6 +268,8 @@ const Sentence = ({
                     />
                 </TouchableOpacity>
                 <SayModal 
+                        sentence={sentence}
+                        sentenceEn={sentenceEn}
                         sayVisible={sayVisible} 
                         setSayVisible={setSayVisible}
                         sentenceWhisper={sentenceWhisper}

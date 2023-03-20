@@ -22,6 +22,8 @@ const Phrasebook = () => {
 
     const [translations, setTranslations] = useState(true)
 
+    const [langs, setLangs] = useState([])
+
 
   // Retrieve session
 
@@ -46,7 +48,7 @@ const Phrasebook = () => {
         if (session) {
             const { data, error } = await supabase
             .from('sentences')
-            .select('sentence, id, translation')
+            .select('id, sentence, language, type, translation')
             .eq('user', session.user.id)
             .not("translation","is", null);
         
@@ -54,12 +56,17 @@ const Phrasebook = () => {
         
             if (data) {
                 setSentences(data)
+                setLangs(Array.from(new Set(data.map(({ language }) => language))))
             }
         }
     }
 
     fetchSentences()
   }, [session])
+    
+    
+    
+    //console.log(langs);
 
  return (  
     <View style={styles.container}>      

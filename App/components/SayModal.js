@@ -14,7 +14,7 @@ import Sound from '../../assets/Sound.svg'
 const PAGE_HEIGHT = Dimensions.get('window').height;
 const PAGE_WIDTH = Dimensions.get('window').width;
 
-const SayModal = ({ sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisper, lang, langCode, sentenceSaidPercentage, setSentenceSaidPercentage, sentenceText}) => {
+const SayModal = ({ sentence, sentenceEn, sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisper, lang, langCode, sentenceSaidPercentage, setSentenceSaidPercentage, sentenceText}) => {
 
     useEffect(() => {
         console.log("sayVisible is", sayVisible) // testing
@@ -195,7 +195,7 @@ const SayModal = ({ sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisp
                         </TouchableOpacity>
                     </View>
                     <View style={styles.buttonsContainer}>    
-                        <SaveButton/>                                        
+                        <SaveButton sentence={sentence} savedSentence={sentenceText} sentenceEn={sentenceEn} langCode={langCode}/>                                        
                         <TouchableOpacity style={styles.grayButton} onPress={() => close()}>
                             <Text style={[styles.smallText, { paddingLeft: 10} ]}>Continue without saving</Text>
                         </TouchableOpacity>                                
