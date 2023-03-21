@@ -22,6 +22,7 @@ import SliderImage1 from './../assets/SliderImage1.svg'
 import SliderImage2 from './../assets/SliderImage2.svg'
 import SliderImage3 from './../assets/SliderImage3.svg'
 import SliderImage4 from './../assets/SliderImage4.svg'
+import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 
 Sentry.init({
   dsn: 'https://5a92132c278b42a79bb122eb9c511e43@o4504618398908416.ingest.sentry.io/4504618595713024',
@@ -178,6 +179,7 @@ const PAGE_WIDTH = Dimensions.get('window').width;
 /// Render slider images DONE
 /// Menu visible without login DONE
 /// Responsive width bug 
+/// Menu non-functional on first login DONE
 
 // App Store
 /// New phrases
@@ -273,6 +275,10 @@ export default function App() {
 
   const [showRealApp, setShowRealApp] = useState(false)
 
+  // ADD MENU VISIBILITY VARIABLE HERE
+
+    const [menuVisible, setMenuVisible] = useState(false);
+
   console.log('showRealApp: ', showRealApp)
 
   const renderItem = ({ item }) => {
@@ -328,32 +334,40 @@ export default function App() {
 
   // transparent header: options={{headerTransparent: true}}  
 
+  // Higher order component to pass setmenuvisible prop to home
+  const withSetMenuVisible = (Component) => (props) => (
+    <Component {...props} setMenuVisible={setMenuVisible} />
+  );
+  
   if (showRealApp || session) {
     return (
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        <NavigationContainer>
-          <NativeBaseProvider style={styles.container}>
-            <Drawer.Navigator
-              screenOptions={{
-                header: ({ navigation, route }) => {
-                  const title = getHeaderTitle(route.name);
-                  return <Header title={title} navigation={navigation}/>;
-                },
-                drawerPosition: 'left',
-                headerRight: () => <Header/>,
-                overlayColor: 'transparent',
-                headerTransparent: true,
-              }}
-            > 
-              <Drawer.Screen name="Home" component={Home}/>
-              <Drawer.Screen name="LogIn" component={LogIn} />
-              <Drawer.Screen name="Choose" component={PhraseSelector} />
-              <Drawer.Screen name="Build" component={Words} />
-              <Drawer.Screen name="Phrasebook" component={Phrasebook} />
-            </Drawer.Navigator>
-          </NativeBaseProvider>
-        </NavigationContainer>
-      </GestureHandlerRootView>  
+      <ActionSheetProvider>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <NavigationContainer>
+            
+            <NativeBaseProvider style={styles.container}>
+              <Drawer.Navigator
+                screenOptions={{
+                  header: ({ navigation }) => {
+                    // const title = getHeaderTitle(route.name);
+                    return <Header navigation={navigation} menuVisible={menuVisible} setMenuVisible={setMenuVisible}/>;
+                  },
+                  drawerPosition: 'left',
+                  headerRight: () => <Header navigation={navigation} menuVisible={menuVisible} setMenuVisible={setMenuVisible}/>,
+                  overlayColor: 'transparent',
+                  headerTransparent: true,
+                }}
+              > 
+                <Drawer.Screen name="Home" component={withSetMenuVisible(Home)}/>
+                <Drawer.Screen name="LogIn" component={LogIn} />
+                <Drawer.Screen name="Choose" component={withSetMenuVisible(PhraseSelector)}/>
+                <Drawer.Screen name="Build" component={Words} />
+                <Drawer.Screen name="Phrasebook" component={Phrasebook} />
+              </Drawer.Navigator>
+            </NativeBaseProvider>
+          </NavigationContainer>
+        </GestureHandlerRootView>  
+      </ActionSheetProvider>
     );
   } 
   else {

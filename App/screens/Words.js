@@ -182,6 +182,7 @@ saveWord()
                         langCode={langCode}
                         sentence={sentence}
                         setSentence={setSentence}
+                        sentenceType={sentenceType}
                     />
                     <Tab.Navigator
                     tabBar={props => <WordMenu {...props} forward={forward} setForward ={setForward} words={words} sentence={sentence} setSentence={setSentence}/>}

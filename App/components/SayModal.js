@@ -14,13 +14,15 @@ import Sound from '../../assets/Sound.svg'
 const PAGE_HEIGHT = Dimensions.get('window').height;
 const PAGE_WIDTH = Dimensions.get('window').width;
 
-const SayModal = ({ sentence, sentenceEn, sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisper, lang, langCode, sentenceSaidPercentage, setSentenceSaidPercentage, sentenceText}) => {
+const SayModal = ({ sentence, sentenceEn, sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisper, lang, langCode, sentenceSaidPercentage, setSentenceSaidPercentage, sentenceText, sentenceType}) => {
 
     useEffect(() => {
         console.log("sayVisible is", sayVisible) // testing
     }, [sayVisible])
 
     // Create variables for modal
+
+    console.log("sentenceType is", sentenceType)
 
     const [topText, setTopText] = useState('Push the record button to practice your sentence!');
 
@@ -195,7 +197,7 @@ const SayModal = ({ sentence, sentenceEn, sayVisible, setSayVisible, sentenceWhi
                         </TouchableOpacity>
                     </View>
                     <View style={styles.buttonsContainer}>    
-                        <SaveButton sentence={sentence} savedSentence={sentenceText} sentenceEn={sentenceEn} langCode={langCode}/>                                        
+                        <SaveButton sentence={sentence} savedSentence={sentenceText} sentenceEn={sentenceEn} lang={lang} langCode={langCode} sentenceType={sentenceType}/>                                        
                         <TouchableOpacity style={styles.grayButton} onPress={() => close()}>
                             <Text style={[styles.smallText, { paddingLeft: 10} ]}>Continue without saving</Text>
                         </TouchableOpacity>                                
@@ -225,7 +227,7 @@ const SayModal = ({ sentence, sentenceEn, sayVisible, setSayVisible, sentenceWhi
                         </TouchableOpacity>
                     </View>
                     <View style={styles.buttonsContainer}>    
-                        <SaveButton/>                                        
+                        <SaveButton sentence={sentence} savedSentence={sentenceText} sentenceEn={sentenceEn} lang={lang} langCode={langCode} sentenceType={sentenceType}/>                                        
                         <TouchableOpacity style={styles.grayButton} onPress={() => keepImproving()}>
                             <Text style={[styles.smallText, { paddingLeft: 10} ]}>Keep improving</Text>
                         </TouchableOpacity>                                

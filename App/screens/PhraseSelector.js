@@ -14,11 +14,13 @@ const PAGE_HEIGHT = Dimensions.get('window').height;
 const PAGE_WIDTH = Dimensions.get('window').width;
 
 
-function PhraseSelector({navigation, route}) {
+function PhraseSelector({navigation, setMenuVisible, route}) {
 
     // Set up word lists 
 
     // create state with words
+
+    console.log("setMenuVisible in <PhraseSelector> is", setMenuVisible)
 
     const [lang, setLang] = useState(route.params.lang)
     const [langCode, setLangCode] = useState(route.params.langCode)
@@ -39,7 +41,7 @@ function PhraseSelector({navigation, route}) {
                 </View>     
                 <View style={styles.buttonsContainer}>
                     <View style={styles.phrasebookContainer}>
-                        <TouchableOpacity style={styles.phrasebookButton} onPress={() => navigation.navigate('Build', {wordSet: introductionList, lang: lang, langCode: langCode})}>
+                        <TouchableOpacity style={styles.phrasebookButton} onPress={() => {navigation.navigate('Build', {wordSet: introductionList, lang: lang, langCode: langCode}); setMenuVisible(true)}}>
                           <Text style={styles.buttonText}>Introduce myself 👋</Text>
                         </TouchableOpacity>
                     </View>

@@ -5,7 +5,7 @@ import Hamburger from "../../assets/hamburger.svg"
 import { DrawerActions } from '@react-navigation/native';
 import { supabase } from '../lib/supabase';
 
-const Header = (navigation) => {
+const Header = ({navigation, menuVisible, setMenuVisible}) => {
 
   const [login, setLogin] = React.useState(false)
 
@@ -19,9 +19,11 @@ const Header = (navigation) => {
     })
   }, [navigation, login])
   
-  navigation = navigation.navigation
+  //navigation = navigation.navigation
+
+
   const header = () => {
-    if (login === true) {
+    if (login === true && menuVisible === true) {
       return (
         <TouchableOpacity onPress={() => navigation.dispatch(DrawerActions.openDrawer())}>
           <Hamburger/>
@@ -34,6 +36,9 @@ const Header = (navigation) => {
       )
     }
   }
+
+
+
   return (
     <TouchableOpacity style={styles.container} onPress={() => navigation.navigate('Home')}>
       <Logo />

@@ -11,19 +11,26 @@ import { Switch} from '@rneui/themed'
 import Header from '../components/Header';
 import { DraxProvider, DraxScrollView } from 'react-native-drax';
 import SentenceCard from '../components/SentenceCard';
-
+import { useActionSheet } from '@expo/react-native-action-sheet';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const PAGE_HEIGHT = Dimensions.get('window').height;
 const PAGE_WIDTH = Dimensions.get('window').width;
 
-const Phrasebook = () => {
+const Phrasebook = ({route}) => {
+
+    // State for phrases
 
     const [sentences, setSentences] = useState([])
 
     const [translations, setTranslations] = useState(true)
 
-    const [langs, setLangs] = useState([])
 
+    // State for language picker
+
+    const [selectedLanguage, setSelectedLanguage] = useState("Spanish");
+        
+    const [langs, setLangs] = useState([])
 
   // Retrieve session
 
@@ -48,7 +55,7 @@ const Phrasebook = () => {
         if (session) {
             const { data, error } = await supabase
             .from('sentences')
-            .select('id, sentence, language, type, translation')
+            .select('id, sentence, language, lang_code, type, translation')
             .eq('user', session.user.id)
             .not("translation","is", null);
         
@@ -63,11 +70,52 @@ const Phrasebook = () => {
 
     fetchSentences()
   }, [session])
-    
-    
-    
-    //console.log(langs);
 
+  // Action sheet
+
+  const { showActionSheetWithOptions } = useActionSheet();
+
+  const onPress = () => {    
+    let options = langs    
+    options.push('Cancel');
+    const cancelButtonIndex = options.length - 1;
+
+    showActionSheetWithOptions({
+      options,
+      cancelButtonIndex
+    //  destructiveButtonIndex
+    }, (selectedIndex: number) => {
+      switch (selectedIndex) {
+
+        case 0:
+          // Save
+          setSelectedLanguage(options[selectedIndex])
+          break;
+
+        case 1:
+          // Save
+          setSelectedLanguage(options[selectedIndex])
+          break;
+
+       // case destructiveButtonIndex:
+          // Delete
+          //break;
+
+        default:
+            for (let i = 2; i < options.length; i++) {
+                if (selectedIndex === i) {
+                    setSelectedLanguage(options[i]);
+                    break;
+                }
+            }
+            break;
+
+        case cancelButtonIndex:
+            break;
+          // Canceled
+      }});
+  }  
+    
  return (  
     <View style={styles.container}>      
         <View style={styles.container}>
@@ -81,23 +129,32 @@ const Phrasebook = () => {
                 <Text style={styles.mainText}>
                 Your phrasebook
                 </Text>
-                <View style={styles.switchContainer}>
-                    <Text style={styles.text}>Eng: </Text>
-                    <Switch
-                        value={translations}
-                        color={'#FFC107'}
-                        onValueChange={(value) => setTranslations(value)}
-                    />
-                </View> 
+                <View style={styles.topContainer}>
+                    <View style={styles.pickerContainer}>
+                        <TouchableOpacity onPress={() => onPress()}>
+                            <Text style={styles.pickerText}>{selectedLanguage}</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.switchContainer}>                                        
+                        <Text style={styles.pickerText}>Eng: </Text>
+                        <Switch
+                            value={translations}
+                            color={'#FFC107'}
+                            onValueChange={(value) => setTranslations(value)}
+                        />
+                    </View> 
+                </View>
                 <DraxProvider>
                     <View style={styles.scrollLimit}>
                         <DraxScrollView style={styles.sentenceContainer}>
-                            {sentences.map((sentence) => <SentenceCard 
-                            key = {sentence.id} 
-                            sentence={sentence.sentence} 
-                            translation={sentence.translation} 
-                            translations={translations}
-                            />)}
+                            {sentences.filter ? sentences.filter(obj => {return obj.language === selectedLanguage})
+                            .map((sentence) => 
+                            <SentenceCard 
+                                key = {sentence.id} 
+                                sentence={sentence.sentence} 
+                                translation={sentence.translation} 
+                                translations={translations}
+                            />) : null}
                         </DraxScrollView>
                     </View>
                 </DraxProvider>
@@ -133,6 +190,13 @@ sentenceContainer: {
   alignItems: 'center',
   justifyContent: 'center',
  },
+ topContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 20,
+    marginTop: 20,
+},
  mainText: {
   fontSize: 54,
   color: "white",
@@ -151,6 +215,23 @@ sentenceContainer: {
 switchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+},
+pickerText: {    
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
+},
+pickerContainer: {
+    backgroundColor: 'transparent',
+    borderColor: '#FFC107',
+    borderWidth: 1,
+    width: PAGE_WIDTH*.4,
+    height: 50,   
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 20,
 },
 });
 

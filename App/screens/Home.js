@@ -12,11 +12,13 @@ const PAGE_HEIGHT = Dimensions.get('window').height;
 
 const PAGE_WIDTH = Dimensions.get('window').width;
 
-function Home({navigation}) {
+function Home({navigation, setMenuVisible}) {
 
     // Retrieve session
       
     const [session, setSession] = useState()
+
+    const [selectedLang, setSelectedLang] = useState("es-MX");
       
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session)
@@ -25,6 +27,7 @@ function Home({navigation}) {
     supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session)
     })
+
 
     /*const LanguageBox = ({lang, langCode, flag}) => {
         return (
@@ -40,7 +43,7 @@ function Home({navigation}) {
         if (!session?.user) {
           return (
             <View>
-                <TouchableOpacity style={styles.phrasebookButton} onPress={() => navigation.navigate('LogIn', {session: session, setSession: setSession})}> 
+                <TouchableOpacity style={styles.loginButton} onPress={() => navigation.navigate('LogIn', {session: session, setSession: setSession})}> 
                   <Text>Login</Text>
                 </TouchableOpacity>
             </View>
@@ -55,22 +58,22 @@ function Home({navigation}) {
                 </View>     
                 <View style={styles.buttonsContainer}>
                   <View style={styles.buttonContainer}>
-                    <TouchableOpacity style={styles.languageBox} onPress={() => navigation.navigate('Choose', {lang: "Korean", langCode: "ko"})}>
+                    <TouchableOpacity style={styles.languageBox} onPress={() => {navigation.navigate('Choose', {lang: "Korean", langCode: "ko"}); setSelectedLang("ko")}}>
                       <Text style={styles.buttonText}>Korean</Text>
                       <KoreanFlag width={55}/>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.languageBox} onPress={() => navigation.navigate('Choose', {lang: "Spanish", langCode: "es-MX"})}>
+                    <TouchableOpacity style={styles.languageBox} onPress={() => {navigation.navigate('Choose', {lang: "Spanish", langCode: "es-MX"}); setSelectedLang("es-MX")}}>
                       <Text style={styles.buttonText}>Spanish</Text>
                       <SpanishFlag width={55}/>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.languageBox} onPress={() => navigation.navigate('Choose', {lang: "Bulgarian", langCode: "bg"})}>
+                    <TouchableOpacity style={styles.languageBox} onPress={() => {navigation.navigate('Choose', {lang: "Bulgarian", langCode: "bg"}); setSelectedLang("bg")}}>
                       <Text style={styles.buttonText}>Bulgarian</Text>
                       <BulgarianFlag width={55}/>
                     </TouchableOpacity>                      
                   </View>
                   <View style={styles.lowerContainer}> 
                     <View style={styles.phrasebookContainer}>                    
-                        <TouchableOpacity style={styles.phrasebookButton} onPress={() => navigation.navigate('Phrasebook')}>
+                        <TouchableOpacity style={styles.phrasebookButton} onPress={() => navigation.navigate('Phrasebook', {selectedLang: selectedLang, setSelectedLang: setSelectedLang})}>
                           <Text style={styles.longButtonText}>My phrases</Text>
                         </TouchableOpacity>
                     </View>
@@ -160,6 +163,18 @@ function Home({navigation}) {
     phrasebookButton: {
       display: 'flex',
       flex: 2,
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: 10,
+      backgroundColor: 'white',
+      borderRadius: 10,
+      width: PAGE_WIDTH*.45,
+      height: PAGE_HEIGHT*.05,
+      margin: 10
+    },
+    loginButton: {
+      
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',

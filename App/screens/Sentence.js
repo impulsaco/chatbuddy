@@ -27,7 +27,8 @@ const Sentence = ({
     lang, 
     langCode, 
     sentence, 
-    setSentence}) => {
+    setSentence,
+    sentenceType}) => {
 
     // Set instructions and sentence placeholder
 
@@ -279,6 +280,7 @@ const Sentence = ({
                         sentenceSaidPercentage={sentenceSaidPercentage}
                         setSentenceSaidPercentage={setSentenceSaidPercentage}
                         sentenceText={sentenceText}
+                        sentenceType={sentenceType}
                 />
                 <TouchableOpacity style={styles.switchContainer} onPress={() => toggleTranslations()}>
                     {translationButton()
