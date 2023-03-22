@@ -11,13 +11,14 @@ import { Switch} from '@rneui/themed'
 import Header from '../components/Header';
 import { DraxProvider, DraxScrollView } from 'react-native-drax';
 import SentenceCard from '../components/SentenceCard';
+import EmptySentence from '../components/EmptySentence';
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const PAGE_HEIGHT = Dimensions.get('window').height;
 const PAGE_WIDTH = Dimensions.get('window').width;
 
-const Phrasebook = ({route}) => {
+const Phrasebook = ({navigate, route}) => {
 
     // State for phrases
 
@@ -25,13 +26,20 @@ const Phrasebook = ({route}) => {
 
     const [translations, setTranslations] = useState(true)
 
+    const emptySentences = 5
+
 
     // State for language picker
 
     const [selectedLanguage, setSelectedLanguage] = useState("Spanish");
         
     const [langs, setLangs] = useState([])
-
+    const [types, setTypes] = useState([
+        {name: "introduction", label: "Self-introduction", unfilled: emptySentences}, 
+        {name: "hobbies", label: "Hobbies", unfilled: emptySentences}, 
+        {name: "family", label: "Family", unfilled: emptySentences},
+        {name: "basic", label: "Anything!", unfilled: emptySentences}
+    ])
   // Retrieve session
 
   const [session, setSession] = useState()
@@ -45,31 +53,38 @@ const Phrasebook = ({route}) => {
     supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session)
     })
-  }, [session])
+  }, [])
   
   // Fetch sentences based on session
 
-  useEffect(() => {
-
-    const fetchSentences = async () => {
-        if (session) {
-            const { data, error } = await supabase
-            .from('sentences')
-            .select('id, sentence, language, lang_code, type, translation')
-            .eq('user', session.user.id)
-            .not("translation","is", null);
-        
-            if (error) alert(error.message)
-        
-            if (data) {
-                setSentences(data)
-                setLangs(Array.from(new Set(data.map(({ language }) => language))))
-            }
+  const fetchSentences = async () => {
+    if (session) {
+        const { data, error } = await supabase
+        .from('sentences')
+        .select('id, sentence, language, lang_code, type, translation')
+        .eq('user', session.user.id)
+        .not("translation","is", null);
+    
+        if (error) alert(error.message)
+    
+        if (data) {
+            setSentences(data)                
+            setTypes([
+                {name: "introduction", label: "Self-introduction", unfilled: emptySentences - data.filter(({ type }) => type === "introduction").length}, 
+                {name: "hobbies", label: "Hobbies", unfilled: emptySentences - data.filter(({ type }) => type === "hobbies").length}, 
+                {name: "family", label: "Family", unfilled: emptySentences - data.filter(({ type }) => type === "family").length},
+                {name: "basic", label: "Anything!", unfilled: emptySentences - data.filter(({ type }) => type === "basic").length}
+            ])
+            setLangs(Array.from(new Set(data.map(({ language }) => language))))
         }
     }
+  }
 
+  useEffect(() => {  
     fetchSentences()
   }, [session])
+
+  // Count types of each sentence
 
   // Action sheet
 
@@ -115,6 +130,35 @@ const Phrasebook = ({route}) => {
           // Canceled
       }});
   }  
+
+  // Render sentences
+
+  const renderSentences = (phrase) => {
+    //console.log("sentences HERE are ", sentences)
+        return (
+            sentences.filter ? sentences.filter(obj => {return obj.language === selectedLanguage && obj.type === phrase})
+            .map((sentence) => 
+            <SentenceCard 
+                key = {sentence.id} 
+                sentence={sentence.sentence} 
+                translation={sentence.translation} 
+                translations={translations}
+            />) : null
+        )
+    }
+
+    // Render unfilled
+    const renderUnfilled = (unfilled) => {
+        const cards = []
+        for (let i = 0; i < unfilled; i++) {
+            cards.push(
+                <EmptySentence key={i} navigation={navigate}/>                
+            )
+        }
+        return cards
+    }
+
+  //console.log("sentences", sentences)
     
  return (  
     <View style={styles.container}>      
@@ -147,14 +191,16 @@ const Phrasebook = ({route}) => {
                 <DraxProvider>
                     <View style={styles.scrollLimit}>
                         <DraxScrollView style={styles.sentenceContainer}>
-                            {sentences.filter ? sentences.filter(obj => {return obj.language === selectedLanguage})
-                            .map((sentence) => 
-                            <SentenceCard 
-                                key = {sentence.id} 
-                                sentence={sentence.sentence} 
-                                translation={sentence.translation} 
-                                translations={translations}
-                            />) : null}
+                            {types.map((type, index) => {
+                                return (
+                                    <View key={index}>
+                                        <Text style={styles.text}>{type.label}</Text>
+                                        {renderSentences(type.name)}
+                                        {renderUnfilled(type.unfilled)}
+                                    </View>
+                                )
+                            })}
+                            {renderSentences("introduction")}
                         </DraxScrollView>
                     </View>
                 </DraxProvider>
@@ -232,7 +278,8 @@ pickerContainer: {
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 20,
-},
+}
+
 });
 
 export default Phrasebook;
