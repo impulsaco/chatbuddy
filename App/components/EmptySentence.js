@@ -1,15 +1,29 @@
 import React from "react";
 import { View, TouchableOpacity, Button, Text, StyleSheet} from "react-native";
 import Plus from "../../assets/Plus.svg";
+import introductionList from '../wordsets/introductionList';
+import hobbiesList from '../wordsets/hobbiesList';
+import basicList from '../wordsets/basicList';
+import familyList from '../wordsets/familyList';
 
-const EmptySentence = ( {navigation} ) => {
-
+const EmptySentence = ( {navigation, type, lang, langCode, setMenuVisible} ) => {    
+    const destination = (type) => {
+        if (type === 'introduction') {
+            return introductionList
+        } else if (type === 'hobbies') {
+            return hobbiesList
+        } else if (type === 'basic') {
+            return basicList
+        } else if (type === 'family') {
+            return familyList
+        }
+    }
      // For translations
-    // onPress={() => {navigation.navigate('Build', {wordSet: introductionList, lang: lang, langCode: langCode}); setMenuVisible(true)}}
+    // 
     return (
         <View style={{width : '100%'}}>
-            <TouchableOpacity style={styles.sentenceCard}>
-                <Plus/>
+            <TouchableOpacity style={styles.sentenceCard} onPress={() => {navigation.navigate('Build', {wordSet: destination(type), lang: lang, langCode: langCode}); setMenuVisible(true)}}>
+                <Plus style={[{fill: 'white'}]}/>
                 <Text style={styles.textLight}>Tap to add!</Text>
             </TouchableOpacity>
         </View>
@@ -23,9 +37,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         paddingHorizontal: 10,
         paddingVertical: 10,
-        borderColor: '#FFC107',
         backgroundColor: 'rgba(197, 197, 197, 0.75);',
-        borderWidth: 1,
         borderRadius: 10,
         position: 'relative',
         width: 359,

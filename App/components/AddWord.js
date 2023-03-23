@@ -72,7 +72,7 @@ const AddWord = ({ type, setUserWords, userWords, langCode }) => {
         <View>
             <View style={styles.container}>
                 <TouchableOpacity style={styles.plusCard} onPress={() => setModalVisible(true)} >
-                    <Plus/>
+                    <Plus style={[{fill: 'black'}]}/>
                 </TouchableOpacity>
             </View>
             <Modal visible={modalVisible} transparent={true}>

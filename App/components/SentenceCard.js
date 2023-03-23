@@ -14,7 +14,7 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 
-const SentenceCard = ( {sentence, translation, translations} ) => {
+const SentenceCard = ( {sentence, translation, translations, blocks, type} ) => {
 
      // For translations
     

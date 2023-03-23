@@ -18,7 +18,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 const PAGE_HEIGHT = Dimensions.get('window').height;
 const PAGE_WIDTH = Dimensions.get('window').width;
 
-const Phrasebook = ({navigate, route}) => {
+const Phrasebook = ({navigation, route}) => {
 
     // State for phrases
 
@@ -32,8 +32,11 @@ const Phrasebook = ({navigate, route}) => {
     // State for language picker
 
     const [selectedLanguage, setSelectedLanguage] = useState("Spanish");
+    const [selectedLangCode, setSelectedLangCode] = useState("es-MX");
         
     const [langs, setLangs] = useState([])
+    const [langCodes, setLangCodes] = useState([])
+
     const [types, setTypes] = useState([
         {name: "introduction", label: "Self-introduction", unfilled: emptySentences}, 
         {name: "hobbies", label: "Hobbies", unfilled: emptySentences}, 
@@ -61,7 +64,7 @@ const Phrasebook = ({navigate, route}) => {
     if (session) {
         const { data, error } = await supabase
         .from('sentences')
-        .select('id, sentence, language, lang_code, type, translation')
+        .select('id, sentence, language, lang_code, type, translation, blocks')
         .eq('user', session.user.id)
         .not("translation","is", null);
     
@@ -70,19 +73,20 @@ const Phrasebook = ({navigate, route}) => {
         if (data) {
             setSentences(data)                
             setTypes([
-                {name: "introduction", label: "Self-introduction", unfilled: emptySentences - data.filter(({ type }) => type === "introduction").length}, 
-                {name: "hobbies", label: "Hobbies", unfilled: emptySentences - data.filter(({ type }) => type === "hobbies").length}, 
-                {name: "family", label: "Family", unfilled: emptySentences - data.filter(({ type }) => type === "family").length},
-                {name: "basic", label: "Anything!", unfilled: emptySentences - data.filter(({ type }) => type === "basic").length}
+                {name: "introduction", label: "Introduce myself 👋", unfilled: emptySentences - data.filter(({ type }) => type === "introduction").length}, 
+                {name: "family", label: "My family 🏡", unfilled: emptySentences - data.filter(({ type }) => type === "family").length},
+                {name: "hobbies", label: "Hobbies 🎨", unfilled: emptySentences - data.filter(({ type }) => type === "hobbies").length}, 
+                {name: "basic", label: "Anything 🤯", unfilled: emptySentences - data.filter(({ type }) => type === "basic").length}
             ])
             setLangs(Array.from(new Set(data.map(({ language }) => language))))
+            setLangCodes(Array.from(new Set(data.map(({ lang_code }) => lang_code))))
         }
     }
   }
 
   useEffect(() => {  
     fetchSentences()
-  }, [session])
+  }, [session, sentences])
 
   // Count types of each sentence
 
@@ -120,6 +124,7 @@ const Phrasebook = ({navigate, route}) => {
             for (let i = 2; i < options.length; i++) {
                 if (selectedIndex === i) {
                     setSelectedLanguage(options[i]);
+                    setSelectedLangCode(langCodes[i-2])
                     break;
                 }
             }
@@ -133,29 +138,53 @@ const Phrasebook = ({navigate, route}) => {
 
   // Render sentences
 
-  const renderSentences = (phrase) => {
+  const renderSentences = (type) => {
     //console.log("sentences HERE are ", sentences)
+    //console.log("type here is", type)
         return (
-            sentences.filter ? sentences.filter(obj => {return obj.language === selectedLanguage && obj.type === phrase})
+            sentences.filter ? sentences.filter(obj => {return obj.language === selectedLanguage && obj.type === type})
             .map((sentence) => 
             <SentenceCard 
                 key = {sentence.id} 
                 sentence={sentence.sentence} 
                 translation={sentence.translation} 
+                blocks={sentence.blocks}
+                type={type}
                 translations={translations}
             />) : null
         )
     }
+    
 
     // Render unfilled
-    const renderUnfilled = (unfilled) => {
+    const renderUnfilled = (type, selectedLang, selectedLangCode, setMenuVisible) => {
+        //console.log("sentence is", sentence)
         const cards = []
-        for (let i = 0; i < unfilled; i++) {
+        for (let i = 0; i < type.unfilled; i++) {
             cards.push(
-                <EmptySentence key={i} navigation={navigate}/>                
+                <EmptySentence key={i} navigation={navigation} type={type.name} lang={selectedLang} langCode={selectedLangCode} setMenuVisible={setMenuVisible}/>                
             )
         }
         return cards
+    }
+
+    const sentenceCounter = (unfilled) => {
+        if (unfilled === emptySentences) {
+            return (
+                <Text style={[styles.typeText, { color: "red"} ]}>{` (${(emptySentences-unfilled)}/${emptySentences})`}</Text>
+            )
+        }
+        if (unfilled <= 0) {
+            return (
+                <Text style={[styles.typeText, { color: "green"} ]}>{` (${(emptySentences-unfilled)}/${emptySentences}) 🏅`}</Text>
+            )
+        }
+        else {
+            return (
+                <Text style={[styles.typeText, { color: "orange"} ]}>{` (${(emptySentences-unfilled)}/${emptySentences})`}</Text>
+            )
+        }
+        
     }
 
   //console.log("sentences", sentences)
@@ -194,9 +223,12 @@ const Phrasebook = ({navigate, route}) => {
                             {types.map((type, index) => {
                                 return (
                                     <View key={index}>
-                                        <Text style={styles.text}>{type.label}</Text>
+                                        <View style={styles.counterContainer}>
+                                            <Text style={styles.typeText}>{type.label}</Text>
+                                            {sentenceCounter(type.unfilled)}
+                                        </View>
                                         {renderSentences(type.name)}
-                                        {renderUnfilled(type.unfilled)}
+                                        {renderUnfilled(type, selectedLanguage, selectedLangCode, route.params.setMenuVisible)}
                                     </View>
                                 )
                             })}
@@ -251,6 +283,19 @@ sentenceContainer: {
     fontSize: 16,
     color: "white",
    },
+ typeText: {
+    fontSize: 18,
+    color: "white",
+    fontWeight: 'bold',
+ },
+ counterContainer: {
+    flexDirection: 'row',
+    alignItems: 'start',
+    justifyContent: 'flex-start',
+    marginBottom: 10,
+    marginTop: 10,
+    marginLeft: 20,
+ },
  linearGradient: {
     position: 'absolute',
     height: PAGE_HEIGHT,

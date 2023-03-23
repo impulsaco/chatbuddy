@@ -73,7 +73,7 @@ function Home({navigation, setMenuVisible}) {
                   </View>
                   <View style={styles.lowerContainer}> 
                     <View style={styles.phrasebookContainer}>                    
-                        <TouchableOpacity style={styles.phrasebookButton} onPress={() => navigation.navigate('Phrasebook', {selectedLang: selectedLang, setSelectedLang: setSelectedLang})}>
+                        <TouchableOpacity style={styles.phrasebookButton} onPress={() => navigation.navigate('Phrasebook', {selectedLang: selectedLang, setSelectedLang: setSelectedLang, setMenuVisible: setMenuVisible})}>
                           <Text style={styles.longButtonText}>My phrases</Text>
                         </TouchableOpacity>
                     </View>
