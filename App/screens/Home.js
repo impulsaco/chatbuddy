@@ -92,7 +92,7 @@ function Home({navigation, setMenuVisible}) {
     return (
       <View style={styles.mainContainer}>
         <LinearGradient 
-        colors={['#319CFF', '#319CFF']}
+        colors={['#3499FE', '#3499FE']}
         locations={[0, .99]}
         style={styles.linearGradient}
         />

@@ -1,12 +1,15 @@
 import React from "react";
-import { View, TouchableOpacity, Button, Text, StyleSheet} from "react-native";
+import { View, TouchableOpacity, Button, Text, StyleSheet, Dimensions} from "react-native";
 import Plus from "../../assets/Plus.svg";
 import introductionList from '../wordsets/introductionList';
 import hobbiesList from '../wordsets/hobbiesList';
 import basicList from '../wordsets/basicList';
 import familyList from '../wordsets/familyList';
 
-const EmptySentence = ( {navigation, type, lang, langCode, setMenuVisible} ) => {    
+const PAGE_HEIGHT = Dimensions.get('window').height;
+const PAGE_WIDTH = Dimensions.get('window').width;
+
+const EmptySentence = ( {navigation, type, lang, langCode, setMenuVisible} ) => {        
     const destination = (type) => {
         if (type === 'introduction') {
             return introductionList
@@ -40,8 +43,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(197, 197, 197, 0.75);',
         borderRadius: 10,
         position: 'relative',
-        width: 359,
-        height: 64,
+        width: PAGE_WIDTH*.87,
+        height: PAGE_HEIGHT * 0.075,
         margin: 10,
     }, 
     text: {

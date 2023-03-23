@@ -46,17 +46,17 @@ function PhraseSelector({navigation, setMenuVisible, route}) {
                         </TouchableOpacity>
                     </View>
                     <View style={styles.phrasebookContainer}>
-                        <TouchableOpacity style={styles.phrasebookButton} onPress={() => navigation.navigate('Build', {wordSet: familyList, lang: lang, langCode: langCode})}>
+                        <TouchableOpacity style={styles.phrasebookButton} onPress={() => {navigation.navigate('Build', {wordSet: familyList, lang: lang, langCode: langCode}); setMenuVisible(true)}}>
                           <Text style={styles.buttonText}>My family 🏡</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.phrasebookContainer}>
-                        <TouchableOpacity style={styles.phrasebookButton} onPress={() => navigation.navigate('Build', {wordSet: hobbiesList, lang: lang, langCode: langCode})}>
+                        <TouchableOpacity style={styles.phrasebookButton} onPress={() => {navigation.navigate('Build', {wordSet: hobbiesList, lang: lang, langCode: langCode}); setMenuVisible(true)}}>
                           <Text style={styles.buttonText}>Hobbies 🎨</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.phrasebookContainer}>
-                        <TouchableOpacity style={styles.phrasebookButton} onPress={() => navigation.navigate('Build', {wordSet: freeformList, lang: lang, langCode: langCode})}>
+                        <TouchableOpacity style={styles.phrasebookButton} onPress={() => {navigation.navigate('Build', {wordSet: freeformList, lang: lang, langCode: langCode}); setMenuVisible(true)}}>
                           <Text style={styles.buttonText}>Anything 🤯</Text>
                         </TouchableOpacity>
                     </View>                    
@@ -68,7 +68,7 @@ function PhraseSelector({navigation, setMenuVisible, route}) {
     return (
       <View style={styles.mainContainer}>
         <LinearGradient 
-        colors={['#319CFF', '#319CFF']}
+        colors={['#3499FE', '#3499FE']}
         locations={[0, .99]}
         style={styles.linearGradient}
         />

@@ -1,9 +1,18 @@
 import React from "react";
-import { View, TouchableOpacity, Button, Text, StyleSheet} from "react-native";
+import { View, TouchableOpacity, Button, Text, StyleSheet, Dimensions} from "react-native";
 import { Card } from "@rneui/themed";
 import { DraxProvider, DraxView } from 'react-native-drax';
 import { Configuration, OpenAIApi } from "openai";
 import { OPENAI_API_KEY } from "@env"
+import AudioPlayback from "../../assets/audioPlayback.svg";
+import sentenceSpeak from "../lib/sentenceSpeak";
+import TrashBin from "../../assets/TrashBin.svg";
+import { supabase } from '../lib/supabase';
+import { useActionSheet } from '@expo/react-native-action-sheet';
+
+
+const PAGE_HEIGHT = Dimensions.get('window').height;
+const PAGE_WIDTH = Dimensions.get('window').width;
 
 // Set up GPT3
 
@@ -13,8 +22,50 @@ const configuration = new Configuration({
 
 const openai = new OpenAIApi(configuration);
 
+// Delete sentence functionality
 
-const SentenceCard = ( {sentence, translation, translations, blocks, type} ) => {
+// Action sheet
+
+
+const SentenceCard = ( {id, sentence, translation, translations, langCode, blocks, type, session} ) => {
+
+    const { showActionSheetWithOptions } = useActionSheet();
+
+    const onDelete = (id) => {      
+        const options = ['Delete', 'Cancel'];
+        const destructiveButtonIndex = 0;
+        const cancelButtonIndex = 1;
+
+        showActionSheetWithOptions({
+            options,
+            cancelButtonIndex,
+            destructiveButtonIndex
+        }, (selectedIndex: number) => {
+            switch (selectedIndex) {          
+    
+            case destructiveButtonIndex:
+                // Delete
+                deleteSentence(id)
+                break;
+    
+            case cancelButtonIndex:
+                // Canceled
+                break;
+            }});
+    } 
+
+    async function deleteSentence(id) {        
+        console.log("in deleteSentence, sentence.id is: ", id)
+        
+        const { error } = await supabase
+        .from('sentences')
+        .delete()
+        .eq('id', id)
+
+        if (error) alert(error.message)
+        
+    }
+    
 
      // For translations
     
@@ -43,36 +94,65 @@ const SentenceCard = ( {sentence, translation, translations, blocks, type} ) => 
 
     return (
         <View style={{width : '100%'}}>
-            <TouchableOpacity onPress={() => gptResponse(sentence)} style={styles.sentenceCard}>
-                <Text style={styles.text}>{sentence}</Text>
-                {sentenceTranslation()}
-            </TouchableOpacity>
+            <View style={styles.sentenceCard}>                
+                <TouchableOpacity onPress={() => sentenceSpeak(sentence, langCode)}>
+                    <AudioPlayback/>
+                </TouchableOpacity>
+                <View style={styles.sentenceContainer}>
+                    <Text style={styles.text}>{sentence}</Text>
+                    {sentenceTranslation()}
+                </View>                
+                <TouchableOpacity style={styles.practiceButton}>
+                    <Text style={styles.practiceText}>Practice</Text>
+                </TouchableOpacity>                
+                <TouchableOpacity style={styles.trashContainer} onPress={() => onDelete(id)}>
+                    <TrashBin style={[{fill: 'red'}]}/>
+                </TouchableOpacity>
+            </View>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
     sentenceCard: {
-        flexDirection: 'column',
+        flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center',
-        paddingHorizontal: 10,
-        paddingVertical: 10,
-        borderColor: '#FFC107',
+        justifyContent: 'flex-start',
+        paddingHorizontal: PAGE_WIDTH * 0.05,
+        paddingVertical: PAGE_HEIGHT * 0.02,
         backgroundColor: '#FFFFFF',
-        borderWidth: 1,
         borderRadius: 10,
         position: 'relative',
-        width: 359,
-        height: 64,
+        width: PAGE_WIDTH*.87,
+        height: PAGE_HEIGHT * 0.075,
         margin: 10,
     }, 
+    sentenceContainer: {
+        flexDirection: 'column',
+        marginLeft: PAGE_WIDTH * 0.05,
+        alignItems: 'flex-start',    
+    },
+    practiceButton: {
+        backgroundColor: '#FFC107',
+        borderRadius: 10,
+        position: 'absolute',
+        right: PAGE_WIDTH * 0.1,
+        padding: 10,
+    },
+    practiceText: {
+        fontSize: 14,
+        height: 16,
+        textAlign: 'center',
+        color: "black",        
+    },
     text: {
-        fontSize: 16,
+        fontSize: 14,
+        flexWrap: 'wrap',
         height: 20,
+        width: PAGE_WIDTH * 0.4,
         display: 'flex',
         alignItems: 'center',
-        textAlign: 'center',
+        textAlign: 'left',
         color: '#030303',
         
     },
@@ -83,9 +163,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         textAlign: 'center',
         color: '#B7B7B7',
-        marginTop: 10,
-        
+        marginTop: 10,        
     },
+    trashContainer: {
+        position: 'absolute',
+        right: PAGE_WIDTH * 0.03,
+    }
 })
 
 export default SentenceCard

@@ -71,22 +71,24 @@ const Phrasebook = ({navigation, route}) => {
         if (error) alert(error.message)
     
         if (data) {
-            setSentences(data)                
+            setSentences(data)      
             setTypes([
-                {name: "introduction", label: "Introduce myself 👋", unfilled: emptySentences - data.filter(({ type }) => type === "introduction").length}, 
-                {name: "family", label: "My family 🏡", unfilled: emptySentences - data.filter(({ type }) => type === "family").length},
-                {name: "hobbies", label: "Hobbies 🎨", unfilled: emptySentences - data.filter(({ type }) => type === "hobbies").length}, 
-                {name: "basic", label: "Anything 🤯", unfilled: emptySentences - data.filter(({ type }) => type === "basic").length}
+                {name: "introduction", label: "Introduce myself 👋", unfilled: emptySentences - data.filter(obj => {return obj.type === "introduction" && obj.language === selectedLanguage}).length}, 
+                {name: "family", label: "My family 🏡", unfilled: emptySentences - data.filter(obj => {return obj.type === "family" && obj.language === selectedLanguage}).length},
+                {name: "hobbies", label: "Hobbies 🎨", unfilled: emptySentences - data.filter(obj => {return obj.type === "hobbies" && obj.language === selectedLanguage}).length}, 
+                {name: "basic", label: "Anything 🤯", unfilled: emptySentences - data.filter(obj => {return obj.type === "basic" && obj.language === selectedLanguage}).length}
             ])
             setLangs(Array.from(new Set(data.map(({ language }) => language))))
             setLangCodes(Array.from(new Set(data.map(({ lang_code }) => lang_code))))
         }
     }
   }
+  //console.log("types are", types)
+  //console.log("selectedLanguage is", selectedLanguage)
 
   useEffect(() => {  
     fetchSentences()
-  }, [session, sentences])
+  }, [session, sentences, selectedLanguage, selectedLangCode])
 
   // Count types of each sentence
 
@@ -109,11 +111,13 @@ const Phrasebook = ({navigation, route}) => {
         case 0:
           // Save
           setSelectedLanguage(options[selectedIndex])
+          setSelectedLangCode(langCodes[selectedIndex])
           break;
 
         case 1:
           // Save
           setSelectedLanguage(options[selectedIndex])
+          setSelectedLangCode(langCodes[selectedIndex])
           break;
 
        // case destructiveButtonIndex:
@@ -145,12 +149,15 @@ const Phrasebook = ({navigation, route}) => {
             sentences.filter ? sentences.filter(obj => {return obj.language === selectedLanguage && obj.type === type})
             .map((sentence) => 
             <SentenceCard 
-                key = {sentence.id} 
+                key = {sentence.id}
+                id = {sentence.id}
                 sentence={sentence.sentence} 
                 translation={sentence.translation} 
                 blocks={sentence.blocks}
                 type={type}
+                langCode={selectedLangCode}
                 translations={translations}
+                session={session}
             />) : null
         )
     }
@@ -158,7 +165,8 @@ const Phrasebook = ({navigation, route}) => {
 
     // Render unfilled
     const renderUnfilled = (type, selectedLang, selectedLangCode, setMenuVisible) => {
-        //console.log("sentence is", sentence)
+        //console.log("selectedlang is", selectedLang)
+        //console.log("selectedlangcode is", selectedLangCode)
         const cards = []
         for (let i = 0; i < type.unfilled; i++) {
             cards.push(
@@ -193,7 +201,7 @@ const Phrasebook = ({navigation, route}) => {
     <View style={styles.container}>      
         <View style={styles.container}>
             <LinearGradient 
-            colors={['#319CFF', '#319CFF']}
+            colors={['#3499FE', '#3499FE']}
             locations={[0, .99]}
             style={styles.linearGradient}
             />
@@ -203,11 +211,11 @@ const Phrasebook = ({navigation, route}) => {
                 Your phrasebook
                 </Text>
                 <View style={styles.topContainer}>
-                    <View style={styles.pickerContainer}>
-                        <TouchableOpacity onPress={() => onPress()}>
+                    <TouchableOpacity style={styles.pickerContainer} onPress={() => onPress()}>
+                        <View>
                             <Text style={styles.pickerText}>{selectedLanguage}</Text>
-                        </TouchableOpacity>
-                    </View>
+                        </View>
+                    </TouchableOpacity>
                     <View style={styles.switchContainer}>                                        
                         <Text style={styles.pickerText}>Eng: </Text>
                         <Switch
