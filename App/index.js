@@ -362,7 +362,7 @@ export default function App() {
                 <Drawer.Screen name="LogIn" component={LogIn} />
                 <Drawer.Screen name="Choose" component={withSetMenuVisible(PhraseSelector)}/>
                 <Drawer.Screen name="Build" component={Words} />
-                <Drawer.Screen name="Phrasebook" component={Phrasebook} />
+                <Drawer.Screen name="Phrasebook" component={withSetMenuVisible(Phrasebook)} />
               </Drawer.Navigator>
             </NativeBaseProvider>
           </NavigationContainer>

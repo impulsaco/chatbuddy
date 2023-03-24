@@ -14,7 +14,7 @@ import Sound from '../../assets/Sound.svg'
 const PAGE_HEIGHT = Dimensions.get('window').height;
 const PAGE_WIDTH = Dimensions.get('window').width;
 
-const SayModal = ({ sentence, sentenceEn, sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisper, lang, langCode, sentenceSaidPercentage, setSentenceSaidPercentage, sentenceText, sentenceType}) => {
+const SayModal = ({ navigation, sentence, sentenceEn, sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisper, lang, langCode, sentenceSaidPercentage, setSentenceSaidPercentage, sentenceText, sentenceType}) => {
 
     useEffect(() => {
         console.log("sayVisible is", sayVisible) // testing
@@ -35,6 +35,8 @@ const SayModal = ({ sentence, sentenceEn, sayVisible, setSayVisible, sentenceWhi
     const [playSound, setPlaySound] = useState(null);
 
     const [closeVisible, setCloseVisible] = useState(true); // to prevent premature recording end
+
+    const [sentenceSaved, setSentenceSaved] = useState(false)
 
     // Sets success upon 50% of sentence said
     useEffect (() => {
@@ -137,6 +139,40 @@ const SayModal = ({ sentence, sentenceEn, sayVisible, setSayVisible, sentenceWhi
         }
     }
 
+    const continueWithoutSavingButton = () => {
+        if (!sentenceSaved) {
+            return (
+                <TouchableOpacity style={styles.grayButton} onPress={() => close()}>
+                    <Text style={[styles.smallText, { paddingLeft: 10} ]}>Continue without saving</Text>
+                </TouchableOpacity>
+            )
+        }
+        else if (sentenceSaved) {
+            return (
+                <TouchableOpacity style={styles.grayButton} onPress={() => {navigation.navigate("Phrasebook"); close(); setSentenceSaved(false)}}>
+                    <Text style={[styles.smallText, { paddingLeft: 10} ]}>Go to phrasebook</Text>
+                </TouchableOpacity>
+            )
+        }
+    }
+
+    const keepImprovingButton = () => {
+        if (!sentenceSaved) {
+            return (
+                <TouchableOpacity style={styles.grayButton} onPress={() => keepImproving()}>
+                    <Text style={[styles.smallText, { paddingLeft: 10} ]}>Keep improving</Text>
+                </TouchableOpacity>
+            )
+        }
+        else if (sentenceSaved) {
+            return (
+                <TouchableOpacity style={styles.grayButton} onPress={() => {navigation.navigate("Phrasebook", {lang: lang, langCode: langCode}); close(); setSentenceSaved(false)}}>
+                    <Text style={[styles.smallText, { paddingLeft: 10} ]}>Go to phrasebook</Text>
+                </TouchableOpacity>
+            )
+        }
+    }
+
     useEffect(() => {
     }, [closeVisible])
 
@@ -197,10 +233,8 @@ const SayModal = ({ sentence, sentenceEn, sayVisible, setSayVisible, sentenceWhi
                         </TouchableOpacity>
                     </View>
                     <View style={styles.buttonsContainer}>    
-                        <SaveButton sentence={sentence} savedSentence={sentenceText} sentenceEn={sentenceEn} lang={lang} langCode={langCode} sentenceType={sentenceType}/>                                        
-                        <TouchableOpacity style={styles.grayButton} onPress={() => close()}>
-                            <Text style={[styles.smallText, { paddingLeft: 10} ]}>Continue without saving</Text>
-                        </TouchableOpacity>                                
+                        <SaveButton sentence={sentence} savedSentence={sentenceText} sentenceEn={sentenceEn} lang={lang} langCode={langCode} sentenceType={sentenceType} sentenceSaved={sentenceSaved} setSentenceSaved={setSentenceSaved}/>                                        
+                        {continueWithoutSavingButton()}                             
                     </View>                                               
                 </View>
             </Modal>
@@ -227,10 +261,8 @@ const SayModal = ({ sentence, sentenceEn, sayVisible, setSayVisible, sentenceWhi
                         </TouchableOpacity>
                     </View>
                     <View style={styles.buttonsContainer}>    
-                        <SaveButton sentence={sentence} savedSentence={sentenceText} sentenceEn={sentenceEn} lang={lang} langCode={langCode} sentenceType={sentenceType}/>                                        
-                        <TouchableOpacity style={styles.grayButton} onPress={() => keepImproving()}>
-                            <Text style={[styles.smallText, { paddingLeft: 10} ]}>Keep improving</Text>
-                        </TouchableOpacity>                                
+                        <SaveButton sentence={sentence} savedSentence={sentenceText} sentenceEn={sentenceEn} lang={lang} langCode={langCode} sentenceType={sentenceType} sentenceSaved={sentenceSaved} setSentenceSaved={setSentenceSaved}/>                                        
+                        {keepImprovingButton()}
                     </View>                                               
                 </View>
             </Modal>

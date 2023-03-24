@@ -28,7 +28,8 @@ const WordMenu = ({ state, navigation, forward, setForward, words, sentence, set
   const color = (pageName, currentIndex) => {
     const nameArray = state.routeNames
     if (currentIndex === nameArray.indexOf(pageName)) {
-      return 'rgba(242, 242, 242, 0.5)'
+      return 'rgba(0, 0, 0, 0)'
+      // return 'rgba(242, 242, 242, 0.5)' // tab color
     }
     else {
       return 'rgba(0, 0, 0, 0)'

@@ -20,6 +20,16 @@ const PAGE_WIDTH = Dimensions.get('window').width;
 
 const Phrasebook = ({navigation, route}) => {
 
+    //console.log("route.params in <Phrasebook> is", route.params)
+
+    let setMenuVisible;
+    
+    if (route.params?.setMenuVisible) {
+        setMenuVisible = route.params.setMenuVisible;
+    }
+    
+    
+
     // State for phrases
 
     const [sentences, setSentences] = useState([])
@@ -31,8 +41,8 @@ const Phrasebook = ({navigation, route}) => {
 
     // State for language picker
 
-    const [selectedLanguage, setSelectedLanguage] = useState("Spanish");
-    const [selectedLangCode, setSelectedLangCode] = useState("es-MX");
+    const [selectedLanguage, setSelectedLanguage] = useState(route.params.lang);
+    const [selectedLangCode, setSelectedLangCode] = useState(route.params.langCode);
         
     const [langs, setLangs] = useState([])
     const [langCodes, setLangCodes] = useState([])
@@ -168,9 +178,10 @@ const Phrasebook = ({navigation, route}) => {
         //console.log("selectedlang is", selectedLang)
         //console.log("selectedlangcode is", selectedLangCode)
         const cards = []
-        for (let i = 0; i < type.unfilled; i++) {
+        //for (let i = 0; i < type.unfilled; i++) {
+        if (type.unfilled > 0) {
             cards.push(
-                <EmptySentence key={i} navigation={navigation} type={type.name} lang={selectedLang} langCode={selectedLangCode} setMenuVisible={setMenuVisible}/>                
+                <EmptySentence navigation={navigation} type={type.name} lang={selectedLang} langCode={selectedLangCode} setMenuVisible={setMenuVisible}/>                
             )
         }
         return cards
@@ -236,7 +247,7 @@ const Phrasebook = ({navigation, route}) => {
                                             {sentenceCounter(type.unfilled)}
                                         </View>
                                         {renderSentences(type.name)}
-                                        {renderUnfilled(type, selectedLanguage, selectedLangCode, route.params.setMenuVisible)}
+                                        {renderUnfilled(type, selectedLanguage, selectedLangCode, setMenuVisible)}
                                     </View>
                                 )
                             })}

@@ -17,7 +17,7 @@ import WordRoute from '../lib/WordRoute';
 const PAGE_WIDTH = Dimensions.get('window').width;
 const PAGE_HEIGHT = Dimensions.get('window').height;
 
-export default ({ route }) => {
+export default ({ navigation, route }) => {
 
     // set up translations toggle 
 
@@ -183,6 +183,7 @@ saveWord()
                         sentence={sentence}
                         setSentence={setSentence}
                         sentenceType={sentenceType}
+                        navigation={navigation}
                     />
                     <Tab.Navigator
                     tabBar={props => <WordMenu {...props} forward={forward} setForward ={setForward} words={words} sentence={sentence} setSentence={setSentence}/>}

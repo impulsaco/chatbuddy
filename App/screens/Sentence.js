@@ -17,6 +17,7 @@ const PAGE_HEIGHT = Dimensions.get('window').height;
 const PAGE_WIDTH = Dimensions.get('window').width;
 
 const Sentence = ({ 
+    navigation,
     sentenceInit,
     words, 
     setWords, 
@@ -269,6 +270,7 @@ const Sentence = ({
                     />
                 </TouchableOpacity>
                 <SayModal 
+                        navigation={navigation}
                         sentence={sentence}
                         sentenceEn={sentenceEn}
                         sayVisible={sayVisible} 

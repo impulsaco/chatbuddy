@@ -18,7 +18,7 @@ function Home({navigation, setMenuVisible}) {
       
     const [session, setSession] = useState()
 
-    const [selectedLang, setSelectedLang] = useState("es-MX");
+    const [selectedLang, setSelectedLang] = useState("es-MX"); // careful what you send to phrasebook
       
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session)

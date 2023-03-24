@@ -10,13 +10,11 @@ const PAGE_HEIGHT = Dimensions.get('window').height;
 const PAGE_WIDTH = Dimensions.get('window').width;
 
 
-const SaveButton = ({sentence, savedSentence, sentenceEn, lang, langCode, sentenceType}) => {
+const SaveButton = ({sentence, savedSentence, sentenceEn, lang, langCode, sentenceType, sentenceSaved, setSentenceSaved}) => {
     
     // Retrieve user session
 
-    const [session, setSession] = useState()
-
-    const [sentenceSaved, setSentenceSaved] = useState(false)
+    const [session, setSession] = useState()    
 
     useEffect(() => {
         supabase.auth.getSession().then(({ data: { session } }) => {

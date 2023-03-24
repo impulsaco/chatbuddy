@@ -86,11 +86,18 @@ const SentenceCard = ( {id, sentence, translation, translations, langCode, block
         console.log("sentence  in GPT-4 is ", sentence)
         openai.createCompletion({
           model: "text-davinci-003",
-          prompt: `Respond to the following sentence, in the language you identify: ${sentence}`,
+          prompt: `Respond to the following sentence, in the language you identify, with romanization on a second line if the language does not use the latin alphabet: ${sentence}`,
           temperature: 0.7,
           max_tokens: 100,
         }).then(response => alert(response.data.choices[0].text.trim()))
     } 
+
+    // Practice button for later: 
+    /*
+    <TouchableOpacity style={styles.practiceButton}>
+        <Text style={styles.practiceText}>Practice</Text>
+    </TouchableOpacity>
+    */
 
     return (
         <View style={{width : '100%'}}>
@@ -101,10 +108,7 @@ const SentenceCard = ( {id, sentence, translation, translations, langCode, block
                 <View style={styles.sentenceContainer}>
                     <Text style={styles.text}>{sentence}</Text>
                     {sentenceTranslation()}
-                </View>                
-                <TouchableOpacity style={styles.practiceButton}>
-                    <Text style={styles.practiceText}>Practice</Text>
-                </TouchableOpacity>                
+                </View>                                                
                 <TouchableOpacity style={styles.trashContainer} onPress={() => onDelete(id)}>
                     <TrashBin style={[{fill: 'red'}]}/>
                 </TouchableOpacity>

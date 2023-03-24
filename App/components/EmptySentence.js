@@ -25,7 +25,7 @@ const EmptySentence = ( {navigation, type, lang, langCode, setMenuVisible} ) => 
     // 
     return (
         <View style={{width : '100%'}}>
-            <TouchableOpacity style={styles.sentenceCard} onPress={() => {navigation.navigate('Build', {wordSet: destination(type), lang: lang, langCode: langCode}); setMenuVisible(true)}}>
+            <TouchableOpacity style={styles.sentenceCard} onPress={() => navigation.navigate('Build', {wordSet: destination(type), lang: lang, langCode: langCode})}>
                 <Plus style={[{fill: 'white'}]}/>
                 <Text style={styles.textLight}>Tap to add!</Text>
             </TouchableOpacity>
