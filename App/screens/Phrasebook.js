@@ -39,10 +39,15 @@ const Phrasebook = ({navigation, route}) => {
     const emptySentences = 5
 
 
-    // State for language picker
+    // State for language picker (not to be confused with selectedLang, which specifies initial general state)
 
-    const [selectedLanguage, setSelectedLanguage] = useState(route.params.lang);
-    const [selectedLangCode, setSelectedLangCode] = useState(route.params.langCode);
+    const [selectedLanguage, setSelectedLanguage] = useState();
+    const [selectedLangCode, setSelectedLangCode] = useState();
+
+    useEffect(() => {
+        setSelectedLanguage(route.params.lang)
+        setSelectedLangCode(route.params.langCode)
+    }, [route.params])
         
     const [langs, setLangs] = useState([])
     const [langCodes, setLangCodes] = useState([])

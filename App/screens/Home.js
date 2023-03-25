@@ -19,6 +19,7 @@ function Home({navigation, setMenuVisible}) {
     const [session, setSession] = useState()
 
     const [selectedLang, setSelectedLang] = useState("es-MX"); // careful what you send to phrasebook
+    const [selectedLangName, setSelectedLangName] = useState("Spanish");
       
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session)
@@ -29,14 +30,6 @@ function Home({navigation, setMenuVisible}) {
     })
 
 
-    /*const LanguageBox = ({lang, langCode, flag}) => {
-        return (
-            <TouchableOpacity style={styles.languageBox} onPress={() => navigation.navigate('Choose', {lang: lang, langCode: langCode})}>
-                <Text style={styles.buttonText}>{lang}</Text>
-                {flag}
-            </TouchableOpacity>
-        )
-    }*/
 
     const renderButtons = () => { 
       
@@ -73,7 +66,7 @@ function Home({navigation, setMenuVisible}) {
                   </View>
                   <View style={styles.lowerContainer}> 
                     <View style={styles.phrasebookContainer}>                    
-                        <TouchableOpacity style={styles.phrasebookButton} onPress={() => navigation.navigate('Phrasebook', {selectedLang: selectedLang, setSelectedLang: setSelectedLang, setMenuVisible: setMenuVisible})}>
+                        <TouchableOpacity style={styles.phrasebookButton} onPress={() => navigation.navigate('Phrasebook', {lang: selectedLangName, setSelectedLangName: setSelectedLangName, langCode: selectedLang, setSelectedLang: setSelectedLang, setMenuVisible: setMenuVisible})}>
                           <Text style={styles.longButtonText}>My phrases</Text>
                         </TouchableOpacity>
                     </View>

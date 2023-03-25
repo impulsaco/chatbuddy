@@ -65,6 +65,7 @@ const SayModal = ({ navigation, sentence, sentenceEn, sayVisible, setSayVisible,
         //setSentenceWhisper("no whisper yet");
         setTopText('Push the record button to practice your sentence!');
         setBottomText('Say it!');
+        setSentenceSaved(false)
     }
 
     const keepImproving = () => {
@@ -149,7 +150,7 @@ const SayModal = ({ navigation, sentence, sentenceEn, sayVisible, setSayVisible,
         }
         else if (sentenceSaved) {
             return (
-                <TouchableOpacity style={styles.grayButton} onPress={() => {navigation.navigate("Phrasebook"); close(); setSentenceSaved(false)}}>
+                <TouchableOpacity style={styles.grayButton} onPress={() => {navigation.navigate("Phrasebook", {lang: lang, langCode: langCode}); close()}}>
                     <Text style={[styles.smallText, { paddingLeft: 10} ]}>Go to phrasebook</Text>
                 </TouchableOpacity>
             )
@@ -166,7 +167,7 @@ const SayModal = ({ navigation, sentence, sentenceEn, sayVisible, setSayVisible,
         }
         else if (sentenceSaved) {
             return (
-                <TouchableOpacity style={styles.grayButton} onPress={() => {navigation.navigate("Phrasebook", {lang: lang, langCode: langCode}); close(); setSentenceSaved(false)}}>
+                <TouchableOpacity style={styles.grayButton} onPress={() => {navigation.navigate("Phrasebook", {lang: lang, langCode: langCode}); close()}}>
                     <Text style={[styles.smallText, { paddingLeft: 10} ]}>Go to phrasebook</Text>
                 </TouchableOpacity>
             )
