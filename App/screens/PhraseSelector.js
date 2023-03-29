@@ -22,13 +22,13 @@ function PhraseSelector({navigation, setMenuVisible, route}) {
 
     console.log("setMenuVisible in <PhraseSelector> is", setMenuVisible)
 
-    const [lang, setLang] = useState(route.params.lang)
+    /* const [lang, setLang] = useState(route.params.lang)
     const [langCode, setLangCode] = useState(route.params.langCode)
 
     useEffect(() => {
         setLang(route.params.lang)
         setLangCode(route.params.langCode)
-    }, [route.params])
+    }, [route.params]) */
 
 
     // Set up state for sentence   
@@ -41,22 +41,22 @@ function PhraseSelector({navigation, setMenuVisible, route}) {
                 </View>     
                 <View style={styles.buttonsContainer}>
                     <View style={styles.phrasebookContainer}>
-                        <TouchableOpacity style={styles.phrasebookButton} onPress={() => {navigation.navigate('Build', {wordSet: introductionList, lang: lang, langCode: langCode}); setMenuVisible(true)}}>
+                        <TouchableOpacity style={styles.phrasebookButton} onPress={() => {navigation.navigate('Build', {wordSet: introductionList}); setMenuVisible(true)}}>
                           <Text style={styles.buttonText}>Introduce myself 👋</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.phrasebookContainer}>
-                        <TouchableOpacity style={styles.phrasebookButton} onPress={() => {navigation.navigate('Build', {wordSet: familyList, lang: lang, langCode: langCode}); setMenuVisible(true)}}>
+                        <TouchableOpacity style={styles.phrasebookButton} onPress={() => {navigation.navigate('Build', {wordSet: familyList}); setMenuVisible(true)}}>
                           <Text style={styles.buttonText}>My family 🏡</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.phrasebookContainer}>
-                        <TouchableOpacity style={styles.phrasebookButton} onPress={() => {navigation.navigate('Build', {wordSet: hobbiesList, lang: lang, langCode: langCode}); setMenuVisible(true)}}>
+                        <TouchableOpacity style={styles.phrasebookButton} onPress={() => {navigation.navigate('Build', {wordSet: hobbiesList}); setMenuVisible(true)}}>
                           <Text style={styles.buttonText}>Hobbies 🎨</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.phrasebookContainer}>
-                        <TouchableOpacity style={styles.phrasebookButton} onPress={() => {navigation.navigate('Build', {wordSet: freeformList, lang: lang, langCode: langCode}); setMenuVisible(true)}}>
+                        <TouchableOpacity style={styles.phrasebookButton} onPress={() => {navigation.navigate('Build', {wordSet: freeformList}); setMenuVisible(true)}}>
                           <Text style={styles.buttonText}>Anything 🤯</Text>
                         </TouchableOpacity>
                     </View>                    
@@ -68,7 +68,7 @@ function PhraseSelector({navigation, setMenuVisible, route}) {
     return (
       <View style={styles.mainContainer}>
         <LinearGradient 
-        colors={['#3499FE', '#3499FE']}
+        colors={['#319CFF', '#319CFF']}
         locations={[0, .99]}
         style={styles.linearGradient}
         />

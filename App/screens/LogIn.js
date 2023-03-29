@@ -134,7 +134,7 @@ const LogIn = ({navigation, route}) => {
  return (        
     <View style={styles.container}>
     <LinearGradient 
-    colors={['#3499FE', '#3499FE']}
+    colors={['#319CFF', '#319CFF']}
     locations={[0, .99]}
     style={styles.linearGradient}
     />

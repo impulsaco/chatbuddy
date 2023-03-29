@@ -4,13 +4,22 @@ import { DraxProvider, DraxScrollView } from 'react-native-drax';
 import DraggableWord from '../components/DraggableWord';
 import AddWord from '../components/AddWord';
 import ShuffleWords from '../components/ShuffleWords';
+import { LanguageContext } from '../lib/LanguageContext';
 
 const PAGE_HEIGHT = Dimensions.get('window').height;
 const PAGE_WIDTH = Dimensions.get('window').width;
 
 /// JUST MAKE ONE, THEN MAP ONTO TAB NAVIGATOR
 
-const WordRoute = (type, setUserWords, userWords, langCode, words, translations, sentence, setSentence, setForward) => {
+const WordRoute = (type, setUserWords, userWords, words, translations, sentence, setSentence, setForward) => {
+
+  const { langCode, setLangCode, lang, setLang} = React.useContext(LanguageContext); 
+  
+  React.useEffect (() => {
+    setLangCode(langCode)
+    setLang(lang)
+  }, [langCode, lang])
+
   return () => (
     <View style={styles.wordContainer}>
       <View style={styles.dragLimit}>

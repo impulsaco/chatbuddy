@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Dimensions, View, StyleSheet } from "react-native";
 import { SceneMap } from 'react-native-tab-view';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -12,6 +12,7 @@ import { LinearGradient } from 'expo-linear-gradient'
 import AddWord from '../components/AddWord';
 import { supabase } from '../lib/supabase';
 import WordRoute from '../lib/WordRoute';
+import { LanguageContext } from '../lib/LanguageContext';
 
 
 const PAGE_WIDTH = Dimensions.get('window').width;
@@ -46,14 +47,26 @@ export default ({ navigation, route }) => {
     //const gestureRootViewStyle = { flex: 1 };
     
     // Import params
+
+    const { langCode, setLangCode, lang, setLang } = useContext(LanguageContext);        
     
     const wordSet = route.params.wordSet;
-    const lang = route.params.lang;
-    const langCode = route.params.langCode;
+    // const lang = route.params.lang;
+    // const langCode = route.params.langCode;
 
     // set up word lists based on choice
 
-    const createWordList = wordSet(langCode)
+    let createWordList = wordSet(langCode)
+    
+    // Update based on language context
+    useEffect((createWordList) => {
+        createWordList = wordSet(langCode)
+        setWords(createWordList[2])
+        setSentenceInit(createWordList[1])
+        setSentenceType(createWordList[0])
+    }, [route.params, langCode])
+
+    
 
     const [words, setWords] = useState(createWordList[2]);
     
@@ -96,13 +109,15 @@ export default ({ navigation, route }) => {
 
   let wordsLang
 
-  if (lang === "ko") {
-    wordsLang = 'wordsKo'
-  }
+  useEffect(() => {    
+    if (lang === "ko") {
+        wordsLang = 'wordsKo'
+    }
 
-  if (lang === "es-MX") {
-    wordsLang = 'wordsEs'
-  }
+    if (lang === "es-MX") {
+        wordsLang = 'wordsEs'
+    }
+}, [langCode, lang])  
 
   useEffect(() => {
     const fetchWords = async () => {
@@ -130,6 +145,7 @@ export default ({ navigation, route }) => {
   async function saveWord() {
 
     if (langCode === "ko") {
+        console.log("creating new korean word")    
         const { error } = await supabase
         .from('userData')
         .update({ 
@@ -165,7 +181,7 @@ saveWord()
             <DraxProvider> 
                 <View style={styles.gestureRootViewStyle}>
                     <LinearGradient 
-                        colors={['#3499FE', '#3499FE']}
+                        colors={['#319CFF', '#319CFF']}
                         locations={[0, .99]}
                         style={styles.linearGradient}
                     />
@@ -193,7 +209,7 @@ saveWord()
                     {routeList.map((route) => (
                     <Tab.Screen
                     name={route}
-                    component={WordRoute(route, setUserWords, userWords, langCode, words, translations, sentence, setSentence, setForward)}
+                    component={WordRoute(route, setUserWords, userWords, words, translations, sentence, setSentence, setForward)}
                     />
                     ))} 
                     </Tab.Navigator>

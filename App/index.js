@@ -23,6 +23,7 @@ import SliderImage2 from './../assets/SliderImage2.svg'
 import SliderImage3 from './../assets/SliderImage3.svg'
 import SliderImage4 from './../assets/SliderImage4.svg'
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
+import { LanguageContext } from './lib/LanguageContext';
 
 Sentry.init({
   dsn: 'https://5a92132c278b42a79bb122eb9c511e43@o4504618398908416.ingest.sentry.io/4504618595713024',
@@ -267,7 +268,7 @@ const slides = [
 ];
 
 // add linear gradient to navigation container 
-export default function App() {
+export default function App() { // MAIN APP ENTRY POINT
 
   /*this.state = {
     showRealApp: false
@@ -275,9 +276,14 @@ export default function App() {
 
   const [showRealApp, setShowRealApp] = useState(false)
 
+  // Set up language context state variable
+
+  const [langCode, setLangCode] = useState("es-MX"); // careful what you send to phrasebook
+  const [lang, setLang] = useState("Spanish"); // default language is Spanish
+
   // ADD MENU VISIBILITY VARIABLE HERE
 
-    const [menuVisible, setMenuVisible] = useState(false);
+  const [menuVisible, setMenuVisible] = useState(false);
 
   console.log('showRealApp: ', showRealApp)
 
@@ -346,24 +352,26 @@ export default function App() {
           <NavigationContainer>
             
             <NativeBaseProvider style={styles.container}>
-              <Drawer.Navigator
-                screenOptions={{
-                  header: ({ navigation }) => {
-                    // const title = getHeaderTitle(route.name);
-                    return <Header navigation={navigation} menuVisible={menuVisible} setMenuVisible={setMenuVisible}/>;
-                  },
-                  drawerPosition: 'left',
-                  headerRight: () => <Header navigation={navigation} menuVisible={menuVisible} setMenuVisible={setMenuVisible}/>,
-                  overlayColor: 'transparent',
-                  headerTransparent: true,
-                }}
-              > 
-                <Drawer.Screen name="Home" component={withSetMenuVisible(Home)}/>
-                <Drawer.Screen name="LogIn" component={LogIn} />
-                <Drawer.Screen name="Choose" component={withSetMenuVisible(PhraseSelector)}/>
-                <Drawer.Screen name="Build" component={Words} />
-                <Drawer.Screen name="Phrasebook" component={withSetMenuVisible(Phrasebook)} />
-              </Drawer.Navigator>
+              <LanguageContext.Provider value={{ langCode, setLangCode, lang, setLang }}>
+                <Drawer.Navigator
+                  screenOptions={{
+                    header: ({ navigation }) => {
+                      // const title = getHeaderTitle(route.name);
+                      return <Header navigation={navigation} menuVisible={menuVisible} setMenuVisible={setMenuVisible}/>;
+                    },
+                    drawerPosition: 'left',
+                    headerRight: () => <Header navigation={navigation} menuVisible={menuVisible} setMenuVisible={setMenuVisible}/>,
+                    overlayColor: 'transparent',
+                    headerTransparent: true,
+                  }}
+                > 
+                  <Drawer.Screen name="Home" component={withSetMenuVisible(Home)}/>
+                  <Drawer.Screen name="LogIn" component={LogIn} />
+                  <Drawer.Screen name="Choose" component={withSetMenuVisible(PhraseSelector)}/>
+                  <Drawer.Screen name="Build" component={Words} />
+                  <Drawer.Screen name="Phrasebook" component={withSetMenuVisible(Phrasebook)} />
+                </Drawer.Navigator>
+              </LanguageContext.Provider>
             </NativeBaseProvider>
           </NavigationContainer>
         </GestureHandlerRootView>  

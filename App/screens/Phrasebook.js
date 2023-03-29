@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext} from 'react';
 import {
  StyleSheet,
  View,
@@ -14,13 +14,12 @@ import SentenceCard from '../components/SentenceCard';
 import EmptySentence from '../components/EmptySentence';
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { LanguageContext } from '../lib/LanguageContext';
 
 const PAGE_HEIGHT = Dimensions.get('window').height;
 const PAGE_WIDTH = Dimensions.get('window').width;
 
 const Phrasebook = ({navigation, route}) => {
-
-    //console.log("route.params in <Phrasebook> is", route.params)
 
     let setMenuVisible;
     
@@ -38,16 +37,9 @@ const Phrasebook = ({navigation, route}) => {
 
     const emptySentences = 5
 
+    // Get selected language from context
 
-    // State for language picker (not to be confused with selectedLang, which specifies initial general state)
-
-    const [selectedLanguage, setSelectedLanguage] = useState();
-    const [selectedLangCode, setSelectedLangCode] = useState();
-
-    useEffect(() => {
-        setSelectedLanguage(route.params.lang)
-        setSelectedLangCode(route.params.langCode)
-    }, [route.params])
+    const { langCode, setLangCode, lang, setLang } = useContext(LanguageContext);    
         
     const [langs, setLangs] = useState([])
     const [langCodes, setLangCodes] = useState([])
@@ -88,22 +80,20 @@ const Phrasebook = ({navigation, route}) => {
         if (data) {
             setSentences(data)      
             setTypes([
-                {name: "introduction", label: "Introduce myself 👋", unfilled: emptySentences - data.filter(obj => {return obj.type === "introduction" && obj.language === selectedLanguage}).length}, 
-                {name: "family", label: "My family 🏡", unfilled: emptySentences - data.filter(obj => {return obj.type === "family" && obj.language === selectedLanguage}).length},
-                {name: "hobbies", label: "Hobbies 🎨", unfilled: emptySentences - data.filter(obj => {return obj.type === "hobbies" && obj.language === selectedLanguage}).length}, 
-                {name: "basic", label: "Anything 🤯", unfilled: emptySentences - data.filter(obj => {return obj.type === "basic" && obj.language === selectedLanguage}).length}
+                {name: "introduction", label: "Introduce myself 👋", unfilled: emptySentences - data.filter(obj => {return obj.type === "introduction" && obj.language === lang}).length}, 
+                {name: "family", label: "My family 🏡", unfilled: emptySentences - data.filter(obj => {return obj.type === "family" && obj.language === lang}).length},
+                {name: "hobbies", label: "Hobbies 🎨", unfilled: emptySentences - data.filter(obj => {return obj.type === "hobbies" && obj.language === lang}).length}, 
+                {name: "basic", label: "Anything 🤯", unfilled: emptySentences - data.filter(obj => {return obj.type === "basic" && obj.language === lang}).length}
             ])
             setLangs(Array.from(new Set(data.map(({ language }) => language))))
             setLangCodes(Array.from(new Set(data.map(({ lang_code }) => lang_code))))
         }
     }
   }
-  //console.log("types are", types)
-  //console.log("selectedLanguage is", selectedLanguage)
 
   useEffect(() => {  
     fetchSentences()
-  }, [session, sentences, selectedLanguage, selectedLangCode])
+  }, [session, sentences, lang, langCode])
 
   // Count types of each sentence
 
@@ -125,14 +115,14 @@ const Phrasebook = ({navigation, route}) => {
 
         case 0:
           // Save
-          setSelectedLanguage(options[selectedIndex])
-          setSelectedLangCode(langCodes[selectedIndex])
+          setLang(options[selectedIndex])
+          setLangCode(langCodes[selectedIndex])
           break;
 
         case 1:
           // Save
-          setSelectedLanguage(options[selectedIndex])
-          setSelectedLangCode(langCodes[selectedIndex])
+          setLang(options[selectedIndex])
+          setLangCode(langCodes[selectedIndex])
           break;
 
        // case destructiveButtonIndex:
@@ -142,8 +132,8 @@ const Phrasebook = ({navigation, route}) => {
         default:
             for (let i = 2; i < options.length; i++) {
                 if (selectedIndex === i) {
-                    setSelectedLanguage(options[i]);
-                    setSelectedLangCode(langCodes[i-2])
+                    setLang(options[i]);
+                    setLangCode(langCodes[i-2])
                     break;
                 }
             }
@@ -158,10 +148,8 @@ const Phrasebook = ({navigation, route}) => {
   // Render sentences
 
   const renderSentences = (type) => {
-    //console.log("sentences HERE are ", sentences)
-    //console.log("type here is", type)
         return (
-            sentences.filter ? sentences.filter(obj => {return obj.language === selectedLanguage && obj.type === type})
+            sentences.filter ? sentences.filter(obj => {return obj.language === lang && obj.type === type})
             .map((sentence) => 
             <SentenceCard 
                 key = {sentence.id}
@@ -170,7 +158,7 @@ const Phrasebook = ({navigation, route}) => {
                 translation={sentence.translation} 
                 blocks={sentence.blocks}
                 type={type}
-                langCode={selectedLangCode}
+                langCode={langCode}
                 translations={translations}
                 session={session}
             />) : null
@@ -179,14 +167,12 @@ const Phrasebook = ({navigation, route}) => {
     
 
     // Render unfilled
-    const renderUnfilled = (type, selectedLang, selectedLangCode, setMenuVisible) => {
-        //console.log("selectedlang is", selectedLang)
-        //console.log("selectedlangcode is", selectedLangCode)
+    const renderUnfilled = (type, lang, langCode, setMenuVisible) => {
         const cards = []
         //for (let i = 0; i < type.unfilled; i++) {
         if (type.unfilled > 0) {
             cards.push(
-                <EmptySentence navigation={navigation} type={type.name} lang={selectedLang} langCode={selectedLangCode} setMenuVisible={setMenuVisible}/>                
+                <EmptySentence navigation={navigation} type={type.name} lang={lang} langCode={langCode} setMenuVisible={setMenuVisible}/>                
             )
         }
         return cards
@@ -210,14 +196,12 @@ const Phrasebook = ({navigation, route}) => {
         }
         
     }
-
-  //console.log("sentences", sentences)
     
  return (  
     <View style={styles.container}>      
         <View style={styles.container}>
             <LinearGradient 
-            colors={['#3499FE', '#3499FE']}
+            colors={['#319CFF', '#319CFF']}
             locations={[0, .99]}
             style={styles.linearGradient}
             />
@@ -229,7 +213,7 @@ const Phrasebook = ({navigation, route}) => {
                 <View style={styles.topContainer}>
                     <TouchableOpacity style={styles.pickerContainer} onPress={() => onPress()}>
                         <View>
-                            <Text style={styles.pickerText}>{selectedLanguage}</Text>
+                            <Text style={styles.pickerText}>{lang}</Text>
                         </View>
                     </TouchableOpacity>
                     <View style={styles.switchContainer}>                                        
@@ -252,7 +236,7 @@ const Phrasebook = ({navigation, route}) => {
                                             {sentenceCounter(type.unfilled)}
                                         </View>
                                         {renderSentences(type.name)}
-                                        {renderUnfilled(type, selectedLanguage, selectedLangCode, setMenuVisible)}
+                                        {renderUnfilled(type, lang, langCode, setMenuVisible)}
                                     </View>
                                 )
                             })}

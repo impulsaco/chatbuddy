@@ -1,5 +1,5 @@
-import { View, StyleSheet, Dimensions, Text, TouchableOpacity} from 'react-native';
-import React, { useState, useEffect} from 'react';
+import { View, StyleSheet, Dimensions, Text, TouchableOpacity } from 'react-native';
+import React, { useState, useContext} from 'react';
 import 'react-native-gesture-handler';
 import { LinearGradient } from 'expo-linear-gradient'
 import { Button } from '@rneui/themed'
@@ -7,6 +7,7 @@ import { supabase } from '../lib/supabase';
 import KoreanFlag from '../../assets/KoreanFlag.svg';
 import SpanishFlag from '../../assets/SpanishFlag.svg';
 import BulgarianFlag from '../../assets/BulgarianFlag.svg';
+import { LanguageContext } from '../lib/LanguageContext';
 
 const PAGE_HEIGHT = Dimensions.get('window').height;
 
@@ -18,8 +19,10 @@ function Home({navigation, setMenuVisible}) {
       
     const [session, setSession] = useState()
 
-    const [selectedLang, setSelectedLang] = useState("es-MX"); // careful what you send to phrasebook
-    const [selectedLangName, setSelectedLangName] = useState("Spanish");
+    const { langCode, setLangCode, lang, setLang} = useContext(LanguageContext);    
+
+    //console.log("langCode", langCode)
+    //console.log("setLangCode", setLangCode)
       
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session)
@@ -51,22 +54,22 @@ function Home({navigation, setMenuVisible}) {
                 </View>     
                 <View style={styles.buttonsContainer}>
                   <View style={styles.buttonContainer}>
-                    <TouchableOpacity style={styles.languageBox} onPress={() => {navigation.navigate('Choose', {lang: "Korean", langCode: "ko"}); setSelectedLang("ko")}}>
+                    <TouchableOpacity style={styles.languageBox} onPress={() => {navigation.navigate('Choose', {lang: "Korean", langCode: "ko"}); setLangCode("ko"); setLang("Korean")}}>
                       <Text style={styles.buttonText}>Korean</Text>
                       <KoreanFlag width={55}/>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.languageBox} onPress={() => {navigation.navigate('Choose', {lang: "Spanish", langCode: "es-MX"}); setSelectedLang("es-MX")}}>
+                    <TouchableOpacity style={styles.languageBox} onPress={() => {navigation.navigate('Choose', {lang: "Spanish", langCode: "es-MX"}); setLangCode("es-MX"); setLang("Spanish")}}>
                       <Text style={styles.buttonText}>Spanish</Text>
                       <SpanishFlag width={55}/>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.languageBox} onPress={() => {navigation.navigate('Choose', {lang: "Bulgarian", langCode: "bg"}); setSelectedLang("bg")}}>
+                    <TouchableOpacity style={styles.languageBox} onPress={() => {navigation.navigate('Choose', {lang: "Bulgarian", langCode: "bg"}); setLangCode("bg"); setLang("Bulgarian")}}>
                       <Text style={styles.buttonText}>Bulgarian</Text>
                       <BulgarianFlag width={55}/>
                     </TouchableOpacity>                      
                   </View>
                   <View style={styles.lowerContainer}> 
                     <View style={styles.phrasebookContainer}>                    
-                        <TouchableOpacity style={styles.phrasebookButton} onPress={() => navigation.navigate('Phrasebook', {lang: selectedLangName, setSelectedLangName: setSelectedLangName, langCode: selectedLang, setSelectedLang: setSelectedLang, setMenuVisible: setMenuVisible})}>
+                        <TouchableOpacity style={styles.phrasebookButton} onPress={() => navigation.navigate('Phrasebook', {lang: lang, setLang: setLang, langCode: langCode, setLangCode: setLangCode, setMenuVisible: setMenuVisible})}>
                           <Text style={styles.longButtonText}>My phrases</Text>
                         </TouchableOpacity>
                     </View>
@@ -85,7 +88,7 @@ function Home({navigation, setMenuVisible}) {
     return (
       <View style={styles.mainContainer}>
         <LinearGradient 
-        colors={['#3499FE', '#3499FE']}
+        colors={['#319CFF', '#319CFF']}
         locations={[0, .99]}
         style={styles.linearGradient}
         />
