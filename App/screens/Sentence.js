@@ -102,7 +102,8 @@ const Sentence = ({
                 setSentenceEn, 
                 lang, 
                 langCode,
-                setSentenceAnalyzed)
+                setSentenceAnalyzed,
+                sentenceType)
         } 
     }
     

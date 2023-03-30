@@ -145,7 +145,6 @@ export default ({ navigation, route }) => {
   async function saveWord() {
 
     if (langCode === "ko") {
-        console.log("creating new korean word")    
         const { error } = await supabase
         .from('userData')
         .update({ 

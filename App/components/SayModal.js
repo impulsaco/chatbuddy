@@ -22,8 +22,6 @@ const SayModal = ({ navigation, sentence, sentenceEn, sayVisible, setSayVisible,
 
     // Create variables for modal
 
-    console.log("sentenceType is", sentenceType)
-
     const [topText, setTopText] = useState('Push the record button to practice your sentence!');
 
     const [bottomText, setBottomText] = useState('Say it!');

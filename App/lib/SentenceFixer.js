@@ -6,6 +6,8 @@ import 'react-native-url-polyfill/auto'
 import { OPENAI_API_KEY } from "@env" 
 import googleTranslate from './googleTranslate';
 import sentenceSpeak from './sentenceSpeak';
+import axios from "axios";
+
 
 // Uses GPT to fix sentence
 
@@ -13,12 +15,13 @@ import sentenceSpeak from './sentenceSpeak';
 
 const API_KEY = OPENAI_API_KEY;
 
+//const {Configuration, OpenAIApi} = require('openai');
+
 const configuration = new Configuration({
   apiKey: API_KEY,
 });
 
 const openai = new OpenAIApi(configuration);
-
 
 // SHOULD ONLY RUN WHEN READY
 
@@ -30,11 +33,12 @@ const SentenceFixer = (sentence,
                         lang, 
                         langCode,
                         setSentenceAnalyzed,
+                        sentenceType,
                       ) => {
 
-
-    console.log("CALLING FIXER")
     console.log("within fixer, sentence is ", sentence)
+
+    console.log("sentenceType in FIXER is ", sentenceType)
 
     var sentenceFixInit = ""
 
@@ -66,16 +70,41 @@ const SentenceFixer = (sentence,
     }
 
     console.log("Sentence to send is ", sentence)
-    const fixSentence = () => {
-      openai.createCompletion({
-        model: "text-davinci-003",
-        prompt: `Make a simple sentence in ${lang} using only these four words, keeping in mind the English translation: ${JSON.stringify(sentence)} Do not add any new words besides conjugations and particles.`,
-        temperature: 0,
-        max_tokens: 100,
-      }).then(response => saveSentenceText(response.data.choices[0].text.trim()))
-    } 
+    const fixSentence = async () => {
+      const prompt = `Make a simple sentence in ${lang} using only these four words, keeping in mind the English meaning of each word: ${JSON.stringify(sentence)}. Output only the ${lang} sentence, not the English one.`;
+      const role = `Helping beginners in ${lang} make a simple sentence.`;
+      console.log("role is ", role)
+      const response = await axios.post('https://api.openai.com/v1/chat/completions', {
+        model: "gpt-3.5-turbo",
+        messages: [{"role": "user", "content": role}, {"role": "system", "content": prompt}],
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${OPENAI_API_KEY}`,
+        },
+      });      
+      const sentenceText = response.data.choices[0].message.content.trim();
+      saveSentenceText(sentenceText);
+    }
     fixSentence()
-
 }
 
 export default SentenceFixer
+
+/* 
+
+
+
+
+    const fixSentence = async () => {
+      const messages = [{role: "Language teacher", content: "say hi to me"}]
+      const response = await openai.createChatCompletion({
+          model: 'gpt-3.5-turbo',
+          messages: messages,        
+        });
+        console.log(response.data.choices[0].message)
+        // .then(response => saveSentenceText(response.data.choices[0].text.trim()))
+        saveSentenceText("hello world")
+    }
+    
+*/
