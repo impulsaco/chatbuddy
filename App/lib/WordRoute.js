@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'space-evenly',
     
-    paddingHorizontal: PAGE_WIDTH*.15, // limits render to 3 cards
+    paddingHorizontal: PAGE_WIDTH*.05, // limits render to 3 cards
     paddingTop: PAGE_HEIGHT*.02,
     width: PAGE_WIDTH,
   },

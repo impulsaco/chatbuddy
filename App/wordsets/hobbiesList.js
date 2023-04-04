@@ -77,21 +77,30 @@ const hobbiesList = (lang) => {
 
     var subjectsKo = ['나', '너', '우리', '그들', '그', '그녀']
 
+    // Romanized Korean
+
+    var nounsKoRom = ["gita", "teniseu", "hoehwa", "geulsseugi", "baiking", "yori", "naksi", "kaemping", "seuki", "yoga", "joging", "chaek", "cheseu", "hai king", "saikelring", "baedeumin teon", "baegu", "chumchugi", "noraehagi"];
+
+    var verbsKoRom = ["nori", "johahada", "hada", "ikda", "gada"];
+
+    var subjectsKoRom = ['na', 'neo', 'uri', 'geudeul', 'geu', 'geunyeo'];
+
+
     const initialWordsKo = [];
 
     // add words to initial array Korean
     for (var i=0; i<nounsKo.length; i++) {
-      initialWordsKo.push({id: idCounter, word: nounsKo[i], type:"noun", translation: nounsEng[i]});
+      initialWordsKo.push({id: idCounter, word: nounsKo[i], type:"noun", translation: nounsEng[i], romanized: nounsKoRom[i]});
       idCounter++;  
     }
 
     for (var i=0; i<verbsKo.length; i++) {
-      initialWordsKo.push({id: idCounter, word: verbsKo[i], type:"verb", translation: verbsEng[i]}); 
+      initialWordsKo.push({id: idCounter, word: verbsKo[i], type:"verb", translation: verbsEng[i], romanized: verbsKoRom[i]}); 
       idCounter++;   
     }
 
     for (var i=0; i<subjectsKo.length; i++) {
-      initialWordsKo.push({id: idCounter, word: subjectsKo[i], type:"subject", translation: subjectsEng[i]}); 
+      initialWordsKo.push({id: idCounter, word: subjectsKo[i], type:"subject", translation: subjectsEng[i], romanized: subjectsKoRom[i]}); 
       idCounter++;   
     }
 
@@ -109,21 +118,29 @@ const hobbiesList = (lang) => {
 
     var verbsBg = ["Свиря", "Харесвам", "Упражнявам", "Чета", "Ходя на"]
 
+    // Romanized Bulgarian
+
+    var nounsBgRom = ["Kitara", "Tenis", "Zhivopis", "Pisane", "Pechene", "Gotvene", "Ribolov", "Kamping", "Ski", "Yoga", "Byagane", "Knigi", "Shah", "Planinski prehod", "Koloezdene", "Badminton", "Voleybol", "Tantsi", "Peene"];
+
+    var subjectsBgRom = ['Az', 'Ti', 'Nie', 'Te', 'Toi', 'Tya'];
+
+    var verbsBgRom = ["Sviriya", "Haresvam", "Uprazhnyavam", "Cheta", "Hodya na"];
+
     const initialWordsBg = [];
 
     // add words to initial array Bulgarian
     for (var i=0; i<nounsBg.length; i++) {
-      initialWordsBg.push({id: idCounter, word: nounsBg[i], type:"noun", translation: nounsEng[i]});
+      initialWordsBg.push({id: idCounter, word: nounsBg[i], type:"noun", translation: nounsEng[i], romanized: nounsBgRom[i]});
       idCounter++;  
     }
 
     for (var i=0; i<verbsBg.length; i++) {
-      initialWordsBg.push({id: idCounter, word: verbsBg[i], type:"verb", translation: verbsEng[i]}); 
+      initialWordsBg.push({id: idCounter, word: verbsBg[i], type:"verb", translation: verbsEng[i], romanized: verbsBgRom[i]}); 
       idCounter++;   
     }
 
     for (var i=0; i<subjectsBg.length; i++) {
-      initialWordsBg.push({id: idCounter, word: subjectsBg[i], type:"subject", translation: subjectsEng[i]}); 
+      initialWordsBg.push({id: idCounter, word: subjectsBg[i], type:"subject", translation: subjectsEng[i], romanized: subjectsBgRom[i]}); 
       idCounter++;   
     }
 

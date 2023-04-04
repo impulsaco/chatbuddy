@@ -92,26 +92,37 @@ const freeformList = (lang) => {
 
     var adjectivesKo = ["칠레", "나쁨", "더 좋음", "더 좋음", "큼", "검정", "안전함", "분명함", "다름", "초기", "쉬움", "경제적", "자유롭게", "완벽함", "좋음", "큼", "단단함", "높이", "인간적", "중요함", "국제적", "큼", "늦게", "작음", "지역적", "길게", "낮음", "중요함", "군사적", "나의", "국가적", "새로움", "오래됨", "혼자", "다른", "정치적", "가능함", "공공의", "실제", "최근의", "권리", "작은", "사회적", "특별함", "강함", "안전함", "진실함", "흰색", "완벽함", "젊음"]
 
+    // Romanized Korean: 
+
+    var nounsKoRom = ['saram', 'mul', 'gonggi', 'banji', 'dongmul', 'yesul', 'gitbal', 'bae', 'kiseu', 'chimdae', 'deulpang', 'haneul', 'ribon', 'eumshik', 'jul', 'songarak', 'don', 'hakgyo', 'kkot', 'gwail', 'gokmul', 'namja', 'sigan', 'gyohoe', 'chaek', 'bit', 'son', 'jido', 'teibeul', 'segye', 'yeoja', 'eumak', 'ko', 'nun', 'jongi', 'usan', 'paedingjokki', 'keikeu', 'meori', 'pija', 'mun', 'sigye', 'baro', 'sogeum', 'uija', 'moja', 'badak', 'keop', 'jigu', 'horangi', 'tab', 'changmun', 'baram'];
+
+    var verbsKoRom = ['itta', 'doeda', 'gajida', 'saranghada', 'hada', 'malhada', 'gada', 'boda', 'hal su itda', 'wonhada', 'gajyeogada', 'alda', 'gajyeo-oda', 'haeya hada', 'oda', 'itta', 'malhada', 'chatda', 'bureuda', 'jinagada', 'deureoolida', 'japda', 'naeryeonoda', 'balgyeonhada', 'deureogada', 'bogwanhada', 'joh-ahada', 'jungyohada', 'nolda', 'yuji-hada', 'baraboda', 'ollatada', 'piryohada', 'balsaenghada', 'jegonghada', 'yocheonghada', 'heohonghada', 'sitta', 'siheomhada', 'ttaragada', 'neukkidahada', 'seobiseuhada', 'balsaenghada', 'kkeutnaeda', 'sidohada', 'gyeolganada'];
+
+    var subjectsKoRom = ["na","dangsin","geu","geudeul","uri","geunyeo","nugu","geudeul","na jasin","geu","hana","geunyeo","uri","mwonga","amugeotdo","mueosideunji","geu jasin","modeun geos","nugunga","geudeul jasin","modu","geu jasin","nugudeunji","na jasin"];
+
+    var adjectivesKoRom = ["chillye", "nappeum", "deo joh-eum", "deo joh-eum", "keum", "geomjeong", "anjeonham", "bunmyeongham", "daleum", "chogi", "swium", "gyeongjejeog", "jayulobege", "wanbyeogham", "joh-eum", "keum", "dandanham", "nop-i", "inganjeog", "jung-yoham", "gugjejeog", "keum", "neujge", "jag-eum", "jyeogjeog", "gilge", "naj-eum", "jung-yoham", "gunsajeog", "naui", "guggajeog", "saeroum", "olaedon", "honja", "daleun", "jeongchijeog", "ganeungham", "gong-gong-ui", "silje", "choegeun-ui", "gwolli", "jag-eun", "sahoejeog", "teugbyeolham", "gangham", "anjeonham", "jinsilham", "heunsaeg", "wanbyeogham", "jeolmeum"];
+
+
     const initialWordsKo = [];
 
     // add words to initial array Korean
     for (var i=0; i<nounsKo.length; i++) {
-      initialWordsKo.push({id: idCounter, word: nounsKo[i], type:"noun", translation: nounsEng[i]});
+      initialWordsKo.push({id: idCounter, word: nounsKo[i], type:"noun", translation: nounsEng[i], romanized: nounsKoRom[i]});
       idCounter++;  
     }
 
     for (var i=0; i<verbsKo.length; i++) {
-      initialWordsKo.push({id: idCounter, word: verbsKo[i], type:"verb", translation: verbsEng[i]}); 
+      initialWordsKo.push({id: idCounter, word: verbsKo[i], type:"verb", translation: verbsEng[i], romanized: verbsKoRom[i]}); 
       idCounter++;   
     }
 
     for (var i=0; i<subjectsKo.length; i++) {
-      initialWordsKo.push({id: idCounter, word: subjectsKo[i], type:"subject", translation: subjectsEng[i]}); 
+      initialWordsKo.push({id: idCounter, word: subjectsKo[i], type:"subject", translation: subjectsEng[i], romanized: subjectsKoRom[i]}); 
       idCounter++;   
     }
 
     for (var i=0; i<adjectivesKo.length; i++) {
-      initialWordsKo.push({id: idCounter, word: adjectivesKo[i], type:"adjective", translation: adjectivesEng[i]}); 
+      initialWordsKo.push({id: idCounter, word: adjectivesKo[i], type:"adjective", translation: adjectivesEng[i], romanized: adjectivesKoRom[i]}); 
       idCounter++;   
     }
 
@@ -130,26 +141,36 @@ const freeformList = (lang) => {
 
     var adjectivesBg = ["Чилийски", "лош", "по-добър", "по-добър", "голям", "черен", "безопасен", "ясен", "различен", "ранен", "лесен", "икономичен", "свободен", "пълен", "добър", "голям", "твърд", "висок", "човешки", "важен", "международен", "голям", "късен", "малък", "местен", "дълъг", "нисък", "важен", "военен", "мой", "национален", "нов", "стар", "единствен", "друг", "политически", "възможен", "обществен", "реален", "скорошен", "прав", "малък", "социален", "специален", "силен", "безопасен", "истински", "бял", "пълен", "млад"]
 
+    // Romanized Bulgarian
+
+    var nounsBgRom = ["chovеk", "voda", "vazduh", "prasten", "zhivotno", "izkustvo", "zname", "lodka", "tseluvka", "leglo", "pole", "nebe", "lenta", "hrana", "vazhе", "prast", "pari", "uchilishte", "tsvete", "plod", "zhito", "mazh", "chas", "tsarkva", "kniga", "svetlina", "raka", "karta", "masa", "svetat", "zhena", "muzika", "nos", "snyag", "hаrtiya", "chadur", "parka", "torta", "kosa", "pitsa", "vrata", "chasovnik", "kamak", "sol", "stol", "shapka", "pod", "chasha", "zemya", "tigar", "krepоst", "prozorets", "veter"];
+
+    var subjectsBgRom = ["Az", "ti", "toй", "te", "nie", "tя", "kой", "tyah", "meni", "nego", "nyakoi", "neya", "nas", "neshto", "nishcho", "nyakakvo", "sebe si", "vsichko", "nyakoi", "sami", "vsichki", "samo sebe si", "nikoi", "sebe si"];
+
+    var verbsBgRom = ['bъda', 'ostana', 'imam', 'obicham', 'pravia', 'kazha', 'otida', 'vizhdam', 'moga', 'iskam', 'nesa', 'znaya', 'donesa', 'dylzha', 'doida', 'imam', 'govoria', 'trasya', 'nareka', 'minavam', 'vdigam', 'ulovyavam', 'napuskam', 'namerya', 'vlizam', 'spasyavam', 'haresvam', 'znacha', 'igraia', 'poddarzhama', 'gledam', 'karam', 'tryabva', 'sluchva se', 'predlagam', 'pitam', 'pozvoliavam', 'postaviаm', 'opitvam se', 'sledvam', 'chuvstvam', 'obsluzhvam', 'sluchva se', 'zavarshvam', 'opitvam se', 'rezultiram'];
+
+    var adjectivesBgRom = ["Chiliyski", "losh", "po-dobar", "po-dobar", "golyam", "chernen", "bezopasen", "yassen", "razlichen", "ranen", "lesen", "ikonomichen", "svoboden", "palen", "dobar", "golyam", "tvard", "visok", "choveshki", "vazhen", "mezhdunaroden", "golyam", "kasen", "malyk", "mesten", "dylgy", "nisyk", "vazhen", "voenen", "moi", "natsionalen", "nov", "star", "edinstven", "drug", "politicheski", "vozmozhnen", "obshtestven", "realen", "skoroshen", "prav", "malyk", "sotsialen", "spetsialen", "silen", "bezopasen", "istinski", "byal", "palen", "mlad"];
+
     const initialWordsBg = [];
 
     // add words to initial array Bulgarian
     for (var i=0; i<nounsBg.length; i++) {
-      initialWordsBg.push({id: idCounter, word: nounsBg[i], type:"noun", translation: nounsEng[i]});
+      initialWordsBg.push({id: idCounter, word: nounsBg[i], type:"noun", translation: nounsEng[i], romanized: nounsBgRom[i]});
       idCounter++;  
     }
 
     for (var i=0; i<verbsBg.length; i++) {
-      initialWordsBg.push({id: idCounter, word: verbsBg[i], type:"verb", translation: verbsEng[i]}); 
+      initialWordsBg.push({id: idCounter, word: verbsBg[i], type:"verb", translation: verbsEng[i], romanized: verbsBgRom[i]}); 
       idCounter++;   
     }
 
     for (var i=0; i<subjectsBg.length; i++) {
-      initialWordsBg.push({id: idCounter, word: subjectsBg[i], type:"subject", translation: subjectsEng[i]}); 
+      initialWordsBg.push({id: idCounter, word: subjectsBg[i], type:"subject", translation: subjectsEng[i], romanized: subjectsBgRom[i]}); 
       idCounter++;   
     }
 
     for (var i=0; i<adjectivesBg.length; i++) {
-      initialWordsBg.push({id: idCounter, word: adjectivesBg[i], type:"adjective", translation: adjectivesEng[i]}); 
+      initialWordsBg.push({id: idCounter, word: adjectivesBg[i], type:"adjective", translation: adjectivesEng[i], romanized: adjectivesBgRom[i]}); 
       idCounter++;   
     }
 

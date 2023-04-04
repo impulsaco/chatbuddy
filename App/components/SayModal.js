@@ -356,9 +356,9 @@ const styles = StyleSheet.create({
         gap: 10,
         
         position: 'absolute',
-        height: PAGE_HEIGHT/3,
+        height: PAGE_HEIGHT/2.8,
         width: PAGE_WIDTH*.8,
-        top: PAGE_HEIGHT/3.5,
+        top: PAGE_HEIGHT/3.1,
         left: PAGE_WIDTH/10,
 
         backgroundColor: "#121212",

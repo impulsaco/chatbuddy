@@ -38,8 +38,8 @@ const DraggableWord = ({word, translations, sentence, setSentence, setForward}) 
         } 
 
     }
-
-    if (Platform.OS === 'ios') {
+// delete comment to re-activate drag
+    /* if (Platform.OS === 'ios') {
         return (
             <DraxView
                 draggingStyle={styles.dragging}
@@ -65,16 +65,17 @@ const DraggableWord = ({word, translations, sentence, setSentence, setForward}) 
         )
     }
 
-    else if (Platform.OS === 'android') {
+    else if (Platform.OS === 'android') { */
         return (
             <TouchableOpacity onPress = {() => updateSentence(word)}>
                 <WordCard style={[{borderColor: '#FFC107'}]}
                     word = { word } 
                     translations = { translations }
+                    menu = { false }
                 />
             </TouchableOpacity>
         )
-    }
+   // }
 
     
 }

@@ -4,7 +4,7 @@ import { View, TouchableOpacity, Button, Text, StyleSheet, Dimensions} from "rea
 const PAGE_HEIGHT = Dimensions.get('window').height;
 const PAGE_WIDTH = Dimensions.get('window').width;
 
-const WordCard = ( {word, translations} ) => {
+const WordCard = ( {word, translations, menu} ) => {
 
     // Toggles word translations
     const WordTranslations = () => {
@@ -23,6 +23,29 @@ const WordCard = ( {word, translations} ) => {
                 null
             )
         }
+    }
+
+    const Romanization = () => {
+        if (word.id >= 0 && word.romanized) {                        
+            return (
+                <Text style={styles.textRom}>{word.romanized}</Text>
+            )
+        }
+        else {
+            return (
+                null
+            )
+        }
+    }
+
+    let varHeight
+
+    if (!menu) {
+        varHeight = null
+    }
+
+    else {
+        varHeight = PAGE_HEIGHT*.06
     }
 
     // Sets word type color
@@ -59,8 +82,9 @@ const WordCard = ( {word, translations} ) => {
 
     return (
         <View style={{width : '100%'}}>
-            <TouchableOpacity style={[styles.wordCard, {borderColor: borderColor(word.type), backgroundColor: backgroundColor(word.type)} ]}> 
+            <TouchableOpacity style={[styles.wordCard, {borderColor: borderColor(word.type), height: varHeight, backgroundColor: backgroundColor(word.type)} ]}> 
                 <Text style={styles.text}>{word.word}</Text>
+                {Romanization()}
                 {WordTranslations()}
             </TouchableOpacity>
         </View>
@@ -78,8 +102,8 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderRadius: 10,
         position: 'relative',
-        width: PAGE_WIDTH*.18,
-        height: PAGE_HEIGHT*.06,
+        width: PAGE_WIDTH*.22,
+        //height: PAGE_HEIGHT*.06,
         margin: 10,
         
     }, 
@@ -91,6 +115,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         textAlign: 'center',
         color: '#030303',
+
+        margin: 5
         
     },
     textLight: {
@@ -100,7 +126,18 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         textAlign: 'center',
         color: '#B7B7B7',
-        marginTop: PAGE_HEIGHT*.008,
+        margin: 5,
+        
+    },
+    textRom: {
+        fontSize: 13,
+        height: 15,
+        display: 'flex',
+        alignItems: 'center',
+        textAlign: 'center',
+        color: '#B7B7B7',
+        margin: 5,
+        fontStyle: 'italic',
         
     },
 })

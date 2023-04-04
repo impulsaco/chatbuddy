@@ -33,7 +33,7 @@ const Sentence = ({
 
     // Set instructions and sentence placeholder
 
-    let starterText = "Drag words into their appropriate box below:"
+    let starterText = "Tap words to build your sentence:"
 
     const [text, setText] = useState(starterText)
 
@@ -41,6 +41,8 @@ const Sentence = ({
 
     // Set translation placeholder
     const [sentenceEn, setSentenceEn] = useState(" ")
+
+    const [sentenceRomanized, setSentenceRomanized] = useState(null)
 
     // Create Whisper sentence
     const [sentenceWhisper, setSentenceWhisper] = useState("no whisper yet")
@@ -68,6 +70,7 @@ const Sentence = ({
             setSentenceText(" ")
             setSentenceAnalyzed([])
             setSentenceEn(" ")
+            setSentenceRomanized(null)
             setSentenceFixed(false)
             setForward(sentenceInit[0].type)
         }
@@ -103,7 +106,9 @@ const Sentence = ({
                 lang, 
                 langCode,
                 setSentenceAnalyzed,
-                sentenceType)
+                sentenceType,
+                sentenceRomanized,
+                setSentenceRomanized)
         } 
     }
     
@@ -126,6 +131,19 @@ const Sentence = ({
         }
     }
 
+    // Sentence romanization
+
+    const sentenceRomanization = () => {
+        if (sentenceRomanized) {
+            return (
+                <Text style={styles.romanizationText}>{sentenceRomanized}</Text>
+            )
+        }
+        else {
+            return null
+        }
+    }
+
     // reset sentence
 
     const resetSentence = () => {        
@@ -135,6 +153,7 @@ const Sentence = ({
         setText(starterText)
         setSentenceText(" ")
         setSentenceEn(" ")
+        setSentenceRomanized(null)
         setSentenceFixed(false)
         setForward(sentenceInit[0].type)
     }
@@ -245,6 +264,7 @@ const Sentence = ({
                 <View style={styles.topSentence}>
                     {setWhispered()}    
                 </View>
+                {sentenceRomanization()}
                 {sentenceTranslation()}
                 {sentenceLine()}
             </View>
@@ -358,7 +378,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 20,
+        padding: 0,
         paddingTop: 40,
     },
     textContainer: {
@@ -384,6 +404,18 @@ const styles = StyleSheet.create({
         fontSize: 20,
         marginTop: 5,
         color: '#B7B7B7',
+    },
+    translationText: {
+        fontSize: 20,
+        marginTop: 5,
+        color: '#B7B7B7',
+    },
+    romanizationText: {
+        fontSize: 20,
+        marginTop: 0,
+        color: 'white',
+        fontStyle: 'italic',
+        marginBottom: 5,
     },
     item: {
         flexDirection: 'row',

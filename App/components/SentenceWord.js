@@ -62,7 +62,7 @@ const SentenceWord = ({word, index, words, sentence, setSentence, forward, setFo
             >
                 <TouchableOpacity style={styles.receiver} onPress={() => {tapNavigation(word.type)}}>
                     <WordCard
-                        word = { word } style={styles.sentenceWord}
+                        word = { word } style={styles.sentenceWord} menu = { true }
                     />
                 </TouchableOpacity>
             </DraxView>
@@ -74,7 +74,9 @@ const styles = StyleSheet.create({
         opacity: 0.1,
     },
     sentenceWord: {
-        borderColor: '#030303',
+        borderColor: 'red',
+        borderWidth: 1,
+        height: 100
     },
     receiver: {
         borderColor: '#030303',
