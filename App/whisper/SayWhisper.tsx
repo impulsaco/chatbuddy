@@ -328,7 +328,7 @@ export default ({
       const uri = recording.getURI();
       const filetype = uri.split(".").pop();
       const filename = uri.split("/").pop();
-      const prompt = `Transcription of spoken ${lang}`
+      const prompt = `${sentenceText} in ${lang}`;
       setLoading(true);
       setBottomText("Analyzing...")
       setTopText("Please wait...")

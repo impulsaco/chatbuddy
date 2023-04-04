@@ -9,6 +9,7 @@ import introductionList from '../wordsets/introductionList';
 import hobbiesList from '../wordsets/hobbiesList';
 import basicList from '../wordsets/basicList';
 import familyList from '../wordsets/familyList';
+import hometownList from '../wordsets/hometownList';
 
 const PAGE_HEIGHT = Dimensions.get('window').height;
 const PAGE_WIDTH = Dimensions.get('window').width;
@@ -42,7 +43,12 @@ function PhraseSelector({navigation, setMenuVisible, route}) {
                 <View style={styles.buttonsContainer}>
                     <View style={styles.phrasebookContainer}>
                         <TouchableOpacity style={styles.phrasebookButton} onPress={() => {navigation.navigate('Build', {wordSet: introductionList}); setMenuVisible(true)}}>
-                          <Text style={styles.buttonText}>Introduce myself 👋</Text>
+                          <Text style={styles.buttonText}>My job or study 💼</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.phrasebookContainer}>
+                        <TouchableOpacity style={styles.phrasebookButton} onPress={() => {navigation.navigate('Build', {wordSet: hometownList}); setMenuVisible(true)}}>
+                          <Text style={styles.buttonText}>Where I'm from 🌍</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.phrasebookContainer}>

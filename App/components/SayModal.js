@@ -83,6 +83,9 @@ const SayModal = ({ navigation, sentence, sentenceEn, sayVisible, setSayVisible,
               }  
               if (lang === "Korean") {
                 setTopText("축하해요! 🚀 We understood everything :) Save it to your phrasebook?")
+              } 
+              if (lang === "Bulgarian") {
+                setTopText("Честито! 🚀 We understood everything :) Save it to your phrasebook?")
               }  
         } 
         else if (attempted && (sayVisible==="partly")) {

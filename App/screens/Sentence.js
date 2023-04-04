@@ -134,6 +134,7 @@ const Sentence = ({
     // Sentence romanization
 
     const sentenceRomanization = () => {
+        console.log("sentenceRomanized is ", sentenceRomanized)
         if (sentenceRomanized) {
             return (
                 <Text style={styles.romanizationText}>{sentenceRomanized}</Text>
@@ -266,7 +267,6 @@ const Sentence = ({
                 </View>
                 {sentenceRomanization()}
                 {sentenceTranslation()}
-                {sentenceLine()}
             </View>
             <View style={styles.bottomContainer}>
                 {speakSentence()}                  
@@ -404,12 +404,9 @@ const styles = StyleSheet.create({
         fontSize: 20,
         marginTop: 5,
         color: '#B7B7B7',
+        marginBottom: 15,
     },
-    translationText: {
-        fontSize: 20,
-        marginTop: 5,
-        color: '#B7B7B7',
-    },
+    
     romanizationText: {
         fontSize: 20,
         marginTop: 0,

@@ -72,20 +72,22 @@ const SentenceFixer = (sentence,
     }
   // Romanize sentence
     const romanizer = async (input) => {
-      console.log("ROMANIZING API")
-      const prompt = `Romanize the following sentence in  ${lang}: ${input}.`;
-      const role = `Simple ${lang} romanizer.`;
-      const response = await axios.post('https://api.openai.com/v1/chat/completions', {
-        model: "gpt-3.5-turbo",
-        messages: [{"role": "user", "content": role}, {"role": "system", "content": prompt}],
-      }, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${OPENAI_API_KEY}`,
-        },
-      });      
-      const sentenceRomanizedTemp = response.data.choices[0].message.content.trim();
-      setSentenceRomanized(sentenceRomanizedTemp);
+      if (langCode === "ko" || langCode === "bg") {
+        console.log("ROMANIZING API")
+        const prompt = `Romanize the following sentence in  ${lang}: ${input}. Output only the romanized sentence`;
+        const role = `Simple ${lang} romanizer.`;
+        const response = await axios.post('https://api.openai.com/v1/chat/completions', {
+          model: "gpt-3.5-turbo",
+          messages: [{"role": "user", "content": role}, {"role": "system", "content": prompt}],
+        }, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${OPENAI_API_KEY}`,
+          },
+        });      
+        const sentenceRomanizedTemp = response.data.choices[0].message.content.trim();
+        setSentenceRomanized(sentenceRomanizedTemp);
+      }
     }
 
 

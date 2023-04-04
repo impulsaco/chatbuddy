@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 // create words dataset
 
-const introductionList = (lang) => {
+const hometownList = (lang) => {
 
   var idCounter = 0;
 
@@ -28,22 +28,22 @@ const introductionList = (lang) => {
 
   // English set
 
-  var nounsEng = ["Student", "Writer", "Developer", "Designer", "Researcher", "Lawyer", "Teacher", "Engineer", "Artist", "Scientist", "Doctor", "Journalist"]
+  var subjectsEng = ['I', 'You', 'We', 'They', 'He', 'She']
 
-  var subjectsEng =   ['I', 'You', 'We', 'They', 'He', 'She']
+  var verbsEng = ['Am from', 'Grew up in', 'Live in', 'Lived in']
 
-  var verbsEng = ["To be", "Want to be", "Studying"]
+  var nounsEng = ['America', 'China', 'Chile', 'Bulgaria', 'Korea']
 
 
   if (lang === 'es-MX') {
 
     // Spanish set
 
-    var nounsEs = ["Estudiante", "Escritor", "Desarrollador", "Diseñador", "Investigador", "Abogado", "Profesor", "Ingeniero", "Artista", "Científico", "Doctor", "Periodista"]
-
-    var verbsEs = ["Ser", "Quiero ser", "Estudiando"]
-
     var subjectsEs = ['Yo', 'Tú', 'Nosotros', 'Ellos', 'Él', 'Ella']
+
+    var verbsEs = ['Soy de', 'Crecí en', 'Vivo en', 'Viví en']
+
+    var nounsEs = ['Estados Unidos', 'China', 'Chile', 'Bulgaria', 'Corea']
 
     const initialWordsEs = [];
 
@@ -63,7 +63,7 @@ const introductionList = (lang) => {
     }
 
 
-    return ["introduction", sentenceStructure, initialWordsEs];
+    return ["hometown", sentenceStructure, initialWordsEs];
 
   }
 
@@ -71,19 +71,19 @@ const introductionList = (lang) => {
 
     // Korean set
 
-    var nounsKo = ["학생", "작가", "개발자", "디자이너", "연구원", "변호사", "교사", "기술자", "예술가", "과학자", "의사", "저널리스트"]
-
-    var verbsKo = ["이다", "하고 싶다", "공부하고 있다"]
-
     var subjectsKo = ['나', '너', '우리', '그들', '그', '그녀']
+
+    var verbsKo = ['출신', '자랐어요', '살고 있어요', '살았어요']
+
+    var nounsKo = ['미국', '중국', '칠레', '불가리아', '한국']
 
     // Romanized set
 
-    var nounsKoRom = ["haksaeng", "jagga", "gaebalja", "dijaieoneo", "yeonguwon", "byeonhosa", "gyosa", "gisulja", "yesulga", "gwahagja", "uisa", "jeoneolliseuteu"]
-
-    var verbsKoRom =["ida", "hago sipda", "gongbu-hago issda"]
-
     var subjectsKoRom = ['na', 'neo', 'uri', 'geudeul', 'geu', 'geunyeo']
+
+    var verbsKoRom = ['chulsin', 'jarasseoyo', 'salgo isseoyo', 'salasseoyo']
+
+    var nounsKoRom = ['Miguk', 'Jungguk', 'Chille', 'Bulgaria', 'Hanguk']
 
 
     const initialWordsKo = [];
@@ -105,26 +105,26 @@ const introductionList = (lang) => {
     }
 
 
-    return ["introduction", sentenceStructure, initialWordsKo];;
+    return ["hometown", sentenceStructure, initialWordsKo];;
   }
 
   if (lang === 'bg') {
 
     // Bulgarian set
 
-    var nounsBg = ["Студент", "Писател", "Разработчик", "Дизайнер", "Изследовател", "Адвокат", "Учител", "Инженер", "Художник", "Учен", "Доктор", "Журналист"]
-
     var subjectsBg = ['Аз', 'Ти', 'Ние', 'Те', 'Той', 'Тя']
 
-    var verbsBg = ["Бъда", "Искам да бъда", "Уча"]
+    var verbsBg = ['Съм от', 'Отгледан съм в', 'Живея в', 'Живях в']
+
+    var nounsBg = ['Америка', 'Китай', 'Чили', 'България', 'Корея']
 
     // Romanized
 
-    var nounsBgRom = ["Student", "Pisatel", "Razrabotchik", "Dizainer", "Izsledovatel", "Advokat", "Uchitel", "Inzhener", "Hudozhnik", "Uchen", "Doktor", "Zhurnalist"]
+    var subjectsBgRom = ['Az', 'Ti', 'Nie', 'Te', 'Toy', 'Tya']
 
-    var subjectsBgRom = ["Az", "Ti", "Nie", "Te", "Toy", "Tya"]
+    var verbsBgRom = ['Sum ot', 'Otgledan sum v', 'Jiveya v', 'Jivyah v']
 
-    var verbsBgRom = ["Bada", "Iskam da bada", "Ucha"]
+    var nounsBgRom = ['Amerika', 'Kitai', 'Chili', 'Bulgaria', 'Koreya']
 
 
     const initialWordsBg = [];
@@ -145,9 +145,9 @@ const introductionList = (lang) => {
       idCounter++;   
     }
 
-    return ["introduction", sentenceStructure, initialWordsBg];;
+    return ["hometown", sentenceStructure, initialWordsBg];;
 
   }
 }
 
-export default introductionList;
+export default hometownList;
