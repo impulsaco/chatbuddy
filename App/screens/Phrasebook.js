@@ -80,10 +80,12 @@ const Phrasebook = ({navigation, route}) => {
         if (data) {
             setSentences(data)      
             setTypes([
-                {name: "introduction", label: "My job or study 💼", unfilled: emptySentences - data.filter(obj => {return obj.type === "introduction" && obj.language === lang}).length}, 
+                {name: "introduction", label: "Jobs or studies  💼", unfilled: emptySentences - data.filter(obj => {return obj.type === "introduction" && obj.language === lang}).length}, 
                 {name: "hometown", label: "Where we're from 🌍", unfilled: emptySentences - data.filter(obj => {return obj.type === "hometown" && obj.language === lang}).length},
+                {name: "feelings", label: "Feelings 😃", unfilled: emptySentences - data.filter(obj => {return obj.type === "feelings" && obj.language === lang}).length},
                 {name: "family", label: "My family 🏡", unfilled: emptySentences - data.filter(obj => {return obj.type === "family" && obj.language === lang}).length},
                 {name: "hobbies", label: "Hobbies 🎨", unfilled: emptySentences - data.filter(obj => {return obj.type === "hobbies" && obj.language === lang}).length}, 
+                {name: "places", label: "Places 📍", unfilled: emptySentences - data.filter(obj => {return obj.type === "places" && obj.language === lang}).length}, 
                 {name: "basic", label: "Anything 🤯", unfilled: emptySentences - data.filter(obj => {return obj.type === "basic" && obj.language === lang}).length}
             ])
             setLangs(Array.from(new Set(data.map(({ language }) => language))))

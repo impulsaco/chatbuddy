@@ -151,7 +151,7 @@ const SayModal = ({ navigation, sentence, sentenceEn, sayVisible, setSayVisible,
         }
         else if (sentenceSaved) {
             return (
-                <TouchableOpacity style={styles.grayButton} onPress={() => {navigation.navigate('Phrasebook', {lang: selectedLangName, setSelectedLangName: setSelectedLangName, langCode: selectedLangCode, setSelectedLang: setSelectedLangCode, setMenuVisible: setMenuVisible}); close()}}>
+                <TouchableOpacity style={styles.grayButton} onPress={() => {navigation.navigate('Phrasebook'); close()}}>
                     <Text style={[styles.smallText, { paddingLeft: 10} ]}>Go to phrasebook</Text>
                 </TouchableOpacity>
             )
@@ -168,7 +168,7 @@ const SayModal = ({ navigation, sentence, sentenceEn, sayVisible, setSayVisible,
         }
         else if (sentenceSaved) {
             return (
-                <TouchableOpacity style={styles.grayButton} onPress={() => {nnavigation.navigate('Phrasebook', {lang: selectedLangName, setSelectedLangName: setSelectedLangName, langCode: selectedLangCode, setSelectedLang: setSelectedLangCode, setMenuVisible: setMenuVisible}); close()}}>
+                <TouchableOpacity style={styles.grayButton} onPress={() => {nnavigation.navigate('Phrasebook'); close()}}>
                     <Text style={[styles.smallText, { paddingLeft: 10} ]}>Go to phrasebook</Text>
                 </TouchableOpacity>
             )

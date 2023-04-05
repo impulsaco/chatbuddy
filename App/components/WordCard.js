@@ -60,6 +60,9 @@ const WordCard = ( {word, translations, menu} ) => {
         else if (type === "adjective") {
             return "#FF5722"
         }
+        else if (type === "preposition") {
+            return "#9C27B0"
+        }
         else if (type === "subject") {
             return "#2196F3"
         }
@@ -74,6 +77,9 @@ const WordCard = ( {word, translations, menu} ) => {
         }
         else if (type === "adjective") {
             return "#FFE0B2"
+        }
+        else if (type === "preposition") {
+            return "#F3E5F5"
         }
         else if (type === "subject") {
             return "#E3F2FD"

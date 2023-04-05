@@ -10,6 +10,9 @@ import hobbiesList from '../wordsets/hobbiesList';
 import basicList from '../wordsets/basicList';
 import familyList from '../wordsets/familyList';
 import hometownList from '../wordsets/hometownList';
+import feelingsList from '../wordsets/feelingsList';
+import { border } from 'native-base/lib/typescript/theme/styled-system';
+import placesList from '../wordsets/placesList';
 
 const PAGE_HEIGHT = Dimensions.get('window').height;
 const PAGE_WIDTH = Dimensions.get('window').width;
@@ -36,29 +39,39 @@ function PhraseSelector({navigation, setMenuVisible, route}) {
 
     const renderButtons = () => { 
         return (
-            <View>
+            <View style={styles.mainContainer}>
                 <View style={styles.textContainer}>
                     <Text style={styles.mainText}>What do you want to say?</Text>
                 </View>     
                 <View style={styles.buttonsContainer}>
                     <View style={styles.phrasebookContainer}>
                         <TouchableOpacity style={styles.phrasebookButton} onPress={() => {navigation.navigate('Build', {wordSet: introductionList}); setMenuVisible(true)}}>
-                          <Text style={styles.buttonText}>My job or study 💼</Text>
+                          <Text style={styles.buttonText}>Jobs & studies 💼</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.phrasebookContainer}>
                         <TouchableOpacity style={styles.phrasebookButton} onPress={() => {navigation.navigate('Build', {wordSet: hometownList}); setMenuVisible(true)}}>
-                          <Text style={styles.buttonText}>Where I'm from 🌍</Text>
+                          <Text style={styles.buttonText}>Where we're from 🌍</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.phrasebookContainer}>
+                        <TouchableOpacity style={styles.phrasebookButton} onPress={() => {navigation.navigate('Build', {wordSet: feelingsList}); setMenuVisible(true)}}>
+                          <Text style={styles.buttonText}>Feelings 😃</Text>
+                        </TouchableOpacity>
+                    </View>            
+                    <View style={styles.phrasebookContainer}>
                         <TouchableOpacity style={styles.phrasebookButton} onPress={() => {navigation.navigate('Build', {wordSet: familyList}); setMenuVisible(true)}}>
-                          <Text style={styles.buttonText}>My family 🏡</Text>
+                          <Text style={styles.buttonText}>Family 🏡</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.phrasebookContainer}>
                         <TouchableOpacity style={styles.phrasebookButton} onPress={() => {navigation.navigate('Build', {wordSet: hobbiesList}); setMenuVisible(true)}}>
                           <Text style={styles.buttonText}>Hobbies 🎨</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.phrasebookContainer}>
+                        <TouchableOpacity style={styles.phrasebookButton} onPress={() => {navigation.navigate('Build', {wordSet: placesList}); setMenuVisible(true)}}>
+                          <Text style={styles.buttonText}>Places📍</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.phrasebookContainer}>
@@ -72,7 +85,7 @@ function PhraseSelector({navigation, setMenuVisible, route}) {
     } 
   
     return (
-      <View style={styles.mainContainer}>
+      <View >
         <LinearGradient 
         colors={['#319CFF', '#319CFF']}
         locations={[0, .99]}
@@ -102,7 +115,8 @@ function PhraseSelector({navigation, setMenuVisible, route}) {
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center', 
-      padding: 10
+      padding: 20,
+      marginTop: PAGE_HEIGHT/5,
     },
     bottomContainer: {
       display: 'flex',
@@ -120,7 +134,7 @@ function PhraseSelector({navigation, setMenuVisible, route}) {
       width: PAGE_WIDTH*.8,
     },
     mainText: {
-      fontSize: 54,
+      fontSize: 42,
       color: "white",
       textAlign: 'center',
      },
@@ -129,7 +143,7 @@ function PhraseSelector({navigation, setMenuVisible, route}) {
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
-      padding: 10
+      padding: 10,
     },
     buttonContainer: {
       display: 'flex',
