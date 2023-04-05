@@ -7,6 +7,8 @@ import { OPENAI_API_KEY } from "@env"
 import googleTranslate from './googleTranslate';
 import sentenceSpeak from './sentenceSpeak';
 import axios from "axios";
+import gptFixer from '../components/api/gptFixer';
+import romanizer from '../components/api/romanizer';
 
 
 // Uses GPT to fix sentence
@@ -70,44 +72,11 @@ const SentenceFixer = (sentence,
         sentenceSpeak(input, langCode)
         setSentenceFixed(true)
     }
-  // Romanize sentence
-    const romanizer = async (input) => {
-      if (langCode === "ko" || langCode === "bg") {
-        console.log("ROMANIZING API")
-        const prompt = `Romanize the following sentence in  ${lang}: ${input}. Output only the romanized sentence`;
-        const role = `Simple ${lang} romanizer.`;
-        const response = await axios.post('https://api.openai.com/v1/chat/completions', {
-          model: "gpt-3.5-turbo",
-          messages: [{"role": "user", "content": role}, {"role": "system", "content": prompt}],
-        }, {
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${OPENAI_API_KEY}`,
-          },
-        });      
-        const sentenceRomanizedTemp = response.data.choices[0].message.content.trim();
-        setSentenceRomanized(sentenceRomanizedTemp);
-      }
-    }
-
-
+  
     console.log("Sentence to send is ", sentence)
     const fixSentence = async () => {
-      const prompt = `Make a simple sentence in ${lang} using only these four words, keeping in mind the English meaning of each word: ${JSON.stringify(sentence)}. Output only the ${lang} sentence, not the English one.`;
-      const role = `Helping beginners in ${lang} make a simple sentence.`;
-      console.log("role is ", role)
-      const response = await axios.post('https://api.openai.com/v1/chat/completions', {
-        model: "gpt-3.5-turbo",
-        messages: [{"role": "user", "content": role}, {"role": "system", "content": prompt}],
-      }, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${OPENAI_API_KEY}`,
-        },
-      });      
-      const sentenceText = response.data.choices[0].message.content.trim();
-      saveSentenceText(sentenceText);
-      romanizer(sentenceText)
+      gptFixer(lang, sentence, saveSentenceText)
+      romanizer(sentenceFixInit, setSentenceRomanized, lang, langCode)
     }
     fixSentence()
 }

@@ -45,15 +45,15 @@ function PhraseSelector({navigation, setMenuVisible, route}) {
                 </View>     
                 <View style={styles.buttonsContainer}>
                     <View style={styles.phrasebookContainer}>
+                        <TouchableOpacity style={styles.phrasebookButton} onPress={() => {navigation.navigate('Build', {wordSet: hometownList}); setMenuVisible(true)}}>
+                          <Text style={styles.buttonText}>Where you're from 🌍</Text>
+                        </TouchableOpacity>
+                    </View>                    
+                    <View style={styles.phrasebookContainer}>
                         <TouchableOpacity style={styles.phrasebookButton} onPress={() => {navigation.navigate('Build', {wordSet: introductionList}); setMenuVisible(true)}}>
                           <Text style={styles.buttonText}>Jobs & studies 💼</Text>
                         </TouchableOpacity>
-                    </View>
-                    <View style={styles.phrasebookContainer}>
-                        <TouchableOpacity style={styles.phrasebookButton} onPress={() => {navigation.navigate('Build', {wordSet: hometownList}); setMenuVisible(true)}}>
-                          <Text style={styles.buttonText}>Where we're from 🌍</Text>
-                        </TouchableOpacity>
-                    </View>
+                    </View>                    
                     <View style={styles.phrasebookContainer}>
                         <TouchableOpacity style={styles.phrasebookButton} onPress={() => {navigation.navigate('Build', {wordSet: feelingsList}); setMenuVisible(true)}}>
                           <Text style={styles.buttonText}>Feelings 😃</Text>
