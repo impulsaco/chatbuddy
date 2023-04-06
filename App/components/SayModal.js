@@ -178,8 +178,24 @@ const SayModal = ({ navigation, sentence, sentenceEn, sayVisible, setSayVisible,
     useEffect(() => {
     }, [closeVisible])
 
+    // Load session
+
+    const [session, setSession] = useState()
+
+    useEffect(() => {
+
+        supabase.auth.getSession().then(({ data: { session } }) => {
+        setSession(session)
+        })
+
+        supabase.auth.onAuthStateChange((_event, session) => {
+        setSession(session)
+        })
+    }, [])
+
 
     // Output modal
+
 
     /// Modals   
    
@@ -207,6 +223,7 @@ const SayModal = ({ navigation, sentence, sentenceEn, sayVisible, setSayVisible,
                         sentenceText={sentenceText}     
                         closeVisible={closeVisible}                       
                         setCloseVisible={setCloseVisible}
+                        session={session}
                     />
                     </TouchableOpacity>                    
                     <View style={styles.bigTextContainer}>

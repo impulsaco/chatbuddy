@@ -15,6 +15,7 @@ import axios from "axios";
 import Mode from './Mode';
 import sentenceSpeak from '../lib/sentenceSpeak';
 import TranscribedOutput from "./TranscribeOutput";
+import { supabase } from '../lib/supabase';
 import { OPENAI_API_KEY } from "@env";
 import * as FileSystem from 'expo-file-system';
 import Microphone from "../../assets/microphone.svg";
@@ -36,7 +37,8 @@ export default ({
   setPlaySound, 
   sentenceText,
   closeVisible,
-  setCloseVisible
+  setCloseVisible,
+  session
 }) => {
   console.log("sentenceWhisper before new is ", sentenceWhisper)
   const [recording, setRecording] = React.useState(false as any);
@@ -370,6 +372,33 @@ export default ({
         .catch(function (error) {
           console.log("error : ", error);
         });
+      // Save call to Supabase
+
+      const costPerToken = 0.006 / 60
+      const { sound, status } = await recording.createNewLoadedSoundAsync();
+      const seconds = status.durationMillis / 1000
+      console.log("seconds are ", status.durationMillis / 1000)
+      const saveCall = async () => {  
+        console.log("saving!")      
+        const { error } = await supabase
+        .from('aiUsage')
+        .insert({ 
+            created_at: new Date().toISOString(), 
+            user: session.user.id, 
+            model: modelName,
+            type: "sayWhisper",
+            chars: null,
+            tokens: null,
+            seconds: seconds,
+            cost: seconds * costPerToken,
+            prompt: prompt,
+            output: null,
+            api_key: OPENAI_API_KEY,
+            }
+        )
+        if (error) alert(error.message)
+      }
+      saveCall()
   
       if (!stopTranscriptionSessionRef.current) {
         setIsRecording(true);

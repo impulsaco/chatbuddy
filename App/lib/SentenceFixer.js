@@ -37,12 +37,15 @@ const SentenceFixer = (sentence,
                         setSentenceAnalyzed,
                         sentenceType,
                         sentenceRomanized,
-                        setSentenceRomanized
+                        setSentenceRomanized,
+                        session
                       ) => {
 
     console.log("within fixer, sentence is ", sentence)
 
     console.log("sentenceType in FIXER is ", sentenceType)
+
+    console.log("SESSION IS ", session)
 
     var sentenceFixInit = ""
 
@@ -75,8 +78,8 @@ const SentenceFixer = (sentence,
   
     console.log("Sentence to send is ", sentence)
     const fixSentence = async () => {
-      gptFixer(lang, sentence, saveSentenceText)
-      romanizer(sentenceFixInit, setSentenceRomanized, lang, langCode)
+      gptFixer(lang, sentence, saveSentenceText, session)
+      romanizer(sentenceFixInit, setSentenceRomanized, lang, langCode, session)
     }
     fixSentence()
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Switch } from "@rneui/themed";
 import { View, Text, TouchableOpacity, ScrollView, StyleSheet, Dimensions } from "react-native";
 import SentenceWord from '../components/SentenceWord';
@@ -12,6 +12,9 @@ import SentenceFixer from '../lib/SentenceFixer';
 import SayModal from '../components/SayModal';
 import TranslationOn from '../../assets/translationOn.svg';
 import TranslationOff from '../../assets/translationOff.svg';
+import { SessionContext } from '../lib/SessionContext';
+import { supabase } from '../lib/supabase';
+
 
 const PAGE_HEIGHT = Dimensions.get('window').height;
 const PAGE_WIDTH = Dimensions.get('window').width;
@@ -34,6 +37,21 @@ const Sentence = ({
     // Set instructions and sentence placeholder
 
     let starterText = "Tap words to build your sentence:"
+
+    // Retrieve session
+
+    const [session, setSession] = useState()
+
+    useEffect(() => {
+
+        supabase.auth.getSession().then(({ data: { session } }) => {
+        setSession(session)
+        })
+
+        supabase.auth.onAuthStateChange((_event, session) => {
+        setSession(session)
+        })
+    }, [])
 
     const [text, setText] = useState(starterText)
 
@@ -108,7 +126,8 @@ const Sentence = ({
                 setSentenceAnalyzed,
                 sentenceType,
                 sentenceRomanized,
-                setSentenceRomanized)
+                setSentenceRomanized,
+                session)
         } 
     }
     
