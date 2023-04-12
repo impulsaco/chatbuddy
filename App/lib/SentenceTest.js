@@ -8,9 +8,9 @@ const SentenceTest = (sentence, setSentenceReady) => {
         
     const sentenceTest = (sentence) => {
 
-        if ((sentence.some((element) => ((element.type==="noun") && (element.id >= 0)))) &&
-        (sentence.some((element) => (element.type==="verb") && (element.id >= 0))) &&
-        (sentence.some((element) => (element.type==="subject") && (element.id >= 0))))
+        const count = sentence.filter((element) => element.id >= 0).length;
+
+        if (count>=sentence.length)
         {
             console.log("sentence is complete!!")
             setSentenceReady(true)

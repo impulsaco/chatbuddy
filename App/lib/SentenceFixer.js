@@ -29,6 +29,7 @@ const openai = new OpenAIApi(configuration);
 
 const SentenceFixer = (sentence,
                         setSentenceFixed, 
+                        sentenceText,
                         setSentenceText,
                         setSavedSentence, 
                         setSentenceEn, 
@@ -78,10 +79,9 @@ const SentenceFixer = (sentence,
   
     console.log("Sentence to send is ", sentence)
     const fixSentence = async () => {
-      gptFixer(lang, sentence, saveSentenceText, session)
-      romanizer(sentenceFixInit, setSentenceRomanized, lang, langCode, session)
-    }
-    fixSentence()
+      await gptFixer(lang, langCode, sentence, saveSentenceText, session, setSentenceRomanized);      
+    };
+    fixSentence();
 }
 
 export default SentenceFixer

@@ -15,10 +15,10 @@ const WordRoute = (type, setUserWords, userWords, words, translations, sentence,
 
   const { langCode, setLangCode, lang, setLang} = React.useContext(LanguageContext); 
   
-  React.useEffect (() => {
+  /*React.useEffect (() => {
     setLangCode(langCode)
     setLang(lang)
-  }, [langCode, lang])
+  }, [langCode, lang])*/
 
   return () => (
     <View style={styles.wordContainer}>

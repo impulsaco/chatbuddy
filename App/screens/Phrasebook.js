@@ -45,10 +45,13 @@ const Phrasebook = ({navigation, route}) => {
     const [langCodes, setLangCodes] = useState([])
 
     const [types, setTypes] = useState([
-        {name: "introduction", label: "Self-introduction", unfilled: emptySentences}, 
-        {name: "hobbies", label: "Hobbies", unfilled: emptySentences}, 
-        {name: "family", label: "Family", unfilled: emptySentences},
-        {name: "basic", label: "Anything!", unfilled: emptySentences}
+        {name: "introduction", label: "Jobs or studies  💼", unfilled: emptySentences}, 
+                {name: "hometown", label: "Where we're from 🌍", unfilled: emptySentences},
+                {name: "feelings", label: "Feelings 😃", unfilled: emptySentences},
+                {name: "family", label: "My family 🏡", unfilled: emptySentences},
+                {name: "hobbies", label: "Hobbies 🎨", unfilled: emptySentences}, 
+                {name: "places", label: "Places 📍", unfilled: emptySentences}, 
+                {name: "basic", label: "Anything 🤯", unfilled: emptySentences}
     ])
   // Retrieve session
 

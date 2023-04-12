@@ -4,14 +4,35 @@ import axios from "axios";
 import 'react-native-url-polyfill/auto'
 import { supabase } from '../../lib/supabase';
 import { SessionContext } from '../../lib/SessionContext';
+import romanizer from './romanizer';
 
-const gptFixer = (lang, sentence, saveSentenceText, session) => {
 
+// Aisso MVP
+/// Decompose fixer API DONE 
+/// Decompose romanize API DONE
+/// Decompose whisper API ???
+/// Set up Supabase backend DONE
+//// One call one row
+//// id
+//// timestamp
+//// user
+//// type (fixer, romanizer, whisper)
+//// characters
+//// seconds
+//// cost
+//// input/prompt
+//// output
+//// API key
+/// Save calls to Supabase DONE
+/// Set up dashboard React
+/// Dashboard metric visualizations
+
+const gptFixer = (lang, langCode, sentence, saveSentenceText, session, setSentenceRomanized) => {
   
   const costPerToken = 0.002/1000;
   
   const fixSentence = async () => {
-    const prompt = `Make a simple sentence in ${lang} using only these four words, keeping in mind the English meaning of each word: ${JSON.stringify(sentence)}. Output only the ${lang} sentence, not the English one.`;
+    const prompt = `Make a simple sentence in ${lang} using only these four words, keeping in mind the English meaning of each word: ${JSON.stringify(sentence)}. Output only the ${lang} sentence, not the English one. Nothing besides the sentence, no parentheses or explanations.`;
     const role = `Helping beginners in ${lang} make a simple sentence.`;
   
     console.log("fixSentence is running")
@@ -26,6 +47,7 @@ const gptFixer = (lang, sentence, saveSentenceText, session) => {
     });      
     const sentenceText = response.data.choices[0].message.content.trim();
     saveSentenceText(sentenceText);
+    romanizer(sentenceText, setSentenceRomanized, lang, langCode, session);
 
     // Save call to Supabase
     const saveCall = async () => {  
@@ -49,9 +71,7 @@ const gptFixer = (lang, sentence, saveSentenceText, session) => {
       if (error) alert(error.message)
     }
     saveCall()
-
   }
-
   fixSentence();  
 
 }

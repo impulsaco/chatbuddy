@@ -118,6 +118,7 @@ const Sentence = ({
         if (sentenceReady === true && sentence !== sentenceInit) {
             SentenceFixer(sentence, 
                 setSentenceFixed,
+                sentenceText,
                 setSentenceText,
                 setSavedSentence, 
                 setSentenceEn, 

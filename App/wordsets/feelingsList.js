@@ -48,7 +48,7 @@ const feelingsList = (lang) => {
     const initialWordsEs = [];
 
     for (var i=0; i<adjectivesEs.length; i++) {
-      initialWordsEs.push({id: idCounter, word: adjectivesEs[i], type:"adjective", translation: adjectiveEng[i]});
+      initialWordsEs.push({id: idCounter, word: adjectivesEs[i], type:"adjective", translation: adjectivesEng[i]});
       idCounter++;  
     }
 

@@ -5,6 +5,10 @@ import introductionList from '../wordsets/introductionList';
 import hobbiesList from '../wordsets/hobbiesList';
 import basicList from '../wordsets/basicList';
 import familyList from '../wordsets/familyList';
+import hometownList from '../wordsets/hometownList';
+import feelingsList from '../wordsets/feelingsList';
+import placesList from '../wordsets/placesList';
+import freeformList from '../wordsets/freeformList';
 
 const PAGE_HEIGHT = Dimensions.get('window').height;
 const PAGE_WIDTH = Dimensions.get('window').width;
@@ -19,6 +23,14 @@ const EmptySentence = ( {navigation, type, lang, langCode, setMenuVisible} ) => 
             return basicList
         } else if (type === 'family') {
             return familyList
+        } else if (type === 'places') {
+            return placesList
+        } else if (type === 'feelings') {
+            return feelingsList
+        } else if (type === 'hometown') {
+            return hometownList
+        } else if (type === 'freeform') {
+            return freeformList
         }
     }
      // For translations
