@@ -62,7 +62,7 @@ const VoiceChat = ({
     useEffect(() => {
 
         console.log("response UPDATED in VOICECHAT: ", response)
-        chatSpeak(response, "en-GB");
+        chatSpeak(response, "en-US");
         if (response) {
             const newMessageData = {
                 _id: Math.random().toString(36).substring(7),

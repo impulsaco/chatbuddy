@@ -24,6 +24,10 @@ const gptChat = (previousMessages, newMessage, setResponse) => {
       role: 'user',
       content: newMessage,
     },
+    {
+      role: 'system',
+      content: `Give a friendly response (no emojis) to this message in less than 100 characters: ${newMessage}.`,
+    },
   ];
 
   const messagesString = JSON.stringify(structuredMessages)

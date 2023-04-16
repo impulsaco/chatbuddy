@@ -209,12 +209,12 @@ const PAGE_WIDTH = Dimensions.get('window').width;
 /// Big mike DONE
 //// 
 /// Send message based on recording DONE
-/// Play back message 
+/// Play back message  DONE
 /// Closable optional chat DONE
 //// Set up chat DONE
 //// Record sent and received audio messages DONE
-//// Basing message chaining
-//// Tap to listen
+//// Basing message chaining DONE
+//// Tap to listen 
 /// Enter API key
 /// Saved chats
 /// Choose model
