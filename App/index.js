@@ -205,14 +205,15 @@ const PAGE_WIDTH = Dimensions.get('window').width;
 /// Phrase categories sliders
 
 // VoiceGPT
-/// Reorganization
-/// Big mike
+/// Reorganization DONE 
+/// Big mike DONE
 //// 
-/// Send message based on recording
-/// Play back message
-/// Closable optional chat
-//// Set up chat
-//// Record sent and received audio messages
+/// Send message based on recording DONE
+/// Play back message 
+/// Closable optional chat DONE
+//// Set up chat DONE
+//// Record sent and received audio messages DONE
+//// Basing message chaining
 //// Tap to listen
 /// Enter API key
 /// Saved chats

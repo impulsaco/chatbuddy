@@ -8,42 +8,76 @@ import romanizer from './romanizer';
 
 
 
-const gptFixer = (lang, langCode, sentence, saveSentenceText, session, setSentenceRomanized) => {
+const gptChat = (previousMessages, newMessage, setResponse) => {
   
   const costPerToken = 0.002/1000;
+  console.log("RESPOND is running. SPENDING TOKENS!!")
+
+  const prompt = newMessage
+  const role = `A helpful AI language model in a voice chat.`;
+  const structuredMessages = [
+    ...previousMessages.map((message) => ({          
+      role: message.user._id === 1 ? 'user' : 'system',
+      content: message.text,
+    })),
+    {
+      role: 'user',
+      content: newMessage,
+    },
+  ];
+
+  const messagesString = JSON.stringify(structuredMessages)
+  const tokenCount = messagesString.length/4
+
+  console.log("structuredMessages are: ", structuredMessages)
   
-  const fixSentence = async () => {
-    const prompt = `Make a simple sentence in ${lang} using only these four words, keeping in mind the English meaning of each word: ${JSON.stringify(sentence)}. Output only the ${lang} sentence, not the English one. Nothing besides the sentence, no parentheses or explanations.`;
-    const role = `Helping beginners in ${lang} make a simple sentence.`;
-  
-    console.log("fixSentence is running")
-    const response = await axios.post('https://api.openai.com/v1/chat/completions', {
+  const respondGpt = async () => {
+
+    if (tokenCount < 3500) {
+      const response = await axios.post('https://api.openai.com/v1/chat/completions', {
       model: "gpt-3.5-turbo",
-      messages: [{"role": "user", "content": role}, {"role": "system", "content": prompt}],
-    }, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${OPENAI_API_KEY}`,
-      },
-    });      
-    const sentenceText = response.data.choices[0].message.content.trim();
-    saveSentenceText(sentenceText);
-    romanizer(sentenceText, setSentenceRomanized, lang, langCode, session);
+      messages: structuredMessages,
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${OPENAI_API_KEY}`,
+        },
+      });      
+      const responseTemp = response.data.choices[0].message.content.trim();
+      setResponse(responseTemp);    
+    }
+    else {
+      const response = await axios.post('https://api.openai.com/v1/chat/completions', {
+        model: "gpt-3.5-turbo",
+        messages: [{"role": "user", "content": "I'm past the prompt limit, respond 'you have used all your free chat, sign up for more!.'"}]
+        }, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${OPENAI_API_KEY}`,
+          },
+        });      
+        const responseTemp = response.data.choices[0].message.content.trim();
+        setResponse(responseTemp);    
+    }
+    
+    
 
     // Save call to Supabase
     const saveCall = async () => {  
-      console.log("saving!")      
+      console.log("saving!")  
+      const messagesString = JSON.stringify(structuredMessages)
+      console.log("tokens are: ", messagesString.length/4)    
       const { error } = await supabase
       .from('aiUsage')
       .insert({ 
           created_at: new Date().toISOString(), 
           user: session.user.id, 
           model: "gpt-3.5-turbo",
-          type: "fixer",
+          type: "gptChat",
           chars: role.length + prompt.length,
-          tokens: (role.length + prompt.length)/4,
+          tokens: messagesString.length/4,
           seconds: null,
-          cost: (role.length + prompt.length)/4 * costPerToken,
+          cost: messagesString.length/4 * costPerToken,
           prompt: `${role} ${prompt}`,
           output: sentenceText,
           api_key: OPENAI_API_KEY,
@@ -53,8 +87,8 @@ const gptFixer = (lang, langCode, sentence, saveSentenceText, session, setSenten
     }
     saveCall()
   }
-  fixSentence();  
+  respondGpt();  
 
 }
 
-export default gptFixer;
+export default gptChat;

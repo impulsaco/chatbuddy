@@ -56,12 +56,9 @@ const VoiceRecord = ({ newMessage, setNewMessage }) => {
 
     return (
         <View style={styles.container}>
-                <View style={styles.modalContainer}> 
-                    <View style={styles.topContainer}>
-                        {/*closeButton()*/}                        
-                    </View>
-                    <View style={styles.smallTextContainer}>
-                        <Text style={styles.smallText}>{topText}</Text>
+                <View style={styles.modalContainer}>                     
+                    <View style={styles.bigTextContainer}>
+                        <Text style={styles.bigText}>{topText}</Text>
                     </View>                                              
                     <TouchableOpacity style={styles.mikeContainer}>                    
                         <VoiceChatWhisper 
@@ -113,17 +110,19 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        padding: 10,
+        padding: 0,
         width: PAGE_WIDTH*.8,
+
     },
     mikeContainer: {
         display: "flex",
-        flex: 0.5,
+        flex: 2,
         flexDirection: "column",
-        justifyContent: "center",
+        justifyContent: "start",
         alignItems: "center",
         padding: 10,
         width: PAGE_WIDTH*.8,
+
     },
 
     

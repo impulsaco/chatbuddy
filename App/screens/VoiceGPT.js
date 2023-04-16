@@ -34,6 +34,7 @@ export default ({ navigation, route }) => {
                     <Header />
                     <VoiceChat 
                         newMessage={newMessage}
+                        setNewMessage={setNewMessage}
                     />
                     <VoiceRecord
                         newMessage={newMessage}

@@ -17,6 +17,8 @@ import { supabase } from '../lib/supabase';
 import {GiftedChat} from 'react-native-gifted-chat';
 import { Keyboard } from 'react-native';
 import { KeyboardAvoidingView } from 'react-native';
+import gptChat from '../components/api/gptChat';
+import chatSpeak from '../lib/chatSpeak';
 
 
 
@@ -25,11 +27,14 @@ const PAGE_WIDTH = Dimensions.get('window').width;
 
 const VoiceChat = ({ 
     newMessage,
+    setNewMessage,
     }) => {
 
     const [messages, setMessages] = useState([]);
+
+    const [response, setResponse] = useState(null);
     
-    
+    // Update messages upon whisper running
     useEffect(() => {
 
         console.log("newMessage UPDATED: ", newMessage)
@@ -48,8 +53,32 @@ const VoiceChat = ({
           setMessages((previousMessages) =>
             GiftedChat.append(previousMessages, newMessageData),
           );
+          gptChat(messages, newMessage, setResponse);
         }
       }, [newMessage]);
+
+    // Update messages upong GPT response received
+
+    useEffect(() => {
+
+        console.log("response UPDATED in VOICECHAT: ", response)
+        chatSpeak(response, "en-GB");
+        if (response) {
+            const newMessageData = {
+                _id: Math.random().toString(36).substring(7),
+                text: response,
+                createdAt: new Date(),
+                user: {
+                    _id: 2, // Replace with a unique identifier for the user
+                    name: 'Gepetia', // Replace with the user's name
+                    avatar: 'https://placeimg.com/140/140/any', // Replace with the user's avatar URL
+                },
+                };
+            setMessages((previousMessages) =>
+                GiftedChat.append(previousMessages, newMessageData),
+            );
+        }
+    }, [response]);
 
     const onSend = (newMessages = []) => {
         const user = {
@@ -57,18 +86,19 @@ const VoiceChat = ({
             name: 'John Doe',
             avatar: 'https://placeimg.com/140/140/any',
           };
-          
+          setNewMessage(newMessages[0].text);
+          /*
           const newMessage = {
             _id: Math.random().toString(36).substring(7),
             text: newMessages[0].text,
             createdAt: new Date(),
             user: user,
-          };
+          };*/
           
             Keyboard.dismiss();
           
         
-          setMessages(previousMessages => GiftedChat.append(previousMessages, [newMessage]));
+          //setMessages(previousMessages => GiftedChat.append(previousMessages, [newMessage]));
     };   
     
     return (
