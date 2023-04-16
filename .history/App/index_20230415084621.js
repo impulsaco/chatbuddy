@@ -24,7 +24,6 @@ import SliderImage3 from './../assets/SliderImage3.svg'
 import SliderImage4 from './../assets/SliderImage4.svg'
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import { LanguageContext } from './lib/LanguageContext';
-import VoiceGPT from './screens/VoiceGPT';
 
 Sentry.init({
   dsn: 'https://5a92132c278b42a79bb122eb9c511e43@o4504618398908416.ingest.sentry.io/4504618595713024',
@@ -204,23 +203,6 @@ const PAGE_WIDTH = Dimensions.get('window').width;
 /// New "full modal"?
 /// Phrase categories sliders
 
-// VoiceGPT
-/// Reorganization
-/// Big mike
-//// 
-/// Send message based on recording
-/// Play back message
-/// Closable optional chat
-//// Set up chat
-//// Record sent and received audio messages
-//// Tap to listen
-/// Enter API key
-/// Saved chats
-/// Choose model
-/// Choose voice
-/// Adjust login
-/// Adjust backend
-/// Set up subscription or API key
 
 
 // Other
@@ -387,7 +369,6 @@ export default function App() { // MAIN APP ENTRY POINT
                   <Drawer.Screen name="LogIn" component={LogIn} />
                   <Drawer.Screen name="Choose" component={withSetMenuVisible(PhraseSelector)}/>
                   <Drawer.Screen name="Build" component={Words} />
-                  <Drawer.Screen name="VoiceGPT" component={VoiceGPT} />
                   <Drawer.Screen name="Phrasebook" component={withSetMenuVisible(Phrasebook)} />
                 </Drawer.Navigator>
               </LanguageContext.Provider>

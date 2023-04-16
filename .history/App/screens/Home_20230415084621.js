@@ -8,7 +8,6 @@ import KoreanFlag from '../../assets/KoreanFlag.svg';
 import SpanishFlag from '../../assets/SpanishFlag.svg';
 import BulgarianFlag from '../../assets/BulgarianFlag.svg';
 import { LanguageContext } from '../lib/LanguageContext';
-import VoiceGPT from './VoiceGPT';
 
 const PAGE_HEIGHT = Dimensions.get('window').height;
 
@@ -72,11 +71,6 @@ function Home({navigation, setMenuVisible}) {
                     <View style={styles.phrasebookContainer}>                    
                         <TouchableOpacity style={styles.phrasebookButton} onPress={() => navigation.navigate('Phrasebook', {lang: lang, setLang: setLang, langCode: langCode, setLangCode: setLangCode, setMenuVisible: setMenuVisible})}>
                           <Text style={styles.longButtonText}>My phrases</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.phrasebookContainer}>                    
-                        <TouchableOpacity style={styles.phrasebookButton} onPress={() => navigation.navigate('VoiceGPT', {lang: lang, setLang: setLang, langCode: langCode, setLangCode: setLangCode, setMenuVisible: setMenuVisible})}>
-                          <Text style={styles.longButtonText}>VoiceGPT</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.logOutContainer}>

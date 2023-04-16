@@ -24,8 +24,8 @@ import romanizer from './romanizer';
 //// output
 //// API key
 /// Save calls to Supabase DONE
-/// Set up dashboard React DONE 
-/// Dashboard metric visualizations DONE
+/// Set up dashboard React
+/// Dashboard metric visualizations
 
 const gptFixer = (lang, langCode, sentence, saveSentenceText, session, setSentenceRomanized) => {
   
