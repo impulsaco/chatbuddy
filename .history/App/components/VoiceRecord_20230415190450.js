@@ -134,7 +134,13 @@ const styles = StyleSheet.create({
         alignItems: "center",
         padding: 10,
         gap: 10,
-    
+        
+        position: 'absolute',
+        height: PAGE_HEIGHT/2.8,
+        width: PAGE_WIDTH*.8,
+        top: PAGE_HEIGHT/3.1,
+        left: PAGE_WIDTH/10,
+
         backgroundColor: "#121212",
         borderColor: "#2E93F2",
         borderWidth: 2,

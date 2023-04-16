@@ -56,6 +56,7 @@ const VoiceRecord = ({ newMessage, setNewMessage }) => {
 
     return (
         <View style={styles.container}>
+            <Modal visible={(sayVisible==="record")} transparent={true}>
                 <View style={styles.modalContainer}> 
                     <View style={styles.topContainer}>
                         {/*closeButton()*/}                        
@@ -76,6 +77,7 @@ const VoiceRecord = ({ newMessage, setNewMessage }) => {
                     />
                     </TouchableOpacity>                                                                              
                 </View>
+            </Modal>            
         </View>
     )
 
@@ -134,7 +136,13 @@ const styles = StyleSheet.create({
         alignItems: "center",
         padding: 10,
         gap: 10,
-    
+        
+        position: 'absolute',
+        height: PAGE_HEIGHT/2.8,
+        width: PAGE_WIDTH*.8,
+        top: PAGE_HEIGHT/3.1,
+        left: PAGE_WIDTH/10,
+
         backgroundColor: "#121212",
         borderColor: "#2E93F2",
         borderWidth: 2,

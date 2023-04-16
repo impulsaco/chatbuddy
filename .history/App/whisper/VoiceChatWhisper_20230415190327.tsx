@@ -25,6 +25,8 @@ import Sound from '../../assets/Sound.svg';
 const PAGE_HEIGHT = Dimensions.get('window').height;
 const PAGE_WIDTH = Dimensions.get('window').width;
 
+console.log("OPENAI_API_KEY is ", OPENAI_API_KEY)
+
 export default ({
   newMessage, 
   setNewMessage,   

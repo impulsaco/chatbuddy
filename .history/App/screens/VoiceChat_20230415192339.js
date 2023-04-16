@@ -16,7 +16,6 @@ import { SessionContext } from '../lib/SessionContext';
 import { supabase } from '../lib/supabase';
 import {GiftedChat} from 'react-native-gifted-chat';
 import { Keyboard } from 'react-native';
-import { KeyboardAvoidingView } from 'react-native';
 
 
 
@@ -73,20 +72,20 @@ const VoiceChat = ({
     
     return (
         <GiftedChat
-            messages={messages}
-            onSend={onSend}
-            user={{
-                _id: 1,
-            }}        
-            keyboardShouldPersistTaps="never" // This prevents the keyboard from persisting after send
+        messages={messages}
+        onSend={onSend}
+        user={{
+            _id: 1,
+        }}
+        keyboardShouldPersistTaps="never" // This prevents the keyboard from persisting after send
+        keyboardVerticalOffset={Platform.select({ ios: 0, android: 500 })}
+        bottomOffset={200}
+        renderChatFooter={() => (
+            <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             keyboardVerticalOffset={Platform.select({ ios: 0, android: 500 })}
-            bottomOffset={300}
-            renderChatFooter={() => (
-                <KeyboardAvoidingView
-                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                keyboardVerticalOffset={Platform.select({ ios: 0, android: 500 })}                
-                />
-            )}
+            />
+        )}
         />
     );      
 }
@@ -191,10 +190,6 @@ const styles = StyleSheet.create({
     sentenceAnalyzed: {
         flexDirection: 'row',
     },
-    giftedChat: {
-        borderColor: 'red',
-        borderWidth: 1,
-    }
   })
 
 export default VoiceChat;

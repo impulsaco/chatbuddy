@@ -73,20 +73,21 @@ const VoiceChat = ({
     
     return (
         <GiftedChat
-            messages={messages}
-            onSend={onSend}
-            user={{
-                _id: 1,
-            }}        
-            keyboardShouldPersistTaps="never" // This prevents the keyboard from persisting after send
+        messages={messages}
+        onSend={onSend}
+        user={{
+            _id: 1,
+        }}        
+        keyboardShouldPersistTaps="never" // This prevents the keyboard from persisting after send
+        keyboardVerticalOffset={Platform.select({ ios: 0, android: 500 })}
+        bottomOffset={200}
+        renderChatFooter={() => (
+            <KeyboardAvoidingView
+            style={styles.giftedChat}
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             keyboardVerticalOffset={Platform.select({ ios: 0, android: 500 })}
-            bottomOffset={300}
-            renderChatFooter={() => (
-                <KeyboardAvoidingView
-                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                keyboardVerticalOffset={Platform.select({ ios: 0, android: 500 })}                
-                />
-            )}
+            />
+        )}
         />
     );      
 }

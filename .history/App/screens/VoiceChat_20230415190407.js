@@ -15,8 +15,6 @@ import TranslationOff from '../../assets/translationOff.svg';
 import { SessionContext } from '../lib/SessionContext';
 import { supabase } from '../lib/supabase';
 import {GiftedChat} from 'react-native-gifted-chat';
-import { Keyboard } from 'react-native';
-import { KeyboardAvoidingView } from 'react-native';
 
 
 
@@ -52,41 +50,18 @@ const VoiceChat = ({
       }, [newMessage]);
 
     const onSend = (newMessages = []) => {
-        const user = {
-            _id: 1,
-            name: 'John Doe',
-            avatar: 'https://placeimg.com/140/140/any',
-          };
-          
-          const newMessage = {
-            _id: Math.random().toString(36).substring(7),
-            text: newMessages[0].text,
-            createdAt: new Date(),
-            user: user,
-          };
-          
-            Keyboard.dismiss();
-          
-        
-          setMessages(previousMessages => GiftedChat.append(previousMessages, [newMessage]));
+        setMessages((previousMessages) =>
+        GiftedChat.append(previousMessages, newMessages),
+        );
     };   
     
     return (
         <GiftedChat
-            messages={messages}
-            onSend={onSend}
-            user={{
-                _id: 1,
-            }}        
-            keyboardShouldPersistTaps="never" // This prevents the keyboard from persisting after send
-            keyboardVerticalOffset={Platform.select({ ios: 0, android: 500 })}
-            bottomOffset={300}
-            renderChatFooter={() => (
-                <KeyboardAvoidingView
-                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                keyboardVerticalOffset={Platform.select({ ios: 0, android: 500 })}                
-                />
-            )}
+        messages={messages}
+        onSend={onSend}
+        user={{
+            _id: 1,
+        }}
         />
     );      
 }
@@ -191,10 +166,6 @@ const styles = StyleSheet.create({
     sentenceAnalyzed: {
         flexDirection: 'row',
     },
-    giftedChat: {
-        borderColor: 'red',
-        borderWidth: 1,
-    }
   })
 
 export default VoiceChat;

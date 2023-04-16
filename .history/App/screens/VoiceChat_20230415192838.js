@@ -80,11 +80,11 @@ const VoiceChat = ({
             }}        
             keyboardShouldPersistTaps="never" // This prevents the keyboard from persisting after send
             keyboardVerticalOffset={Platform.select({ ios: 0, android: 500 })}
-            bottomOffset={300}
+            bottomOffset={200}
             renderChatFooter={() => (
                 <KeyboardAvoidingView
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                keyboardVerticalOffset={Platform.select({ ios: 0, android: 500 })}                
+                keyboardVerticalOffset={Platform.select({ ios: 100, android: 500 })}
                 />
             )}
         />
