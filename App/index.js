@@ -207,7 +207,7 @@ const PAGE_WIDTH = Dimensions.get('window').width;
 // VoiceGPT
 /// Reorganization DONE 
 /// Big mike DONE
-//// 
+//// Record audio DONE
 /// Send message based on recording DONE
 /// Play back message  DONE
 /// Closable optional chat DONE
@@ -265,8 +265,8 @@ const slides = [
   },
   {
     key: 2,
-    title: 'Drag and drop to build a sentence',
-    text: 'AI will help you build it',
+    title: 'Tap words to build a sentence',
+    text: 'AI will help you',
     image: <SliderImage2/>,
     backgroundColor: '#3499FE',
   },
