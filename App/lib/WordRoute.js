@@ -41,13 +41,13 @@ const WordRoute = (type, setUserWords, userWords, words, translations, sentence,
 const styles = StyleSheet.create({
   wordContainer: {
 
-      backgroundColor: 'rgba(242, 242, 242, 0.5)',
+      backgroundColor: '#143e66',
       justifyContent: 'flex-start',
       flexDirection: 'column',
 
       height: PAGE_HEIGHT*.5,
       width: PAGE_WIDTH,
-      borderRadius: 10,
+      borderRadius: 5,
   },
 
   dragContainer: {

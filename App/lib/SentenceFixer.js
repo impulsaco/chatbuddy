@@ -39,7 +39,9 @@ const SentenceFixer = (sentence,
                         sentenceType,
                         sentenceRomanized,
                         setSentenceRomanized,
-                        session
+                        session,
+                        sayVisible,
+                        setSayVisible
                       ) => {
 
     console.log("within fixer, sentence is ", sentence)
@@ -47,6 +49,8 @@ const SentenceFixer = (sentence,
     console.log("sentenceType in FIXER is ", sentenceType)
 
     console.log("SESSION IS ", session)
+    
+    console.log("within fixer, setSentenceVisible is ", setSayVisible)
 
     var sentenceFixInit = ""
 
@@ -74,7 +78,7 @@ const SentenceFixer = (sentence,
         }
         setSentenceAnalyzed(sentenceAnalyzedTemp)
         sentenceSpeak(input, langCode)
-        setSentenceFixed(true)
+        setSayVisible("record")
     }
   
     console.log("Sentence to send is ", sentence)

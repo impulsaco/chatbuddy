@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, TouchableOpacity, TextInput, Modal, Text, StyleSheet, Dimensions} from "react-native";
-import Close from '../../assets/close.svg'
+import Back from '../../assets/Back.svg'
 import { supabase } from '../lib/supabase';
 import SayWhisper from '../whisper/SayWhisper';
 import SaveButton from './SaveButton';
@@ -130,7 +130,7 @@ const SayModal = ({ navigation, sentence, sentenceEn, sayVisible, setSayVisible,
         if (closeVisible) {
             return (
                 <TouchableOpacity onPress={() => close()}>
-                    <Close/>
+                    <Back/>
                 </TouchableOpacity> 
             )
         }
@@ -261,7 +261,7 @@ const SayModal = ({ navigation, sentence, sentenceEn, sayVisible, setSayVisible,
                 <View style={[styles.modalContainer, { height: PAGE_HEIGHT/2.5,} ]}> 
                     <View style={styles.topContainer}>
                         <TouchableOpacity onPress={() => close()}>
-                            <Close/>
+                            <Back/>
                         </TouchableOpacity>                        
                     </View>
                     <View style={styles.smallTextContainer}>
@@ -289,7 +289,7 @@ const SayModal = ({ navigation, sentence, sentenceEn, sayVisible, setSayVisible,
                 <View style={[styles.modalContainer, { height: PAGE_HEIGHT/2.5,} ]}> 
                     <View style={styles.topContainer}>
                         <TouchableOpacity onPress={() => close()}>
-                            <Close/>
+                            <Back/>
                         </TouchableOpacity>                        
                     </View>
                     <View style={styles.smallTextContainer}>
@@ -376,14 +376,14 @@ const styles = StyleSheet.create({
         gap: 10,
         
         position: 'absolute',
-        height: PAGE_HEIGHT/2.8,
-        width: PAGE_WIDTH*.8,
-        top: PAGE_HEIGHT/3.1,
-        left: PAGE_WIDTH/10,
+        height: PAGE_HEIGHT/2.3,
+        width: PAGE_WIDTH*0.9,
+        top: PAGE_HEIGHT/1.9,
+        right: PAGE_WIDTH/20,
 
-        backgroundColor: "#121212",
+        backgroundColor: "#143e66",
         borderColor: "#2E93F2",
-        borderWidth: 2,
+        borderWidth: 0,
         borderRadius: 20
     },
     topContainer: {

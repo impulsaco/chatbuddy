@@ -13,6 +13,7 @@ import AddWord from '../components/AddWord';
 import { supabase } from '../lib/supabase';
 import WordRoute from '../lib/WordRoute';
 import { LanguageContext } from '../lib/LanguageContext';
+import SayModal from '../components/SayModal';
 
 
 const PAGE_WIDTH = Dimensions.get('window').width;
@@ -23,6 +24,8 @@ export default ({ navigation, route }) => {
     // set up translations toggle 
 
     const [translations, setTranslations] = useState(true)
+
+    let starterText = "Tap words to build your sentence:"
 
     // set up the tab navigator, for alternative navigation
 
@@ -82,6 +85,30 @@ export default ({ navigation, route }) => {
 
     const [sentence, setSentence] = useState(sentenceInit); // Sets the initial sentence state, will be modified on drag or tap
       // SHOULD BE USEEFFECT FOR UPDATING
+
+    
+    // Set translation placeholder
+    const [sentenceEn, setSentenceEn] = useState(" ")
+
+    // Say/recording modal setup
+
+    const [sayVisible, setSayVisible] = useState("invisible");
+
+    // Create Whisper sentence
+
+    const [sentenceWhisper, setSentenceWhisper] = useState("no whisper yet")
+
+
+    // Check if sentence has been said and is understood enough to save
+    const [sentenceSaidPercentage, setSentenceSaidPercentage] = useState(0); 
+
+    // Other state set up
+
+    const [text, setText] = useState(starterText)
+
+    const [sentenceText, setSentenceText] = useState(" ")
+
+    const [sentenceRomanized, setSentenceRomanized] = useState(null)
 
     // Updates word boxes to load on choose phrase structure
     useEffect(() => {
@@ -199,6 +226,20 @@ saveWord()
                         setSentence={setSentence}
                         sentenceType={sentenceType}
                         navigation={navigation}
+                        sentenceEn={sentenceEn}
+                        setSentenceEn={setSentenceEn}
+                        sayVisible={sayVisible}
+                        setSayVisible={setSayVisible}
+                        sentenceWhisper={sentenceWhisper}
+                        setSentenceWhisper={setSentenceWhisper}
+                        sentenceSaidPercentage={sentenceSaidPercentage}
+                        setSentenceSaidPercentage={setSentenceSaidPercentage}
+                        text={text}
+                        setText={setText}
+                        sentenceText={sentenceText}
+                        setSentenceText={setSentenceText}
+                        sentenceRomanized={sentenceRomanized}
+                        setSentenceRomanized={setSentenceRomanized}
                     />
                     <Tab.Navigator
                     tabBar={props => <WordMenu {...props} forward={forward} setForward ={setForward} words={words} sentence={sentence} setSentence={setSentence}/>}
@@ -209,8 +250,25 @@ saveWord()
                     <Tab.Screen
                     name={route}
                     component={WordRoute(route, setUserWords, userWords, words, translations, sentence, setSentence, setForward)}
-                    />
+                    />                    
                     ))} 
+                    <Tab.Screen name="SayModal" component={SayModal} 
+                        initialParams={{
+                        navigation,
+                        sentence,
+                        sentenceEn,
+                        sayVisible,
+                        setSayVisible,
+                        sentenceWhisper,
+                        setSentenceWhisper,
+                        lang,
+                        langCode,
+                        sentenceSaidPercentage,
+                        setSentenceSaidPercentage,
+                        sentenceText,
+                        sentenceType
+                    }} 
+                    />                    
                     </Tab.Navigator>
                 </View>
             </DraxProvider>

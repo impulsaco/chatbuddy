@@ -32,7 +32,21 @@ const Sentence = ({
     langCode, 
     sentence, 
     setSentence,
-    sentenceType}) => {
+    sentenceType,
+    sentenceEn,
+    setSentenceEn,
+    sayVisible,
+    setSayVisible,
+    sentenceWhisper,
+    setSentenceWhisper,
+    sentenceSaidPercentage,
+    setSentenceSaidPercentage,
+    text,
+    setText,
+    sentenceText,
+    setSentenceText,
+    sentenceRomanized,
+    setSentenceRomanized}) => {
 
     // Set instructions and sentence placeholder
 
@@ -53,21 +67,7 @@ const Sentence = ({
         })
     }, [])
 
-    const [text, setText] = useState(starterText)
 
-    const [sentenceText, setSentenceText] = useState(" ")
-
-    // Set translation placeholder
-    const [sentenceEn, setSentenceEn] = useState(" ")
-
-    const [sentenceRomanized, setSentenceRomanized] = useState(null)
-
-    // Create Whisper sentence
-    const [sentenceWhisper, setSentenceWhisper] = useState("no whisper yet")
-
-    // Say/recording modal setup
-
-    const [sayVisible, setSayVisible] = useState("invisible");
 
     // Sentence analyzed
 
@@ -128,7 +128,9 @@ const Sentence = ({
                 sentenceType,
                 sentenceRomanized,
                 setSentenceRomanized,
-                session)
+                session,
+                sayVisible,
+                setSayVisible)
         } 
     }
     
@@ -178,9 +180,6 @@ const Sentence = ({
         setSentenceFixed(false)
         setForward(sentenceInit[0].type)
     }
-
-    // Check if sentence has been said and is understood enough to save
-    const [sentenceSaidPercentage, setSentenceSaidPercentage] = useState(0); 
 
     // check whispered sentence against sentence
     useEffect(() => {
@@ -288,43 +287,7 @@ const Sentence = ({
                 {sentenceRomanization()}
                 {sentenceTranslation()}
             </View>
-            <View style={styles.bottomContainer}>
-                {speakSentence()}                  
-                <TouchableOpacity style={styles.buttonContainer}>
-                    <SayItButton 
-                        sentence={sentence} 
-                        sentenceFixed={sentenceFixed}
-                        sayVisible={sayVisible}
-                        setSayVisible={setSayVisible}
-                        setText={setText} 
-                        setSentenceText={setSentenceText}
-                        setSentenceEn={setSentenceEn} 
-                        sentenceEn={sentenceEn}
-                        sentenceWhisper={sentenceWhisper}
-                        setSentenceWhisper={setSentenceWhisper}
-                        lang={lang}
-                        langCode={langCode}
-                        sentenceAnalyzed={sentenceAnalyzed}
-                        setSentenceAnalyzed={setSentenceAnalyzed}
-                        sentenceSaidPercentage={sentenceSaidPercentage}
-                        sentenceReady={sentenceReady}
-                    />
-                </TouchableOpacity>
-                <SayModal 
-                        navigation={navigation}
-                        sentence={sentence}
-                        sentenceEn={sentenceEn}
-                        sayVisible={sayVisible} 
-                        setSayVisible={setSayVisible}
-                        sentenceWhisper={sentenceWhisper}
-                        setSentenceWhisper={setSentenceWhisper}
-                        lang={lang}
-                        langCode={langCode}
-                        sentenceSaidPercentage={sentenceSaidPercentage}
-                        setSentenceSaidPercentage={setSentenceSaidPercentage}
-                        sentenceText={sentenceText}
-                        sentenceType={sentenceType}
-                />
+            <View style={styles.bottomContainer}>                                
                 <TouchableOpacity style={styles.switchContainer} onPress={() => toggleTranslations()}>
                     {translationButton()
                     /*
