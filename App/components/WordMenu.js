@@ -93,6 +93,7 @@ const styles = StyleSheet.create({
   {
     alignItems: 'center',
     height: PAGE_HEIGHT*.07,
+    marginBottom: PAGE_HEIGHT*.01,
   },
   buttonsContainer: {
     flexDirection: 'row',

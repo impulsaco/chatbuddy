@@ -48,9 +48,10 @@ const styles = StyleSheet.create({
 
       flexDirection: 'column',
 
-      height: PAGE_HEIGHT*.5,
-      width: PAGE_WIDTH * 8,
-      borderRadius: 5,
+      height: PAGE_HEIGHT/2.2,
+      width: PAGE_WIDTH*.9,
+      marginLeft: PAGE_WIDTH*.05,
+      borderRadius: 10,      
   },
 
   dragContainer: {
@@ -60,7 +61,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     
     paddingHorizontal: PAGE_WIDTH*.05, // limits render to 3 cards
-    paddingTop: PAGE_HEIGHT*.02,
     width: PAGE_WIDTH,
   },
 

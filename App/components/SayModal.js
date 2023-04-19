@@ -232,7 +232,7 @@ const SayModal = ({ navigation, sentence, sentenceEn, sayVisible, setSayVisible,
                 </View>
             </Modal>
             <Modal visible={(sayVisible==="success")} transparent={true}>
-                <View style={[styles.modalContainer, { height: PAGE_HEIGHT/2.5,} ]}> 
+                <View style={[styles.modalContainer, { height: PAGE_HEIGHT/2.4,} ]}> 
                     <View style={styles.topContainer}>
                         {closeButton()}                       
                     </View>
@@ -258,7 +258,7 @@ const SayModal = ({ navigation, sentence, sentenceEn, sayVisible, setSayVisible,
                 </View>
             </Modal>
             <Modal visible={(sayVisible==="partly")} transparent={true}>
-                <View style={[styles.modalContainer, { height: PAGE_HEIGHT/2.5,} ]}> 
+                <View style={[styles.modalContainer, { height: PAGE_HEIGHT/2.4,} ]}> 
                     <View style={styles.topContainer}>
                         <TouchableOpacity onPress={() => close()}>
                             <Back/>
@@ -286,7 +286,7 @@ const SayModal = ({ navigation, sentence, sentenceEn, sayVisible, setSayVisible,
                 </View>
             </Modal>
             <Modal visible={(sayVisible==="none")} transparent={true}>
-                <View style={[styles.modalContainer, { height: PAGE_HEIGHT/2.5,} ]}> 
+                <View style={[styles.modalContainer, { height: PAGE_HEIGHT/2.4,} ]}> 
                     <View style={styles.topContainer}>
                         <TouchableOpacity onPress={() => close()}>
                             <Back/>
@@ -328,7 +328,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
 
         position: 'absolute',
-        height: PAGE_HEIGHT/2.3,
+        height: PAGE_HEIGHT/2.4,
         width: PAGE_WIDTH*0.9,
         top: PAGE_HEIGHT/1.9,
         right: PAGE_WIDTH/20,
@@ -382,7 +382,7 @@ const styles = StyleSheet.create({
         gap: 10,
         
         position: 'absolute',
-        height: PAGE_HEIGHT/2.3,
+        height: PAGE_HEIGHT/2.4,
         width: PAGE_WIDTH*0.9,
         top: PAGE_HEIGHT/1.9,
         right: PAGE_WIDTH/20,
