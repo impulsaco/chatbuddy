@@ -306,7 +306,7 @@ const Sentence = ({
                     <TouchableOpacity onPress={() => resetSentence()}>
                         <Refresh/>
                     </TouchableOpacity>    
-                </View>             
+                </View>                             
             </View>
             <View style={styles.textContainer}><Text style={styles.text}>{text}</Text></View>                
         </View>

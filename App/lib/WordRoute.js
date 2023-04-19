@@ -42,11 +42,14 @@ const styles = StyleSheet.create({
   wordContainer: {
 
       backgroundColor: '#143e66',
-      justifyContent: 'flex-start',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+
       flexDirection: 'column',
 
       height: PAGE_HEIGHT*.5,
-      width: PAGE_WIDTH,
+      width: PAGE_WIDTH * 8,
       borderRadius: 5,
   },
 

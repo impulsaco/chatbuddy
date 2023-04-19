@@ -241,6 +241,21 @@ saveWord()
                         sentenceRomanized={sentenceRomanized}
                         setSentenceRomanized={setSentenceRomanized}
                     />
+                    <SayModal 
+                        navigation={navigation}
+                        sentence={sentence}
+                        sentenceEn={sentenceEn}
+                        sayVisible={sayVisible} 
+                        setSayVisible={setSayVisible}
+                        sentenceWhisper={sentenceWhisper}
+                        setSentenceWhisper={setSentenceWhisper}
+                        lang={lang}
+                        langCode={langCode}
+                        sentenceSaidPercentage={sentenceSaidPercentage}
+                        setSentenceSaidPercentage={setSentenceSaidPercentage}
+                        sentenceText={sentenceText}
+                        sentenceType={sentenceType}
+                    />
                     <Tab.Navigator
                     tabBar={props => <WordMenu {...props} forward={forward} setForward ={setForward} words={words} sentence={sentence} setSentence={setSentence}/>}
                     initialRouteName={'subject'} 
@@ -251,26 +266,9 @@ saveWord()
                     name={route}
                     component={WordRoute(route, setUserWords, userWords, words, translations, sentence, setSentence, setForward)}
                     />                    
-                    ))} 
-                    <Tab.Screen name="SayModal" component={SayModal} 
-                        initialParams={{
-                        navigation,
-                        sentence,
-                        sentenceEn,
-                        sayVisible,
-                        setSayVisible,
-                        sentenceWhisper,
-                        setSentenceWhisper,
-                        lang,
-                        langCode,
-                        sentenceSaidPercentage,
-                        setSentenceSaidPercentage,
-                        sentenceText,
-                        sentenceType
-                    }} 
-                    />                    
-                    </Tab.Navigator>
-                </View>
+                    ))}                                        
+                    </Tab.Navigator>                    
+                </View>                
             </DraxProvider>
         </GestureHandlerRootView>
     )

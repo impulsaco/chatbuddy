@@ -326,6 +326,12 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+
+        position: 'absolute',
+        height: PAGE_HEIGHT/2.3,
+        width: PAGE_WIDTH*0.9,
+        top: PAGE_HEIGHT/1.9,
+        right: PAGE_WIDTH/20,
     },  
     smallText: {
         fontSize: 14,
