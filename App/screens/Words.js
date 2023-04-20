@@ -255,6 +255,7 @@ saveWord()
                         setSentenceSaidPercentage={setSentenceSaidPercentage}
                         sentenceText={sentenceText}
                         sentenceType={sentenceType}
+                        setText={setText}
                     />
                     <Tab.Navigator
                     tabBar={props => <WordMenu {...props} forward={forward} setForward ={setForward} words={words} sentence={sentence} setSentence={setSentence}/>}

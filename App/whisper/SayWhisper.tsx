@@ -405,58 +405,87 @@ export default ({
       }
     }
     if (Platform.OS === "android") {
-      async function transcribeRecording() {
+      const url = 'https://api.openai.com/v1/audio/transcriptions';
+      const token = API_KEY;
+      // const fileUri = '/path/to/file/openai.mp3';
+      const modelName = 'whisper-1';
   
-        const uri = recording.getURI();
-        const filetype = uri.split(".").pop();
-        const filename = uri.split("/").pop();
-        setLoading(true);    
-        setBottomText("Analyzing...")
-        setTopText("Please wait...")
-        const formData: any = new FormData();
-        formData.append("language", lang.toLowerCase());
-        formData.append("model_size", "tiny");
-        formData.append(
-          "audio_data",
-          {
-            uri,
-            type: `audio/${filetype}`,
-            name: filename,
-          },
-          "temp_recording"
-        );
-        console.log("formData sent is", formData)
-        axios({
-          url: "https://backendsay-wkdnx77abq-uw.a.run.app/transcribe", // IMPORTANT! must equal current server
-          method: "POST",
-          data: formData,
+      const uri = recording.getURI();
+      const filetype = uri.split(".").pop();
+      const filename = uri.split("/").pop();
+      const prompt = `${sentenceText} in ${lang}`;
+      setLoading(true);
+      setBottomText("Analyzing...")
+      setTopText("Please wait...")
+      const formData: any = new FormData();
+      //formData.append("language", lang.toLowerCase());
+      // formData.append("model_size", "tiny");
+      formData.append(
+        "file",
+        {
+          uri,
+          name: filename,
+          type: "mp4"
+        });
+      formData.append('model', modelName)
+      console.log("formData sent is", formData)
+  
+      axios.post(url, formData, {
           headers: {
-            Accept: "application/json",
-            "content-type": "multipart/form-data",
-          },
+            'Content-Type': 'multipart/form-data',
+            'Authorization': `Bearer ${API_KEY}`
+          }
         })
-          .then(function (response) {
-            console.log("response is :", response.data);
-            setTranscribedData((oldData: any) => [...oldData, response.data]);
-            setLoading(false);
-            setIsTranscribing(false);
-            setRecordingDone(false)
-            setSentenceWhisper(response.data) // Sets the sentence check to be shown
-            setAttempted(true)
-            setCloseVisible(true)
-            console.log("sentenceWhisper in Response is ", sentenceWhisper)
-            /*intervalRef.current = setInterval(
-              transcribeInterim,
-              transcribeTimeout * 1000
-            );*/
-          })
-          .catch(function (error) {
-            console.log("error : ", error);
-          });
-    
-        if (!stopTranscriptionSessionRef.current) {
-          setIsRecording(true);
-        }
+        .then(function (response) {
+          console.log("response is :", response.data);
+          setTranscribedData((oldData: any) => [...oldData, response.data]);
+          setLoading(false);
+          setIsTranscribing(false);
+          setRecordingDone(false)
+          setSentenceWhisper(response.data.text) // Sets the sentence check to be shown
+          setAttempted(true)
+          setCloseVisible(true)
+          console.log("sentenceWhisper in Response is ", sentenceWhisper)
+          /*intervalRef.current = setInterval(
+            transcribeInterim,
+            transcribeTimeout * 1000
+          );*/
+        })
+        .catch(function (error) {
+          console.log("error : ", error);
+          console.log("error.response : ", error.response);
+          console.log("error.response.data : ", error.response.data);
+        });
+      // Save call to Supabase
+
+      const costPerToken = 0.006 / 60
+      const { sound, status } = await recording.createNewLoadedSoundAsync();
+      const seconds = status.durationMillis / 1000
+      console.log("seconds are ", status.durationMillis / 1000)
+      const saveCall = async () => {  
+        console.log("saving!")      
+        const { error } = await supabase
+        .from('aiUsage')
+        .insert({ 
+            created_at: new Date().toISOString(), 
+            user: session.user.id, 
+            model: modelName,
+            type: "sayWhisper",
+            chars: null,
+            tokens: null,
+            seconds: seconds,
+            cost: seconds * costPerToken,
+            prompt: prompt,
+            output: null,
+            api_key: OPENAI_API_KEY,
+            }
+        )
+        if (error) alert(error.message)
+      }
+      saveCall()
+  
+      if (!stopTranscriptionSessionRef.current) {
+        setIsRecording(true);
       }
     }
   }

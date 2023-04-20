@@ -41,9 +41,8 @@ const SayItButton = ({ sentence,
         sayButton = 
             <View>
                 <TouchableOpacity>
-                    <View style={styles.button}>
-                        <Microphone fill={"#FFFFFF"} width={20} height={20} marginRight={10} />
-                        <Text style={styles.buttonText}>Say it!</Text>                        
+                    <View style={styles.button}>                        
+                        <Text style={styles.buttonText}>Practice!</Text>                        
                     </View>
                 </TouchableOpacity>
             </View>        
@@ -53,9 +52,8 @@ const SayItButton = ({ sentence,
          sayButton = 
          <View>
              <TouchableOpacity onPress={() => setSayVisible("record")}>
-                 <View style={styles.buttonReady}>
-                     <Microphone fill={"#FFFFFF"} width={20} height={20} marginRight={10} />
-                     <Text style={styles.buttonText}>Say it!</Text>                        
+                 <View style={styles.buttonReady}>                     
+                     <Text style={styles.buttonText}>Practice!</Text>                        
                  </View>
              </TouchableOpacity>
          </View>      
@@ -97,7 +95,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 10,
 
-        width: 152,
+        width: 100,
         height: 35,
 
         backgroundColor: "rgba(255, 255, 255, 0.5)",
@@ -109,9 +107,10 @@ const styles = StyleSheet.create({
     }, 
     buttonText: {
         color: "#FFFFFF",
+        textAlign: 'center',
         fontSize: 17,
         height: 20,
-        width: 50
+        width: 80
     }
 })
 

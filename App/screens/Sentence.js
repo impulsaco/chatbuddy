@@ -130,7 +130,8 @@ const Sentence = ({
                 setSentenceRomanized,
                 session,
                 sayVisible,
-                setSayVisible)
+                setSayVisible,
+                setText)
         } 
     }
     
@@ -298,10 +299,31 @@ const Sentence = ({
                         thumbColor={translations ? "#2E93F2" : "#f4f3f4"}
                         ios_backgroundColor="#3e3e3e"
                     /> 
+                    <SayItButton 
+                        sentence={sentence} 
+                        sentenceFixed={sentenceFixed}
+                        sayVisible={sayVisible}
+                        setSayVisible={setSayVisible}
+                        setText={setText} 
+                        setSentenceText={setSentenceText}
+                        setSentenceEn={setSentenceEn} 
+                        sentenceEn={sentenceEn}
+                        sentenceWhisper={sentenceWhisper}
+                        setSentenceWhisper={setSentenceWhisper}
+                        lang={lang}
+                        langCode={langCode}
+                        sentenceAnalyzed={sentenceAnalyzed}
+                        setSentenceAnalyzed={setSentenceAnalyzed}
+                        sentenceSaidPercentage={sentenceSaidPercentage}
+                        sentenceReady={sentenceReady}
+                    />
                     */
                     }
                     
                 </TouchableOpacity> 
+                <TouchableOpacity style={styles.buttonContainer}>
+                    
+                </TouchableOpacity>
                 <View style={styles.refreshContainer}>
                     <TouchableOpacity onPress={() => resetSentence()}>
                         <Refresh/>
@@ -323,18 +345,19 @@ const styles = StyleSheet.create({
         justifyContent: 'space-evenly',
         alignItems: 'center',
         distributeContent: 'evenly',
-        paddingBottom: PAGE_HEIGHT*0.03,
-        width: PAGE_WIDTH*0.8,
+        paddingTop: PAGE_HEIGHT*0.01,
+        paddingBottom: PAGE_HEIGHT*0.02,
+        width: PAGE_WIDTH*0.6,        
 
     },
     buttonContainer: {
-        flex: 4,
+        //flex: 5,
         flexDirection: 'row',
         justifyContent: 'flex-end',
         marginRight: 0,
     },
     switchContainer: {
-        flex: 0.1,
+        //flex: 0.1,
         flexDirection: 'row',
         justifyContent: 'flex-end',
         paddingRight: 0,
@@ -352,9 +375,9 @@ const styles = StyleSheet.create({
         marginRight: 10,
     },
     refreshContainer: {
-        flex: 1,
+        //flex: 1,
         flexDirection: 'row',
-        justifyContent: 'flex-end',
+        justifyContent: 'flex-start',
         paddingRight: 10,
     },
     sentenceContainer: {

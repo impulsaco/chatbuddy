@@ -14,7 +14,7 @@ import Sound from '../../assets/Sound.svg'
 const PAGE_HEIGHT = Dimensions.get('window').height;
 const PAGE_WIDTH = Dimensions.get('window').width;
 
-const SayModal = ({ navigation, sentence, sentenceEn, sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisper, lang, langCode, sentenceSaidPercentage, setSentenceSaidPercentage, sentenceText, sentenceType}) => {
+const SayModal = ({ navigation, sentence, sentenceEn, sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisper, lang, langCode, sentenceSaidPercentage, setSentenceSaidPercentage, sentenceText, sentenceType, setText}) => {
 
     useEffect(() => {
         console.log("sayVisible is", sayVisible) // testing
@@ -22,9 +22,11 @@ const SayModal = ({ navigation, sentence, sentenceEn, sayVisible, setSayVisible,
 
     // Create variables for modal
 
-    const [topText, setTopText] = useState('Push the record button to practice your sentence!');
+    const PracticeText = 'Great! Now practice saying it.'
 
-    const [bottomText, setBottomText] = useState('Say it!');
+    const [topText, setTopText] = useState(PracticeText);
+
+    const [bottomText, setBottomText] = useState('Tap to say!');
 
     const [attempted, setAttempted] = useState(false);
 
@@ -61,15 +63,16 @@ const SayModal = ({ navigation, sentence, sentenceEn, sayVisible, setSayVisible,
         setSentenceSaidPercentage(0);
         setSentenceWhisper("no whisper yet");
         //setSentenceWhisper("no whisper yet");
-        setTopText('Push the record button to practice your sentence!');
+        setTopText(PracticeText);
         setBottomText('Say it!');
         setSentenceSaved(false)
+        setText("Build a new sentence!");
     }
 
     const keepImproving = () => {
         setSayVisible("record");
         setAttempted(false);        
-        setTopText('Push the record button to practice your sentence!');
+        setTopText(PracticeText);
         setBottomText('Say it!');
     }
 
@@ -232,7 +235,7 @@ const SayModal = ({ navigation, sentence, sentenceEn, sayVisible, setSayVisible,
                 </View>
             </Modal>
             <Modal visible={(sayVisible==="success")} transparent={true}>
-                <View style={[styles.modalContainer, { height: PAGE_HEIGHT/2.4,} ]}> 
+                <View style={[styles.modalContainer, { height: PAGE_HEIGHT/2.5,} ]}> 
                     <View style={styles.topContainer}>
                         {closeButton()}                       
                     </View>
@@ -258,7 +261,7 @@ const SayModal = ({ navigation, sentence, sentenceEn, sayVisible, setSayVisible,
                 </View>
             </Modal>
             <Modal visible={(sayVisible==="partly")} transparent={true}>
-                <View style={[styles.modalContainer, { height: PAGE_HEIGHT/2.4,} ]}> 
+                <View style={[styles.modalContainer, { height: PAGE_HEIGHT/2.5,} ]}> 
                     <View style={styles.topContainer}>
                         <TouchableOpacity onPress={() => close()}>
                             <Back/>
@@ -286,7 +289,7 @@ const SayModal = ({ navigation, sentence, sentenceEn, sayVisible, setSayVisible,
                 </View>
             </Modal>
             <Modal visible={(sayVisible==="none")} transparent={true}>
-                <View style={[styles.modalContainer, { height: PAGE_HEIGHT/2.4,} ]}> 
+                <View style={[styles.modalContainer, { height: PAGE_HEIGHT/2.5,} ]}> 
                     <View style={styles.topContainer}>
                         <TouchableOpacity onPress={() => close()}>
                             <Back/>
@@ -382,14 +385,14 @@ const styles = StyleSheet.create({
         gap: 10,
         
         position: 'absolute',
-        height: PAGE_HEIGHT/2.4,
-        width: PAGE_WIDTH*0.9,
-        top: PAGE_HEIGHT/1.9,
-        right: PAGE_WIDTH/20,
+        height: PAGE_HEIGHT/2.5,
+        width: PAGE_WIDTH*0.8,
+        top: PAGE_HEIGHT/3.3,
+        right: PAGE_WIDTH/10,
 
-        backgroundColor: "#143e66",
+        backgroundColor: "black",
         borderColor: "#2E93F2",
-        borderWidth: 0,
+        borderWidth: 2,
         borderRadius: 20
     },
     topContainer: {
