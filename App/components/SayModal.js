@@ -14,13 +14,11 @@ import Sound from '../../assets/Sound.svg'
 const PAGE_HEIGHT = Dimensions.get('window').height;
 const PAGE_WIDTH = Dimensions.get('window').width;
 
-const SayModal = ({ navigation, sentence, sentenceEn, sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisper, lang, langCode, sentenceSaidPercentage, setSentenceSaidPercentage, sentenceText, sentenceType, setText}) => {
+const SayModal = ({ sentence, sentenceEn, sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisper, lang, langCode, sentenceSaidPercentage, setSentenceSaidPercentage, sentenceText, sentenceType, setText}) => {    
 
-    useEffect(() => {
-        console.log("sayVisible is", sayVisible) // testing
-    }, [sayVisible])
+    // Create variables for modal    
 
-    // Create variables for modal
+    console.log("lang is ", lang)
 
     const PracticeText = 'Great! Now practice saying it.'
 
@@ -41,7 +39,7 @@ const SayModal = ({ navigation, sentence, sentenceEn, sayVisible, setSayVisible,
     // Sets success upon 50% of sentence said
     useEffect (() => {
         console.log("sentenceSaidPercentage", sentenceSaidPercentage)
-        console.log("sayVisible is", sayVisible)
+        console.log("sayVisible IN USEEFFECT is", sayVisible)
         if (sentenceSaidPercentage > 0 && sentenceSaidPercentage < 1 && attempted) {        
             setSayVisible("partly");
         }
@@ -199,12 +197,15 @@ const SayModal = ({ navigation, sentence, sentenceEn, sayVisible, setSayVisible,
 
     // Output modal
 
+    const sayModal = () => {
 
-    /// Modals   
-   
-    return (
-        <View style={styles.container}>
-            <Modal visible={(sayVisible==="record")} transparent={true}>
+        useEffect(() => {
+            console.log("sayVisible HERE is", sayVisible) // testing
+          }, [sayVisible])
+
+        console.log("sayVisible in sayModal() is ", sayVisible)
+        if (sayVisible==="record") {
+            return (
                 <View style={styles.modalContainer}> 
                     <View style={styles.topContainer}>
                         {closeButton()}                        
@@ -233,34 +234,38 @@ const SayModal = ({ navigation, sentence, sentenceEn, sayVisible, setSayVisible,
                         <Text style={styles.bigText}>{bottomText}</Text>
                     </View>                                        
                 </View>
-            </Modal>
-            <Modal visible={(sayVisible==="success")} transparent={true}>
+            )
+        }
+        else if (sayVisible==="success") {
+            return (
                 <View style={[styles.modalContainer, { height: PAGE_HEIGHT/2.5,} ]}> 
-                    <View style={styles.topContainer}>
-                        {closeButton()}                       
+                        <View style={styles.topContainer}>
+                            {closeButton()}                       
+                        </View>
+                        <View style={styles.smallTextContainer}>
+                            <Text style={styles.smallText}>{topText}</Text>
+                        </View>
+                        <View style={styles.playbackContainer}>
+                            <TouchableOpacity style={styles.playbackButton} onPress={() => sentenceSpeak(sentenceText, langCode)}>
+                                <AudioPlayback/>
+                                <Text style={styles.playbackText}>We said</Text>
+                                <Playback/>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.playbackButton} onPress={() => playRecording(recordingUri)}>
+                                <MicrophonePlayback/>
+                                <Text style={styles.playbackText}>You said</Text>
+                                <Playback/>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.buttonsContainer}>    
+                            <SaveButton sentence={sentence} savedSentence={sentenceText} sentenceEn={sentenceEn} lang={lang} langCode={langCode} sentenceType={sentenceType} sentenceSaved={sentenceSaved} setSentenceSaved={setSentenceSaved}/>                                        
+                            {continueWithoutSavingButton()}                             
+                        </View>                                               
                     </View>
-                    <View style={styles.smallTextContainer}>
-                        <Text style={styles.smallText}>{topText}</Text>
-                    </View>
-                    <View style={styles.playbackContainer}>
-                        <TouchableOpacity style={styles.playbackButton} onPress={() => sentenceSpeak(sentenceText, langCode)}>
-                            <AudioPlayback/>
-                            <Text style={styles.playbackText}>We said</Text>
-                            <Playback/>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.playbackButton} onPress={() => playRecording(recordingUri)}>
-                            <MicrophonePlayback/>
-                            <Text style={styles.playbackText}>You said</Text>
-                            <Playback/>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.buttonsContainer}>    
-                        <SaveButton sentence={sentence} savedSentence={sentenceText} sentenceEn={sentenceEn} lang={lang} langCode={langCode} sentenceType={sentenceType} sentenceSaved={sentenceSaved} setSentenceSaved={setSentenceSaved}/>                                        
-                        {continueWithoutSavingButton()}                             
-                    </View>                                               
-                </View>
-            </Modal>
-            <Modal visible={(sayVisible==="partly")} transparent={true}>
+            )
+        }
+        else if (sayVisible==="partly") {
+            return (
                 <View style={[styles.modalContainer, { height: PAGE_HEIGHT/2.5,} ]}> 
                     <View style={styles.topContainer}>
                         <TouchableOpacity onPress={() => close()}>
@@ -287,8 +292,10 @@ const SayModal = ({ navigation, sentence, sentenceEn, sayVisible, setSayVisible,
                         {keepImprovingButton()}
                     </View>                                               
                 </View>
-            </Modal>
-            <Modal visible={(sayVisible==="none")} transparent={true}>
+            )
+        }
+        else if (sayVisible==="none") {
+            return (
                 <View style={[styles.modalContainer, { height: PAGE_HEIGHT/2.5,} ]}> 
                     <View style={styles.topContainer}>
                         <TouchableOpacity onPress={() => close()}>
@@ -319,7 +326,16 @@ const SayModal = ({ navigation, sentence, sentenceEn, sayVisible, setSayVisible,
                         </TouchableOpacity>                                                                                           
                     </View>                                               
                 </View>
-            </Modal>
+            )
+        }
+    }
+    
+
+    /// Modals   
+   
+    return (
+        <View style={styles.container}>
+            {sayModal()}
         </View>
     );
 }

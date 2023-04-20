@@ -240,8 +240,53 @@ saveWord()
                         setSentenceText={setSentenceText}
                         sentenceRomanized={sentenceRomanized}
                         setSentenceRomanized={setSentenceRomanized}
-                    />
-                    <SayModal 
+                    />                    
+                    <Tab.Navigator
+                    tabBar={props => <WordMenu {...props} forward={forward} setForward ={setForward} words={words} sentence={sentence} setSentence={setSentence}/>}
+                    initialRouteName={'subject'} 
+                    sceneContainerStyle={{backgroundColor: 'transparent'}}
+                    >
+                    {routeList.map((route) => (
+                    <Tab.Screen
+                    name={route}
+                    component={WordRoute(route, setUserWords, userWords, words, translations, sentence, setSentence, setForward)}
+                    />                    
+                    ))}                                                                                
+                    <Tab.Screen
+                        name="SayModal"
+                        options={{
+                            tabBarLabel: "Say",
+                            tabBarVisible: false, // hide tab bar for this screen
+                        }}
+                        >
+                        {props => (
+                            <SayModal 
+                            {...props}
+                            sentence={sentence} 
+                            sentenceEn={sentenceEn}
+                            sayVisible={sayVisible}
+                            setSayVisible={setSayVisible}
+                            sentenceWhisper={sentenceWhisper}
+                            setSentenceWhisper={setSentenceWhisper}
+                            lang={lang}
+                            langCode={langCode}
+                            sentenceSaidPercentage={sentenceSaidPercentage}
+                            setSentenceSaidPercentage={setSentenceSaidPercentage}
+                            sentenceText={sentenceText}
+                            sentenceType={sentenceType}
+                            setText={setText}
+                            />
+                        )}
+                        </Tab.Screen>                          
+                    </Tab.Navigator>                    
+                </View>                
+            </DraxProvider>
+        </GestureHandlerRootView>
+    )
+}
+
+/*
+<SayModal 
                         navigation={navigation}
                         sentence={sentence}
                         sentenceEn={sentenceEn}
@@ -257,23 +302,30 @@ saveWord()
                         sentenceType={sentenceType}
                         setText={setText}
                     />
-                    <Tab.Navigator
-                    tabBar={props => <WordMenu {...props} forward={forward} setForward ={setForward} words={words} sentence={sentence} setSentence={setSentence}/>}
-                    initialRouteName={'subject'} 
-                    sceneContainerStyle={{backgroundColor: 'transparent'}}
-                    >
-                    {routeList.map((route) => (
+
                     <Tab.Screen
-                    name={route}
-                    component={WordRoute(route, setUserWords, userWords, words, translations, sentence, setSentence, setForward)}
-                    />                    
-                    ))}                                        
-                    </Tab.Navigator>                    
-                </View>                
-            </DraxProvider>
-        </GestureHandlerRootView>
-    )
-}
+                        name="SayModal"
+                        component={SayModal(navigation,
+                            sentence,
+                            sentenceEn,
+                            sayVisible,
+                            setSayVisible,
+                            sentenceWhisper,
+                            setSentenceWhisper,
+                            lang,
+                            langCode,
+                            sentenceSaidPercentage,
+                            setSentenceSaidPercentage,
+                            sentenceText,
+                            sentenceType,
+                            setText
+                        )}
+                        options={{
+                            swipeEnabled: false,
+                        }}
+                        />     
+                        </Tab.Navigator>  
+*/
 
 const styles = StyleSheet.create({
     gestureRootViewStyle: {
