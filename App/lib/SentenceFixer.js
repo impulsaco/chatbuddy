@@ -42,7 +42,8 @@ const SentenceFixer = (sentence,
                         session,
                         sayVisible,
                         setSayVisible,
-                        setText
+                        setText,
+                        setForward
                       ) => {
 
     console.log("within fixer, sentence is ", sentence)
@@ -82,7 +83,7 @@ const SentenceFixer = (sentence,
         setSayVisible("record")
         console.log("setting SayVisible to record")
         setSentenceFixed(true)
-        setText("Great! Now practice saying it.")
+        setText("Great! Now practice saying it.")        
     }
 
     
@@ -90,7 +91,7 @@ const SentenceFixer = (sentence,
     console.log("Sentence to send is ", sentence)
     const fixSentence = async () => {
       await gptFixer(lang, langCode, sentence, saveSentenceText, session, setSentenceRomanized);      
-    };
+    };    
     fixSentence();
 }
 

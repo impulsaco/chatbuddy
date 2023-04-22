@@ -14,17 +14,32 @@ import Sound from '../../assets/Sound.svg'
 const PAGE_HEIGHT = Dimensions.get('window').height;
 const PAGE_WIDTH = Dimensions.get('window').width;
 
-const SayModal = ({ sentence, sentenceEn, sayVisible, setSayVisible, sentenceWhisper, setSentenceWhisper, lang, langCode, sentenceSaidPercentage, setSentenceSaidPercentage, sentenceText, sentenceType, setText}) => {    
+const SayModal = ({ sentence, 
+                    sentenceEn, 
+                    sayVisible, 
+                    setSayVisible, 
+                    sentenceWhisper, 
+                    setSentenceWhisper, 
+                    lang, 
+                    langCode, 
+                    sentenceSaidPercentage, 
+                    setSentenceSaidPercentage, 
+                    sentenceText, 
+                    sentenceType, 
+                    setText, 
+                    setForward,
+                    sentenceInit
+                }) => {    
 
     // Create variables for modal    
 
     console.log("lang is ", lang)
 
-    const PracticeText = 'Great! Now practice saying it.'
+    const PracticeText = 'Practice your sentence'
 
     const [topText, setTopText] = useState(PracticeText);
 
-    const [bottomText, setBottomText] = useState('Tap to say!');
+    const [bottomText, setBottomText] = useState(' ');
 
     const [attempted, setAttempted] = useState(false);
 
@@ -60,11 +75,20 @@ const SayModal = ({ sentence, sentenceEn, sayVisible, setSayVisible, sentenceWhi
         setAttempted(false);
         setSentenceSaidPercentage(0);
         setSentenceWhisper("no whisper yet");
-        //setSentenceWhisper("no whisper yet");
         setTopText(PracticeText);
-        setBottomText('Say it!');
+        setBottomText(' ');
         setSentenceSaved(false)
-        setText("Build a new sentence!");
+
+        // reset sentence states
+        // setSentence(sentenceInit); // full reset of sentence
+        //setSentenceReady(false);
+        setText("Tap words to build your sentence:")
+        //setSentenceText(" ")
+        //setSentenceEn(" ")
+        //setSentenceRomanized(null)
+        //setSentenceFixed(false)
+        console.log("sentenceInit[0].type is ", sentenceInit[0].type)
+        setForward(sentenceInit[0].type)
     }
 
     const keepImproving = () => {
@@ -204,7 +228,8 @@ const SayModal = ({ sentence, sentenceEn, sayVisible, setSayVisible, sentenceWhi
           }, [sayVisible])
 
         console.log("sayVisible in sayModal() is ", sayVisible)
-        if (sayVisible==="record") {
+        if (sayVisible==="record") {      
+            console.log("sayVisible in sayModal() is ", sayVisible) // testing      
             return (
                 <View style={styles.modalContainer}> 
                     <View style={styles.topContainer}>
@@ -342,28 +367,20 @@ const SayModal = ({ sentence, sentenceEn, sayVisible, setSayVisible, sentenceWhi
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-
-        position: 'absolute',
-        height: PAGE_HEIGHT/2.4,
-        width: PAGE_WIDTH*0.9,
-        top: PAGE_HEIGHT/1.9,
-        right: PAGE_WIDTH/20,
+          
     },  
     smallText: {
-        fontSize: 14,
+        fontSize: 18,
         textAlign: 'center',
         color: '#FFFFFF',        
     },    
     smallTextContainer: {
         display: "flex",
-        flex: 0.8,
+        flex: 1,
         flexDirection: "column",
-        justifyContent: "center",
+        justifyContent: "start",
         alignItems: "center",
-        width: PAGE_WIDTH*.45,
+        width: PAGE_WIDTH*.8,        
     },
     bigText: {
         fontSize: 25,
@@ -393,30 +410,29 @@ const styles = StyleSheet.create({
 
     
     modalContainer: {
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        padding: 10,
-        gap: 10,
-        
-        position: 'absolute',
-        height: PAGE_HEIGHT/2.5,
-        width: PAGE_WIDTH*0.8,
-        top: PAGE_HEIGHT/3.3,
-        right: PAGE_WIDTH/10,
+        backgroundColor: '#143e66',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
 
-        backgroundColor: "black",
-        borderColor: "#2E93F2",
-        borderWidth: 2,
-        borderRadius: 20
+        flexDirection: 'column',
+
+        height: PAGE_HEIGHT/2.2,
+        width: PAGE_WIDTH*.9,
+        marginLeft: PAGE_WIDTH*.05,
+        borderRadius: 10,  
     },
     topContainer: {
         display: "flex",
-        flex: 0.3,
+        
         flexDirection: "column",        
         padding: 10,
-        width: PAGE_WIDTH*.7,
+        justifyContent: "center",
+        alignItems: "start",
+        height: PAGE_HEIGHT*.09,
+        width: PAGE_WIDTH*.9,
+        paddingLeft: PAGE_WIDTH*.1,
+
     },
     playbackContainer: {
         flexDirection: "column",
@@ -444,7 +460,7 @@ const styles = StyleSheet.create({
         padding: 10,
         justifyContent: "space-evenly",
         alignItems: "center",
-        width: PAGE_WIDTH*.5,
+        width: PAGE_WIDTH*.7,
         height: PAGE_HEIGHT/7,
 
     },
@@ -454,7 +470,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         padding: 10,
-        width: PAGE_WIDTH*.5,
+        width: PAGE_WIDTH*.7,
 
         backgroundColor: "#8B8B8B",
         borderRadius: 10,
@@ -465,7 +481,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         padding: 10,
-        width: PAGE_WIDTH*.5,
+        width: PAGE_WIDTH*.7,
 
         backgroundColor: "#2E92F0",
         borderRadius: 10,

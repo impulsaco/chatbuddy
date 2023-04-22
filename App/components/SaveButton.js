@@ -100,13 +100,13 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         padding: 10,
-        width: PAGE_WIDTH*.5,
+        width: PAGE_WIDTH*.7,
 
         backgroundColor: "#2E92F0",
         borderRadius: 10,
     },
     smallText: {
-        fontSize: 14,
+        fontSize: 18,
         textAlign: 'center',
         color: '#FFFFFF',        
     },

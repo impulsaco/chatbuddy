@@ -19,7 +19,7 @@ import { supabase } from '../lib/supabase';
 import { OPENAI_API_KEY } from "@env";
 import * as FileSystem from 'expo-file-system';
 import Microphone from "../../assets/microphone.svg";
-import BigMike from "../../assets/bigMike.svg";
+import BiggestMike from "../../assets/biggestMike.svg";
 import Sound from '../../assets/Sound.svg';
 
 const PAGE_HEIGHT = Dimensions.get('window').height;
@@ -457,7 +457,7 @@ export default ({
               <Sound/>                
             </TouchableOpacity> 
             <TouchableOpacity onPress={() => {setCloseVisible(false); startRecording()} } >
-              <BigMike/>                  
+              <BiggestMike/>                  
             </TouchableOpacity>
           </View>
         )}

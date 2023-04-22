@@ -144,53 +144,53 @@ export default ({ navigation, route }) => {
     if (lang === "es-MX") {
         wordsLang = 'wordsEs'
     }
-}, [langCode, lang])  
+    }, [langCode, lang])  
 
-  useEffect(() => {
-    const fetchWords = async () => {
-        if (session) {
-            const { data, error } = await supabase
-            .from('userData')
-            .select(wordsLang)
-            .eq('user', session.user.id)
-        
-            if (error) alert(error.message)
-        
-            if (data) {
-                setUserWords(data)
+    useEffect(() => {
+        const fetchWords = async () => {
+            if (session) {
+                const { data, error } = await supabase
+                .from('userData')
+                .select(wordsLang)
+                .eq('user', session.user.id)
+            
+                if (error) alert(error.message)
+            
+                if (data) {
+                    setUserWords(data)
+                }
             }
         }
-    }
 
-    fetchWords()
-  }, [session])
+        fetchWords()
+    }, [session])
 
-  // update words
+    // update words
 
-  // Update words in backend
+    // Update words in backend
 
-  async function saveWord() {
+    async function saveWord() {
 
-    if (langCode === "ko") {
-        const { error } = await supabase
-        .from('userData')
-        .update({ 
-            wordsKo: userWords
-            }
-        ).eq('user', session.user.id)
-        if (error) alert(error.message)
-      }
-    if (langCode === "es") {
-        console.log("creating new spanish word")            
-        const { error } = await supabase
-        .from('profiles')
-        .update({ wordsEs: userWords})
-        .eq('id', session.user.id)
-        if (error) alert(error.message)
-    }        
-} 
+        if (langCode === "ko") {
+            const { error } = await supabase
+            .from('userData')
+            .update({ 
+                wordsKo: userWords
+                }
+            ).eq('user', session.user.id)
+            if (error) alert(error.message)
+        }
+        if (langCode === "es") {
+            console.log("creating new spanish word")            
+            const { error } = await supabase
+            .from('profiles')
+            .update({ wordsEs: userWords})
+            .eq('id', session.user.id)
+            if (error) alert(error.message)
+        }        
+    } 
 
-saveWord()
+    saveWord()
 
     // setup tab navigation
 
@@ -201,6 +201,57 @@ saveWord()
     const [forward, setForward] = useState("");
     
     // Note: DraxProvider doesn't work on Android with Tab.Navigator
+
+    // SayModal visibility
+
+    const sayModal = () => {
+        if (sayVisible !== "invisible") {
+            return (
+                <Tab.Screen
+                        name="SayModal"
+                        options={{
+                            tabBarLabel: "Say",
+                            tabBarVisible: false, // hide tab bar for this screen
+                            swipeEnabled: false,
+                        }}
+                        >
+                        {props => (
+                            <SayModal 
+                            {...props}
+                            sentence={sentence} 
+                            sentenceEn={sentenceEn}
+                            sayVisible={sayVisible}
+                            setSayVisible={setSayVisible}
+                            sentenceWhisper={sentenceWhisper}
+                            setSentenceWhisper={setSentenceWhisper}
+                            lang={lang}
+                            langCode={langCode}
+                            sentenceSaidPercentage={sentenceSaidPercentage}
+                            setSentenceSaidPercentage={setSentenceSaidPercentage}
+                            sentenceText={sentenceText}
+                            sentenceType={sentenceType}
+                            setText={setText}
+                            setForward={setForward}
+                            sentenceInit={sentenceInit}
+                            />
+                        )}                        
+                        </Tab.Screen>  
+            )
+        }
+        else {
+            return (
+                null
+            )
+        }
+    }
+
+    useEffect(() => {
+        console.log("sayVisible is " + sayVisible)
+        if (sayVisible === "record") {
+            console.log("forward!!")
+            setForward("SayModal")
+        }        
+    }, [sayVisible])
     
     return (
         <GestureHandlerRootView style={styles.gestureRootViewStyle}>
@@ -251,33 +302,8 @@ saveWord()
                     name={route}
                     component={WordRoute(route, setUserWords, userWords, words, translations, sentence, setSentence, setForward)}
                     />                    
-                    ))}                                                                                
-                    <Tab.Screen
-                        name="SayModal"
-                        options={{
-                            tabBarLabel: "Say",
-                            tabBarVisible: false, // hide tab bar for this screen
-                        }}
-                        >
-                        {props => (
-                            <SayModal 
-                            {...props}
-                            sentence={sentence} 
-                            sentenceEn={sentenceEn}
-                            sayVisible={sayVisible}
-                            setSayVisible={setSayVisible}
-                            sentenceWhisper={sentenceWhisper}
-                            setSentenceWhisper={setSentenceWhisper}
-                            lang={lang}
-                            langCode={langCode}
-                            sentenceSaidPercentage={sentenceSaidPercentage}
-                            setSentenceSaidPercentage={setSentenceSaidPercentage}
-                            sentenceText={sentenceText}
-                            sentenceType={sentenceType}
-                            setText={setText}
-                            />
-                        )}
-                        </Tab.Screen>                          
+                    ))}       
+                    {sayModal()}                                                                                                                     
                     </Tab.Navigator>                    
                 </View>                
             </DraxProvider>

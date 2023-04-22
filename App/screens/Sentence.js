@@ -131,7 +131,8 @@ const Sentence = ({
                 session,
                 sayVisible,
                 setSayVisible,
-                setText)
+                setText,
+                setForward)
         } 
     }
     
@@ -367,6 +368,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         padding: 10,
+        height: PAGE_HEIGHT*0.13,
+        width: PAGE_WIDTH*0.9,
+
     },
     soundButton: {
         flexDirection: 'row',
@@ -385,7 +389,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         padding: 0,
-        paddingTop: 40,
+        paddingTop: 0,
+
     },
     textContainer: {
         flexDirection: 'column',
