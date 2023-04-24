@@ -83,7 +83,7 @@ const SentenceFixer = (sentence,
         setSayVisible("record")
         console.log("setting SayVisible to record")
         setSentenceFixed(true)
-        setText("Great! Now practice saying it.")        
+        setText("Great! Now practice saying it.")               
     }
 
     

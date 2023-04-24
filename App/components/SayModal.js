@@ -28,10 +28,18 @@ const SayModal = ({ sentence,
                     sentenceType, 
                     setText, 
                     setForward,
-                    sentenceInit
+                    sentenceInit,
+                    onMounted                
                 }) => {    
 
-    // Create variables for modal    
+    // Create variables for modal   
+    
+    // Communicate rendered for navigation
+    useEffect(() => {
+        if (onMounted) {
+          onMounted();
+        }
+      }, [onMounted]);
 
     console.log("lang is ", lang)
 
@@ -54,7 +62,6 @@ const SayModal = ({ sentence,
     // Sets success upon 50% of sentence said
     useEffect (() => {
         console.log("sentenceSaidPercentage", sentenceSaidPercentage)
-        console.log("sayVisible IN USEEFFECT is", sayVisible)
         if (sentenceSaidPercentage > 0 && sentenceSaidPercentage < 1 && attempted) {        
             setSayVisible("partly");
         }
@@ -68,10 +75,10 @@ const SayModal = ({ sentence,
     }, [sentenceSaidPercentage, attempted, recordingUri, sentenceWhisper, sayVisible])
 
     useEffect (() => {
-    }, [attempted, sayVisible])
+    }, [attempted, sayVisible])    
 
     const close = () => {
-        setSayVisible("invisible");
+        //setSayVisible("invisible");
         setAttempted(false);
         setSentenceSaidPercentage(0);
         setSentenceWhisper("no whisper yet");
@@ -217,15 +224,10 @@ const SayModal = ({ sentence,
         setSession(session)
         })
     }, [])
+            
 
-
-    // Output modal
-
-    const sayModal = () => {
-
-        useEffect(() => {
-            console.log("sayVisible HERE is", sayVisible) // testing
-          }, [sayVisible])
+    const sayModal = () => {        
+        
 
         console.log("sayVisible in sayModal() is ", sayVisible)
         if (sayVisible==="record") {      
@@ -233,7 +235,7 @@ const SayModal = ({ sentence,
             return (
                 <View style={styles.modalContainer}> 
                     <View style={styles.topContainer}>
-                        {closeButton()}                        
+                        {closeButton()}                                                
                     </View>
                     <View style={styles.smallTextContainer}>
                         <Text style={styles.smallText}>{topText}</Text>

@@ -204,6 +204,18 @@ export default ({ navigation, route }) => {
 
     // SayModal visibility
 
+    const [isMounted, setIsMounted] = useState(false);
+
+    useEffect(() => {
+        if (isMounted && sayVisible === 'record') {
+        setForward('SayModal');
+        }
+    }, [isMounted, sayVisible]);
+
+    const handleSayModalMounted = () => {
+        setIsMounted(true);
+    };
+
     const sayModal = () => {
         if (sayVisible !== "invisible") {
             return (
@@ -212,7 +224,7 @@ export default ({ navigation, route }) => {
                         options={{
                             tabBarLabel: "Say",
                             tabBarVisible: false, // hide tab bar for this screen
-                            swipeEnabled: false,
+                            // swipeEnabled: false,
                         }}
                         >
                         {props => (
@@ -233,6 +245,7 @@ export default ({ navigation, route }) => {
                             setText={setText}
                             setForward={setForward}
                             sentenceInit={sentenceInit}
+                            onMounted={handleSayModalMounted}
                             />
                         )}                        
                         </Tab.Screen>  
@@ -245,13 +258,13 @@ export default ({ navigation, route }) => {
         }
     }
 
-    useEffect(() => {
+    /*useEffect(() => {
         console.log("sayVisible is " + sayVisible)
         if (sayVisible === "record") {
             console.log("forward!!")
             setForward("SayModal")
         }        
-    }, [sayVisible])
+    }, [sayVisible])*/
     
     return (
         <GestureHandlerRootView style={styles.gestureRootViewStyle}>

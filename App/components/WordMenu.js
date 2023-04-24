@@ -19,6 +19,8 @@ const WordMenu = ({ state, navigation, forward, setForward, words, sentence, set
 
   useEffect(() => {
     if (forward !== "") {
+      console.log("forward is ", forward)
+      console.log("navigation is ", navigation.navigate)
       navigation.navigate(forward);
       setForward("")
     }
