@@ -25,7 +25,7 @@ export default ({ navigation, route }) => {
 
     const [translations, setTranslations] = useState(true)
 
-    let starterText = "Tap words to build your sentence:"
+    let starterText = "Pick words to build your sentence"
 
     // set up the tab navigator, for alternative navigation
 
@@ -109,6 +109,39 @@ export default ({ navigation, route }) => {
     const [sentenceText, setSentenceText] = useState(" ")
 
     const [sentenceRomanized, setSentenceRomanized] = useState(null)
+
+    // Sentence analyzed
+
+    const [sentenceAnalyzed, setSentenceAnalyzed] = useState([])
+
+    // Automatic completion checker
+
+    const [sentenceReady, setSentenceReady] = useState(false);
+    const [sentenceFixed, setSentenceFixed] = useState(false);
+    const [savedSentence, setSavedSentence] = useState("");
+
+
+    // Set up functions for reset and toggle translations
+    const resetSentence = () => {        
+        setSentence(sentenceInit);
+        setSentenceReady(false);
+        setSentenceWhisper("no whisper yet")
+        setText(starterText)
+        setSentenceText(" ")
+        setSentenceEn(" ")
+        setSentenceRomanized(null)
+        setSentenceFixed(false)
+        setForward(sentenceInit[0].type)
+    }
+
+    const toggleTranslations = () => {
+        if (translations === true) {
+            setTranslations(false)
+        }
+        else {
+            setTranslations(true)
+        }
+    }
 
     // Updates word boxes to load on choose phrase structure
     useEffect(() => {
@@ -304,6 +337,12 @@ export default ({ navigation, route }) => {
                         setSentenceText={setSentenceText}
                         sentenceRomanized={sentenceRomanized}
                         setSentenceRomanized={setSentenceRomanized}
+                        sentenceReady={sentenceReady}
+                        setSentenceReady={setSentenceReady}
+                        sentenceAnalyzed={sentenceAnalyzed}
+                        setSentenceAnalyzed={setSentenceAnalyzed}
+                        setSentenceFixed={setSentenceFixed}
+                        setSavedSentence={setSavedSentence}
                     />                    
                     <Tab.Navigator
                     tabBar={props => <WordMenu {...props} forward={forward} setForward ={setForward} words={words} sentence={sentence} setSentence={setSentence}/>}
@@ -313,7 +352,7 @@ export default ({ navigation, route }) => {
                     {routeList.map((route) => (
                     <Tab.Screen
                     name={route}
-                    component={WordRoute(route, setUserWords, userWords, words, translations, sentence, setSentence, setForward)}
+                    component={WordRoute(route, setUserWords, userWords, words, translations, sentence, setSentence, setForward, resetSentence, toggleTranslations)}
                     />                    
                     ))}       
                     {sayModal()}                                                                                                                     

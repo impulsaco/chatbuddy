@@ -494,10 +494,12 @@ export default ({
   return (
     <View style={styles.container}>
         {!isRecording && !isTranscribing && !recordingDone && (
-          <View style={styles.middleContainer}>
-            <TouchableOpacity style={styles.playBack} onPress={() => sentenceSpeak(sentenceText, langCode)}>                
-              <Sound/>                
-            </TouchableOpacity> 
+          <View style={styles.middleContainer}> 
+            {/* 
+              <TouchableOpacity style={styles.playBack} onPress={() => sentenceSpeak(sentenceText, langCode)}>                
+                <Sound/>                
+              </TouchableOpacity> 
+            */}       
             <TouchableOpacity onPress={() => {setCloseVisible(false); startRecording()} } >
               <BiggestMike/>                  
             </TouchableOpacity>
@@ -585,8 +587,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    width: PAGE_WIDTH,
-    paddingRight: PAGE_WIDTH*.2,
+    width: PAGE_WIDTH,    
   },
   playBack: {
     marginRight: PAGE_WIDTH*.1,

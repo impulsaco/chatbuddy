@@ -46,11 +46,17 @@ const Sentence = ({
     sentenceText,
     setSentenceText,
     sentenceRomanized,
-    setSentenceRomanized}) => {
+    setSentenceRomanized,
+    sentenceReady,
+    setSentenceReady,
+    sentenceAnalyzed,
+    setSentenceAnalyzed,
+    setSentenceFixed,
+    setSavedSentence}) => {
 
     // Set instructions and sentence placeholder
 
-    let starterText = "Tap words to build your sentence:"
+    let starterText = "Pick words to build your sentence"
 
     // Retrieve session
 
@@ -66,20 +72,9 @@ const Sentence = ({
         setSession(session)
         })
     }, [])
-
-
-
-    // Sentence analyzed
-
-    const [sentenceAnalyzed, setSentenceAnalyzed] = useState([])
+    
     
     const gestureRootViewStyle = { flex: 1 };
-
-    // Automatic completion checker
-
-    const [sentenceReady, setSentenceReady] = useState(false);
-    const [sentenceFixed, setSentenceFixed] = useState(false);
-    const [savedSentence, setSavedSentence] = useState("");
 
     // Clear top sentence if re-entering sentence screen (e.g. when choosing new language)
 
@@ -145,13 +140,28 @@ const Sentence = ({
     // Translate sentence
 
     const sentenceTranslation = () => {
-        if (translations===true) {
+        if (translations===true && sentenceEn!==" ") {
             return (
-                <Text style={styles.translationText}>{sentenceEn}</Text>
+                <View style={styles.translationContainer}>
+                    <TouchableOpacity style={styles.switchContainer} onPress={() => toggleTranslations()}>
+                        {translationButton()}                                    
+                    </TouchableOpacity> 
+                    <Text style={styles.translationText}>{sentenceEn}</Text>
+                </View>                
             )
         }
+        if (translations===false && sentenceEn!==" ") {
+            return (
+                <View style={styles.translationContainer}>
+                    <TouchableOpacity style={styles.switchContainer} onPress={() => toggleTranslations()}>
+                        {translationButton()}                                    
+                    </TouchableOpacity> 
+                    <Text style={styles.translationText}>{" "}</Text>
+                </View>                
+            )            
+        }
         else {
-            return <Text style={styles.translationText}>{" "}</Text>
+            return null
         }
     }
 
@@ -165,7 +175,9 @@ const Sentence = ({
             )
         }
         else {
-            return null
+            return (
+                <Text style={styles.romanizationText}>{" "}</Text>
+            )
         }
     }
 
@@ -248,13 +260,18 @@ const Sentence = ({
     }
 
     const speakSentence = () => {
-        return (
-            <View style={styles.soundButton}>
-                <TouchableOpacity onPress={() => sentenceSpeak(sentenceText, langCode)}>
-                    <Sound/>
-                </TouchableOpacity>
-            </View>
-        )
+        if (sentenceText !== " ") {
+            return (
+                <View style={styles.soundButton}>
+                    <TouchableOpacity onPress={() => sentenceSpeak(sentenceText, langCode)}>
+                        <Sound/>
+                    </TouchableOpacity>
+                </View>
+            )
+        }
+        else {
+            return null
+        }
     }
 
     const toggleTranslations = () => {
@@ -279,59 +296,41 @@ const Sentence = ({
         }
     }
 
+    const topSentence = () => {
+        if (sentenceReady === true) {
+            return (
+            <View style={styles.sentenceContainer}>
+                <View style={styles.topSentence}>
+                    {speakSentence()}                    
+                    {setWhispered()}                    
+                </View>
+                <View style={styles.romanizationContainer}>
+                    {sentenceRomanization()}
+                </View>    
+                {sentenceTranslation()}                            
+            </View>
+            )
+        }
+        else {
+            return (
+                <View style={styles.textContainer}><Text style={styles.text}>{text}</Text></View>
+            )
+        }
+    }
+
+    /*
+        <View style={styles.bottomContainer}>                                                
+            <View style={styles.refreshContainer}>
+                <TouchableOpacity onPress={() => resetSentence()}>
+                    <Refresh/>
+                </TouchableOpacity>    
+            </View>                             
+        </View>                            
+    */
 
     return (
         <View style={styles.container}>
-            <View style={styles.sentenceContainer}>
-                <View style={styles.topSentence}>
-                    {setWhispered()}    
-                </View>
-                {sentenceRomanization()}
-                {sentenceTranslation()}
-            </View>
-            <View style={styles.bottomContainer}>                                
-                <TouchableOpacity style={styles.switchContainer} onPress={() => toggleTranslations()}>
-                    {translationButton()
-                    /*
-                    <Switch 
-                        value={translations}
-                        onValueChange={() => toggleTranslations()}
-                        trackColor={{ false: "#767577", true: "#f4f3f4" }}
-                        thumbColor={translations ? "#2E93F2" : "#f4f3f4"}
-                        ios_backgroundColor="#3e3e3e"
-                    /> 
-                    <SayItButton 
-                        sentence={sentence} 
-                        sentenceFixed={sentenceFixed}
-                        sayVisible={sayVisible}
-                        setSayVisible={setSayVisible}
-                        setText={setText} 
-                        setSentenceText={setSentenceText}
-                        setSentenceEn={setSentenceEn} 
-                        sentenceEn={sentenceEn}
-                        sentenceWhisper={sentenceWhisper}
-                        setSentenceWhisper={setSentenceWhisper}
-                        lang={lang}
-                        langCode={langCode}
-                        sentenceAnalyzed={sentenceAnalyzed}
-                        setSentenceAnalyzed={setSentenceAnalyzed}
-                        sentenceSaidPercentage={sentenceSaidPercentage}
-                        sentenceReady={sentenceReady}
-                    />
-                    */
-                    }
-                    
-                </TouchableOpacity> 
-                <TouchableOpacity style={styles.buttonContainer}>
-                    
-                </TouchableOpacity>
-                <View style={styles.refreshContainer}>
-                    <TouchableOpacity onPress={() => resetSentence()}>
-                        <Refresh/>
-                    </TouchableOpacity>    
-                </View>                             
-            </View>
-            <View style={styles.textContainer}><Text style={styles.text}>{text}</Text></View>                
+            {topSentence()}                        
         </View>
     )
 }
@@ -339,6 +338,8 @@ const Sentence = ({
 const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
+        justifyContent: 'center',
+        height: PAGE_HEIGHT*0.3,
     },
     bottomContainer: {
         display: 'flex',
@@ -361,22 +362,23 @@ const styles = StyleSheet.create({
         //flex: 0.1,
         flexDirection: 'row',
         justifyContent: 'flex-end',
-        paddingRight: 0,
+        paddingRight: PAGE_WIDTH*0.04,
     },
     topSentence: {
         flexDirection: 'row',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         alignItems: 'center',
-        padding: 10,
-        height: PAGE_HEIGHT*0.13,
+        padding: 0,
+        paddingTop: PAGE_HEIGHT*0.05,
         width: PAGE_WIDTH*0.9,
 
     },
+    
     soundButton: {
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        marginRight: 10,
+        marginRight: 15,
     },
     refreshContainer: {
         //flex: 1,
@@ -387,10 +389,10 @@ const styles = StyleSheet.create({
     sentenceContainer: {
         flexDirection: 'column',
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'flex-start',
         padding: 0,
+        paddingLeft: PAGE_WIDTH*0.05,
         paddingTop: 0,
-
     },
     textContainer: {
         flexDirection: 'column',
@@ -399,31 +401,48 @@ const styles = StyleSheet.create({
         padding: 10,
         width: PAGE_WIDTH*0.8,
         paddingBottom: PAGE_HEIGHT*0.03,
-
     },
     text: {
-        fontSize: 20,
+        fontSize: 24,
         color: 'white',
         textAlign: 'center',            
     },
     sentenceText: {
         fontSize: 36,
         color: 'white',
-        textAlign: 'center',            
+        textAlign: 'left',
+        width: PAGE_WIDTH*0.8,  
+    },
+    translationContainer: {
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        padding: 0,
+        paddingTop: 0,
+        width: PAGE_WIDTH*0.9,             
     },
     translationText: {
         fontSize: 20,
         marginTop: 5,
         color: '#B7B7B7',
-        marginBottom: 15,
+        marginBottom: 10,
+        width: PAGE_WIDTH*0.77,
     },
-    
+    romanizationContainer: {
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        padding: 0,
+        paddingTop: 0,
+        width: PAGE_WIDTH*0.9,        
+    },
     romanizationText: {
         fontSize: 20,
         marginTop: 0,
         color: 'white',
         fontStyle: 'italic',
         marginBottom: 5,
+        paddingLeft: PAGE_WIDTH*0.12,
     },
     item: {
         flexDirection: 'row',

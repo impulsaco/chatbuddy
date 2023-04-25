@@ -89,7 +89,7 @@ const SayModal = ({ sentence,
         // reset sentence states
         // setSentence(sentenceInit); // full reset of sentence
         //setSentenceReady(false);
-        setText("Tap words to build your sentence:")
+        setText("Pick words to build your sentence")
         //setSentenceText(" ")
         //setSentenceEn(" ")
         //setSentenceRomanized(null)

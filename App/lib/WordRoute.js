@@ -1,17 +1,20 @@
 import React from 'react';
-import { View, StyleSheet, Dimensions } from 'react-native';
+import { View, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import { DraxProvider, DraxScrollView } from 'react-native-drax';
 import DraggableWord from '../components/DraggableWord';
 import AddWord from '../components/AddWord';
 import ShuffleWords from '../components/ShuffleWords';
 import { LanguageContext } from '../lib/LanguageContext';
+import Refresh from '../../assets/Refresh.svg';
+import TranslationOn from '../../assets/translationOn.svg';
+import TranslationOff from '../../assets/translationOff.svg';
 
 const PAGE_HEIGHT = Dimensions.get('window').height;
 const PAGE_WIDTH = Dimensions.get('window').width;
 
 /// JUST MAKE ONE, THEN MAP ONTO TAB NAVIGATOR
 
-const WordRoute = (type, setUserWords, userWords, words, translations, sentence, setSentence, setForward) => {
+const WordRoute = (type, setUserWords, userWords, words, translations, sentence, setSentence, setForward, resetSentence, toggleTranslations) => {
 
   const { langCode, setLangCode, lang, setLang} = React.useContext(LanguageContext); 
   
@@ -20,10 +23,25 @@ const WordRoute = (type, setUserWords, userWords, words, translations, sentence,
     setLang(lang)
   }, [langCode, lang])*/
 
+
+  const translationButton = () => {
+      if (translations === true) {
+          return (
+              <TranslationOn/>
+          )
+      }
+      else if (translations === false) {
+          return (
+              <TranslationOff/>
+          )
+      }
+  }
+  
   return () => (
     <View style={styles.wordContainer}>
       <View style={styles.dragLimit}>
         <DraxScrollView contentContainerStyle={styles.dragContainer}>                  
+          <AddWord type={type} setUserWords={setUserWords} userWords={userWords} langCode={langCode}/>      
           {userWords.filter ? userWords.filter(obj => {return obj.type === type})
             .map((word) => <DraggableWord key={word.id} word={word} translations={translations} sentence={sentence} setSentence={setSentence} setForward={setForward}/>) : null}
           {words.filter(obj => {return obj.type === type})
@@ -31,9 +49,14 @@ const WordRoute = (type, setUserWords, userWords, words, translations, sentence,
         </DraxScrollView>
       </View>
       <View style={styles.buttonContainer}>
-        <ShuffleWords type={type} setUserWords={setUserWords} userWords={userWords} langCode={langCode}/>
-        <AddWord type={type} setUserWords={setUserWords} userWords={userWords} langCode={langCode}/>      
-      </View>
+        <TouchableOpacity style={styles.switchContainer} onPress={() => toggleTranslations()}>
+            {translationButton()}                                    
+        </TouchableOpacity> 
+        <ShuffleWords type={type} setUserWords={setUserWords} userWords={userWords} langCode={langCode}/>    
+        <TouchableOpacity onPress={() => resetSentence()}>
+            <Refresh/>
+        </TouchableOpacity>    
+      </View>    
     </View>
   );
 };
