@@ -28,34 +28,15 @@ export default ({ navigation, route }) => {
     let starterText = "Pick words to build your sentence"
 
     // set up the tab navigator, for alternative navigation
-
-    /* const [tab, setTab] = useState("subject")
-
-    const page = () => {
-        switch (tab) {
-            case 'subject':
-                return <subjectRoute />
-            case 'verb':
-                return <verbRoute/>
-            case 'adjective':
-                return <adjectiveRoute />
-            case 'noun':
-                return <nounRoute />
-            default:
-                return <subjectRoute />
-        }
-    } */
+    
     
     // Set styles
-    //const gestureRootViewStyle = { flex: 1 };
     
     // Import params
 
     const { langCode, setLangCode, lang, setLang } = useContext(LanguageContext);        
     
     const wordSet = route.params.wordSet;
-    // const lang = route.params.lang;
-    // const langCode = route.params.langCode;
 
     // set up word lists based on choice
 
@@ -289,15 +270,7 @@ export default ({ navigation, route }) => {
                 null
             )
         }
-    }
-
-    /*useEffect(() => {
-        console.log("sayVisible is " + sayVisible)
-        if (sayVisible === "record") {
-            console.log("forward!!")
-            setForward("SayModal")
-        }        
-    }, [sayVisible])*/
+    }   
     
     return (
         <GestureHandlerRootView style={styles.gestureRootViewStyle}>
@@ -349,10 +322,11 @@ export default ({ navigation, route }) => {
                     initialRouteName={'subject'} 
                     sceneContainerStyle={{backgroundColor: 'transparent'}}
                     >
-                    {routeList.map((route) => (
+                    {routeList.map((route, index) => (
                     <Tab.Screen
+                    key={`tab-screen-${index}`}
                     name={route}
-                    component={WordRoute(route, setUserWords, userWords, words, translations, sentence, setSentence, setForward, resetSentence, toggleTranslations)}
+                    component={WordRoute(route, setUserWords, userWords, words, translations, sentence, setSentence, setForward, resetSentence, toggleTranslations, `tab-screen-${index}`)}
                     />                    
                     ))}       
                     {sayModal()}                                                                                                                     

@@ -14,7 +14,7 @@ const PAGE_WIDTH = Dimensions.get('window').width;
 
 /// JUST MAKE ONE, THEN MAP ONTO TAB NAVIGATOR
 
-const WordRoute = (type, setUserWords, userWords, words, translations, sentence, setSentence, setForward, resetSentence, toggleTranslations) => {
+const WordRoute = (type, setUserWords, userWords, words, translations, sentence, setSentence, setForward, resetSentence, toggleTranslations, key) => {
 
   const { langCode, setLangCode, lang, setLang} = React.useContext(LanguageContext); 
   

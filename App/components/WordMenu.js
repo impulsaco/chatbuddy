@@ -41,9 +41,9 @@ const WordMenu = ({ state, navigation, forward, setForward, words, sentence, set
   const tabButton = (word, index) => {
     const isFocused = state.index === index; // Checks if the current page is the same as the page in the array 
     return (   
-    <View style={[styles.wordContainer, {backgroundColor: color(word.type, state.index)}]}>
+    <View key={`wordmenu-${index}`} style={[styles.wordContainer, {backgroundColor: color(word.type, state.index)}]}>
       <Pressable
-          key={`wordmenu-${index}`}
+          
           style={styles.button}
           
           onPress={() => {
