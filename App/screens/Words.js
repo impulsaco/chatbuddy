@@ -232,6 +232,18 @@ export default ({ navigation, route }) => {
 
     const drawerNavigation = navigation
 
+    // Set up annoying navigation to phrasebook
+
+    const [navigatePhrasebook, setNavigatePhrasebook] = useState(false)    
+
+    useEffect(() => {
+        if (navigatePhrasebook) {
+            navigation.navigate('Phrasebook')
+            setNavigatePhrasebook(false)
+        }
+    }, [navigatePhrasebook])
+
+
     const sayModal = (drawerNavigation) => {
         if (sayVisible !== "invisible") {
             return (
@@ -247,6 +259,7 @@ export default ({ navigation, route }) => {
                             <SayModal 
                             {...props}
                             drawerNavigation={drawerNavigation}
+                            setNavigatePhrasebook={setNavigatePhrasebook}
                             sentence={sentence} 
                             sentenceEn={sentenceEn}
                             sayVisible={sayVisible}
@@ -274,6 +287,7 @@ export default ({ navigation, route }) => {
             )
         }
     }   
+
     
     return (
         <GestureHandlerRootView style={styles.gestureRootViewStyle}>

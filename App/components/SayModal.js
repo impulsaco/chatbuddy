@@ -15,6 +15,7 @@ const PAGE_HEIGHT = Dimensions.get('window').height;
 const PAGE_WIDTH = Dimensions.get('window').width;
 
 const SayModal = ({ drawerNavigation,
+                    setNavigatePhrasebook,
                     sentence, 
                     sentenceEn, 
                     sayVisible, 
@@ -94,7 +95,6 @@ const SayModal = ({ drawerNavigation,
         setTopText(PracticeText);
         setBottomText(' ');
         setSentenceSaved(false)
-
         // reset sentence states
         // setSentence(sentenceInit); // full reset of sentence
         //setSentenceReady(false);
@@ -105,6 +105,26 @@ const SayModal = ({ drawerNavigation,
         //setSentenceFixed(false)
         console.log("sentenceInit[0].type is ", sentenceInit[0].type)
         setForward(sentenceInit[0].type)
+    }
+
+    const leave = () => {
+        //setSayVisible("invisible"); // MAKE THIS WORK WITHOUT RETURNING TO SCREEN
+        setAttempted(false);
+        setSentenceSaidPercentage(0);
+        setSentenceWhisper("no whisper yet");
+        setTopText(PracticeText);
+        setBottomText(' ');
+        setSentenceSaved(false)
+        // reset sentence states
+        // setSentence(sentenceInit); // full reset of sentence
+        //setSentenceReady(false);
+        setText("Pick words to build your sentence")
+        //setSentenceText(" ")
+        //setSentenceEn(" ")
+        //setSentenceRomanized(null)
+        //setSentenceFixed(false)
+        //console.log("sentenceInit[0].type is ", sentenceInit[0].type)
+        //setForward(sentenceInit[0].type)
     }
 
     const keepImproving = () => {
@@ -182,17 +202,17 @@ const SayModal = ({ drawerNavigation,
         }
     }
 
-    const continueWithoutSavingButton = () => {
+    const keepPracticingButton = () => {
         if (!sentenceSaved) {
             return (
-                <TouchableOpacity style={styles.grayButton} onPress={() => close()}>
-                    <Text style={[styles.smallText, { paddingLeft: 10} ]}>Continue without saving</Text>
+                <TouchableOpacity style={styles.grayButton} onPress={() => keepImproving()}>
+                    <Text style={[styles.smallText, { paddingLeft: 10} ]}>Keep practicing</Text>
                 </TouchableOpacity>
             )
         }
         else if (sentenceSaved) {
             return (
-                <TouchableOpacity style={styles.grayButton} onPress={() => {navigateDrawer(); close()}}>
+                <TouchableOpacity style={styles.grayButton} onPress={() => {setNavigatePhrasebook(true); leave()}}>
                     <Text style={[styles.smallText, { paddingLeft: 10} ]}>Go to phrasebook</Text>
                 </TouchableOpacity>
             )
@@ -209,7 +229,7 @@ const SayModal = ({ drawerNavigation,
         }
         else if (sentenceSaved) {
             return (
-                <TouchableOpacity style={styles.grayButton} onPress={() => {navigateDrawer(); close()}}>
+                <TouchableOpacity style={styles.grayButton} onPress={() => {setNavigatePhrasebook(true); leave()}}>
                     <Text style={[styles.smallText, { paddingLeft: 10} ]}>Go to phrasebook</Text>
                 </TouchableOpacity>
             )
@@ -295,7 +315,7 @@ const SayModal = ({ drawerNavigation,
                         </View>
                         <View style={styles.buttonsContainer}>    
                             <SaveButton sentence={sentence} savedSentence={sentenceText} sentenceEn={sentenceEn} lang={lang} langCode={langCode} sentenceType={sentenceType} sentenceSaved={sentenceSaved} setSentenceSaved={setSentenceSaved}/>                                        
-                            {continueWithoutSavingButton()}                             
+                            {keepPracticingButton()}                             
                         </View>                                               
                     </View>
             )
