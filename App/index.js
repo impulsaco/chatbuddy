@@ -25,6 +25,7 @@ import SliderImage4 from './../assets/SliderImage4.svg'
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import { LanguageContext } from './lib/LanguageContext';
 import VoiceGPT from './screens/VoiceGPT';
+import { DrawerNavigationContext } from './lib/DrawerNavigationContext';
 
 Sentry.init({
   dsn: 'https://5a92132c278b42a79bb122eb9c511e43@o4504618398908416.ingest.sentry.io/4504618595713024',
@@ -368,29 +369,28 @@ export default function App() { // MAIN APP ENTRY POINT
     return (
       <ActionSheetProvider>
         <GestureHandlerRootView style={{ flex: 1 }}>
-          <NavigationContainer>
-            
+          <NavigationContainer>            
             <NativeBaseProvider style={styles.container}>
-              <LanguageContext.Provider value={{ langCode, setLangCode, lang, setLang }}>
-                <Drawer.Navigator
-                  screenOptions={{
-                    header: ({ navigation }) => {
-                      // const title = getHeaderTitle(route.name);
-                      return <Header navigation={navigation} menuVisible={menuVisible} setMenuVisible={setMenuVisible}/>;
-                    },
-                    drawerPosition: 'left',
-                    headerRight: () => <Header navigation={navigation} menuVisible={menuVisible} setMenuVisible={setMenuVisible}/>,
-                    overlayColor: 'transparent',
-                    headerTransparent: true,
-                  }}
-                > 
-                  <Drawer.Screen name="Home" component={withSetMenuVisible(Home)}/>
-                  <Drawer.Screen name="LogIn" component={LogIn} />
-                  <Drawer.Screen name="Choose" component={withSetMenuVisible(PhraseSelector)}/>
-                  <Drawer.Screen name="Build" component={Words} />
-                  <Drawer.Screen name="VoiceGPT" component={VoiceGPT} />
-                  <Drawer.Screen name="Phrasebook" component={withSetMenuVisible(Phrasebook)} />
-                </Drawer.Navigator>
+              <LanguageContext.Provider value={{ langCode, setLangCode, lang, setLang }}>                
+                  <Drawer.Navigator
+                    screenOptions={{
+                      header: ({ navigation }) => {
+                        // const title = getHeaderTitle(route.name);
+                        return <Header navigation={navigation} menuVisible={menuVisible} setMenuVisible={setMenuVisible}/>;
+                      },
+                      drawerPosition: 'left',
+                      headerRight: () => <Header navigation={navigation} menuVisible={menuVisible} setMenuVisible={setMenuVisible}/>,
+                      overlayColor: 'transparent',
+                      headerTransparent: true,
+                    }}
+                  >                   
+                    <Drawer.Screen name="Home" component={withSetMenuVisible(Home)}/>
+                    <Drawer.Screen name="LogIn" component={LogIn} />
+                    <Drawer.Screen name="Choose" component={withSetMenuVisible(PhraseSelector)}/>
+                    <Drawer.Screen name="Build" component={Words} />
+                    <Drawer.Screen name="VoiceGPT" component={VoiceGPT} />
+                    <Drawer.Screen name="Phrasebook" component={withSetMenuVisible(Phrasebook)} />                  
+                  </Drawer.Navigator>                
               </LanguageContext.Provider>
             </NativeBaseProvider>
           </NavigationContainer>

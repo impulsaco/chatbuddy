@@ -14,7 +14,8 @@ import Sound from '../../assets/Sound.svg'
 const PAGE_HEIGHT = Dimensions.get('window').height;
 const PAGE_WIDTH = Dimensions.get('window').width;
 
-const SayModal = ({ sentence, 
+const SayModal = ({ drawerNavigation,
+                    sentence, 
                     sentenceEn, 
                     sayVisible, 
                     setSayVisible, 
@@ -29,7 +30,7 @@ const SayModal = ({ sentence,
                     setText, 
                     setForward,
                     sentenceInit,
-                    onMounted                
+                    onMounted,                                  
                 }) => {    
 
     // Create variables for modal   
@@ -42,6 +43,14 @@ const SayModal = ({ sentence,
       }, [onMounted]);
 
     console.log("lang is ", lang)
+
+    //console.log("navigation is ", navigation)
+
+    console.log("drawerNavigation is", drawerNavigation)
+
+    const navigateDrawer = () => {
+        drawerNavigation.navigate("noun");
+    };
 
     const PracticeText = 'Practice your sentence'
 
@@ -183,7 +192,7 @@ const SayModal = ({ sentence,
         }
         else if (sentenceSaved) {
             return (
-                <TouchableOpacity style={styles.grayButton} onPress={() => {navigation.navigate('Phrasebook'); close()}}>
+                <TouchableOpacity style={styles.grayButton} onPress={() => {navigateDrawer(); close()}}>
                     <Text style={[styles.smallText, { paddingLeft: 10} ]}>Go to phrasebook</Text>
                 </TouchableOpacity>
             )
@@ -200,7 +209,7 @@ const SayModal = ({ sentence,
         }
         else if (sentenceSaved) {
             return (
-                <TouchableOpacity style={styles.grayButton} onPress={() => {nnavigation.navigate('Phrasebook'); close()}}>
+                <TouchableOpacity style={styles.grayButton} onPress={() => {navigateDrawer(); close()}}>
                     <Text style={[styles.smallText, { paddingLeft: 10} ]}>Go to phrasebook</Text>
                 </TouchableOpacity>
             )

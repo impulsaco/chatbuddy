@@ -230,7 +230,9 @@ export default ({ navigation, route }) => {
         setIsMounted(true);
     };
 
-    const sayModal = () => {
+    const drawerNavigation = navigation
+
+    const sayModal = (drawerNavigation) => {
         if (sayVisible !== "invisible") {
             return (
                 <Tab.Screen
@@ -244,6 +246,7 @@ export default ({ navigation, route }) => {
                         {props => (
                             <SayModal 
                             {...props}
+                            drawerNavigation={drawerNavigation}
                             sentence={sentence} 
                             sentenceEn={sentenceEn}
                             sayVisible={sayVisible}
@@ -329,7 +332,7 @@ export default ({ navigation, route }) => {
                     component={WordRoute(route, setUserWords, userWords, words, translations, sentence, setSentence, setForward, resetSentence, toggleTranslations, `tab-screen-${index}`)}
                     />                    
                     ))}       
-                    {sayModal()}                                                                                                                     
+                    {sayModal(drawerNavigation)}                                                                                                                     
                     </Tab.Navigator>                    
                 </View>                
             </DraxProvider>
