@@ -40,13 +40,44 @@ const WordRoute = (type, setUserWords, userWords, words, translations, sentence,
   return () => (
     <View style={styles.wordContainer}>
       <View style={styles.dragLimit}>
-        <DraxScrollView contentContainerStyle={styles.dragContainer}>                  
-          <AddWord type={type} setUserWords={setUserWords} userWords={userWords} langCode={langCode}/>      
-          {userWords.filter ? userWords.filter(obj => {return obj.type === type})
-            .map((word) => <DraggableWord key={word.id} word={word} translations={translations} sentence={sentence} setSentence={setSentence} setForward={setForward}/>) : null}
-          {words.filter(obj => {return obj.type === type})
-            .map((word) => <DraggableWord key={word.id} word={word} translations={translations} sentence={sentence} setSentence={setSentence} setForward={setForward}/>)}
-        </DraxScrollView>
+      <DraxScrollView contentContainerStyle={styles.dragContainer}>
+        <AddWord
+          type={type}
+          setUserWords={setUserWords}
+          userWords={userWords}
+          langCode={langCode}          
+        />
+        {userWords.filter
+          ? userWords
+              .filter((obj) => {
+                return obj.type === type;
+              })
+              .map((word, index) => (
+                <DraggableWord
+                  key={word.id}
+                  word={word}
+                  translations={translations}
+                  sentence={sentence}
+                  setSentence={setSentence}
+                  setForward={setForward}
+                />
+              ))
+          : null}
+        {words
+          .filter((obj) => {
+            return obj.type === type;
+          })
+          .map((word, index) => (
+            <DraggableWord
+              key={word.id}
+              word={word}
+              translations={translations}
+              sentence={sentence}
+              setSentence={setSentence}
+              setForward={setForward}
+            />
+          ))}
+      </DraxScrollView>
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.switchContainer} onPress={() => toggleTranslations()}>

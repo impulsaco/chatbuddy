@@ -6,7 +6,6 @@ const googleTranslateWord = async (word, lang) => {
 
 // const [sentenceTrans, setSentenceTrans] = useState("")
 
-    console.log("Translating  ", word)
     // console.log("setState function is", setTranslation)
     let fromLang = 'en';
     let toLang = lang; // translate to target language

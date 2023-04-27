@@ -6,18 +6,14 @@ import { supabase } from '../../lib/supabase';
 // Romanize sentence
 
 const romanizer = (input, setSentenceRomanized, lang, langCode, session) => {
-    console.log("entered romanizer")
 
     const romanizeSentence = async (input, lang, langCode) => {
-        console.log("entered romanizeSentence")                        
         
         if (langCode === "ko" || langCode === "bg") {
             const prompt = `Romanize the following sentence in  ${lang}: ${input}. Output only the romanized sentence`;
-            console.log("prompt is", prompt)
             const role = `Simple ${lang} romanizer.`;
             const costPerToken = 0.002/1000;
             let sentenceRomanizedTemp = "";
-            console.log("ROMANIZING API")            
             const response = await axios.post('https://api.openai.com/v1/chat/completions', {
                 model: "gpt-3.5-turbo",
                 messages: [{"role": "user", "content": role}, {"role": "system", "content": prompt}],
@@ -32,7 +28,6 @@ const romanizer = (input, setSentenceRomanized, lang, langCode, session) => {
 
             // Save call to Supabase
             const saveCall = async () => {  
-                console.log("saving romanizer call!")      
                 const { error } = await supabase
                 .from('aiUsage')
                 .insert({ 

@@ -9,7 +9,7 @@ import { supabase } from '../lib/supabase';
 const PAGE_HEIGHT = Dimensions.get('window').height;
 const PAGE_WIDTH = Dimensions.get('window').width;
 
-const AddWord = ({ type, setUserWords, userWords, langCode }) => {
+const AddWord = ({ type, setUserWords, userWords, langCode, style }) => {
 
     // Create variables for modal
 
@@ -19,6 +19,15 @@ const AddWord = ({ type, setUserWords, userWords, langCode }) => {
     // Retrieve user session
 
     const [session, setSession] = useState()
+
+    let height = 54
+
+    if (langCode === "ko" || langCode === "bg") {
+        height = PAGE_HEIGHT*.09
+    }
+    else {
+        height = PAGE_HEIGHT*.06
+    }
 
     /*useEffect(() => {
         supabase.auth.getSession().then(({ data: { session } }) => {
@@ -71,7 +80,7 @@ const AddWord = ({ type, setUserWords, userWords, langCode }) => {
     return (
         <View>
             <View style={styles.container}>
-                <TouchableOpacity style={styles.plusCard} onPress={() => setModalVisible(true)} >
+                <TouchableOpacity style={[styles.plusCard, style, { height: height }]} onPress={() => setModalVisible(true)} >
                     <Plus style={[{fill: 'black'}]}/>
                 </TouchableOpacity>
             </View>
@@ -120,7 +129,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         position: 'relative',
         width: PAGE_WIDTH*.22,
-        height: 54,
+        //height: height,
         margin: 10,
     }, 
     text: {

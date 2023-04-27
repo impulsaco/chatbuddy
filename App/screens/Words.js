@@ -5,6 +5,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { DraxProvider, DraxScrollView } from 'react-native-drax';
 import Sentence from "../screens/Sentence"
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { useFocusEffect } from '@react-navigation/native';
 import DraggableWord from '../components/DraggableWord';
 import WordMenu from '../components/WordMenu';
 import Header from '../components/Header';
@@ -115,6 +116,19 @@ export default ({ navigation, route }) => {
         setForward(sentenceInit[0].type)
         setSayVisible("invisible")
     }
+
+    useFocusEffect(        
+        React.useCallback(() => {
+          console.log("REFRESHING")
+          resetSentence();
+      
+          return () => {
+            // You can perform cleanup here, if needed.
+          };
+        }, [])
+      );
+      
+
 
     const toggleTranslations = () => {
         if (translations === true) {

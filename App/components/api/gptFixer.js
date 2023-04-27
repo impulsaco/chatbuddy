@@ -35,7 +35,7 @@ const gptFixer = (lang, langCode, sentence, saveSentenceText, session, setSenten
     const prompt = `Make a simple sentence in ${lang} using only these four words, keeping in mind the English meaning of each word: ${JSON.stringify(sentence)}. Output only the ${lang} sentence, not the English one. Nothing besides the sentence, no parentheses or explanations.`;
     const role = `Helping beginners in ${lang} make a simple sentence.`;
   
-    console.log("fixSentence is running")
+    console.log("fixSentence is running OPEN AI CREDITS!!")
     const response = await axios.post('https://api.openai.com/v1/chat/completions', {
       model: "gpt-3.5-turbo",
       messages: [{"role": "user", "content": role}, {"role": "system", "content": prompt}],
@@ -51,7 +51,6 @@ const gptFixer = (lang, langCode, sentence, saveSentenceText, session, setSenten
 
     // Save call to Supabase
     const saveCall = async () => {  
-      console.log("saving!")      
       const { error } = await supabase
       .from('aiUsage')
       .insert({ 

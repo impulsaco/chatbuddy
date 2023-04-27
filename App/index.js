@@ -240,7 +240,7 @@ const PAGE_WIDTH = Dimensions.get('window').width;
 /// github reorg
 
 // New UX bugs
-/// Language not changing well from phrasebook
+/// Language not changing well from phrasebook DONE
 /// Navigating away should reset builder, buggy
 
 //Other

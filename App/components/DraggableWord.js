@@ -1,8 +1,9 @@
-import { StyleSheet, Platform } from "react-native";
+import React from "react";
+import { StyleSheet, Platform, TouchableOpacity } from "react-native";
 import WordCard from "./WordCard";
 import Draggable from 'react-native-draggable';
 import { DraxProvider, DraxView, DraxList } from 'react-native-drax';
-import { TouchableOpacity } from "react-native-gesture-handler";
+//import { TouchableOpacity } from "react-native-gesture-handler";
 
 
 const styles = StyleSheet.create({
@@ -14,10 +15,10 @@ const styles = StyleSheet.create({
     },
   })
 
-const DraggableWord = ({word, translations, sentence, setSentence, setForward}) => {
+  const DraggableWord = (({ word, translations, sentence, setSentence, setForward }) => {
     
     // sentence updater for on tap change for Android
-    updateSentence = (wordTapped) => {
+    const updateSentence = (wordTapped) => {
         let newSentence = [...sentence]
         let index = sentence.findIndex(item => item.type === wordTapped.type)
         newSentence[index] = wordTapped
@@ -62,18 +63,20 @@ const DraggableWord = ({word, translations, sentence, setSentence, setForward}) 
     }
 
     else if (Platform.OS === 'android') { */
-        return (
-            <TouchableOpacity onPress = {() => updateSentence(word)}>
-                <WordCard style={[{borderColor: '#FFC107'}]}
-                    word = { word } 
-                    translations = { translations }
-                    menu = { false }
-                />
-            </TouchableOpacity>
-        )
+    return (
+        <TouchableOpacity onPress={() => updateSentence(word)}>
+          <WordCard
+            style={[{ borderColor: '#FFC107' }]}
+            word={word}
+            translations={translations}
+            menu={false}
+          />
+        </TouchableOpacity>
+      );
+      
    // }
 
     
-}
+})
 
 export default DraggableWord

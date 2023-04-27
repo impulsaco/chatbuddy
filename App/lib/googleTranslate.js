@@ -7,7 +7,6 @@ const googleTranslate = async (savedSentence, lang, setSentenceEn) => {
 
 // const [sentenceTrans, setSentenceTrans] = useState("")
 
-    console.log("Translating sentence ", savedSentence)
     let fromLang = lang;
     let toLang = 'en'; // translate to English
 
@@ -16,7 +15,6 @@ const googleTranslate = async (savedSentence, lang, setSentenceEn) => {
     url += `&source=${fromLang}`;
     url += `&target=${toLang}`;
 
-    console.log("url is ", url)
 
     
     const result = await fetch(url, { 
