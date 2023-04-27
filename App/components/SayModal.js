@@ -43,11 +43,9 @@ const SayModal = ({ drawerNavigation,
         }
       }, [onMounted]);
 
-    console.log("lang is ", lang)
 
     //console.log("navigation is ", navigation)
 
-    console.log("drawerNavigation is", drawerNavigation)
 
     const navigateDrawer = () => {
         drawerNavigation.navigate("noun");
@@ -95,6 +93,7 @@ const SayModal = ({ drawerNavigation,
         setTopText(PracticeText);
         setBottomText(' ');
         setSentenceSaved(false)
+        setSayVisible("record")
         // reset sentence states
         // setSentence(sentenceInit); // full reset of sentence
         //setSentenceReady(false);
@@ -102,9 +101,8 @@ const SayModal = ({ drawerNavigation,
         //setSentenceText(" ")
         //setSentenceEn(" ")
         //setSentenceRomanized(null)
-        //setSentenceFixed(false)
-        console.log("sentenceInit[0].type is ", sentenceInit[0].type)
-        setForward(sentenceInit[0].type)
+        //setSentenceFixed(false)        
+        setForward(sentenceInit[(sentenceInit.length-1)].type)
     }
 
     const leave = () => {
@@ -115,6 +113,7 @@ const SayModal = ({ drawerNavigation,
         setTopText(PracticeText);
         setBottomText(' ');
         setSentenceSaved(false)
+        setSayVisible("record")
         // reset sentence states
         // setSentence(sentenceInit); // full reset of sentence
         //setSentenceReady(false);
@@ -136,9 +135,7 @@ const SayModal = ({ drawerNavigation,
 
     // Logic for which modal renders
     useEffect(() => {
-        console.log("UPDATE!", attempted, sayVisible)
         if (attempted && (sayVisible==="success")) {
-            console.log("attempted HERE is ", attempted)
             if (lang === "Spanish") {
                 setTopText("¡Felicidades! 🚀 We understood everything :) Save it to your phrasebook?")
               }  
@@ -256,11 +253,7 @@ const SayModal = ({ drawerNavigation,
             
 
     const sayModal = () => {        
-        
-
-        console.log("sayVisible in sayModal() is ", sayVisible)
         if (sayVisible==="record") {      
-            console.log("sayVisible in sayModal() is ", sayVisible) // testing      
             return (
                 <View style={styles.modalContainer}> 
                     <View style={styles.topContainer}>

@@ -35,6 +35,7 @@ const EmptySentence = ( {navigation, type, lang, langCode, setMenuVisible} ) => 
     }
      // For translations
     // 
+
     return (
         <View style={{width : '100%'}}>
             <TouchableOpacity style={styles.sentenceCard} onPress={() => navigation.navigate('Build', {wordSet: destination(type), lang: lang, langCode: langCode})}>

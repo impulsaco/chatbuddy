@@ -47,10 +47,6 @@ const SentenceFixer = (sentence,
                       ) => {
 
     console.log("within fixer, sentence is ", sentence)
-
-    console.log("sentenceType in FIXER is ", sentenceType)
-
-    console.log("SESSION IS ", session)
     
     console.log("within fixer, sayVisible is ", sayVisible)
 

@@ -139,7 +139,7 @@ const Phrasebook = ({navigation, route}) => {
             for (let i = 2; i < options.length; i++) {
                 if (selectedIndex === i) {
                     setLang(options[i]);
-                    setLangCode(langCodes[i-2])
+                    setLangCode(langCodes[i])
                     break;
                 }
             }

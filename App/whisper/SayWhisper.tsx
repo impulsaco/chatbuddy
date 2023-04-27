@@ -603,8 +603,8 @@ const styles = StyleSheet.create({
   stopButton: {
     backgroundColor: "red",
     borderRadius: 2,
-    width: 40,
-    height: 40,
+    width: 100,
+    height: 100,
     marginRight: PAGE_WIDTH*.03,
   },
   stopText: {

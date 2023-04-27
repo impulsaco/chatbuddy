@@ -113,6 +113,7 @@ export default ({ navigation, route }) => {
         setSentenceRomanized(null)
         setSentenceFixed(false)
         setForward(sentenceInit[0].type)
+        setSayVisible("invisible")
     }
 
     const toggleTranslations = () => {
@@ -222,9 +223,9 @@ export default ({ navigation, route }) => {
 
     useEffect(() => {
         if (isMounted && sayVisible === 'record') {
-        setForward('SayModal');
+            setForward('SayModal');
         }
-    }, [isMounted, sayVisible]);
+    }, [isMounted, sayVisible, sentence]);
 
     const handleSayModalMounted = () => {
         setIsMounted(true);

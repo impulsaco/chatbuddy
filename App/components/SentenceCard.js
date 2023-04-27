@@ -55,7 +55,6 @@ const SentenceCard = ( {id, sentence, translation, translations, langCode, block
     } 
 
     async function deleteSentence(id) {        
-        console.log("in deleteSentence, sentence.id is: ", id)
         
         const { error } = await supabase
         .from('sentences')

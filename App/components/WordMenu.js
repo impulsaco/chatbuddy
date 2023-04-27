@@ -18,14 +18,14 @@ const WordMenu = ({ state, navigation, forward, setForward, words, sentence, set
   // Move forward if new word entered
 
   useEffect(() => {
-    if (forward !== "") {
-      console.log("navigation HERE is ", navigation)
-      console.log("forward is ", forward)
-      console.log("navigation is ", navigation.navigate)
-      navigation.navigate(forward);
+    if (forward !== "") {      
+      setTimeout(() => {
+        navigation.navigate(forward);
+        setForward("");
+      }, 100); // Add a delay of 100 milliseconds
       setForward("")
     }
-  }, [forward]) 
+  }, [forward, sentence]) 
 
   // Sets background color of tabs if pressed (disabled for now)
   const color = (pageName, currentIndex) => {

@@ -185,19 +185,19 @@ const PAGE_WIDTH = Dimensions.get('window').width;
 /// Menu non-functional on first login DONE
 
 // App Store
-/// New phrases
-/// Romanization
-/// Better instructions
-/// Phrasebook category & counters
-/// Phrase playback & practice modal
+/// New phrases DONE 
+/// Romanization DONE 
+/// Better instructions DONE 
+/// Phrasebook category & counters DONE 
+/// Phrase playback & practice modal DONE
 /// Sentry bugs
-/// Easy UX tweaks
-/// Update to GPT 3.5, tweak prompt (limits)
+/// Easy UX tweaks DONE
+/// Update to GPT 3.5, tweak prompt (limits) DONE
 /// Payment for more phrases?
 /// Saved words
 /// GPT3 sentence coloring 
-/// Delete words
-/// Delete phrases
+/// Delete words 
+/// Delete phrases DONE
 /// Activate shuffle button
 
 // Lower priority 
@@ -239,6 +239,10 @@ const PAGE_WIDTH = Dimensions.get('window').width;
 /// permanent site for google login
 /// github reorg
 
+// New UX bugs
+/// Language not changing well from phrasebook
+/// Navigating away should reset builder, buggy
+
 //Other
 /// Nudges for spaced repetition
 /// Edge cases cleanup
@@ -247,8 +251,8 @@ const PAGE_WIDTH = Dimensions.get('window').width;
 
 //CLEANUP
 
-// Remove Draggable
-// Solve child warning
+// Remove Draggable DONE
+// Solve child warning DONE
 
 // LIBRARIES
 /// react-native-drax
@@ -305,8 +309,6 @@ export default function App() { // MAIN APP ENTRY POINT
 
   const [menuVisible, setMenuVisible] = useState(false);
 
-  console.log('showRealApp: ', showRealApp)
-
   const renderItem = ({ item }) => {
     return (
       <View style={styles.slide}>
@@ -321,7 +323,6 @@ export default function App() { // MAIN APP ENTRY POINT
   const onDone = () => {
     // User finished the introduction. Show real app through
     // navigation or simply by controlling state
-    console.log('onDone running!')
     setShowRealApp(true);
   }  
 
