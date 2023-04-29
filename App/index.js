@@ -241,7 +241,7 @@ const PAGE_WIDTH = Dimensions.get('window').width;
 
 // New UX bugs
 /// Language not changing well from phrasebook DONE
-/// Navigating away should reset builder, buggy
+/// Navigating away should reset builder, buggy DONE
 
 //Other
 /// Nudges for spaced repetition

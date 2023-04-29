@@ -105,7 +105,7 @@ const SayModal = ({ drawerNavigation,
         setForward(sentenceInit[(sentenceInit.length-1)].type)
     }
 
-    const leave = () => {
+    const clearStart = () => {
         //setSayVisible("invisible"); // MAKE THIS WORK WITHOUT RETURNING TO SCREEN
         setAttempted(false);
         setSentenceSaidPercentage(0);
@@ -125,6 +125,10 @@ const SayModal = ({ drawerNavigation,
         //console.log("sentenceInit[0].type is ", sentenceInit[0].type)
         //setForward(sentenceInit[0].type)
     }
+
+    useEffect(() => {
+        clearStart()
+    }, [])
 
     const keepImproving = () => {
         setSayVisible("record");
@@ -209,7 +213,7 @@ const SayModal = ({ drawerNavigation,
         }
         else if (sentenceSaved) {
             return (
-                <TouchableOpacity style={styles.grayButton} onPress={() => {setNavigatePhrasebook(true); leave()}}>
+                <TouchableOpacity style={styles.grayButton} onPress={() => {setNavigatePhrasebook(true)}}>
                     <Text style={[styles.smallText, { paddingLeft: 10} ]}>Go to phrasebook</Text>
                 </TouchableOpacity>
             )
@@ -226,7 +230,7 @@ const SayModal = ({ drawerNavigation,
         }
         else if (sentenceSaved) {
             return (
-                <TouchableOpacity style={styles.grayButton} onPress={() => {setNavigatePhrasebook(true); leave()}}>
+                <TouchableOpacity style={styles.grayButton} onPress={() => {setNavigatePhrasebook(true)}}>
                     <Text style={[styles.smallText, { paddingLeft: 10} ]}>Go to phrasebook</Text>
                 </TouchableOpacity>
             )
