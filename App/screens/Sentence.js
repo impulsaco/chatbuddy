@@ -216,6 +216,7 @@ const Sentence = ({
     const analyzeSentence = () => {
         return (
             <View style={styles.sentenceAnalyzed}>
+                <View style={styles.wordsContainer}>
                     {sentenceAnalyzed.map(
                         (word, id) => (
                             <AnalyzeWord 
@@ -224,6 +225,7 @@ const Sentence = ({
                             />
                         ))
                     }
+                </View>
             </View>
         )
     }
@@ -459,6 +461,11 @@ const styles = StyleSheet.create({
     },
     sentenceAnalyzed: {
         flexDirection: 'row',
+        width: PAGE_WIDTH*0.8,
+    },
+    wordsContainer: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
     },
   })
 

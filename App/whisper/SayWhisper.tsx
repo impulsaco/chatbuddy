@@ -40,7 +40,8 @@ export default ({
   setCloseVisible,
   session
 }) => {
-  console.log("sentenceWhisper before new is ", sentenceWhisper)
+  console.log("sentenceWhisper before new is ", sentenceWhisper)  
+
   const [recording, setRecording] = React.useState(false as any);
   const [recordingDone, setRecordingDone] = React.useState(false);
   const [recordings, setRecordings] = React.useState([]);
@@ -57,6 +58,7 @@ export default ({
   const [isLoading, setLoading] = React.useState(false);
   const [sound, setSound] = React.useState(null); // for audio playback
   const intervalRef: any = React.useRef(null);
+
 
   const stopTranscriptionSessionRef = React.useRef(stopTranscriptionSession);
   stopTranscriptionSessionRef.current = stopTranscriptionSession;
@@ -181,17 +183,47 @@ export default ({
     setTranscribeTimout(newTimeout);
   }
 
-  async function startRecording() {    
-    try {
-      console.log("Requesting permissions..");
-      const permission = await Audio.requestPermissionsAsync();
+  async function requestPermission() {
+    console.log("Requesting permissions..");
+    const permission = await Audio.requestPermissionsAsync();
+    console.log("permission is ", permission);
+    if (permission.status === "granted") {
+      console.log("permission granted");
+    } else {
+      console.log("permission denied");
+      setMessage("Please grant permission to app to access microphone");
+    }
+  }
+
+  React.useEffect(() => {
+    requestPermission();
+  }, []);  
+  
+
+  async function startRecording() {  
+    //Request permission
+    console.log("Requesting permissions..");
+    const permission = await Audio.requestPermissionsAsync();  
+    console.log("permission is ", permission)
+
+    const updateStates = async () => {
+      setTopText("Hit the stop button when done:");
+      setBottomText("Recording...");
+      setStopTranscriptionSession(false);
+      setIsRecording(true);
+    };
+
+    try { 
+      console.log("entering try block")
+      console.log("permission is NOW", permission)     
       if (permission.status === "granted") {
+        console.log("have permission")
         await Audio.setAudioModeAsync({
           allowsRecordingIOS: true,
           playsInSilentModeIOS: true,
-        });
-        setTopText("Hit the stop button when done:")
-        setBottomText("Recording...")
+        }); // ADD IF PREMISSION STATUS NOT GRANTED QUITE YET!!
+        //setTopText("Hit the stop button when done:")
+        //setBottomText("Recording...")
         const RECORDING_OPTIONS_PRESET_LOW_QUALITY: any = {
           android: {
             extension: ".mp4",
@@ -218,20 +250,25 @@ export default ({
         );
         setRecording(recording);
         console.log("Recording started");
-        setStopTranscriptionSession(false);
-        setIsRecording(true);
+        await Promise.all([updateStates()]);
         /*intervalRef.current = setInterval(
           transcribeInterim,
           transcribeTimeout * 1000
         );*/
         console.log("erer", recording);
       } else {
-        setMessage("Please grant permission to app to access microphone");
+        console.log("permission denied")
+        setMessage("Please grant permission to app to access microphone");        
       }
     } catch (err) {
+      console.log("ERROR")
       console.error(" Failed to start recording", err);
     }
   }  
+
+  React.useEffect(() => {    
+    console.log("ACTIVATING RECORD")
+  }, [isRecording])
 
   React.useEffect(() => {
     console.log("close UseEffect")
@@ -493,8 +530,8 @@ export default ({
   
   return (
     <View style={styles.container}>
-        {!isRecording && !isTranscribing && !recordingDone && (
-          <View style={styles.middleContainer}> 
+        {!isRecording && !isTranscribing && !recordingDone && (          
+          <View style={styles.middleContainer}>             
             {/* 
               <TouchableOpacity style={styles.playBack} onPress={() => sentenceSpeak(sentenceText, langCode)}>                
                 <Sound/>                
