@@ -241,7 +241,7 @@ const PAGE_WIDTH = Dimensions.get('window').width;
 
 // New UX bugs
 /// Language not changing well from phrasebook DONE
-/// Navigating away should reset builder, buggy DONE
+/// Navigating away should reset builder, buggy
 
 //Other
 /// Nudges for spaced repetition
@@ -389,7 +389,6 @@ export default function App() { // MAIN APP ENTRY POINT
                     <Drawer.Screen name="LogIn" component={LogIn} />
                     <Drawer.Screen name="Choose" component={withSetMenuVisible(PhraseSelector)}/>
                     <Drawer.Screen name="Build" component={Words} />
-                    <Drawer.Screen name="VoiceGPT" component={VoiceGPT} />
                     <Drawer.Screen name="Phrasebook" component={withSetMenuVisible(Phrasebook)} />                  
                   </Drawer.Navigator>                
               </LanguageContext.Provider>
