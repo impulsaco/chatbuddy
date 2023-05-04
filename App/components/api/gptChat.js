@@ -29,7 +29,7 @@ const gptChat = (previousMessages, newMessage, setResponse) => {
     },
     {
       role: 'system',
-      content: `Give a friendly response (no emojis) to this message in less than 100 characters: ${newMessage}.`,
+      content: `You are a friendly AI that responds in less than 50 characters`,
     },
   ];
 

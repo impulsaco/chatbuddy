@@ -12,13 +12,15 @@ const CustomMessage = (props) => {
   const textColor = isSameUser ? 'white' : 'black';
   const containerAlignment = isSameUser ? 'flex-end' : 'flex-start';
   const bubbleAlignment = isSameUser ? 'row-reverse' : 'row';
+  const marginBubble = isSameUser ? { marginLeft: 80 } : { marginRight: 80 };
+  const marginEdge = isSameUser ? { marginRight: 10 } : { marginLeft: 0 };
 
   return (
     <View style={[styles.container, { alignItems: containerAlignment }]}>
       <View style={[styles.messageRow, { flexDirection: bubbleAlignment }]}>
         {!isSameUser && <Avatar {...props} containerStyle={styles.avatar} />}
         <View>
-          <View style={[styles.bubble, { backgroundColor }]}>
+          <View style={[styles.bubble, { backgroundColor }, marginBubble, marginEdge]}>
             <MessageText
               {...props}
               textStyle={{ left: { color: textColor }, right: { color: textColor } }}
@@ -49,10 +51,11 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   bubble: {
-    paddingHorizontal: 10,
-    paddingTop: 5,
-    paddingBottom: 10,
-    borderRadius: 20,
+    borderRadius: 15,
+    minHeight: 20,
+    justifyContent: 'flex-end',
+
+    flexWrap: 'wrap',    
   },
   translation: {
     fontStyle: 'italic',
