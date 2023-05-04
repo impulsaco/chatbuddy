@@ -5,10 +5,13 @@ import 'react-native-url-polyfill/auto'
 import { supabase } from '../../lib/supabase';
 import { SessionContext } from '../../lib/SessionContext';
 import romanizer from './romanizer';
+import { LanguageContext } from '../../lib/LanguageContext';
+
 
 
 
 const gptChat = (previousMessages, newMessage, setResponse) => {
+
   
   const costPerToken = 0.002/1000;
   console.log("RESPOND is running. SPENDING TOKENS!!")
@@ -17,7 +20,7 @@ const gptChat = (previousMessages, newMessage, setResponse) => {
   const role = `A helpful AI language model in a voice chat.`;
   const structuredMessages = [
     ...previousMessages.map((message) => ({          
-      role: message.user._id === 1 ? 'user' : 'system',
+      role: message.user._id === 1 ? 'user' : 'assistant',
       content: message.text,
     })),
     {
@@ -25,7 +28,7 @@ const gptChat = (previousMessages, newMessage, setResponse) => {
       content: newMessage,
     },
     {
-      role: 'assistant',
+      role: 'system',
       content: `Give a friendly response (no emojis) to this message in less than 100 characters: ${newMessage}.`,
     },
   ];
@@ -38,6 +41,7 @@ const gptChat = (previousMessages, newMessage, setResponse) => {
   const respondGpt = async () => {
 
     if (tokenCount < 3500) {
+      console.log("structuredMessages are", structuredMessages)
       const response = await axios.post('https://api.openai.com/v1/chat/completions', {
       model: "gpt-3.5-turbo",
       messages: structuredMessages,

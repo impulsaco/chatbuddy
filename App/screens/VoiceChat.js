@@ -19,6 +19,10 @@ import { Keyboard } from 'react-native';
 import { KeyboardAvoidingView } from 'react-native';
 import gptChat from '../components/api/gptChat';
 import chatSpeak from '../lib/chatSpeak';
+import { LanguageContext } from '../lib/LanguageContext';
+import avatar from '../../assets/avatar.png';
+import CustomMessage from '../components/CustomMessage';
+
 
 
 
@@ -33,6 +37,8 @@ const VoiceChat = ({
     const [messages, setMessages] = useState([]);
 
     const [response, setResponse] = useState(null);
+
+    const { langCode, setLangCode, lang, setLang } = useContext(LanguageContext);    
     
     // Update messages upon whisper running
     useEffect(() => {
@@ -43,6 +49,7 @@ const VoiceChat = ({
             const newMessageData = {
                 _id: Math.random().toString(36).substring(7),
                 text: newMessage,
+                translation: "bla bla bla",
                 createdAt: new Date(),
                 user: {
                     _id: 1, // Replace with a unique identifier for the user
@@ -67,11 +74,12 @@ const VoiceChat = ({
             const newMessageData = {
                 _id: Math.random().toString(36).substring(7),
                 text: response,
+                translation: "bla bla bla",
                 createdAt: new Date(),
                 user: {
                     _id: 2, // Replace with a unique identifier for the user
                     name: 'Gepetia', // Replace with the user's name
-                    avatar: 'https://placeimg.com/140/140/any', // Replace with the user's avatar URL
+                    avatar: avatar, // Replace with the user's avatar URL
                 },
                 };
             setMessages((previousMessages) =>
@@ -107,7 +115,8 @@ const VoiceChat = ({
             onSend={onSend}
             user={{
                 _id: 1,
-            }}        
+            }}
+            renderMessage={(props) => <CustomMessage {...props} />}   
             keyboardShouldPersistTaps="never" // This prevents the keyboard from persisting after send
             keyboardVerticalOffset={Platform.select({ ios: 0, android: 500 })}
             bottomOffset={300}

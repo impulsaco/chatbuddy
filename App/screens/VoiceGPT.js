@@ -21,6 +21,8 @@ const PAGE_HEIGHT = Dimensions.get('window').height;
 
 export default ({ navigation, route }) => {
 
+    const { langCode, setLangCode, lang, setLang } = useContext(LanguageContext);    
+
     const[newMessage, setNewMessage] = useState("Hello World")
     
     return (
