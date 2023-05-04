@@ -22,113 +22,96 @@ import chatSpeak from '../lib/chatSpeak';
 import { LanguageContext } from '../lib/LanguageContext';
 import avatar from '../../assets/avatar.png';
 import CustomMessage from '../components/CustomMessage';
+import googleTranslateWordEng from '../lib/googleTranslateWordEng';
 
 
 
 
 const PAGE_HEIGHT = Dimensions.get('window').height;
 const PAGE_WIDTH = Dimensions.get('window').width;
-
-const VoiceChat = ({ 
-    newMessage,
-    setNewMessage,
-    }) => {
-
+const VoiceChat = ({ newMessage, setNewMessage }) => {
     const [messages, setMessages] = useState([]);
-
     const [response, setResponse] = useState(null);
-
-    const { langCode, setLangCode, lang, setLang } = useContext(LanguageContext);    
-    
-    // Update messages upon whisper running
+  
+    const { langCode, setLangCode, lang, setLang } = useContext(LanguageContext);
+  
+    const handleNewMessage = async (message) => {
+      const translatedText = await googleTranslateWordEng(message, langCode);
+  
+      const newMessageData = {
+        _id: Math.random().toString(36).substring(7),
+        text: message,
+        translation: translatedText,
+        createdAt: new Date(),
+        user: {
+          _id: 1,
+          name: 'John Doe',
+          avatar: 'https://placeimg.com/140/140/any',
+        },
+      };
+  
+      setMessages((previousMessages) => GiftedChat.append(previousMessages, newMessageData));
+      gptChat(messages, message, setResponse, lang);
+    };
+  
     useEffect(() => {
-
-        console.log("newMessage UPDATED: ", newMessage)
-        
-        if (newMessage) {
-            const newMessageData = {
-                _id: Math.random().toString(36).substring(7),
-                text: newMessage,
-                translation: "bla bla bla",
-                createdAt: new Date(),
-                user: {
-                    _id: 1, // Replace with a unique identifier for the user
-                    name: 'John Doe', // Replace with the user's name
-                    avatar: 'https://placeimg.com/140/140/any', // Replace with the user's avatar URL
-                },
-              };
-          setMessages((previousMessages) =>
-            GiftedChat.append(previousMessages, newMessageData),
-          );
-          gptChat(messages, newMessage, setResponse);
-        }
-      }, [newMessage]);
-
-    // Update messages upong GPT response received
-
-    useEffect(() => {
-
-        console.log("response UPDATED in VOICECHAT: ", response)
-        chatSpeak(response, "en-US");
+      if (newMessage) {
+        handleNewMessage(newMessage);
+      }
+    }, [newMessage]);
+  
+    const handleIncomingMessage = async (message) => {
+        const translatedText = await googleTranslateWordEng(message, langCode);
+      
+        const newMessageData = {
+          _id: Math.random().toString(36).substring(7),
+          text: message,
+          translation: translatedText,
+          createdAt: new Date(),
+          user: {
+            _id: 2,
+            name: 'Gepetia',
+            avatar: avatar,
+          },
+        };
+      
+        setMessages((previousMessages) => GiftedChat.append(previousMessages, newMessageData));
+      };
+      
+      useEffect(() => {
+        chatSpeak(response, langCode);
         if (response) {
-            const newMessageData = {
-                _id: Math.random().toString(36).substring(7),
-                text: response,
-                translation: "bla bla bla",
-                createdAt: new Date(),
-                user: {
-                    _id: 2, // Replace with a unique identifier for the user
-                    name: 'Gepetia', // Replace with the user's name
-                    avatar: avatar, // Replace with the user's avatar URL
-                },
-                };
-            setMessages((previousMessages) =>
-                GiftedChat.append(previousMessages, newMessageData),
-            );
+          handleIncomingMessage(response);
         }
-    }, [response]);
-
+      }, [response]);
+      
+  
     const onSend = (newMessages = []) => {
-        const user = {
-            _id: 1,
-            name: 'John Doe',
-            avatar: 'https://placeimg.com/140/140/any',
-          };
-          setNewMessage(newMessages[0].text);
-          /*
-          const newMessage = {
-            _id: Math.random().toString(36).substring(7),
-            text: newMessages[0].text,
-            createdAt: new Date(),
-            user: user,
-          };*/
-          
-            Keyboard.dismiss();
-          
-        
-          //setMessages(previousMessages => GiftedChat.append(previousMessages, [newMessage]));
-    };   
-    
+      setNewMessage(newMessages[0].text);
+      Keyboard.dismiss();
+    };
+  
     return (
-        <GiftedChat
-            messages={messages}
-            onSend={onSend}
-            user={{
-                _id: 1,
-            }}
-            renderMessage={(props) => <CustomMessage {...props} />}   
-            keyboardShouldPersistTaps="never" // This prevents the keyboard from persisting after send
+      <GiftedChat
+        messages={messages}
+        onSend={onSend}
+        user={{
+          _id: 1,
+        }}
+        renderMessage={(props) => <CustomMessage {...props} />}
+        keyboardShouldPersistTaps="never"
+        keyboardVerticalOffset={Platform.select({ ios: 0, android: 500 })}
+        bottomOffset={300}
+        renderChatFooter={() => (
+          <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             keyboardVerticalOffset={Platform.select({ ios: 0, android: 500 })}
-            bottomOffset={300}
-            renderChatFooter={() => (
-                <KeyboardAvoidingView
-                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                keyboardVerticalOffset={Platform.select({ ios: 0, android: 500 })}                
-                />
-            )}
-        />
-    );      
-}
+          />
+        )}
+      />
+    );
+  };
+  
 
 const styles = StyleSheet.create({
     container: {

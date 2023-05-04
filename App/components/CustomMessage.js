@@ -53,9 +53,7 @@ const styles = StyleSheet.create({
   bubble: {
     borderRadius: 15,
     minHeight: 20,
-    justifyContent: 'flex-end',
-
-    flexWrap: 'wrap',    
+    justifyContent: 'flex-end',    
   },
   translation: {
     fontStyle: 'italic',

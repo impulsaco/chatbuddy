@@ -7,10 +7,9 @@ import { SessionContext } from '../../lib/SessionContext';
 import romanizer from './romanizer';
 import { LanguageContext } from '../../lib/LanguageContext';
 
+const gptChat = (previousMessages, newMessage, setResponse, lang) => {
 
-
-
-const gptChat = (previousMessages, newMessage, setResponse) => {
+  console.log("in GPT chat, lang is ", lang)
 
   
   const costPerToken = 0.002/1000;
@@ -29,7 +28,7 @@ const gptChat = (previousMessages, newMessage, setResponse) => {
     },
     {
       role: 'system',
-      content: `You are a friendly AI that responds in less than 50 characters`,
+      content: `You are a language tutor for a beginner in ${lang}. Respond ONLY in ${lang}, no English, no parentheses. Respond in five words or less, using very simple vocabulary`,
     },
   ];
 
