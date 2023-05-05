@@ -29,7 +29,30 @@ const placesList = (lang) => {
         "type": "noun",
         "word": "NOUN",
     }  
-]
+  ]
+
+  function consolidateWordSets(nouns, subjects, verbs, prepositions, nounsTranslations, subjectsTranslations, verbsTranslations, prepositionsTranslations, nounsRomanized, subjectsRomanized, verbsRomanized, prepositionsRomanized) {
+    const words = [];
+
+    for (let i = 0; i < nouns.length; i++) {
+      words.push({ id: idCounter++, word: nouns[i], type: "noun", translation: nounsTranslations[i], romanized: nounsRomanized && nounsRomanized[i] });
+    }
+
+    for (let i = 0; i < verbs.length; i++) {
+      words.push({ id: idCounter++, word: verbs[i], type: "verb", translation: verbsTranslations[i], romanized: verbsRomanized && verbsRomanized[i] });
+    }
+
+    for (let i = 0; i < subjects.length; i++) {
+      words.push({ id: idCounter++, word: subjects[i], type: "subject", translation: subjectsTranslations[i], romanized: subjectsRomanized && subjectsRomanized[i] });
+    }
+
+    for (let i = 0; i < prepositions.length; i++) {
+      words.push({ id: idCounter++, word: prepositions[i], type: "preposition", translation: prepositionsTranslations[i], romanized: prepositionsRomanized && prepositionsRomanized[i] });
+    }
+
+    return words;
+  }
+
 
   // English set
 
@@ -54,29 +77,7 @@ const placesList = (lang) => {
 
     var subjectsEs = ['Yo', 'Tú', 'Nosotros', 'Ellos', 'Él', 'Ella']
 
-    const initialWordsEs = [];
-
-    for (var i=0; i<nounsEs.length; i++) {
-      initialWordsEs.push({id: idCounter, word: nounsEs[i], type:"noun", translation: nounsEng[i]});
-      idCounter++;  
-    }
-
-    for (var i=0; i<verbsEs.length; i++) {
-      initialWordsEs.push({id: idCounter, word: verbsEs[i], type:"verb", translation: verbsEng[i]}); 
-      idCounter++;   
-    }
-
-    for (var i=0; i<subjectsEs.length; i++) {
-      initialWordsEs.push({id: idCounter, word: subjectsEs[i], type:"subject", translation: subjectsEng[i]}); 
-      idCounter++;   
-    }
-
-    for (var i=0; i<prepositionsEs.length; i++) {
-      initialWordsEs.push({id: idCounter, word: prepositionsEs[i], type:"preposition", translation: prepositionsEng[i]}); 
-      idCounter++;   
-    }
-
-    return ["places", sentenceStructure, initialWordsEs];
+    return ["places", sentenceStructure, consolidateWordSets(nounsEs, subjectsEs, verbsEs, prepositionsEs, nounsEng, subjectsEng, verbsEng, prepositionsEng)];
 
   }
 
@@ -102,32 +103,7 @@ const placesList = (lang) => {
 
     var prepositionsKoRom = ['~(eu)ro', '~e', '~e', '~e', '~robeo', '~wie', '~arae-e', '~eul(leul) tonghae'];
 
-
-
-    const initialWordsKo = [];
-
-    // add words to initial array Korean
-    for (var i=0; i<nounsKo.length; i++) {
-      initialWordsKo.push({id: idCounter, word: nounsKo[i], type:"noun", translation: nounsEng[i], romanized: nounsKoRom[i]});
-      idCounter++;  
-    }
-
-    for (var i=0; i<verbsKo.length; i++) {
-      initialWordsKo.push({id: idCounter, word: verbsKo[i], type:"verb", translation: verbsEng[i], romanized: verbsKoRom[i]}); 
-      idCounter++;   
-    }
-
-    for (var i=0; i<subjectsKo.length; i++) {
-      initialWordsKo.push({id: idCounter, word: subjectsKo[i], type:"subject", translation: subjectsEng[i], romanized: subjectsKoRom[i]}); 
-      idCounter++;   
-    }
-
-    for (var i=0; i<prepositionsKo.length; i++) {
-      initialWordsKo.push({id: idCounter, word: prepositionsKo[i], type:"preposition", translation: prepositionsEng[i], romanized: prepositionsKoRom[i]}); 
-      idCounter++;   
-    }
-
-    return ["places", sentenceStructure, initialWordsKo];;
+    return ["places", sentenceStructure, consolidateWordSets(nounsKo, subjectsKo, verbsKo, prepositionsKo, nounsEng, subjectsEng, verbsEng, prepositionsKo, nounsKoRom, subjectsKoRom, verbsKoRom, prepositionsKoRom)];;
   }
 
   if (lang === 'bg') {
@@ -153,30 +129,7 @@ const placesList = (lang) => {
 
     var prepositionsBgRom = ['Kam', 'Na', 'V', 'Varhu', 'Ot', 'Nad', 'Pod', 'Prez'];
 
-    const initialWordsBg = [];
-
-    // add words to initial array Bulgarian
-    for (var i=0; i<nounsBg.length; i++) {
-      initialWordsBg.push({id: idCounter, word: nounsBg[i], type:"noun", translation: nounsEng[i], romanized: nounsBgRom[i]});
-      idCounter++;  
-    }
-
-    for (var i=0; i<verbsBg.length; i++) {
-      initialWordsBg.push({id: idCounter, word: verbsBg[i], type:"verb", translation: verbsEng[i], romanized: verbsBgRom[i]}); 
-      idCounter++;   
-    }
-
-    for (var i=0; i<subjectsBg.length; i++) {
-      initialWordsBg.push({id: idCounter, word: subjectsBg[i], type:"subject", translation: subjectsEng[i], romanized: subjectsBgRom[i]}); 
-      idCounter++;   
-    }
-
-    for (var i=0; i<prepositionsBg.length; i++) {
-      initialWordsBg.push({id: idCounter, word: prepositionsBg[i], type:"preposition", translation: prepositionsEng[i], romanized: prepositionsBgRom[i]}); 
-      idCounter++;   
-    }
-
-    return ["places", sentenceStructure, initialWordsBg];;
+    return ["places", sentenceStructure, consolidateWordSets(nounsBg, subjectsBg, verbsBg, prepositionsBg, nounsEng, subjectsEng, verbsEng, prepositionsBg, nounsBgRom, subjectsBgRom, verbsBgRom, prepositionsBgRom)];;
 
   }
 }

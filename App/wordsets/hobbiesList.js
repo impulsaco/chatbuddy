@@ -24,7 +24,27 @@ const hobbiesList = (lang) => {
         "type": "noun",
         "word": "NOUN",
     }  
-] 
+  ]
+  
+  // Consolidate word sets
+
+  function consolidateWordSets(nouns, subjects, verbs, nounsTranslations, subjectsTranslations, verbsTranslations, nounsRomanized, subjectsRomanized, verbsRomanized) {
+    const words = [];
+
+    for (let i = 0; i < nouns.length; i++) {
+      words.push({ id: idCounter++, word: nouns[i], type: "noun", translation: nounsTranslations[i], romanized: nounsRomanized && nounsRomanized[i] });
+    }
+
+    for (let i = 0; i < verbs.length; i++) {
+      words.push({ id: idCounter++, word: verbs[i], type: "verb", translation: verbsTranslations[i], romanized: verbsRomanized && verbsRomanized[i] });
+    }
+
+    for (let i = 0; i < subjects.length; i++) {
+      words.push({ id: idCounter++, word: subjects[i], type: "subject", translation: subjectsTranslations[i], romanized: subjectsRomanized && subjectsRomanized[i] });
+    }
+
+    return words;
+  }
 
   // English set
 
@@ -35,9 +55,9 @@ const hobbiesList = (lang) => {
   var verbsEng = ["Play", "Like", "Do", "Read", "Go for"]
 
 
-  if (lang === 'es-MX') {
+  // Spanish set
 
-    // Spanish set
+  if (lang === 'es-MX') {
 
     var nounsEs = ["Guitarra", "Tenis", "Pintura", "Escritura", "Horneado", "Cocinar", "Pescar", "Acampar", "Esquí", "Yoga", "Correr", "Libros", "Ajedrez", "Senderismo", "Ciclismo", "Badminton", "Voleibol", "Bailar", "Cantar"]
 
@@ -45,31 +65,13 @@ const hobbiesList = (lang) => {
 
     var subjectsEs = ['Yo', 'Tú', 'Nosotros', 'Ellos', 'Él', 'Ella']
 
-    const initialWordsEs = [];
-
-    for (var i=0; i<nounsEs.length; i++) {
-      initialWordsEs.push({id: idCounter, word: nounsEs[i], type:"noun", translation: nounsEng[i]});
-      idCounter++;  
-    }
-
-    for (var i=0; i<verbsEs.length; i++) {
-      initialWordsEs.push({id: idCounter, word: verbsEs[i], type:"verb", translation: verbsEng[i]}); 
-      idCounter++;   
-    }
-
-    for (var i=0; i<subjectsEs.length; i++) {
-      initialWordsEs.push({id: idCounter, word: subjectsEs[i], type:"subject", translation: subjectsEng[i]}); 
-      idCounter++;   
-    }
-
-
-    return ["hobbies", sentenceStructure, initialWordsEs];
+    return ["hobbies", sentenceStructure, consolidateWordSets(nounsEs, subjectsEs, verbsEs, nounsEng, subjectsEng, verbsEng)];
 
   }
 
-  if (lang === 'ko') {
+  // Korean set
 
-    // Korean set
+  if (lang === 'ko') {
 
     var nounsKo = ["기타", "테니스", "회화", "글쓰기", "바이킹", "요리", "낚시", "캠핑", "스키", "요가", "조깅", "책", "체스", "하이킹", "사이클링", "배드민턴", "배구", "춤추기", "노래하기"]
 
@@ -85,27 +87,7 @@ const hobbiesList = (lang) => {
 
     var subjectsKoRom = ['na', 'neo', 'uri', 'geudeul', 'geu', 'geunyeo'];
 
-
-    const initialWordsKo = [];
-
-    // add words to initial array Korean
-    for (var i=0; i<nounsKo.length; i++) {
-      initialWordsKo.push({id: idCounter, word: nounsKo[i], type:"noun", translation: nounsEng[i], romanized: nounsKoRom[i]});
-      idCounter++;  
-    }
-
-    for (var i=0; i<verbsKo.length; i++) {
-      initialWordsKo.push({id: idCounter, word: verbsKo[i], type:"verb", translation: verbsEng[i], romanized: verbsKoRom[i]}); 
-      idCounter++;   
-    }
-
-    for (var i=0; i<subjectsKo.length; i++) {
-      initialWordsKo.push({id: idCounter, word: subjectsKo[i], type:"subject", translation: subjectsEng[i], romanized: subjectsKoRom[i]}); 
-      idCounter++;   
-    }
-
-
-    return ["hobbies", sentenceStructure, initialWordsKo];;
+    return ["hobbies", sentenceStructure, consolidateWordSets(nounsKo, subjectsKo, verbsKo, nounsEng, subjectsEng, verbsEng, nounsKoRom, subjectsKoRom, verbsKoRom)];;
   }
 
   if (lang === 'bg') {
@@ -126,25 +108,7 @@ const hobbiesList = (lang) => {
 
     var verbsBgRom = ["Sviriya", "Haresvam", "Uprazhnyavam", "Cheta", "Hodya na"];
 
-    const initialWordsBg = [];
-
-    // add words to initial array Bulgarian
-    for (var i=0; i<nounsBg.length; i++) {
-      initialWordsBg.push({id: idCounter, word: nounsBg[i], type:"noun", translation: nounsEng[i], romanized: nounsBgRom[i]});
-      idCounter++;  
-    }
-
-    for (var i=0; i<verbsBg.length; i++) {
-      initialWordsBg.push({id: idCounter, word: verbsBg[i], type:"verb", translation: verbsEng[i], romanized: verbsBgRom[i]}); 
-      idCounter++;   
-    }
-
-    for (var i=0; i<subjectsBg.length; i++) {
-      initialWordsBg.push({id: idCounter, word: subjectsBg[i], type:"subject", translation: subjectsEng[i], romanized: subjectsBgRom[i]}); 
-      idCounter++;   
-    }
-
-    return ["hobbies", sentenceStructure, initialWordsBg];;
+    return ["hobbies", sentenceStructure, consolidateWordSets(nounsBg, subjectsBg, verbsBg, nounsEng, subjectsEng, verbsEng, nounsBgRom, subjectsBgRom, verbsBgRom)];;
 
   }
 }

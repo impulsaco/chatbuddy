@@ -389,8 +389,8 @@ export default function App() { // MAIN APP ENTRY POINT
                     <Drawer.Screen name="LogIn" component={LogIn} />
                     <Drawer.Screen name="Choose" component={withSetMenuVisible(PhraseSelector)}/>
                     <Drawer.Screen name="Build" component={Words} />
-                    <Drawer.Screen name="Phrasebook" component={withSetMenuVisible(Phrasebook)} />                  
-                    <Drawer.Screen name="LanguageBuddy" component={VoiceGPT} />                  
+                    <Drawer.Screen name="Phrasebook" component={withSetMenuVisible(Phrasebook)} />
+                    <Drawer.Screen name="LanguageBuddy" component={VoiceGPT} />
                   </Drawer.Navigator>                
               </LanguageContext.Provider>
             </NativeBaseProvider>

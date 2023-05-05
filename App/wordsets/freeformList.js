@@ -29,7 +29,29 @@ const freeformList = (lang) => {
         "type": "noun",
         "word": "NOUN",
     }  
-]
+  ]
+
+  function consolidateWordSets(nouns, subjects, verbs, adjectives, nounsTranslations, subjectsTranslations, verbsTranslations, adjectivesTranslations, nounsRomanized, subjectsRomanized, verbsRomanized, adjectivesRomanized) {
+    const words = [];
+
+    for (let i = 0; i < nouns.length; i++) {
+      words.push({ id: idCounter++, word: nouns[i], type: "noun", translation: nounsTranslations[i], romanized: nounsRomanized && nounsRomanized[i] });
+    }
+
+    for (let i = 0; i < verbs.length; i++) {
+      words.push({ id: idCounter++, word: verbs[i], type: "verb", translation: verbsTranslations[i], romanized: verbsRomanized && verbsRomanized[i] });
+    }
+
+    for (let i = 0; i < subjects.length; i++) {
+      words.push({ id: idCounter++, word: subjects[i], type: "subject", translation: subjectsTranslations[i], romanized: subjectsRomanized && subjectsRomanized[i] });
+    }
+
+    for (let i = 0; i < adjectives.length; i++) {
+      words.push({ id: idCounter++, word: adjectives[i], type: "adjective", translation: adjectivesTranslations[i], romanized: adjectivesRomanized && adjectivesRomanized[i] });
+    }
+
+    return words;
+  }
 
   // English set
 
@@ -54,29 +76,7 @@ const freeformList = (lang) => {
 
     var adjectivesEs = ["chileno", "malo","mejor","mejor","grande","negro","seguro","claro","diferente","temprano","fácil","económico","libre","completo","bueno","grande","duro","alto","humano","importante","internacional","grande","tarde","pequeño","local","largo","bajo","importante","militar","mío","nacional","nuevo","viejo","solo","otro","político","posible","público","real","reciente","derecho","pequeño","social","especial","fuerte","seguro","verdadero","blanco","completo","joven"]
 
-    const initialWordsEs = [];
-
-    for (var i=0; i<nounsEs.length; i++) {
-      initialWordsEs.push({id: idCounter, word: nounsEs[i], type:"noun", translation: nounsEng[i]});
-      idCounter++;  
-    }
-
-    for (var i=0; i<verbsEs.length; i++) {
-      initialWordsEs.push({id: idCounter, word: verbsEs[i], type:"verb", translation: verbsEng[i]}); 
-      idCounter++;   
-    }
-
-    for (var i=0; i<subjectsEs.length; i++) {
-      initialWordsEs.push({id: idCounter, word: subjectsEs[i], type:"subject", translation: subjectsEng[i]}); 
-      idCounter++;   
-    }
-
-    for (var i=0; i<adjectivesEs.length; i++) {
-      initialWordsEs.push({id: idCounter, word: adjectivesEs[i], type:"adjective", translation: adjectivesEng[i]}); 
-      idCounter++;   
-    }
-
-    return ["freeform", sentenceStructure, initialWordsEs];
+    return ["freeform", sentenceStructure, consolidateWordSets(nounsEs, subjectsEs, verbsEs, adjectivesEs, nounsEng, subjectsEng, verbsEng, adjectivesEng)];
 
   }
 
@@ -102,31 +102,7 @@ const freeformList = (lang) => {
 
     var adjectivesKoRom = ["chillye", "nappeum", "deo joh-eum", "deo joh-eum", "keum", "geomjeong", "anjeonham", "bunmyeongham", "daleum", "chogi", "swium", "gyeongjejeog", "jayulobege", "wanbyeogham", "joh-eum", "keum", "dandanham", "nop-i", "inganjeog", "jung-yoham", "gugjejeog", "keum", "neujge", "jag-eum", "jyeogjeog", "gilge", "naj-eum", "jung-yoham", "gunsajeog", "naui", "guggajeog", "saeroum", "olaedon", "honja", "daleun", "jeongchijeog", "ganeungham", "gong-gong-ui", "silje", "choegeun-ui", "gwolli", "jag-eun", "sahoejeog", "teugbyeolham", "gangham", "anjeonham", "jinsilham", "heunsaeg", "wanbyeogham", "jeolmeum"];
 
-
-    const initialWordsKo = [];
-
-    // add words to initial array Korean
-    for (var i=0; i<nounsKo.length; i++) {
-      initialWordsKo.push({id: idCounter, word: nounsKo[i], type:"noun", translation: nounsEng[i], romanized: nounsKoRom[i]});
-      idCounter++;  
-    }
-
-    for (var i=0; i<verbsKo.length; i++) {
-      initialWordsKo.push({id: idCounter, word: verbsKo[i], type:"verb", translation: verbsEng[i], romanized: verbsKoRom[i]}); 
-      idCounter++;   
-    }
-
-    for (var i=0; i<subjectsKo.length; i++) {
-      initialWordsKo.push({id: idCounter, word: subjectsKo[i], type:"subject", translation: subjectsEng[i], romanized: subjectsKoRom[i]}); 
-      idCounter++;   
-    }
-
-    for (var i=0; i<adjectivesKo.length; i++) {
-      initialWordsKo.push({id: idCounter, word: adjectivesKo[i], type:"adjective", translation: adjectivesEng[i], romanized: adjectivesKoRom[i]}); 
-      idCounter++;   
-    }
-
-    return ["freeform", sentenceStructure, initialWordsKo];;
+    return ["freeform", sentenceStructure, consolidateWordSets(nounsKo, subjectsKo, verbsKo, adjectivesKo, nounsEng, subjectsEng, verbsEng, adjectivesKo, nounsKoRom, subjectsKoRom, verbsKoRom, adjectivesKoRom)];;
   }
 
   if (lang === 'bg') {
@@ -151,30 +127,7 @@ const freeformList = (lang) => {
 
     var adjectivesBgRom = ["Chiliyski", "losh", "po-dobar", "po-dobar", "golyam", "chernen", "bezopasen", "yassen", "razlichen", "ranen", "lesen", "ikonomichen", "svoboden", "palen", "dobar", "golyam", "tvard", "visok", "choveshki", "vazhen", "mezhdunaroden", "golyam", "kasen", "malyk", "mesten", "dylgy", "nisyk", "vazhen", "voenen", "moi", "natsionalen", "nov", "star", "edinstven", "drug", "politicheski", "vozmozhnen", "obshtestven", "realen", "skoroshen", "prav", "malyk", "sotsialen", "spetsialen", "silen", "bezopasen", "istinski", "byal", "palen", "mlad"];
 
-    const initialWordsBg = [];
-
-    // add words to initial array Bulgarian
-    for (var i=0; i<nounsBg.length; i++) {
-      initialWordsBg.push({id: idCounter, word: nounsBg[i], type:"noun", translation: nounsEng[i], romanized: nounsBgRom[i]});
-      idCounter++;  
-    }
-
-    for (var i=0; i<verbsBg.length; i++) {
-      initialWordsBg.push({id: idCounter, word: verbsBg[i], type:"verb", translation: verbsEng[i], romanized: verbsBgRom[i]}); 
-      idCounter++;   
-    }
-
-    for (var i=0; i<subjectsBg.length; i++) {
-      initialWordsBg.push({id: idCounter, word: subjectsBg[i], type:"subject", translation: subjectsEng[i], romanized: subjectsBgRom[i]}); 
-      idCounter++;   
-    }
-
-    for (var i=0; i<adjectivesBg.length; i++) {
-      initialWordsBg.push({id: idCounter, word: adjectivesBg[i], type:"adjective", translation: adjectivesEng[i], romanized: adjectivesBgRom[i]}); 
-      idCounter++;   
-    }
-
-    return ["freeform", sentenceStructure, initialWordsBg];;
+    return ["freeform", sentenceStructure, consolidateWordSets(nounsBg, subjectsBg, verbsBg, adjectivesBg, nounsEng, subjectsEng, verbsEng, adjectivesBg, nounsBgRom, subjectsBgRom, verbsBgRom, adjectivesBgRom)];;
 
   }
 }

@@ -24,7 +24,25 @@ const feelingsList = (lang) => {
         "type": "adjective",
         "word": "ADJECTIVE",
     }  
-] 
+  ]
+  
+  function consolidateWordSets(adjectives, subjects, verbs, adjectivesTranslations, subjectsTranslations, verbsTranslations, adjectivesRomanized, subjectsRomanized, verbsRomanized) {
+    const words = [];
+
+    for (let i = 0; i < adjectives.length; i++) {
+      words.push({ id: idCounter++, word: adjectives[i], type: "adjective", translation: adjectivesTranslations[i], romanized: adjectivesRomanized && adjectivesRomanized[i] });
+    }
+
+    for (let i = 0; i < verbs.length; i++) {
+      words.push({ id: idCounter++, word: verbs[i], type: "verb", translation: verbsTranslations[i], romanized: verbsRomanized && verbsRomanized[i] });
+    }
+
+    for (let i = 0; i < subjects.length; i++) {
+      words.push({ id: idCounter++, word: subjects[i], type: "subject", translation: subjectsTranslations[i], romanized: subjectsRomanized && subjectsRomanized[i] });
+    }
+
+    return words;
+  }
 
   // English set
 
@@ -45,25 +63,7 @@ const feelingsList = (lang) => {
 
     var subjectsEs = ['Yo', 'Tú', 'Nosotros', 'Ellos', 'Él', 'Ella']
 
-    const initialWordsEs = [];
-
-    for (var i=0; i<adjectivesEs.length; i++) {
-      initialWordsEs.push({id: idCounter, word: adjectivesEs[i], type:"adjective", translation: adjectivesEng[i]});
-      idCounter++;  
-    }
-
-    for (var i=0; i<verbsEs.length; i++) {
-      initialWordsEs.push({id: idCounter, word: verbsEs[i], type:"verb", translation: verbsEng[i]}); 
-      idCounter++;   
-    }
-
-    for (var i=0; i<subjectsEs.length; i++) {
-      initialWordsEs.push({id: idCounter, word: subjectsEs[i], type:"subject", translation: subjectsEng[i]}); 
-      idCounter++;   
-    }
-
-
-    return ["feelings", sentenceStructure, initialWordsEs];
+    return ["feelings", sentenceStructure, consolidateWordSets(adjectivesEs, subjectsEs, verbsEs, adjectivesEng, subjectsEng, verbsEng)];
 
   }
 
@@ -85,26 +85,7 @@ const feelingsList = (lang) => {
 
     var subjectsKoRom = ['na', 'neoneun', "uiri", "geudeul", "geu", "geunyeo"]
 
-    const initialWordsKo = [];
-
-    // add words to initial array Korean
-    for (var i=0; i<adjectivesKo.length; i++) {
-      initialWordsKo.push({id: idCounter, word: adjectivesKo[i], type:"adjective", translation: adjectivesEng[i], romanized: adjectivesKoRom[i]});
-      idCounter++;  
-    }
-
-    for (var i=0; i<verbsKo.length; i++) {
-      initialWordsKo.push({id: idCounter, word: verbsKo[i], type:"verb", translation: verbsEng[i], romanized: verbsKoRom[i]}); 
-      idCounter++;   
-    }
-
-    for (var i=0; i<subjectsKo.length; i++) {
-      initialWordsKo.push({id: idCounter, word: subjectsKo[i], type:"subject", translation: subjectsEng[i], romanized: subjectsKoRom[i]}); 
-      idCounter++;   
-    }
-
-
-    return ["feelings", sentenceStructure, initialWordsKo];;
+    return ["feelings", sentenceStructure, consolidateWordSets(adjectivesKo, subjectsKo, verbsKo, adjectivesEng, subjectsEng, verbsEng, adjectivesKoRom, subjectsKoRom, verbsKoRom)];;
   }
 
   if (lang === 'bg') {
@@ -125,25 +106,7 @@ const feelingsList = (lang) => {
 
     var subjectsBgRom = ['Az', 'Ti', 'Nie', 'Te', 'Toi', 'Tya']
 
-    const initialWordsBg = [];
-
-    // add words to initial array Bulgarian
-    for (var i=0; i<adjectivesBg.length; i++) {
-      initialWordsBg.push({id: idCounter, word: adjectivesBg[i], type:"adjective", translation: adjectivesEng[i], romanized: adjectivesBgRom[i]});
-      idCounter++;  
-    }
-
-    for (var i=0; i<verbsBg.length; i++) {
-      initialWordsBg.push({id: idCounter, word: verbsBg[i], type:"verb", translation: verbsEng[i], romanized: verbsBgRom[i]}); 
-      idCounter++;   
-    }
-
-    for (var i=0; i<subjectsBg.length; i++) {
-      initialWordsBg.push({id: idCounter, word: subjectsBg[i], type:"subject", translation: subjectsEng[i], romanized: subjectsBgRom[i]}); 
-      idCounter++;   
-    }
-
-    return ["feelings", sentenceStructure, initialWordsBg];;
+    return ["feelings", sentenceStructure, consolidateWordSets(adjectivesBg, subjectsBg, verbsBg, adjectivesEng, subjectsEng, verbsEng, adjectivesBgRom, subjectsBgRom, verbsBgRom)];;
 
   }
 }

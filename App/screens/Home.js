@@ -76,9 +76,9 @@ function Home({navigation, setMenuVisible}) {
                     </View>
                     <View style={styles.phrasebookContainer}>                    
                         <TouchableOpacity style={styles.phrasebookButton} onPress={() => navigation.navigate('LanguageBuddy', {lang: lang, setLang: setLang, langCode: langCode, setLangCode: setLangCode, setMenuVisible: setMenuVisible})}>
-                          <Text style={styles.longButtonText}>LanguageBuddy</Text>
+                          <Text style={styles.longButtonText}>Language Buddy</Text>
                         </TouchableOpacity>
-                    </View>                 
+                    </View>      
                     <View style={styles.logOutContainer}>
                         <TouchableOpacity style={styles.logoutButton} onPress={() => supabase.auth.signOut()}>
                           <Text style={[styles.longButtonText, {color: "white"}]}>Log out</Text>

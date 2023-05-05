@@ -24,7 +24,25 @@ const introductionList = (lang) => {
         "type": "noun",
         "word": "NOUN",
     }  
-] 
+  ]
+  
+  function consolidateWordSets(nouns, subjects, verbs, nounsTranslations, subjectsTranslations, verbsTranslations, nounsRomanized, subjectsRomanized, verbsRomanized) {
+    const words = [];
+
+    for (let i = 0; i < nouns.length; i++) {
+      words.push({ id: idCounter++, word: nouns[i], type: "noun", translation: nounsTranslations[i], romanized: nounsRomanized && nounsRomanized[i] });
+    }
+
+    for (let i = 0; i < verbs.length; i++) {
+      words.push({ id: idCounter++, word: verbs[i], type: "verb", translation: verbsTranslations[i], romanized: verbsRomanized && verbsRomanized[i] });
+    }
+
+    for (let i = 0; i < subjects.length; i++) {
+      words.push({ id: idCounter++, word: subjects[i], type: "subject", translation: subjectsTranslations[i], romanized: subjectsRomanized && subjectsRomanized[i] });
+    }
+
+    return words;
+  }
 
   // English set
 
@@ -45,25 +63,7 @@ const introductionList = (lang) => {
 
     var subjectsEs = ['Yo', 'Tú', 'Nosotros', 'Ellos', 'Él', 'Ella']
 
-    const initialWordsEs = [];
-
-    for (var i=0; i<nounsEs.length; i++) {
-      initialWordsEs.push({id: idCounter, word: nounsEs[i], type:"noun", translation: nounsEng[i]});
-      idCounter++;  
-    }
-
-    for (var i=0; i<verbsEs.length; i++) {
-      initialWordsEs.push({id: idCounter, word: verbsEs[i], type:"verb", translation: verbsEng[i]}); 
-      idCounter++;   
-    }
-
-    for (var i=0; i<subjectsEs.length; i++) {
-      initialWordsEs.push({id: idCounter, word: subjectsEs[i], type:"subject", translation: subjectsEng[i]}); 
-      idCounter++;   
-    }
-
-
-    return ["introduction", sentenceStructure, initialWordsEs];
+    return ["introduction", sentenceStructure, consolidateWordSets(nounsEs, subjectsEs, verbsEs, nounsEng, subjectsEng, verbsEng)];
 
   }
 
@@ -85,27 +85,7 @@ const introductionList = (lang) => {
 
     var subjectsKoRom = ['na', 'neo', 'uri', 'geudeul', 'geu', 'geunyeo']
 
-
-    const initialWordsKo = [];
-
-    // add words to initial array Korean
-    for (var i=0; i<nounsKo.length; i++) {
-      initialWordsKo.push({id: idCounter, word: nounsKo[i], type:"noun", translation: nounsEng[i], romanized: nounsKoRom[i]});
-      idCounter++;  
-    }
-
-    for (var i=0; i<verbsKo.length; i++) {
-      initialWordsKo.push({id: idCounter, word: verbsKo[i], type:"verb", translation: verbsEng[i], romanized: verbsKoRom[i]}); 
-      idCounter++;   
-    }
-
-    for (var i=0; i<subjectsKo.length; i++) {
-      initialWordsKo.push({id: idCounter, word: subjectsKo[i], type:"subject", translation: subjectsEng[i], romanized: subjectsKoRom[i]}); 
-      idCounter++;   
-    }
-
-
-    return ["introduction", sentenceStructure, initialWordsKo];;
+    return ["introduction", sentenceStructure, consolidateWordSets(adjectivesKo, subjectsKo, verbsKo, adjectivesEng, subjectsEng, verbsEng, adjectivesKoRom, subjectsKoRom, verbsKoRom)];;
   }
 
   if (lang === 'bg') {

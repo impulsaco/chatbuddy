@@ -24,7 +24,27 @@ const familyList = (lang) => {
         "type": "noun",
         "word": "NOUN",
     }  
-] 
+  ]
+  
+  // Consolidate word sets
+
+  function consolidateWordSets(nouns, subjects, verbs, nounsTranslations, subjectsTranslations, verbsTranslations, nounsRomanized, subjectsRomanized, verbsRomanized) {
+    const words = [];
+
+    for (let i = 0; i < nouns.length; i++) {
+      words.push({ id: idCounter++, word: nouns[i], type: "noun", translation: nounsTranslations[i], romanized: nounsRomanized && nounsRomanized[i] });
+    }
+
+    for (let i = 0; i < verbs.length; i++) {
+      words.push({ id: idCounter++, word: verbs[i], type: "verb", translation: verbsTranslations[i], romanized: verbsRomanized && verbsRomanized[i] });
+    }
+
+    for (let i = 0; i < subjects.length; i++) {
+      words.push({ id: idCounter++, word: subjects[i], type: "subject", translation: subjectsTranslations[i], romanized: subjectsRomanized && subjectsRomanized[i] });
+    }
+
+    return words;
+  }
 
   // English set
 
@@ -43,27 +63,9 @@ const familyList = (lang) => {
 
     var verbsEs = ["Tener", "Soy", "Será"]
 
-    var subjectsEs = ['Yo', 'Tú', 'Nosotros', 'Ellos', 'Él', 'Ella']
+    var subjectsEs = ['Yo', 'Tú', 'Nosotros', 'Ellos', 'Él', 'Ella']    
 
-    const initialWordsEs = [];
-
-    for (var i=0; i<nounsEs.length; i++) {
-      initialWordsEs.push({id: idCounter, word: nounsEs[i], type:"noun", translation: nounsEng[i]});
-      idCounter++;  
-    }
-
-    for (var i=0; i<verbsEs.length; i++) {
-      initialWordsEs.push({id: idCounter, word: verbsEs[i], type:"verb", translation: verbsEng[i]}); 
-      idCounter++;   
-    }
-
-    for (var i=0; i<subjectsEs.length; i++) {
-      initialWordsEs.push({id: idCounter, word: subjectsEs[i], type:"subject", translation: subjectsEng[i]}); 
-      idCounter++;   
-    }
-
-
-    return ["family", sentenceStructure, initialWordsEs];
+    return ["family", sentenceStructure, consolidateWordSets(nounsEs, subjectsEs, verbsEs, nounsEng, subjectsEng, verbsEng)];
 
   }
 
@@ -85,26 +87,7 @@ const familyList = (lang) => {
 
     var subjectsKoRom = ['na', 'neoneun', "uiri", "geudeul", "geu", "geunyeo"]
 
-    const initialWordsKo = [];
-
-    // add words to initial array Korean
-    for (var i=0; i<nounsKo.length; i++) {
-      initialWordsKo.push({id: idCounter, word: nounsKo[i], type:"noun", translation: nounsEng[i], romanized: nounsKoRom[i]});
-      idCounter++;  
-    }
-
-    for (var i=0; i<verbsKo.length; i++) {
-      initialWordsKo.push({id: idCounter, word: verbsKo[i], type:"verb", translation: verbsEng[i], romanized: verbsKoRom[i]}); 
-      idCounter++;   
-    }
-
-    for (var i=0; i<subjectsKo.length; i++) {
-      initialWordsKo.push({id: idCounter, word: subjectsKo[i], type:"subject", translation: subjectsEng[i], romanized: subjectsKoRom[i]}); 
-      idCounter++;   
-    }
-
-
-    return ["family", sentenceStructure, initialWordsKo];;
+    return ["family", sentenceStructure, consolidateWordSets(nounsKo, subjectsKo, verbsKo, nounsEng, subjectsEng, verbsEng, nounsKoRom, subjectsKoRom, verbsKoRom)];;
   }
 
   if (lang === 'bg') {
@@ -123,27 +106,9 @@ const familyList = (lang) => {
 
     var verbsBgRom = ["Imam", "Sam", "Shta budya"]
 
-    var subjectsBgRom = ['Az', 'Ti', 'Nie', 'Te', 'Toi', 'Tya']
+    var subjectsBgRom = ['Az', 'Ti', 'Nie', 'Te', 'Toi', 'Tya']    
 
-    const initialWordsBg = [];
-
-    // add words to initial array Bulgarian
-    for (var i=0; i<nounsBg.length; i++) {
-      initialWordsBg.push({id: idCounter, word: nounsBg[i], type:"noun", translation: nounsEng[i], romanized: nounsBgRom[i]});
-      idCounter++;  
-    }
-
-    for (var i=0; i<verbsBg.length; i++) {
-      initialWordsBg.push({id: idCounter, word: verbsBg[i], type:"verb", translation: verbsEng[i], romanized: verbsBgRom[i]}); 
-      idCounter++;   
-    }
-
-    for (var i=0; i<subjectsBg.length; i++) {
-      initialWordsBg.push({id: idCounter, word: subjectsBg[i], type:"subject", translation: subjectsEng[i], romanized: subjectsBgRom[i]}); 
-      idCounter++;   
-    }
-
-    return ["family", sentenceStructure, initialWordsBg];;
+    return ["family", sentenceStructure, consolidateWordSets(nounsBg, subjectsBg, verbsBg, nounsEng, subjectsEng, verbsEng, nounsBgRom, subjectsBgRom, verbsBgRom)];;
 
   }
 }
