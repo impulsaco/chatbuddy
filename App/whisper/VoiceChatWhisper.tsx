@@ -35,7 +35,6 @@ export default ({
   setCloseVisible,
   session
 }) => {
-  console.log("newMessage before new is ", newMessage)
   const [recording, setRecording] = React.useState(false as any);
   const [recordingDone, setRecordingDone] = React.useState(false);
   const [recordings, setRecordings] = React.useState([]);

@@ -29,8 +29,8 @@ import googleTranslateWordEng from '../lib/googleTranslateWordEng';
 
 const PAGE_HEIGHT = Dimensions.get('window').height;
 const PAGE_WIDTH = Dimensions.get('window').width;
-const VoiceChat = ({ newMessage, setNewMessage }) => {
-    const [messages, setMessages] = useState([]);
+const VoiceChat = ({ newMessage, setNewMessage, messages, setMessages}) => {
+    
     const [response, setResponse] = useState(null);
   
     const { langCode, setLangCode, lang, setLang } = useContext(LanguageContext);

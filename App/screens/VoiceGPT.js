@@ -5,6 +5,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { DraxProvider, DraxScrollView } from 'react-native-drax';
 import VoiceChat from "./VoiceChat"
 import VoiceRecord from '../components/VoiceRecord';
+import ChatWordPicker from '../components/ChatWordPicker';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import DraggableWord from '../components/DraggableWord';
 import WordMenu from '../components/WordMenu';
@@ -19,11 +20,88 @@ import { LanguageContext } from '../lib/LanguageContext';
 const PAGE_WIDTH = Dimensions.get('window').width;
 const PAGE_HEIGHT = Dimensions.get('window').height;
 
+// Todos for scaffolding
+
+/// Tab navigation DONE
+/// Grab phrases DONE
+/// Deconstruct phrases into words DONE
+/// Use embeddings to find six most relevant words
+/// Add word button
+/// Shuffle words button
+/// Shift to practice modal
+/// Reproduce and compress practice modal
+/// Push out new sentence to message
+
 export default ({ navigation, route }) => {
 
     const { langCode, setLangCode, lang, setLang } = useContext(LanguageContext);    
 
+    const Tab = createMaterialTopTabNavigator(); 
+
     const[newMessage, setNewMessage] = useState("Hello World")
+
+    const [messages, setMessages] = useState([]);
+
+    const [chosenWords, setChosenWords] = useState([])
+    
+
+    // Navigation handler
+
+    const [forward, setForward] = useState("");
+
+    useEffect(() => {
+        if (forward !== "") {      
+        setTimeout(() => {
+            navigation.navigate(forward);
+            setForward("");
+        }, 100); // Add a delay of 100 milliseconds
+        setForward("")
+        }
+    }, [forward]) 
+
+    const voiceRecord = () => {        
+        return (
+            <Tab.Screen
+                name="VoiceRecord"
+                options={{
+                    tabBarLabel: "VoiceRecord",
+                    tabBarVisible: true, // hide tab bar for this screen
+                    // swipeEnabled: false,
+                }}
+                >
+                {props => (
+                    <VoiceRecord 
+                    {...props}
+                    newMessage={newMessage}
+                    setNewMessage={setNewMessage}                    
+                    />
+                )}                        
+            </Tab.Screen>  
+        )        
+    }  
+    
+    const chatWordPicker = () => {        
+        return (
+            <Tab.Screen
+                name="ChatWordPicker"
+                options={{
+                    tabBarLabel: "ChatWordPicker",
+                    tabBarVisible: true, // hide tab bar for this screen
+                    // swipeEnabled: false,
+                }}
+                >
+                {props => (
+                    <ChatWordPicker 
+                    {...props}
+                    newMessage={newMessage}
+                    setNewMessage={setNewMessage}
+                    messages={messages}
+                    setChosenWords={setChosenWords}
+                    />
+                )}                        
+                </Tab.Screen>  
+        )        
+    }  
     
     return (
         <GestureHandlerRootView style={styles.gestureRootViewStyle}>
@@ -37,11 +115,18 @@ export default ({ navigation, route }) => {
                     <VoiceChat 
                         newMessage={newMessage}
                         setNewMessage={setNewMessage}
+                        messages={messages}
+                        setMessages={setMessages}
                     />
-                    <VoiceRecord
-                        newMessage={newMessage}
-                        setNewMessage={setNewMessage}
-                    />                                
+                    <Tab.Navigator  
+                        tabBar={() => null} // Hide the tab menu                      
+                        sceneContainerStyle={{backgroundColor: 'transparent'}}
+                    >
+                    
+                        {voiceRecord()}
+                    
+                        {chatWordPicker()}
+                    </Tab.Navigator>                
                 </View>
         </GestureHandlerRootView>
     )

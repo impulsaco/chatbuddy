@@ -1,22 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, TouchableOpacity, TextInput, Modal, Text, StyleSheet, Dimensions} from "react-native";
 import Close from '../../assets/close.svg'
 import { supabase } from '../lib/supabase';
 import VoiceChatWhisper from '../whisper/VoiceChatWhisper';
-import SaveButton from './SaveButton';
-import AudioPlayback from "../../assets/audioPlayback.svg"
-import MicrophonePlayback from "../../assets/microphonePlayback.svg"
-import Playback from "../../assets/playback.svg"
-import sentenceSpeak from '../lib/sentenceSpeak';
-import playRecording from '../lib/playRecording';
-import Sound from '../../assets/Sound.svg'
+import { LanguageContext } from '../lib/LanguageContext';
+import wordCompare from './api/wordCompare';
 
 const PAGE_HEIGHT = Dimensions.get('window').height;
 const PAGE_WIDTH = Dimensions.get('window').width;
 
-const VoiceRecord = ({ newMessage, setNewMessage }) => {
+const ChatWordPicker = ({ newMessage, setNewMessage, messages, setChosenWords }) => {
     
-    const [topText, setTopText] = useState('Push to voice chat!');
+    const [topText, setTopText] = useState('Pick some words!');
 
     const [recordingUri, setRecordingUri] = useState(null);
     
@@ -24,20 +19,71 @@ const VoiceRecord = ({ newMessage, setNewMessage }) => {
 
     const [closeVisible, setCloseVisible] = useState(true); // to prevent premature recording end
 
-    // Load session
+    const [sentences, setSentences] = useState([])
 
-    const [session, setSession] = useState()
+    const { langCode, setLangCode, lang, setLang } = useContext(LanguageContext);   
+    
+    const [allWords, setAllWords] = useState([])
 
-    useEffect(() => {
 
-        supabase.auth.getSession().then(({ data: { session } }) => {
-        setSession(session)
-        })
+  // Retrieve session and phrases
 
-        supabase.auth.onAuthStateChange((_event, session) => {
-        setSession(session)
-        })
-    }, [])
+  const [session, setSession] = useState()
+
+  useEffect(() => {
+
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session)
+    })
+
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session)
+    })
+  }, [])
+
+  // Helper to extract words from blocks
+
+  function extractBlocks(data) {
+    let allBlocks = [];
+  
+    for (let item of data) {
+        if (item.lang_code === langCode) {
+            allBlocks.push(...item.blocks);
+        }
+    }
+    console.log("allBlocks is ", allBlocks)
+
+    setAllWords(allBlocks)
+}
+  
+  // Fetch sentences based on session
+
+  const fetchSentences = async () => {    
+    if (session) {
+        console.log("CAREFUL FETCHING!!!")
+        const { data, error } = await supabase
+        .from('sentences')
+        .select('id, sentence, language, lang_code, type, translation, blocks')
+        .eq('user', session.user.id)
+        .not("translation","is", null);
+    
+        if (error) alert(error.message)
+    
+        if (data) {
+            setSentences(data)      
+            extractBlocks(data)            
+            console.log("data is ", data)
+        }
+    }
+  }
+
+  useEffect(() => {  
+    fetchSentences()
+  }, [session])  
+
+  useEffect(() => {
+    wordCompare(allWords, messages)
+  }, [allWords, messages])
 
     const closeButton = () => {
         if (closeVisible) {
@@ -201,4 +247,4 @@ const styles = StyleSheet.create({
 
     
 
-export default VoiceRecord
+export default ChatWordPicker

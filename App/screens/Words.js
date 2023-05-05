@@ -247,7 +247,7 @@ export default ({ navigation, route }) => {
 
     const drawerNavigation = navigation
 
-    // Set up annoying navigation to phrasebook
+    // Set up navigation to phrasebook after sentence complete
 
     const [navigatePhrasebook, setNavigatePhrasebook] = useState(false)    
 
