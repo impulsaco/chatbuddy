@@ -98,7 +98,7 @@ const VoiceChat = ({ newMessage, setNewMessage, messages, setMessages}) => {
         user={{
           _id: 1,
         }}
-        renderMessage={(props) => <CustomMessage {...props} />}
+        renderMessage={(props) => <CustomMessage {...props} />} // line for custom message, comment out for react-native-gifted-chat default
         keyboardShouldPersistTaps="never"
         keyboardVerticalOffset={Platform.select({ ios: 0, android: 500 })}
         bottomOffset={300}
