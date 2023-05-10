@@ -37,7 +37,7 @@ const WordMenu = ({ state, navigation, forward, setForward, words, sentence, set
     else {
       return 'rgba(0, 0, 0, 0)'
     }
-  }
+  }  
 
   const tabButton = (word, index) => {
     const isFocused = state.index === index; // Checks if the current page is the same as the page in the array 

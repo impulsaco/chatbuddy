@@ -111,6 +111,43 @@ const hobbiesList = (lang) => {
     return ["hobbies", sentenceStructure, consolidateWordSets(nounsBg, subjectsBg, verbsBg, nounsEng, subjectsEng, verbsEng, nounsBgRom, subjectsBgRom, verbsBgRom)];;
 
   }
+
+  if (lang === 'de') {
+    // German set
+    var nounsDe = ["Gitarre", "Tennis", "Malerei", "Schreiben", "Backen", "Kochen", "Angeln", "Camping", "Skifahren", "Yoga", "Joggen", "Bücher", "Schach", "Wandern", "Radfahren", "Badminton", "Volleyball", "Tanzen", "Singen"];
+    var subjectsDe = ['Ich', 'Du', 'Wir', 'Sie', 'Er', 'Sie'];
+    var verbsDe = ["Spielen", "Mögen", "Tun", "Lesen", "Gehen für"];
+  
+    return ["hobbies", sentenceStructure, consolidateWordSets(nounsDe, subjectsDe, verbsDe, nounsEng, subjectsEng, verbsEng)];
+  }
+  
+  if (lang === 'ja') {
+    // Japanese set
+    var nounsJa = ["ギター", "テニス", "絵画", "書き物", "ベーキング", "料理", "釣り", "キャンプ", "スキー", "ヨガ", "ジョギング", "本", "チェス", "ハイキング", "サイクリング", "バドミントン", "バレーボール", "ダンス", "歌"];
+    var subjectsJa = ['私', 'あなた', '私たち', '彼ら', '彼', '彼女'];
+    var verbsJa = ["プレイ", "好き", "する", "読む", "行く"];
+  
+    return ["hobbies", sentenceStructure, consolidateWordSets(nounsJa, subjectsJa, verbsJa, nounsEng, subjectsEng, verbsEng)];
+  }
+  
+  if (lang === 'bn') {
+    // Bengali set
+    var nounsBn = ["গিটার", "টেনিস", "চিত্রকর্ম", "লেখা", "পাকনা", "রান্না", "মাছ ধরা", "ক্যাম্পিং", "স্কিইং", "যোগা", "দৌড়ানো", "বই", "দাবা", "হাইকিং", "সাইকেলিং", "ব্যাডমিন্টন", "ভলিবল", "নাচ", "গান"];
+    var subjectsBn = ['আমি', 'তুমি', 'আমরা', 'তারা', 'সে', 'সে'];
+    var verbsBn = ["খেলা", "পছন্দ", "করা", "পড়া", "যাওয়া"];
+  
+    return ["hobbies", sentenceStructure, consolidateWordSets(nounsBn, subjectsBn, verbsBn, nounsEng, subjectsEng, verbsEng)];
+  }
+
+  // Albanian set
+  if (lang === 'sq') {
+    var nounsSq = ["Kitarë", "Tenis", "Pikturë", "Shkrim", "Përgatitje brumash", "Gatim", "Peshkim", "Kampim", "Ski", "Jogë", "Vrapim", "Libra", "Shah", "Ecje", "Bicikletë", "Badminton", "Volejboll", "Vallëzim", "Këndim"];
+    var subjectsSq = ['Unë', 'Ti', 'Ne', 'Ata', 'Ai', 'Ajo'];
+    var verbsSq = ["Luaj", "Pëlqej", "Bëj", "Lexoj", "Shkoj për"];
+
+    return ["hobbies", sentenceStructure, consolidateWordSets(nounsSq, subjectsSq, verbsSq, nounsEng, subjectsEng, verbsEng)];
+  }
+
 }
 
 export default hobbiesList;

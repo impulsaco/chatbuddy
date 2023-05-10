@@ -68,6 +68,11 @@ export default ({ navigation, route }) => {
     const [sentence, setSentence] = useState(sentenceInit); // Sets the initial sentence state, will be modified on drag or tap
       // SHOULD BE USEEFFECT FOR UPDATING
 
+      useEffect(() => {  
+        setSentence(sentenceInit);
+        console.log("SENTENCE INIT", sentenceInit);
+    }, [sentenceInit])
+
     
     // Set translation placeholder
     const [sentenceEn, setSentenceEn] = useState(" ")
@@ -256,7 +261,7 @@ export default ({ navigation, route }) => {
             navigation.navigate('Phrasebook')
             setNavigatePhrasebook(false)
         }
-    }, [navigatePhrasebook])
+    }, [navigatePhrasebook])      
 
 
     const sayModal = (drawerNavigation) => {

@@ -132,6 +132,46 @@ const placesList = (lang) => {
     return ["places", sentenceStructure, consolidateWordSets(nounsBg, subjectsBg, verbsBg, prepositionsBg, nounsEng, subjectsEng, verbsEng, prepositionsBg, nounsBgRom, subjectsBgRom, verbsBgRom, prepositionsBgRom)];;
 
   }
+
+  if (lang === 'de') {
+    // German set
+    var nounsDe = ['Zuhause', 'Schule', 'Büro', 'Bus', 'Fitnessstudio', 'Park', 'Bank', 'Lebensmittelgeschäft', 'Bibliothek', 'Kino', 'Post', 'Einkaufszentrum'];
+    var subjectsDe = ['Ich', 'Du', 'Wir', 'Sie', 'Er', 'Sie'];
+    var verbsDe = ['Gehen', 'Schlafen', 'Spielen', 'Laufen', 'Gehen', 'Schwimmen', 'Lernen', 'Arbeiten'];
+    var prepositionsDe = ['Zu', 'Auf', 'In', 'An', 'Von', 'Über', 'Unter', 'Durch'];
+  
+    return ["places", sentenceStructure, consolidateWordSets(nounsDe, subjectsDe, verbsDe, prepositionsDe, nounsEng, subjectsEng, verbsEng, prepositionsEng)];
+  }
+  
+  if (lang === 'ja') {
+    // Japanese set
+    var nounsJa = ['家', '学校', 'オフィス', 'バス', 'ジム', '公園', '銀行', '食料品店', '図書館', '映画館', '郵便局', 'ショッピングモール'];
+    var subjectsJa = ['私', 'あなた', '私たち', '彼ら', '彼', '彼女'];
+    var verbsJa = ['行く', '寝る', '遊ぶ', '走る', '歩く', '泳ぐ', '勉強する', '働く'];
+    var prepositionsJa = ['へ', 'で', 'で', 'で', 'から', '上', '下', 'を通って'];
+  
+    return ["places", sentenceStructure, consolidateWordSets(nounsJa, subjectsJa, verbsJa, prepositionsJa, nounsEng, subjectsEng, verbsEng, prepositionsEng)];
+  }
+
+  if (lang === 'bn') {
+    // Bengali set
+    var nounsBn = ['বাড়ি', 'স্কুল', 'অফিস', 'বাস', 'জিম', 'পার্ক', 'ব্যাংক', 'মুদিখানা', 'গ্রন্থাগার', 'সিনেমা হল', 'ডাকঘর', 'শপিং মল'];
+    var subjectsBn = ['আমি', 'তুমি', 'আমরা', 'তারা', 'সে', 'সে'];
+    var verbsBn = ['যাওয়া', 'ঘুমানো', 'খেলা', 'দৌড়ানো', 'হাঁটা', 'সাঁতার কাটা', 'পড়া', 'কাজ করা'];
+    var prepositionsBn = ['প্রতি', 'উপর', 'মধ্যে', 'এ', 'থেকে', 'উপর', 'নিচে', 'মাধ্যমে'];
+
+    return ["places", sentenceStructure, consolidateWordSets(nounsBn, subjectsBn, verbsBn, prepositionsBn, nounsEng, subjectsEng, verbsEng, prepositionsEng)];
+  }
+  
+  if (lang === 'sq') {
+    // Albanian set
+    var nounsSq = ['Shtëpi', 'Shkollë', 'Zyrë', 'Autobus', 'Palestër', 'Park', 'Bankë', 'Dyqan ushqimesh', 'Bibliotekë', 'Kinema', 'Postë', 'Qendër tregtare'];
+    var subjectsSq = ['Unë', 'Ti', 'Ne', 'Ata', 'Ai', 'Ajo'];
+    var verbsSq = ['Shkoj', 'Fle', 'Luaj', 'Vrapoj', 'Ec', 'Not', 'Studioj', 'Punoj'];
+    var prepositionsSq = ['Për', 'Mbi', 'Në', 'Tek', 'Nga', 'Mbi', 'Nën', 'Përmes'];
+  
+    return ["places", sentenceStructure, consolidateWordSets(nounsSq, subjectsSq, verbsSq, prepositionsSq, nounsEng, subjectsEng, verbsEng, prepositionsEng)];
+  }
 }
 
 export default placesList;

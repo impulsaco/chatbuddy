@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { OPENAI_API_KEY } from "@env" 
+import { REACT_APP_SERVER_URL } from "@env" 
 import axios from "axios";
 import 'react-native-url-polyfill/auto'
 import { supabase } from '../../lib/supabase';
@@ -35,16 +35,14 @@ const gptFixer = (lang, langCode, sentence, saveSentenceText, session, setSenten
     const prompt = `Make a simple sentence in ${lang} using only these four words, keeping in mind the English meaning of each word: ${JSON.stringify(sentence)}. Output only the ${lang} sentence, not the English one. Nothing besides the sentence, no parentheses or explanations.`;
     const role = `Helping beginners in ${lang} make a simple sentence.`;
   
-    console.log("fixSentence is running OPEN AI CREDITS!!")
-    const response = await axios.post('https://api.openai.com/v1/chat/completions', {
-      model: "gpt-3.5-turbo",
-      messages: [{"role": "user", "content": role}, {"role": "system", "content": prompt}],
-    }, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${OPENAI_API_KEY}`,
-      },
-    });      
+    console.log("fixSentence is running OPEN AI CREDITS!!")    
+    const serverUrl = REACT_APP_SERVER_URL;
+    // send call to node.js server 
+    const response = await axios.post(`${serverUrl}/api/gpt-completions`, {
+      role: role,
+      prompt: prompt,
+    });
+    
     const sentenceText = response.data.choices[0].message.content.trim();
     saveSentenceText(sentenceText);
     romanizer(sentenceText, setSentenceRomanized, lang, langCode, session);
@@ -64,7 +62,7 @@ const gptFixer = (lang, langCode, sentence, saveSentenceText, session, setSenten
           cost: (role.length + prompt.length)/4 * costPerToken,
           prompt: `${role} ${prompt}`,
           output: sentenceText,
-          api_key: OPENAI_API_KEY,
+          api_key: null,
           }
       )
       if (error) alert(error.message)

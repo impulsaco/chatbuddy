@@ -66,6 +66,9 @@ const WordCard = ( {word, translations, menu} ) => {
         else if (type === "subject") {
             return "#2196F3"
         }
+        else if (type === "word") {
+            return "#808080"
+        }
     }
 
     const backgroundColor = (type) => {
@@ -83,6 +86,9 @@ const WordCard = ( {word, translations, menu} ) => {
         }
         else if (type === "subject") {
             return "#E3F2FD"
+        }
+        else if (type === "word") {
+            return "#F5F5F5"
         }
     }
 

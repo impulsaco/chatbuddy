@@ -16,7 +16,7 @@ import Mode from './Mode';
 import sentenceSpeak from '../lib/sentenceSpeak';
 import TranscribedOutput from "./TranscribeOutput";
 import { supabase } from '../lib/supabase';
-import { OPENAI_API_KEY } from "@env";
+import { REACT_APP_SERVER_URL } from "@env";
 import * as FileSystem from 'expo-file-system';
 import Microphone from "../../assets/microphone.svg";
 import BiggestMike from "../../assets/biggestMike.svg";
@@ -67,9 +67,7 @@ export default ({
   selectedLangRef.current = selectedLanguage;
 
   const selectedModelRef = React.useRef(selectedModel);
-  selectedModelRef.current = selectedModel;
-
-  const API_KEY = OPENAI_API_KEY;
+  selectedModelRef.current = selectedModel;  
 
   const supportedLanguages = [
     "english",
@@ -359,8 +357,8 @@ export default ({
 
   async function transcribeRecording() {
     if (Platform.OS === "ios") {
-      const url = 'https://api.openai.com/v1/audio/transcriptions';
-      const token = API_KEY;
+      const serverUrl = REACT_APP_SERVER_URL;
+      const url = `${serverUrl}/api/whisper`;      
       // const fileUri = '/path/to/file/openai.mp3';
       const modelName = 'whisper-1';
   
@@ -371,26 +369,20 @@ export default ({
       setLoading(true);
       setBottomText("Analyzing...")
       setTopText("Please wait...")
+      const file = new Blob([uri], { type: "audio/wav" });
       const formData: any = new FormData();
       //formData.append("language", lang.toLowerCase());
       // formData.append("model_size", "tiny");
       formData.append(
         "file",
-        {
-          uri,
-          name: filename,
-          type: "audio/wav"
-        });
+        file,
+        filename
+      );
       formData.append('model', modelName)
       formData.append('prompt', prompt)
-      console.log("formData sent is", formData)
+      console.log("formData sent is", JSON.stringify(formData))
   
-      axios.post(url, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            'Authorization': `Bearer ${API_KEY}`
-          }
-        })
+      axios.post(url, formData)
         .then(function (response) {
           console.log("response is :", response.data);
           setTranscribedData((oldData: any) => [...oldData, response.data]);
@@ -408,6 +400,9 @@ export default ({
         })
         .catch(function (error) {
           console.log("error : ", error);
+          if (error.response) {
+            console.log("Error data: ", error.response.data);
+          }
         });
       // Save call to Supabase
 
@@ -430,7 +425,7 @@ export default ({
             cost: seconds * costPerToken,
             prompt: prompt,
             output: null,
-            api_key: OPENAI_API_KEY,
+            api_key: null,
             }
         )
         if (error) alert(error.message)
@@ -443,7 +438,7 @@ export default ({
     }
     if (Platform.OS === "android") {
       const url = 'https://api.openai.com/v1/audio/transcriptions';
-      const token = API_KEY;
+      //const token = API_KEY;
       // const fileUri = '/path/to/file/openai.mp3';
       const modelName = 'whisper-1';
   
@@ -514,7 +509,7 @@ export default ({
             cost: seconds * costPerToken,
             prompt: prompt,
             output: null,
-            api_key: OPENAI_API_KEY,
+            api_key: null,
             }
         )
         if (error) alert(error.message)

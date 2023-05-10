@@ -109,6 +109,42 @@ const feelingsList = (lang) => {
     return ["feelings", sentenceStructure, consolidateWordSets(adjectivesBg, subjectsBg, verbsBg, adjectivesEng, subjectsEng, verbsEng, adjectivesBgRom, subjectsBgRom, verbsBgRom)];;
 
   }
+
+  if (lang === 'de') {
+    // German set
+    var adjectivesDe = ['Fröhlich', 'Hoffnungsvoll', 'Glücklich', 'Geliebt', 'Amüsiert', 'Entschlossen', 'Energiegeladen', 'Ruhig', 'Erfüllt', 'Entspannt', 'Traurig', 'Ängstlich', 'Desillusioniert'];
+    var subjectsDe = ['Ich', 'Du', 'Wir', 'Sie', 'Er', 'Sie'];
+    var verbsDe = ["Ist", "Bin", "Sind", "Fühle"];
+  
+    return ["feelings", sentenceStructure, consolidateWordSets(adjectivesDe, subjectsDe, verbsDe, adjectivesEng, subjectsEng, verbsEng)];
+  }
+  
+  if (lang === 'ja') {
+    // Japanese set
+    var adjectivesJa = ['喜びに満ちた', '希望に満ちた', '幸せな', '愛された', '楽しんでいる', '決意した', '活力に満ちた', '穏やかな', '充実した', 'リラックスした', '悲しい', '不安な', '幻滅した'];
+    var subjectsJa = ['私', 'あなた', '私たち', '彼ら', '彼', '彼女'];
+    var verbsJa = ["です", "である", "である", "感じる"];
+  
+    return ["feelings", sentenceStructure, consolidateWordSets(adjectivesJa, subjectsJa, verbsJa, adjectivesEng, subjectsEng, verbsEng)];
+  }
+  
+  if (lang === 'bn') {
+    // Bengali set
+    var adjectivesBn = ['আনন্দিত', 'আশাবাদী', 'খুশি', 'প্রিয়', 'আমুসেড', 'নির্ধারিত', 'প্রচণ্ড', 'শান্ত', 'পূর্ণ', 'শিথিল', 'দু:খিত', 'উদ্বেগপূর্ণ', 'মোহাবিস্মৃত'];
+    var subjectsBn = ['আমি', 'তুমি', 'আমরা', 'তারা', 'সে', 'সে'];
+    var verbsBn = ["হলো", "আমি", "আছি", "অনুভব"];
+  
+    return ["feelings", sentenceStructure, consolidateWordSets(adjectivesBn, subjectsBn, verbsBn, adjectivesEng, subjectsEng, verbsEng)];
+  }
+
+  if (lang === 'sq') {
+    // Albanian set
+    var adjectivesSq = ['I gëzuar', 'I shpresëdhënës', 'I lumtur', 'I dashur', 'I argëtuar', 'I vendosur', 'Energjik', 'I qetë', 'I përmbushur', 'I relaksuar', 'I trishtuar', 'I ankthshëm', 'I zhgënjyer'];
+    var subjectsSq = ['Unë', 'Ti', 'Ne', 'Ata', 'Ai', 'Ajo'];
+    var verbsSq = ["Është", "Jam", "Jemi", "Ndjehem"];
+  
+    return ["feelings", sentenceStructure, consolidateWordSets(adjectivesSq, subjectsSq, verbsSq, adjectivesEng, subjectsEng, verbsEng)];
+  }
 }
 
 export default feelingsList;

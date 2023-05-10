@@ -7,6 +7,10 @@ import { supabase } from '../lib/supabase';
 import KoreanFlag from '../../assets/KoreanFlag.svg';
 import SpanishFlag from '../../assets/SpanishFlag.svg';
 import BulgarianFlag from '../../assets/BulgarianFlag.svg';
+import GermanFlag from '../../assets/GermanFlag.svg';
+import AlbanianFlag from '../../assets/AlbanianFlag.svg';
+import BengaliFlag from '../../assets/BengaliFlag.svg';
+import JapaneseFlag from '../../assets/JapaneseFlag.svg';
 import { LanguageContext } from '../lib/LanguageContext';
 import VoiceGPT from './VoiceGPT';
 
@@ -32,6 +36,24 @@ function Home({navigation, setMenuVisible}) {
     supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session)
     })
+
+    /* 
+    To add later:
+
+    <TouchableOpacity style={styles.languageBox} onPress={() => {navigation.navigate('Choose', {lang: "Albanian", langCode: "sq"}); setLangCode("sq"); setLang("Albanian")}}>
+                      <Text style={styles.buttonText}>Albanian</Text>
+                      <AlbanianFlag width={55}/>
+                    </TouchableOpacity>   
+                    <TouchableOpacity style={styles.languageBox} onPress={() => {navigation.navigate('Choose', {lang: "Bengali", langCode: "bn"}); setLangCode("bn"); setLang("Bengali")}}>
+                      <Text style={styles.buttonText}>Bengali</Text>
+                      <BengaliFlag width={55}/>
+                    </TouchableOpacity>   
+                    <TouchableOpacity style={styles.languageBox} onPress={() => {navigation.navigate('Choose', {lang: "Japanese", langCode: "ja"}); setLangCode("ja"); setLang("Japanese")}}>
+                      <Text style={styles.buttonText}>Japanese</Text>
+                      <JapaneseFlag width={55}/>
+                    </TouchableOpacity>         
+    
+    */
 
 
 
@@ -63,22 +85,22 @@ function Home({navigation, setMenuVisible}) {
                       <Text style={styles.buttonText}>Spanish</Text>
                       <SpanishFlag width={55}/>
                     </TouchableOpacity>
+                    <TouchableOpacity style={styles.languageBox} onPress={() => {navigation.navigate('Choose', {lang: "German", langCode: "de"}); setLangCode("de"); setLang("German")}}>
+                      <Text style={styles.buttonText}>German</Text>
+                      <GermanFlag width={55}/>
+                    </TouchableOpacity>
                     <TouchableOpacity style={styles.languageBox} onPress={() => {navigation.navigate('Choose', {lang: "Bulgarian", langCode: "bg"}); setLangCode("bg"); setLang("Bulgarian")}}>
                       <Text style={styles.buttonText}>Bulgarian</Text>
                       <BulgarianFlag width={55}/>
-                    </TouchableOpacity>                      
+                    </TouchableOpacity>
+                                 
                   </View>
                   <View style={styles.lowerContainer}> 
                     <View style={styles.phrasebookContainer}>                    
                         <TouchableOpacity style={styles.phrasebookButton} onPress={() => navigation.navigate('Phrasebook', {lang: lang, setLang: setLang, langCode: langCode, setLangCode: setLangCode, setMenuVisible: setMenuVisible})}>
                           <Text style={styles.longButtonText}>My phrases</Text>
                         </TouchableOpacity>
-                    </View>
-                    <View style={styles.phrasebookContainer}>                    
-                        <TouchableOpacity style={styles.phrasebookButton} onPress={() => navigation.navigate('LanguageBuddy', {lang: lang, setLang: setLang, langCode: langCode, setLangCode: setLangCode, setMenuVisible: setMenuVisible})}>
-                          <Text style={styles.longButtonText}>Language Buddy</Text>
-                        </TouchableOpacity>
-                    </View>      
+                    </View>                    
                     <View style={styles.logOutContainer}>
                         <TouchableOpacity style={styles.logoutButton} onPress={() => supabase.auth.signOut()}>
                           <Text style={[styles.longButtonText, {color: "white"}]}>Log out</Text>
@@ -232,6 +254,7 @@ function Home({navigation, setMenuVisible}) {
     },
     buttonContainer: {
       display: 'flex',
+      flexWrap: 'wrap',
       alignItems: 'center',
       justifyContent: 'center',
       flexDirection: 'row',

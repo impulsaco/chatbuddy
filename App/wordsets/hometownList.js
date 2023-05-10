@@ -109,6 +109,43 @@ const hometownList = (lang) => {
     return ["hometown", sentenceStructure, consolidateWordSets(nounsBg, subjectsBg, verbsBg, nounsEng, subjectsEng, verbsEng, nounsBgRom, subjectsBgRom, verbsBgRom)];;
 
   }
+
+  if (lang === 'de') {
+    // German set
+    var subjectsDe = ['Ich', 'Du', 'Wir', 'Sie', 'Er', 'Sie'];
+    var verbsDe = ['Komme aus', 'Bin aufgewachsen in', 'Lebe in', 'Habe gelebt in'];
+    var nounsDe = ['Amerika', 'China', 'Chile', 'Bulgarien', 'Korea'];
+  
+    return ["hometown", sentenceStructure, consolidateWordSets(nounsDe, subjectsDe, verbsDe, nounsEng, subjectsEng, verbsEng)];
+  }
+  
+  if (lang === 'ja') {
+    // Japanese set
+    var subjectsJa = ['私', 'あなた', '私たち', '彼ら', '彼', '彼女'];
+    var verbsJa = ['出身です', '育ちました', '住んでいます', '住んでいました'];
+    var nounsJa = ['アメリカ', '中国', 'チリ', 'ブルガリア', '韓国'];
+  
+    return ["hometown", sentenceStructure, consolidateWordSets(nounsJa, subjectsJa, verbsJa, nounsEng, subjectsEng, verbsEng)];
+  }
+  
+  if (lang === 'bn') {
+    // Bengali set
+    var subjectsBn = ['আমি', 'তুমি', 'আমরা', 'তারা', 'সে', 'সে'];
+    var verbsBn = ['আমি আসছি', 'আমি বড় হয়েছি', 'আমি থাকি', 'আমি থাকেছিলাম'];
+    var nounsBn = ['আমেরিকা', 'চীন', 'চিলি', 'বুলগেরিয়া', 'কোরিয়া'];
+  
+    return ["hometown", sentenceStructure, consolidateWordSets(nounsBn, subjectsBn, verbsBn, nounsEng, subjectsEng, verbsEng)];
+  }
+  
+  if (lang === 'sq') {
+    // Albanian set
+    var subjectsSq = ['Unë', 'Ti', 'Ne', 'Ata', 'Ai', 'Ajo'];
+    var verbsSq = ['Jam nga', 'U rrita në', 'Jetoj në', 'Kam jetuar në'];
+    var nounsSq = ['Amerikë', 'Kinë', 'Kili', 'Bullgari', 'Kore'];
+  
+    return ["hometown", sentenceStructure, consolidateWordSets(nounsSq, subjectsSq, verbsSq, nounsEng, subjectsEng, verbsEng)];
+  }
+  
 }
 
 export default hometownList;

@@ -85,7 +85,7 @@ const introductionList = (lang) => {
 
     var subjectsKoRom = ['na', 'neo', 'uri', 'geudeul', 'geu', 'geunyeo']
 
-    return ["introduction", sentenceStructure, consolidateWordSets(adjectivesKo, subjectsKo, verbsKo, adjectivesEng, subjectsEng, verbsEng, adjectivesKoRom, subjectsKoRom, verbsKoRom)];;
+    return ["introduction", sentenceStructure, consolidateWordSets(nounsKo, subjectsKo, verbsKo, nounsEng, subjectsEng, verbsEng, nounsKoRom, subjectsKoRom, verbsKoRom)];;
   }
 
   if (lang === 'bg') {

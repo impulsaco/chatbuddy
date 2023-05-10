@@ -111,6 +111,42 @@ const familyList = (lang) => {
     return ["family", sentenceStructure, consolidateWordSets(nounsBg, subjectsBg, verbsBg, nounsEng, subjectsEng, verbsEng, nounsBgRom, subjectsBgRom, verbsBgRom)];;
 
   }
+
+  if (lang === 'de') {
+    // German set
+    var nounsDe = ["Mutter", "Vater", "Tochter", "Sohn", "Freund", "Freundin", "Großmutter", "Großvater", "Tante", "Onkel", "Cousin/e", "Schwester", "Bruder", "Neffe", "Nichte"];
+    var subjectsDe = ['Ich', 'Du', 'Wir', 'Sie', 'Er', 'Sie'];
+    var verbsDe = ["Habe", "Bin", "Werde sein"];
+  
+    return ["family", sentenceStructure, consolidateWordSets(nounsDe, subjectsDe, verbsDe, nounsEng, subjectsEng, verbsEng)];
+  }
+  
+  if (lang === 'ja') {
+    // Japanese set
+    var nounsJa = ["母", "父", "娘", "息子", "彼氏", "彼女", "祖母", "祖父", "叔母", "叔父", "いとこ", "姉", "兄", "甥", "姪"];
+    var subjectsJa = ['私', 'あなた', '私たち', '彼ら', '彼', '彼女'];
+    var verbsJa = ["持っている", "である", "になる"];
+  
+    return ["family", sentenceStructure, consolidateWordSets(nounsJa, subjectsJa, verbsJa, nounsEng, subjectsEng, verbsEng)];
+  }
+  
+  if (lang === 'bn') {
+    // Bengali set
+    var nounsBn = ["মা", "বাবা", "মেয়ে", "ছেলে", "প্রেমিক", "প্রেমিকা", "দিদিমা", "দাদু", "পিসি", "কাকা", "চাচাতো/ভাইবোনের সন্তান", "বোন", "ভাই", "ভাইপো", "বোনপো"];
+    var subjectsBn = ['আমি', 'তুমি', 'আমরা', 'তারা', 'সে', 'সে'];
+    var verbsBn = ["আছে", "আমি", "হবে"];
+  
+    return ["family", sentenceStructure, consolidateWordSets(nounsBn, subjectsBn, verbsBn, nounsEng, subjectsEng, verbsEng)];
+  }
+
+  if (lang === 'sq') {
+    // Albanian set
+    var nounsSq = ["Nëna", "Babai", "Vajza", "Djali", "I dashuri", "E dashura", "Gjyshja", "Gjyshi", "Halla", "Daja", "Kushëri/a", "Motra", "Vëllai", "Nip", "Mbesa"];
+    var subjectsSq = ['Unë', 'Ti', 'Ne', 'Ata', 'Ai', 'Ajo'];
+    var verbsSq = ["Kam", "Jam", "Do të jem"];
+  
+    return ["family", sentenceStructure, consolidateWordSets(nounsSq, subjectsSq, verbsSq, nounsEng, subjectsEng, verbsEng)];
+  }
 }
 
 export default familyList;

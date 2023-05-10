@@ -11,6 +11,7 @@ import basicList from '../wordsets/basicList';
 import familyList from '../wordsets/familyList';
 import hometownList from '../wordsets/hometownList';
 import feelingsList from '../wordsets/feelingsList';
+import exclamationsList from '../wordsets/exclamationsList';
 import { border } from 'native-base/lib/typescript/theme/styled-system';
 import placesList from '../wordsets/placesList';
 
@@ -44,6 +45,11 @@ function PhraseSelector({navigation, setMenuVisible, route}) {
                     <Text style={styles.mainText}>What do you want to say?</Text>
                 </View>     
                 <View style={styles.buttonsContainer}>
+                    <View style={styles.phrasebookContainer}>
+                        <TouchableOpacity style={styles.phrasebookButton} onPress={() => {navigation.navigate('Build', {wordSet: exclamationsList}); setMenuVisible(true)}}>
+                          <Text style={styles.buttonText}>One word basics 🚀</Text>
+                        </TouchableOpacity>
+                    </View>                    
                     <View style={styles.phrasebookContainer}>
                         <TouchableOpacity style={styles.phrasebookButton} onPress={() => {navigation.navigate('Build', {wordSet: hometownList}); setMenuVisible(true)}}>
                           <Text style={styles.buttonText}>Where you're from 🌍</Text>

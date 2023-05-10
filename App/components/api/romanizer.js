@@ -1,4 +1,4 @@
-import { OPENAI_API_KEY } from "@env" 
+import { REACT_APP_SERVER_URL } from "@env" 
 import axios from "axios";
 import 'react-native-url-polyfill/auto'
 import { supabase } from '../../lib/supabase';
@@ -14,15 +14,13 @@ const romanizer = (input, setSentenceRomanized, lang, langCode, session) => {
             const role = `Simple ${lang} romanizer.`;
             const costPerToken = 0.002/1000;
             let sentenceRomanizedTemp = "";
-            const response = await axios.post('https://api.openai.com/v1/chat/completions', {
-                model: "gpt-3.5-turbo",
-                messages: [{"role": "user", "content": role}, {"role": "system", "content": prompt}],
-            }, {
-                headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${OPENAI_API_KEY}`,
-                },
-            });      
+
+            const serverUrl = REACT_APP_SERVER_URL;
+            // Send call to node.js
+            const response = await axios.post(`${serverUrl}/api/gpt-completions`, {
+                role: role,
+                prompt: prompt,
+            });    
             sentenceRomanizedTemp = response.data.choices[0].message.content.trim();
             setSentenceRomanized(sentenceRomanizedTemp);
 
@@ -41,7 +39,7 @@ const romanizer = (input, setSentenceRomanized, lang, langCode, session) => {
                     cost: (role.length + prompt.length)/4 * costPerToken,
                     prompt: `${role} ${prompt}`,
                     output: sentenceRomanizedTemp,
-                    api_key: OPENAI_API_KEY,
+                    api_key: null,
                     }
                 )
                 if (error) alert(error.message)
