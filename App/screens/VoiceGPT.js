@@ -22,6 +22,10 @@ const PAGE_HEIGHT = Dimensions.get('window').height;
 
 // Todos for scaffolding
 
+/// Chat messages and styling DONE
+/// Type new message DONE
+/// Record new message DONE
+/// Add message translation DONE
 /// Tab navigation DONE
 /// Grab phrases DONE
 /// Deconstruct phrases into words DONE
@@ -121,10 +125,8 @@ export default ({ navigation, route }) => {
                     <Tab.Navigator  
                         tabBar={() => null} // Hide the tab menu                      
                         sceneContainerStyle={{backgroundColor: 'transparent'}}
-                    >
-                    
-                        {voiceRecord()}
-                    
+                    >                    
+                        {voiceRecord()}                    
                         {chatWordPicker()}
                     </Tab.Navigator>                
                 </View>

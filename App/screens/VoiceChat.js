@@ -30,6 +30,18 @@ import googleTranslateWordEng from '../lib/googleTranslateWordEng';
 const PAGE_HEIGHT = Dimensions.get('window').height;
 const PAGE_WIDTH = Dimensions.get('window').width;
 const VoiceChat = ({ newMessage, setNewMessage, messages, setMessages}) => {
+
+  // Retrieve session
+      
+  const [session, setSession] = useState()
+    
+  supabase.auth.getSession().then(({ data: { session } }) => {
+    setSession(session)
+  })
+
+  supabase.auth.onAuthStateChange((_event, session) => {
+    setSession(session)
+  })
     
     const [response, setResponse] = useState(null);
   
@@ -51,7 +63,7 @@ const VoiceChat = ({ newMessage, setNewMessage, messages, setMessages}) => {
       };
   
       setMessages((previousMessages) => GiftedChat.append(previousMessages, newMessageData));
-      gptChat(messages, message, setResponse, lang);
+      gptChat(messages, message, setResponse, lang, session);
     };
   
     useEffect(() => {

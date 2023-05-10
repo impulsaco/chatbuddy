@@ -7,7 +7,9 @@ import { SessionContext } from '../../lib/SessionContext';
 import romanizer from './romanizer';
 import { LanguageContext } from '../../lib/LanguageContext';
 
-const gptChat = (previousMessages, newMessage, setResponse, lang) => {
+const gptChat = (previousMessages, newMessage, setResponse, lang, session) => {
+
+  console.log("session is", session)
 
   console.log("in GPT chat, lang is ", lang)
 
@@ -71,7 +73,7 @@ const gptChat = (previousMessages, newMessage, setResponse, lang) => {
 
     // Save call to Supabase
     const saveCall = async () => {  
-      console.log("saving!")  
+      console.log("saving chat call!")  
       const messagesString = JSON.stringify(structuredMessages)
       console.log("tokens are: ", messagesString.length/4)    
       const { error } = await supabase
