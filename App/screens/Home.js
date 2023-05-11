@@ -111,6 +111,11 @@ function Home({navigation, setMenuVisible}) {
                         <TouchableOpacity style={styles.phrasebookButton} onPress={() => navigation.navigate('Phrasebook', {lang: lang, setLang: setLang, langCode: langCode, setLangCode: setLangCode, setMenuVisible: setMenuVisible})}>
                           <Text style={styles.longButtonText}>My phrases</Text>
                         </TouchableOpacity>
+                    </View>   
+                    <View style={styles.phrasebookContainer}>                    
+                        <TouchableOpacity style={styles.phrasebookButton} onPress={() => navigation.navigate('LanguageBuddy', {lang: lang, setLang: setLang, langCode: langCode, setLangCode: setLangCode, setMenuVisible: setMenuVisible})}>
+                          <Text style={styles.longButtonText}>Language Buddy</Text>
+                        </TouchableOpacity>
                     </View>                    
                     <View style={styles.logOutContainer}>
                         <TouchableOpacity style={styles.logoutButton} onPress={() => supabase.auth.signOut()}>
