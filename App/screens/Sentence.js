@@ -195,21 +195,36 @@ const Sentence = ({
         setForward(sentenceInit[0].type)
     }
 
-    // check whispered sentence against sentence
     useEffect(() => {
-        console.log("sentenceWhisper in Sentence is ", sentenceWhisper)  
-        console.log("sentenceAnalyzed in Sentence is ", sentenceAnalyzed)      
-        let interimCount = 0
+        console.log("sentenceWhisper in Sentence is ", sentenceWhisper);
+        console.log("sentenceAnalyzed in Sentence is ", sentenceAnalyzed);
+        let interimCount = 0;
+      
+        // Convert sentenceWhisper to lowercase and remove punctuation
+        const cleanedSentenceWhisper = sentenceWhisper
+          .toLowerCase()
+          .replace(/[.,!?]/g, "")
+          .replace(/\.$/, "");
+      
         for (let i = 0; i < sentenceAnalyzed.length; i++) {
-            let interimState = [...sentenceAnalyzed]
-            if (sentenceWhisper.includes(sentenceAnalyzed[i].word)) {
-                interimState[i].said = true
-                setSentenceAnalyzed(interimState)
-                interimCount++                
-            }
+          let interimState = [...sentenceAnalyzed];
+          console.log("sentenceAnalyzed[i].word is ", sentenceAnalyzed[i].word);
+      
+          // Convert sentenceAnalyzed[i].word to lowercase and remove punctuation
+          const cleanedWord = sentenceAnalyzed[i].word
+            .toLowerCase()
+            .replace(/[.,!?]/g, "")
+            .replace(/\.$/, "");
+      
+          if (cleanedSentenceWhisper.includes(cleanedWord)) {
+            console.log("includes!");
+            interimState[i].said = true;
+            setSentenceAnalyzed(interimState);
+            interimCount++;
+          }
         }
-        setSentenceSaidPercentage(interimCount / sentenceAnalyzed.length)
-      }, [sentenceWhisper]) //DOES NOT UPDATE WHEN SENTENCE SAID STAYS THE SAME!
+        setSentenceSaidPercentage(interimCount / sentenceAnalyzed.length);
+      }, [sentenceWhisper]);
 
     // set Text based on whispered
 

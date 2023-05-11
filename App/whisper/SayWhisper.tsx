@@ -369,41 +369,37 @@ export default ({
       setLoading(true);
       setBottomText("Analyzing...")
       setTopText("Please wait...")
-      const file = new Blob([uri], { type: "audio/wav" });
-      const formData: any = new FormData();
-      //formData.append("language", lang.toLowerCase());
-      // formData.append("model_size", "tiny");
-      formData.append(
-        "file",
-        file,
-        filename
-      );
-      formData.append('model', modelName)
-      formData.append('prompt', prompt)
-      console.log("formData sent is", JSON.stringify(formData))
-  
-      axios.post(url, formData)
-        .then(function (response) {
-          console.log("response is :", response.data);
-          setTranscribedData((oldData: any) => [...oldData, response.data]);
-          setLoading(false);
-          setIsTranscribing(false);
-          setRecordingDone(false)
-          setSentenceWhisper(response.data.text) // Sets the sentence check to be shown
-          setAttempted(true)
-          setCloseVisible(true)
-          console.log("sentenceWhisper in Response is ", sentenceWhisper)
-          /*intervalRef.current = setInterval(
-            transcribeInterim,
-            transcribeTimeout * 1000
-          );*/
+      FileSystem.readAsStringAsync(uri, { encoding: FileSystem.EncodingType.Base64 })
+        .then(base64Data => {
+          const formData: any = new FormData();
+          formData.append("file", `data:audio/wav;base64,${base64Data}`, filename);
+          formData.append('model', modelName);
+          formData.append('prompt', prompt);
+
+          axios.post(url, formData)
+            .then(function (response) {
+              console.log("response is :", response.data);
+              setTranscribedData((oldData: any) => [...oldData, response.data]);
+              setLoading(false);
+              setIsTranscribing(false);
+              setRecordingDone(false);
+              setSentenceWhisper(response.data.text); // Sets the sentence check to be shown
+              setAttempted(true);
+              setCloseVisible(true);
+              console.log("sentenceWhisper in Response is ", sentenceWhisper);
+              /*intervalRef.current = setInterval(
+                transcribeInterim,
+                transcribeTimeout * 1000
+              );*/
+            })
+            .catch(function (error) {
+              console.log("error : ", error);
+              if (error.response) {
+                console.log("Error data: ", error.response.data);
+              }
+            });
         })
-        .catch(function (error) {
-          console.log("error : ", error);
-          if (error.response) {
-            console.log("Error data: ", error.response.data);
-          }
-        });
+        .catch(error => console.error('Error reading the file data:', error));
       // Save call to Supabase
 
       const costPerToken = 0.006 / 60
