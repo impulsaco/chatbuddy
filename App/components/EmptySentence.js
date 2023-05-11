@@ -9,6 +9,7 @@ import hometownList from '../wordsets/hometownList';
 import feelingsList from '../wordsets/feelingsList';
 import placesList from '../wordsets/placesList';
 import freeformList from '../wordsets/freeformList';
+import exclamationsList from "../wordsets/exclamationsList";
 
 const PAGE_HEIGHT = Dimensions.get('window').height;
 const PAGE_WIDTH = Dimensions.get('window').width;
@@ -29,8 +30,8 @@ const EmptySentence = ( {navigation, type, lang, langCode, setMenuVisible} ) => 
             return feelingsList
         } else if (type === 'hometown') {
             return hometownList
-        } else if (type === 'freeform') {
-            return freeformList
+        } else if (type === 'exclamations') {
+            return exclamationsList
         }
     }
      // For translations

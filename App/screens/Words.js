@@ -296,6 +296,7 @@ export default ({ navigation, route }) => {
                             setForward={setForward}
                             sentenceInit={sentenceInit}
                             onMounted={handleSayModalMounted}
+                            sentenceRomanized={sentenceRomanized}
                             />
                         )}                        
                         </Tab.Screen>  

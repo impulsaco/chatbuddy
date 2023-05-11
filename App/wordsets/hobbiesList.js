@@ -127,8 +127,14 @@ const hobbiesList = (lang) => {
     var subjectsJa = ['私', 'あなた', '私たち', '彼ら', '彼', '彼女'];
     var verbsJa = ["プレイ", "好き", "する", "読む", "行く"];
   
-    return ["hobbies", sentenceStructure, consolidateWordSets(nounsJa, subjectsJa, verbsJa, nounsEng, subjectsEng, verbsEng)];
+    // Romanized Japanese
+    var nounsJaRom = ["Gitā", "Tenisu", "Kaiga", "Kakimono", "Bēkingu", "Ryōri", "Tsurī", "Kyanpu", "Sukī", "Yoga", "Jogingu", "Hon", "Chesu", "Haikingu", "Saikuringu", "Badominton", "Barēbōru", "Dansu", "Uta"];
+    var subjectsJaRom = ['Watashi', 'Anata', 'Watashitachi', 'Karera', 'Kare', 'Kanojo'];
+    var verbsJaRom = ["Purei", "Suki", "Suru", "Yomu", "Iku"];
+  
+    return ["hobbies", sentenceStructure, consolidateWordSets(nounsJa, subjectsJa, verbsJa, nounsEng, subjectsEng, verbsEng, nounsJaRom, subjectsJaRom, verbsJaRom)];
   }
+  
   
   if (lang === 'bn') {
     // Bengali set
@@ -147,6 +153,29 @@ const hobbiesList = (lang) => {
 
     return ["hobbies", sentenceStructure, consolidateWordSets(nounsSq, subjectsSq, verbsSq, nounsEng, subjectsEng, verbsEng)];
   }
+
+  // French set
+if (lang === 'fr-FR') {
+  var subjectsFr = ['Je', 'Tu', 'Nous', 'Ils', 'Il', 'Elle'];
+
+  var verbsFr = ['Joue', 'Aime', 'Fais', 'Lis', 'Vais faire'];
+
+  var nounsFr = ['Guitare', 'Tennis', 'Peinture', 'Écriture', 'Cuisine', 'Cuisson', 'Pêche', 'Camping', 'Ski', 'Yoga', 'Jogging', 'Livres', 'Échecs', 'Randonnée', 'Cyclisme', 'Badminton', 'Volleyball', 'Danse', 'Chant'];
+
+  return ["hobbies", sentenceStructure, consolidateWordSets(nounsFr, subjectsFr, verbsFr, nounsEng, subjectsEng, verbsEng)];
+}
+
+// Italian set
+if (lang === 'it') {
+  var subjectsIt = ['Io', 'Tu', 'Noi', 'Loro', 'Lui', 'Lei'];
+
+  var verbsIt = ['Gioco', 'Mi piace', 'Faccio', 'Leggo', 'Vado a fare'];
+
+  var nounsIt = ['Chitarra', 'Tennis', 'Pittura', 'Scrittura', 'Cottura', 'Cucina', 'Pesca', 'Campeggio', 'Sci', 'Yoga', 'Jogging', 'Libri', 'Scacchi', 'Escursionismo', 'Ciclismo', 'Badminton', 'Pallavolo', 'Danza', 'Canto'];
+
+  return ["hobbies", sentenceStructure, consolidateWordSets(nounsIt, subjectsIt, verbsIt, nounsEng, subjectsEng, verbsEng)];
+}
+
 
 }
 

@@ -27,7 +27,7 @@ const openai = new OpenAIApi(configuration);
 // Action sheet
 
 
-const SentenceCard = ( {id, sentence, translation, translations, langCode, blocks, type, session} ) => {
+const SentenceCard = ( {id, sentence, translation, translations, langCode, blocks, type, session, romanization} ) => {
 
     const { showActionSheetWithOptions } = useActionSheet();
 
@@ -98,6 +98,19 @@ const SentenceCard = ( {id, sentence, translation, translations, langCode, block
     </TouchableOpacity>
     */
 
+    const sentenceRomanization = () => {
+        if (romanization) {                        
+            return (
+                <Text style={[styles.textLight, { fontStyle: 'italic' }]}>{romanization}</Text>
+            )
+        }
+        else {
+            return (
+                null
+            )
+        }
+    }
+
     return (
         <View style={{width : '100%'}}>
             <View style={styles.sentenceCard}>                
@@ -106,7 +119,8 @@ const SentenceCard = ( {id, sentence, translation, translations, langCode, block
                 </TouchableOpacity>
                 <View style={styles.sentenceContainer}>
                     <Text style={styles.text}>{sentence}</Text>
-                    {sentenceTranslation()}
+                    {sentenceRomanization()}
+                    {sentenceTranslation()}                    
                 </View>                                                
                 <TouchableOpacity style={styles.trashContainer} onPress={() => onDelete(id)}>
                     <TrashBin style={[{fill: 'red'}]}/>
@@ -126,8 +140,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFFFF',
         borderRadius: 10,
         position: 'relative',
-        width: PAGE_WIDTH*.87,
-        height: PAGE_HEIGHT * 0.075,
+        width: PAGE_WIDTH*.87,        
         margin: 10,
     }, 
     sentenceContainer: {

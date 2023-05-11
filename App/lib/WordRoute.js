@@ -45,7 +45,8 @@ const WordRoute = (type, setUserWords, userWords, words, translations, sentence,
           type={type}
           setUserWords={setUserWords}
           userWords={userWords}
-          langCode={langCode}          
+          langCode={langCode}   
+          lang={lang}       
         />
         {userWords.filter
           ? userWords

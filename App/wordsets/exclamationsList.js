@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 // create words dataset
 
-const hobbiesList = (lang) => {
+const exclamationsList = (lang) => {
 
   var idCounter = 0;
 
@@ -38,7 +38,7 @@ if (lang === 'es-MX') {
 
   var wordsEs = ["Hola", "Sí", "No", "Adiós", "Por favor", "Gracias", "Lo siento", "Ayuda"];
 
-  return ["words", sentenceStructure, consolidateWordSets(wordsEs, wordsEng)];
+  return ["exclamations", sentenceStructure, consolidateWordSets(wordsEs, wordsEng)];
 
 }
 
@@ -52,7 +52,7 @@ if (lang === 'ko') {
 
   var wordsKoRom = ["annyeonghaseyo", "ne", "aniyo", "annyeonghi gaseyo", "butakdeurimnida", "gamsahamnida", "mianhamnida", "dowajuseyo"];
 
-  return ["words", sentenceStructure, consolidateWordSets(wordsKo, wordsEng, wordsKoRom)];
+  return ["exclamations", sentenceStructure, consolidateWordSets(wordsKo, wordsEng, wordsKoRom)];
 
 }
 
@@ -66,7 +66,7 @@ if (lang === 'bg') {
 
   var wordsBgRom = ["Zdravei", "Da", "Ne", "Dovizhdane", "Molya", "Blagodarya", "Sazhalyavam", "Pomosht"];
 
-  return ["words", sentenceStructure, consolidateWordSets(wordsBg, wordsEng, wordsBgRom)];
+  return ["exclamations", sentenceStructure, consolidateWordSets(wordsBg, wordsEng, wordsBgRom)];
 
 }
 
@@ -76,7 +76,7 @@ if (lang === 'de') {
 
   var wordsDe = ["Hallo", "Ja", "Nein", "Auf Wiedersehen", "Bitte", "Danke", "Es tut mir leid", "Hilfe"];
 
-  return ["words", sentenceStructure, consolidateWordSets(wordsDe, wordsEng)];
+  return ["exclamations", sentenceStructure, consolidateWordSets(wordsDe, wordsEng)];
 
 }
 
@@ -90,7 +90,7 @@ if (lang === 'ja') {
 
   var wordsJaRom = ["konnichiwa", "hai", "iie", "sayounara", "onegaishimasu", "arigatou", "gomennasai", "tasukete"];
 
-  return ["words", sentenceStructure, consolidateWordSets(wordsJa, wordsEng, wordsJaRom)];
+  return ["exclamations", sentenceStructure, consolidateWordSets(wordsJa, wordsEng, wordsJaRom)];
 
 }
 
@@ -104,12 +104,27 @@ if (lang === 'bn') {
 
   var wordsBnRom = ["hyālō", "hyā̃", "nā", "bidāẏ", "anugrha karē", "dhan'yabād", "duḥkhita", "sāhāẏẏa"];
 
-  return ["words", sentenceStructure, consolidateWordSets(wordsBn, wordsEng, wordsBnRom)];
+  return ["exclamations", sentenceStructure, consolidateWordSets(wordsBn, wordsEng, wordsBnRom)];
 
 }
+
+// French set
+if (lang === 'fr-FR') {
+  var wordsFr = ["Bonjour", "Oui", "Non", "Au revoir", "S'il vous plaît", "Merci", "Désolé", "Aide"];
+
+  return ["exclamations", sentenceStructure, consolidateWordSets(wordsFr, wordsEng)];
+}
+
+// Italian set
+if (lang === 'it') {
+  var wordsIt = ["Ciao", "Sì", "No", "Arrivederci", "Per favore", "Grazie", "Mi dispiace", "Aiuto"];
+
+  return ["exclamations", sentenceStructure, consolidateWordSets(wordsIt, wordsEng)];
+}
+
 
  
 
 }
 
-export default hobbiesList;
+export default exclamationsList;

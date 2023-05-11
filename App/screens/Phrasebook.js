@@ -45,13 +45,14 @@ const Phrasebook = ({navigation, route}) => {
     const [langCodes, setLangCodes] = useState([])
 
     const [types, setTypes] = useState([
-        {name: "introduction", label: "Jobs or studies  💼", unfilled: emptySentences}, 
+                {name: "exclamations", label: "One word basics 🚀", unfilled: emptySentences},
+                {name: "introduction", label: "Jobs or studies  💼", unfilled: emptySentences}, 
                 {name: "hometown", label: "Where we're from 🌍", unfilled: emptySentences},
                 {name: "feelings", label: "Feelings 😃", unfilled: emptySentences},
                 {name: "family", label: "My family 🏡", unfilled: emptySentences},
                 {name: "hobbies", label: "Hobbies 🎨", unfilled: emptySentences}, 
                 {name: "places", label: "Places 📍", unfilled: emptySentences}, 
-                {name: "basic", label: "Anything 🤯", unfilled: emptySentences}
+                
     ])
   // Retrieve session
 
@@ -74,7 +75,7 @@ const Phrasebook = ({navigation, route}) => {
     if (session) {
         const { data, error } = await supabase
         .from('sentences')
-        .select('id, sentence, language, lang_code, type, translation, blocks')
+        .select('id, sentence, language, lang_code, type, translation, blocks, romanization')
         .eq('user', session.user.id)
         .not("translation","is", null);
     
@@ -83,13 +84,13 @@ const Phrasebook = ({navigation, route}) => {
         if (data) {
             setSentences(data)      
             setTypes([
+                {name: "exclamations", label: "One word basics 🚀", unfilled: emptySentences - data.filter(obj => {return obj.type === "exclamations" && obj.language === lang}).length},
                 {name: "introduction", label: "Jobs or studies  💼", unfilled: emptySentences - data.filter(obj => {return obj.type === "introduction" && obj.language === lang}).length}, 
                 {name: "hometown", label: "Where we're from 🌍", unfilled: emptySentences - data.filter(obj => {return obj.type === "hometown" && obj.language === lang}).length},
                 {name: "feelings", label: "Feelings 😃", unfilled: emptySentences - data.filter(obj => {return obj.type === "feelings" && obj.language === lang}).length},
                 {name: "family", label: "My family 🏡", unfilled: emptySentences - data.filter(obj => {return obj.type === "family" && obj.language === lang}).length},
                 {name: "hobbies", label: "Hobbies 🎨", unfilled: emptySentences - data.filter(obj => {return obj.type === "hobbies" && obj.language === lang}).length}, 
                 {name: "places", label: "Places 📍", unfilled: emptySentences - data.filter(obj => {return obj.type === "places" && obj.language === lang}).length}, 
-                {name: "basic", label: "Anything 🤯", unfilled: emptySentences - data.filter(obj => {return obj.type === "basic" && obj.language === lang}).length}
             ])
             setLangs(Array.from(new Set(data.map(({ language }) => language))))
             setLangCodes(Array.from(new Set(data.map(({ lang_code }) => lang_code))))
@@ -154,6 +155,7 @@ const Phrasebook = ({navigation, route}) => {
   // Render sentences
 
   const renderSentences = (type) => {
+        //console.log( "sentences", sentences)
         return (
             sentences.filter ? sentences.filter(obj => {return obj.language === lang && obj.type === type})
             .map((sentence) => 
@@ -167,6 +169,7 @@ const Phrasebook = ({navigation, route}) => {
                 langCode={langCode}
                 translations={translations}
                 session={session}
+                romanization={sentence.romanization}
             />) : null
         )
     }

@@ -125,8 +125,14 @@ const hometownList = (lang) => {
     var verbsJa = ['出身です', '育ちました', '住んでいます', '住んでいました'];
     var nounsJa = ['アメリカ', '中国', 'チリ', 'ブルガリア', '韓国'];
   
-    return ["hometown", sentenceStructure, consolidateWordSets(nounsJa, subjectsJa, verbsJa, nounsEng, subjectsEng, verbsEng)];
+    // Romanized Japanese
+    var subjectsJaRom = ['Watashi', 'Anata', 'Watashitachi', 'Karera', 'Kare', 'Kanojo'];
+    var verbsJaRom = ['Shusshin desu', 'Sodachimashita', 'Sunde imasu', 'Sunde imashita'];
+    var nounsJaRom = ['Amerika', 'Chūgoku', 'Chiri', 'Burugaria', 'Kankoku'];
+  
+    return ["hometown", sentenceStructure, consolidateWordSets(nounsJa, subjectsJa, verbsJa, nounsEng, subjectsEng, verbsEng, nounsJaRom, subjectsJaRom, verbsJaRom)];
   }
+  
   
   if (lang === 'bn') {
     // Bengali set
@@ -145,6 +151,28 @@ const hometownList = (lang) => {
   
     return ["hometown", sentenceStructure, consolidateWordSets(nounsSq, subjectsSq, verbsSq, nounsEng, subjectsEng, verbsEng)];
   }
+
+  // French set
+if (lang === 'fr-FR') {
+  var subjectsFr = ['Je', 'Tu', 'Nous', 'Ils', 'Il', 'Elle'];
+
+  var verbsFr = ['Suis originaire de', 'Ai grandi à', 'Habite à', 'Habitais à'];
+
+  var nounsFr = ['États-Unis', 'Chine', 'Chili', 'Bulgarie', 'Corée'];
+
+  return ["hometown", sentenceStructure, consolidateWordSets(nounsFr, subjectsFr, verbsFr, nounsEng, subjectsEng, verbsEng)];
+}
+
+// Italian set
+if (lang === 'it') {
+  var subjectsIt = ['Io', 'Tu', 'Noi', 'Loro', 'Lui', 'Lei'];
+
+  var verbsIt = ['Sono di', 'Sono cresciuto/a in', 'Vivo a', 'Ho vissuto a'];
+
+  var nounsIt = ['Stati Uniti', 'Cina', 'Cile', 'Bulgaria', 'Corea'];
+
+  return ["hometown", sentenceStructure, consolidateWordSets(nounsIt, subjectsIt, verbsIt, nounsEng, subjectsEng, verbsEng)];
+}
   
 }
 

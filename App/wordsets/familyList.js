@@ -127,8 +127,14 @@ const familyList = (lang) => {
     var subjectsJa = ['私', 'あなた', '私たち', '彼ら', '彼', '彼女'];
     var verbsJa = ["持っている", "である", "になる"];
   
-    return ["family", sentenceStructure, consolidateWordSets(nounsJa, subjectsJa, verbsJa, nounsEng, subjectsEng, verbsEng)];
+    // Romanized Japanese
+    var nounsJaRom = ["Haha", "Chichi", "Musume", "Musuko", "Kareshi", "Kanojo", "Sobo", "Sofu", "Oba", "Oji", "Itoko", "Ane", "Ani", "Ōi", "Mei"];
+    var subjectsJaRom = ['Watashi', 'Anata', 'Watashitachi', 'Karera', 'Kare', 'Kanojo'];
+    var verbsJaRom = ["Motte iru", "Dearu", "Ni naru"];
+  
+    return ["family", sentenceStructure, consolidateWordSets(nounsJa, subjectsJa, verbsJa, nounsEng, subjectsEng, verbsEng, nounsJaRom, subjectsJaRom, verbsJaRom)];
   }
+  
   
   if (lang === 'bn') {
     // Bengali set
@@ -147,6 +153,29 @@ const familyList = (lang) => {
   
     return ["family", sentenceStructure, consolidateWordSets(nounsSq, subjectsSq, verbsSq, nounsEng, subjectsEng, verbsEng)];
   }
+
+  // French set
+if (lang === 'fr-FR') {
+  var subjectsFr = ['Je', 'Tu', 'Nous', 'Ils', 'Il', 'Elle'];
+
+  var verbsFr = ['Avoir', 'Suis', 'Serai'];
+
+  var nounsFr = ['Mère', 'Père', 'Fille', 'Fils', 'Petit ami', 'Petite amie', 'Grand-mère', 'Grand-père', 'Tante', 'Oncle', 'Cousin(e)', 'Soeur', 'Frère', 'Neveu', 'Nièce'];
+
+  return ["family", sentenceStructure, consolidateWordSets(nounsFr, subjectsFr, verbsFr, nounsEng, subjectsEng, verbsEng)];
+}
+
+// Italian set
+if (lang === 'it') {
+  var subjectsIt = ['Io', 'Tu', 'Noi', 'Loro', 'Lui', 'Lei'];
+
+  var verbsIt = ['Ho', 'Sono', 'Sarò'];
+
+  var nounsIt = ['Madre', 'Padre', 'Figlia', 'Figlio', 'Fidanzato', 'Fidanzata', 'Nonna', 'Nonno', 'Zia', 'Zio', 'Cugino/a', 'Sorella', 'Fratello', 'Nipote', 'Nipote'];
+
+  return ["family", sentenceStructure, consolidateWordSets(nounsIt, subjectsIt, verbsIt, nounsEng, subjectsEng, verbsEng)];
+}
+
 }
 
 export default familyList;

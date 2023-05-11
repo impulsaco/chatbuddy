@@ -125,8 +125,14 @@ const feelingsList = (lang) => {
     var subjectsJa = ['私', 'あなた', '私たち', '彼ら', '彼', '彼女'];
     var verbsJa = ["です", "である", "である", "感じる"];
   
-    return ["feelings", sentenceStructure, consolidateWordSets(adjectivesJa, subjectsJa, verbsJa, adjectivesEng, subjectsEng, verbsEng)];
+    // Romanized Japanese
+    var adjectivesJaRom = ['Yorokobi ni michita', 'Kibō ni michita', 'Shiawasena', 'Aisareta', 'Tanoshinde iru', 'Ketsui shita', 'Katsuryoku ni michita', 'Odayakana', 'Jūjitsu shita', 'Rirakkusu shita', 'Kanashī', 'Fuan na', 'Genmetsu shita'];
+    var subjectsJaRom = ['Watashi', 'Anata', 'Watashitachi', 'Karera', 'Kare', 'Kanojo'];
+    var verbsJaRom = ["Desu", "Dearu", "Dearu", "Kanjiru"];
+  
+    return ["feelings", sentenceStructure, consolidateWordSets(adjectivesJa, subjectsJa, verbsJa, adjectivesEng, subjectsEng, verbsEng, adjectivesJaRom, subjectsJaRom, verbsJaRom)];
   }
+  
   
   if (lang === 'bn') {
     // Bengali set
@@ -145,6 +151,29 @@ const feelingsList = (lang) => {
   
     return ["feelings", sentenceStructure, consolidateWordSets(adjectivesSq, subjectsSq, verbsSq, adjectivesEng, subjectsEng, verbsEng)];
   }
+
+  // French set
+if (lang === 'fr-FR') {
+  var subjectsFr = ['Je', 'Tu', 'Nous', 'Ils', 'Il', 'Elle'];
+
+  var verbsFr = ['Suis', 'Es', 'Sommes', 'Se sent'];
+
+  var adjectivesFr = ['Joyeux', 'Plein d\'espoir', 'Heureux', 'Aimé', 'Amusé', 'Déterminé', 'Énergique', 'Calme', 'Épanoui', 'Détendu', 'Triste', 'Anxieux', 'Désillusionné'];
+
+  return ["feelings", sentenceStructure, consolidateWordSets(adjectivesFr, subjectsFr, verbsFr, adjectivesEng, subjectsEng, verbsEng)];
+}
+
+// Italian set
+if (lang === 'it') {
+  var subjectsIt = ['Io', 'Tu', 'Noi', 'Loro', 'Lui', 'Lei'];
+
+  var verbsIt = ['Sono', 'Sei', 'Siamo', 'Si sente'];
+
+  var adjectivesIt = ['Gioioso', 'Speranzoso', 'Felice', 'Amato', 'Divertito', 'Determinato', 'Energetico', 'Calmo', 'Realizzato', 'Rilassato', 'Triste', 'Ansioso', 'Disilluso'];
+
+  return ["feelings", sentenceStructure, consolidateWordSets(adjectivesIt, subjectsIt, verbsIt, adjectivesEng, subjectsEng, verbsEng)];
+}
+
 }
 
 export default feelingsList;

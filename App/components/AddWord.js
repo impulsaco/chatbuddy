@@ -4,12 +4,13 @@ import Plus from '../../assets/Plus.svg'
 import { Button } from "@rneui/themed"
 import Close from '../../assets/close.svg'
 import googleTranslateWord from '../lib/googleTranslateWord';
+import romanizeWord from './api/romanizeWord';
 import { supabase } from '../lib/supabase';
 
 const PAGE_HEIGHT = Dimensions.get('window').height;
 const PAGE_WIDTH = Dimensions.get('window').width;
 
-const AddWord = ({ type, setUserWords, userWords, langCode, style }) => {
+const AddWord = ({ type, setUserWords, userWords, lang, langCode, style }) => {
 
     // Create variables for modal
 
@@ -22,14 +23,14 @@ const AddWord = ({ type, setUserWords, userWords, langCode, style }) => {
 
     let height = 54
 
-    if (langCode === "ko" || langCode === "bg") {
+    if (langCode === "ko" || langCode === "bg" || langCode === "ja") {
         height = PAGE_HEIGHT*.09
     }
     else {
         height = PAGE_HEIGHT*.06
     }
 
-    /*useEffect(() => {
+    useEffect(() => {
         supabase.auth.getSession().then(({ data: { session } }) => {
         setSession(session)
         })
@@ -37,7 +38,7 @@ const AddWord = ({ type, setUserWords, userWords, langCode, style }) => {
         supabase.auth.onAuthStateChange((_event, session) => {
         setSession(session)
         })
-    }, [])
+    }, []) /*
 
     // Update words in backend
 
@@ -67,13 +68,29 @@ const AddWord = ({ type, setUserWords, userWords, langCode, style }) => {
 
     // Adds the word on button press
     const addWord = async (word) => {
-            let id = userWords.length + 100000 // makes sure IDs do not clash with preloaded words
-            let translation = await googleTranslateWord(word, langCode)
-            let wordToAdd = {id: id, word: translation, type:type, translation: word} 
-            setUserWords(userWords => [...userWords, wordToAdd]);
-            // saveWord();
-            setModalVisible(false)
-    }
+        let id = userWords.length + 100000; // makes sure IDs do not clash with preloaded words
+        let translation = await googleTranslateWord(word, langCode);
+      
+        // Add romanized property if the langCode is 'bg' or 'ko'
+        let romanized;
+        if (langCode === 'bg' || langCode === 'ko' || langCode === 'ja') {
+          romanized = await romanizeWord(translation, langCode, session);
+        }
+
+      
+        let wordToAdd = {
+          id: id,
+          word: translation,
+          type: type,
+          translation: word,
+          ...(romanized && { romanized: romanized }), // Add the romanized property if it exists
+        };
+      
+        setUserWords((userWords) => [...userWords, wordToAdd]);
+        // saveWord();
+        setModalVisible(false);
+      };
+      
 
     
 

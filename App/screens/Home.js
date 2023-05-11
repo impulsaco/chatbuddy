@@ -8,6 +8,8 @@ import KoreanFlag from '../../assets/KoreanFlag.svg';
 import SpanishFlag from '../../assets/SpanishFlag.svg';
 import BulgarianFlag from '../../assets/BulgarianFlag.svg';
 import GermanFlag from '../../assets/GermanFlag.svg';
+import ItalianFlag from '../../assets/ItalianFlag.svg';
+import FrenchFlag from '../../assets/FrenchFlag.svg';
 import AlbanianFlag from '../../assets/AlbanianFlag.svg';
 import BengaliFlag from '../../assets/BengaliFlag.svg';
 import JapaneseFlag from '../../assets/JapaneseFlag.svg';
@@ -47,11 +49,7 @@ function Home({navigation, setMenuVisible}) {
                     <TouchableOpacity style={styles.languageBox} onPress={() => {navigation.navigate('Choose', {lang: "Bengali", langCode: "bn"}); setLangCode("bn"); setLang("Bengali")}}>
                       <Text style={styles.buttonText}>Bengali</Text>
                       <BengaliFlag width={55}/>
-                    </TouchableOpacity>   
-                    <TouchableOpacity style={styles.languageBox} onPress={() => {navigation.navigate('Choose', {lang: "Japanese", langCode: "ja"}); setLangCode("ja"); setLang("Japanese")}}>
-                      <Text style={styles.buttonText}>Japanese</Text>
-                      <JapaneseFlag width={55}/>
-                    </TouchableOpacity>         
+                    </TouchableOpacity>                             
     
     */
 
@@ -89,10 +87,23 @@ function Home({navigation, setMenuVisible}) {
                       <Text style={styles.buttonText}>German</Text>
                       <GermanFlag width={55}/>
                     </TouchableOpacity>
+                    <TouchableOpacity style={styles.languageBox} onPress={() => {navigation.navigate('Choose', {lang: "Italian", langCode: "it"}); setLangCode("it"); setLang("Italian")}}>
+                      <Text style={styles.buttonText}>Italian</Text>
+                      <ItalianFlag width={55}/>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.languageBox} onPress={() => {navigation.navigate('Choose', {lang: "French", langCode: "fr-FR"}); setLangCode("fr-FR"); setLang("French")}}>
+                      <Text style={styles.buttonText}>French</Text>
+                      <FrenchFlag width={55}/>
+                    </TouchableOpacity>
                     <TouchableOpacity style={styles.languageBox} onPress={() => {navigation.navigate('Choose', {lang: "Bulgarian", langCode: "bg"}); setLangCode("bg"); setLang("Bulgarian")}}>
                       <Text style={styles.buttonText}>Bulgarian</Text>
                       <BulgarianFlag width={55}/>
                     </TouchableOpacity>
+                    <TouchableOpacity style={styles.languageBox} onPress={() => {navigation.navigate('Choose', {lang: "Japanese", langCode: "ja"}); setLangCode("ja"); setLang("Japanese")}}>
+                      <Text style={styles.buttonText}>Japanese</Text>
+                      <JapaneseFlag width={55}/>
+                    </TouchableOpacity>   
+                    
                                  
                   </View>
                   <View style={styles.lowerContainer}> 

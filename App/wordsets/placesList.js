@@ -150,7 +150,13 @@ const placesList = (lang) => {
     var verbsJa = ['行く', '寝る', '遊ぶ', '走る', '歩く', '泳ぐ', '勉強する', '働く'];
     var prepositionsJa = ['へ', 'で', 'で', 'で', 'から', '上', '下', 'を通って'];
   
-    return ["places", sentenceStructure, consolidateWordSets(nounsJa, subjectsJa, verbsJa, prepositionsJa, nounsEng, subjectsEng, verbsEng, prepositionsEng)];
+    // Romanized Japanese
+    var nounsJaRom = ['Ie', 'Gakkō', 'Ofisu', 'Basu', 'Jimu', 'Kōen', 'Ginkō', 'Shokuryōhinten', 'Toshokan', 'Eigakan', 'Yūbinkyoku', 'Shoppingumōru'];
+    var subjectsJaRom = ['Watashi', 'Anata', 'Watashitachi', 'Karera', 'Kare', 'Kanojo'];
+    var verbsJaRom = ['Iku', 'Neru', 'Asobu', 'Hashiru', 'Aruku', 'Oyogu', 'Benkyō suru', 'Hataraku'];
+    var prepositionsJaRom = ['e', 'de', 'de', 'de', 'kara', 'ue', 'shita', 'wototte'];
+  
+    return ["places", sentenceStructure, consolidateWordSets(nounsJa, subjectsJa, verbsJa, prepositionsJa, nounsEng, subjectsEng, verbsEng, prepositionsEng, nounsJaRom, subjectsJaRom, verbsJaRom, prepositionsJaRom)];
   }
 
   if (lang === 'bn') {
@@ -172,6 +178,33 @@ const placesList = (lang) => {
   
     return ["places", sentenceStructure, consolidateWordSets(nounsSq, subjectsSq, verbsSq, prepositionsSq, nounsEng, subjectsEng, verbsEng, prepositionsEng)];
   }
+
+  // French set
+if (lang === 'fr-FR') {
+  var nounsFr = ['Maison', 'École', 'Bureau', 'Bus', 'Salle de sport', 'Parc', 'Banque', 'Épicerie', 'Bibliothèque', 'Cinéma', 'Bureau de poste', 'Centre commercial'];
+
+  var subjectsFr = ['Je', 'Tu', 'Nous', 'Ils', 'Il', 'Elle'];
+
+  var verbsFr = ['Aller', 'Dormir', 'Jouer', 'Courir', 'Marcher', 'Nager', 'Étudier', 'Travailler'];
+
+  var prepositionsFr = ['À', 'Sur', 'Dans', 'À', 'De', 'Au-dessus', 'En dessous', 'À travers'];
+
+  return ["places", sentenceStructure, consolidateWordSets(nounsFr, subjectsFr, verbsFr, prepositionsFr, nounsEng, subjectsEng, verbsEng, prepositionsEng)];
+}
+
+// Italian set
+if (lang === 'it') {
+  var nounsIt = ['Casa', 'Scuola', 'Ufficio', 'Autobus', 'Palestra', 'Parco', 'Banca', 'Negozio di alimentari', 'Biblioteca', 'Cinema', 'Ufficio postale', 'Centro commerciale'];
+
+  var subjectsIt = ['Io', 'Tu', 'Noi', 'Loro', 'Lui', 'Lei'];
+
+  var verbsIt = ['Andare', 'Dormire', 'Giocare', 'Correre', 'Camminare', 'Nuotare', 'Studiare', 'Lavorare'];
+
+  var prepositionsIt = ['A', 'Su', 'In', 'A', 'Da', 'Sopra', 'Sotto', 'Attraverso'];
+
+  return ["places", sentenceStructure, consolidateWordSets(nounsIt, subjectsIt, verbsIt, prepositionsIt, nounsEng, subjectsEng, verbsEng, prepositionsEng)];
+}
+
 }
 
 export default placesList;

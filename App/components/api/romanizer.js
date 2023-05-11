@@ -9,7 +9,7 @@ const romanizer = (input, setSentenceRomanized, lang, langCode, session) => {
 
     const romanizeSentence = async (input, lang, langCode) => {
         
-        if (langCode === "ko" || langCode === "bg") {
+        if (langCode === "ko" || langCode === "bg" || langCode === "ja" ) {
             const prompt = `Romanize the following sentence in  ${lang}: ${input}. Output only the romanized sentence`;
             const role = `Simple ${lang} romanizer.`;
             const costPerToken = 0.002/1000;

@@ -31,7 +31,8 @@ const SayModal = ({ drawerNavigation,
                     setText, 
                     setForward,
                     sentenceInit,
-                    onMounted,                                  
+                    onMounted,  
+                    sentenceRomanized                                
                 }) => {    
 
     // Create variables for modal   
@@ -311,7 +312,7 @@ const SayModal = ({ drawerNavigation,
                             </TouchableOpacity>
                         </View>
                         <View style={styles.buttonsContainer}>    
-                            <SaveButton sentence={sentence} savedSentence={sentenceText} sentenceEn={sentenceEn} lang={lang} langCode={langCode} sentenceType={sentenceType} sentenceSaved={sentenceSaved} setSentenceSaved={setSentenceSaved}/>                                        
+                            <SaveButton sentence={sentence} savedSentence={sentenceText} sentenceEn={sentenceEn} lang={lang} langCode={langCode} sentenceType={sentenceType} sentenceSaved={sentenceSaved} setSentenceSaved={setSentenceSaved} sentenceRomanized={sentenceRomanized}/>                                        
                             {keepPracticingButton()}                             
                         </View>                                               
                     </View>

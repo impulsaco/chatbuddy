@@ -128,6 +128,39 @@ const introductionList = (lang) => {
     return ["introduction", sentenceStructure, initialWordsBg];;
 
   }
+
+  if (lang === 'fr-FR') {
+    // French set
+    var nounsFr = ["Étudiant", "Écrivain", "Développeur", "Designer", "Chercheur", "Avocat", "Professeur", "Ingénieur", "Artiste", "Scientifique", "Médecin", "Journaliste"];
+    var subjectsFr = ['Je', 'Tu', 'Nous', 'Ils', 'Il', 'Elle'];
+    var verbsFr = ["être", "vouloir être", "étudier"];
+  
+    return ["introduction", sentenceStructure, consolidateWordSets(nounsFr, subjectsFr, verbsFr, nounsEng, subjectsEng, verbsEng)];
+  }
+  
+  if (lang === 'it') {
+    // Italian set
+    var nounsIt = ["Studente", "Scrittore", "Sviluppatore", "Designer", "Ricercatore", "Avvocato", "Insegnante", "Ingegnere", "Artista", "Scienziato", "Medico", "Giornalista"];
+    var subjectsIt = ['Io', 'Tu', 'Noi', 'Loro', 'Lui', 'Lei'];
+    var verbsIt = ["essere", "voler essere", "studiare"];
+  
+    return ["introduction", sentenceStructure, consolidateWordSets(nounsIt, subjectsIt, verbsIt, nounsEng, subjectsEng, verbsEng)];
+  }
+
+  if (lang === 'ja') {
+    // Japanese set
+    var nounsJa = ["学生", "作家", "開発者", "デザイナー", "研究者", "弁護士", "教師", "技術者", "アーティスト", "科学者", "医者", "ジャーナリスト"];
+    var subjectsJa = ['私', 'あなた', '私たち', '彼ら', '彼', '彼女'];
+    var verbsJa = ["である", "になりたい", "勉強している"];
+  
+    // Romanized Japanese
+    var nounsJaRom = ["Gakusei", "Sakka", "Kaihatsu-sha", "Dezainā", "Kenkyū-sha", "Bengoshi", "Kyōshi", "Gijutsu-sha", "Ātisuto", "Kagakusha", "Isha", "Jānarisuto"];
+    var subjectsJaRom = ['Watashi', 'Anata', 'Watashitachi', 'Karera', 'Kare', 'Kanojo'];
+    var verbsJaRom = ["dearu", "ni naritai", "benkyō shite iru"];
+  
+    return ["introduction", sentenceStructure, consolidateWordSets(nounsJa, subjectsJa, verbsJa, nounsEng, subjectsEng, verbsEng, nounsJaRom, subjectsJaRom, verbsJaRom)];
+  }
+  
 }
 
 export default introductionList;

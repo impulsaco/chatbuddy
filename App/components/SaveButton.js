@@ -10,7 +10,7 @@ const PAGE_HEIGHT = Dimensions.get('window').height;
 const PAGE_WIDTH = Dimensions.get('window').width;
 
 
-const SaveButton = ({sentence, savedSentence, sentenceEn, lang, langCode, sentenceType, sentenceSaved, setSentenceSaved}) => {
+const SaveButton = ({sentence, savedSentence, sentenceEn, lang, langCode, sentenceType, sentenceSaved, setSentenceSaved, sentenceRomanized}) => {
     
     // Retrieve user session
 
@@ -40,7 +40,8 @@ const SaveButton = ({sentence, savedSentence, sentenceEn, lang, langCode, senten
             lang_code: langCode, 
             type: sentenceType, 
             blocks: sentence,
-            translation: sentenceEn
+            translation: sentenceEn,
+            romanization: sentenceRomanized
             }
         )
 
