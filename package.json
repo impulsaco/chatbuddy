@@ -70,7 +70,8 @@
     "fs": "react-native-level-fs"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.9"
+    "@babel/core": "^7.12.9",
+    "babel-plugin-module-resolver": "^5.0.0"
   },
   "private": true
 }
