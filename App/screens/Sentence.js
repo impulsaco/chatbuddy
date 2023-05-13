@@ -22,7 +22,7 @@ import TranslationOff from "../../assets/translationOff.svg";
 import { SessionContext } from "../lib/SessionContext";
 import { supabase } from "../lib/supabase";
 
-import { customLog } from "@app/utils/customLog";
+import { logger } from "@app/utils/logger";
 
 const PAGE_HEIGHT = Dimensions.get("window").height;
 const PAGE_WIDTH = Dimensions.get("window").width;
@@ -106,14 +106,14 @@ const Sentence = ({
   }, [sentence]);
 
   useEffect(() => {
-    customLog("sentenceReady is NOW ", sentenceReady);
+    logger.debug("sentenceReady is NOW ", sentenceReady);
   }, [sentenceReady]);
 
   // Sentence GPT fix (build with chosen words)
 
   // Prevent sentenceFix from running on initial load
   const sentenceFix = (sentence) => {
-    customLog("sentenceReady FIXER is ", sentenceReady);
+    logger.debug("sentenceReady FIXER is ", sentenceReady);
     if (sentenceReady === true && sentence !== sentenceInit) {
       SentenceFixer(
         sentence,
@@ -179,7 +179,7 @@ const Sentence = ({
   // Sentence romanization
 
   const sentenceRomanization = () => {
-    customLog("sentenceRomanized is ", sentenceRomanized);
+    logger.debug("sentenceRomanized is ", sentenceRomanized);
     if (sentenceRomanized) {
       return <Text style={styles.romanizationText}>{sentenceRomanized}</Text>;
     } else {
@@ -202,8 +202,8 @@ const Sentence = ({
   };
 
   useEffect(() => {
-    customLog("sentenceWhisper in Sentence is ", sentenceWhisper);
-    customLog("sentenceAnalyzed in Sentence is ", sentenceAnalyzed);
+    logger.debug("sentenceWhisper in Sentence is ", sentenceWhisper);
+    logger.debug("sentenceAnalyzed in Sentence is ", sentenceAnalyzed);
     let interimCount = 0;
 
     // Convert sentenceWhisper to lowercase and remove punctuation
@@ -214,7 +214,7 @@ const Sentence = ({
 
     for (let i = 0; i < sentenceAnalyzed.length; i++) {
       let interimState = [...sentenceAnalyzed];
-      customLog("sentenceAnalyzed[i].word is ", sentenceAnalyzed[i].word);
+      logger.debug("sentenceAnalyzed[i].word is ", sentenceAnalyzed[i].word);
 
       // Convert sentenceAnalyzed[i].word to lowercase and remove punctuation
       const cleanedWord = sentenceAnalyzed[i].word
@@ -223,7 +223,7 @@ const Sentence = ({
         .replace(/\.$/, "");
 
       if (cleanedSentenceWhisper.includes(cleanedWord)) {
-        customLog("includes!");
+        logger.debug("includes!");
         interimState[i].said = true;
         setSentenceAnalyzed(interimState);
         interimCount++;

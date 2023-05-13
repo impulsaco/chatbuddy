@@ -12,7 +12,7 @@ import { makeRedirectUri, startAsync } from "expo-auth-session";
 import { supabase } from "../lib/supabase";
 import { Button, Input } from "@rneui/themed";
 
-import { customLog } from "@app/utils/customLog";
+import { logger } from "@app/utils/logger";
 
 // For later production login
 /*import {
@@ -59,8 +59,8 @@ const LogIn = ({ navigation, route }) => {
   // Google login
 
   const googleSignIn = async (session, setSession, navigation) => {
-    customLog("setSession is", setSession);
-    console.log("session is", session);
+    logger.debug("setSession is", setSession);
+    logger.debug("session is", session);
     // This will create a redirectUri
     // This should be the URL you added to "Redirect URLs" in Supabase URL Configuration
     // If they are different add the value of redirectUrl to your Supabase Redirect URLs

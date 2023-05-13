@@ -22,7 +22,7 @@ import Microphone from "../../assets/microphone.svg";
 import BiggestMike from "../../assets/biggestMike.svg";
 import Sound from '../../assets/Sound.svg';
 
-import { customLog } from '@app/utils/customLog';
+import { logger } from '@app/utils/logger';
 
 const PAGE_HEIGHT = Dimensions.get('window').height;
 const PAGE_WIDTH = Dimensions.get('window').width;
@@ -42,7 +42,7 @@ export default ({
   setCloseVisible,
   session
 }) => {
-  customLog("sentenceWhisper before new is ", sentenceWhisper)  
+  logger.debug("sentenceWhisper before new is ", sentenceWhisper)  
 
   const [recording, setRecording] = React.useState(false as any);
   const [recordingDone, setRecordingDone] = React.useState(false);
