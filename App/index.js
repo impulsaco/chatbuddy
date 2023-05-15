@@ -6,6 +6,7 @@ import Words from './screens/Words'
 import { NativeBaseProvider } from 'native-base';
 import 'react-native-gesture-handler';
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import * as Linking from 'expo-linking';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Header from './components/Header';
@@ -260,6 +261,16 @@ const PAGE_WIDTH = Dimensions.get('window').width;
 
 const Drawer = createDrawerNavigator();
 
+// This is the deep link configuration for handling email confirmations
+const linking = {
+  prefixes: ['sayapp://'],
+  config: {
+    screens: {
+      Home: 'Home',
+    },
+  },
+};
+
 const slides = [
   {
     key: 1,
@@ -370,7 +381,7 @@ export default function App() { // MAIN APP ENTRY POINT
     return (
       <ActionSheetProvider>
         <GestureHandlerRootView style={{ flex: 1 }}>
-          <NavigationContainer>            
+          <NavigationContainer linking={linking} fallback={<Text>Loading...</Text>}>       
             <NativeBaseProvider style={styles.container}>
               <LanguageContext.Provider value={{ langCode, setLangCode, lang, setLang }}>                
                   <Drawer.Navigator

@@ -6,6 +6,8 @@ import {
   Dimensions,
   TouchableOpacity,
   Image,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { makeRedirectUri, startAsync } from "expo-auth-session";
@@ -38,6 +40,7 @@ async function googleSignIn() {
 } */
 
 const PAGE_HEIGHT = Dimensions.get("window").height;
+const PAGE_WIDTH = Dimensions.get("window").width;
 
 const LogIn = ({ navigation, route }) => {
   // Import params
@@ -107,6 +110,20 @@ const LogIn = ({ navigation, route }) => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // For sign up indicator
+  const [signupSuccess, setSignupSuccess] = useState("");
+  const [signupText, setsignupText] = useState("");
+
+  useEffect(() => {
+    if (signupSuccess) {
+      setTimeout(() => {
+        setSignupSuccess("");
+        setsignupText("Sign Up");
+      }, 3000);
+    }
+  }, [signupSuccess]);
+
+
   async function signInWithEmail() {
     setLoading(true);
     const { error } = await supabase.auth.signInWithPassword({
@@ -121,16 +138,25 @@ const LogIn = ({ navigation, route }) => {
 
   async function signUpWithEmail() {
     setLoading(true);
-    const { error } = await supabase.auth.signUp({
+    setSignupSuccess(""); // clear any previous success message
+    const { user, error } = await supabase.auth.signUp({
       email: email,
       password: password,
     });
-
-    if (error) alert(error.message);
+  
+    if (error) {
+      alert(error.message);
+      console.log("ERROR")
+    } else {
+      setSignupSuccess("Sign up successful! Check your email for confirmation.");
+      setsignupText("Success!")
+    }
+  
     setLoading(false);
   }
-
+  
   return (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
     <View style={styles.container}>
       <LinearGradient
         colors={["#319CFF", "#319CFF"]}
@@ -164,29 +190,20 @@ const LogIn = ({ navigation, route }) => {
           inputContainerStyle={{ borderBottomColor: "white" }}
           labelStyle={{ color: "white" }}
         />
+        {signupSuccess && <Text style={styles.successText}>{signupSuccess}</Text>}
       </View>
-      <View style={styles.buttons}>
-        <View>
-          <Button
-            buttonStyle={{ backgroundColor: "#FFC107", marginRight: 10 }}
-            title="Sign in"
-            disabled={loading}
-            onPress={() => signInWithEmail()}
-          />
-        </View>
-        <View>
-          <Button
-            buttonStyle={{
-              backgroundColor: "transparent",
-              borderColor: "#FFC107",
-              borderWidth: 1,
-              marginRight: 10,
-            }}
-            title="Sign up"
-            disabled={loading}
-            onPress={() => signUpWithEmail()}
-          />
-        </View>
+      <View style={styles.buttons}>        
+        <TouchableOpacity style={styles.loginButton} onPress={() => signInWithEmail()}>
+          <Text style={styles.buttonText}>Sign in</Text>
+        </TouchableOpacity>        
+        {!signupSuccess && 
+          <TouchableOpacity style={styles.signupButton} onPress={() => signUpWithEmail()}>
+            <Text style={{ ...styles.buttonText, color: 'white' }}>
+              Sign up
+            </Text>
+          </TouchableOpacity>
+        }        
+        
       </View>
       <View style={styles.bottomContent}>
         <TouchableOpacity
@@ -203,6 +220,7 @@ const LogIn = ({ navigation, route }) => {
         </TouchableOpacity>
       </View>
     </View>
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -210,6 +228,29 @@ const styles = StyleSheet.create({
   container: {
     height: Dimensions.get("window").height,
     backgroundColor: "black",
+  },
+  loginButton: {      
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 10,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    width: PAGE_WIDTH*.3,
+    height: PAGE_HEIGHT*.05,
+    marginRight: 10
+  },
+  signupButton: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 10,
+    borderColor: 'white',
+    borderWidth: 1,
+    borderRadius: 10,
+    width: PAGE_WIDTH*.3,
+    height: PAGE_HEIGHT*.05,
+    margin: 10
   },
   topContent: {
     flex: 1,
@@ -226,6 +267,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingTop: PAGE_HEIGHT * 0.1,
   },
+  buttonText: {
+    fontSize: 16,
+    color: "black",      
+    textAlign: 'center',
+    textAlignVertical: 'center',
+  }, 
   mainText: {
     fontSize: 54,
     color: "white",
@@ -262,6 +309,15 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     top: 0,
+  },
+  successText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
+    alignSelf: 'center',
+    marginTop: 10,
+    marginBottom: 10,
+    textAlign: 'center',
   },
 });
 
