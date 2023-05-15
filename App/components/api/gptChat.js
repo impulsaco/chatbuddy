@@ -43,7 +43,10 @@ const gptChat = (previousMessages, newMessage, setResponse, lang, session) => {
 
     if (tokenCount < 3500) {
       console.log("structuredMessages are", structuredMessages)
-      const response = await axios.post('https://api.openai.com/v1/chat/completions', {
+      const response = await axios.post(`${serverUrl}/api/gpt-chat`, {        
+        messages: structuredMessages,
+      });      
+      /*const response = await axios.post('https://api.openai.com/v1/chat/completions', {
       model: "gpt-3.5-turbo",
       messages: structuredMessages,
       }, {
@@ -51,7 +54,7 @@ const gptChat = (previousMessages, newMessage, setResponse, lang, session) => {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${OPENAI_API_KEY}`,
         },
-      });      
+      });      */
       const responseTemp = response.data.choices[0].message.content.trim();
       setResponse(responseTemp);    
     }

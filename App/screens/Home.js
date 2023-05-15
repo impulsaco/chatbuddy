@@ -61,7 +61,7 @@ function Home({navigation, setMenuVisible}) {
           return (
             <View>
                 <TouchableOpacity style={styles.loginButton} onPress={() => navigation.navigate('LogIn', {session: session, setSession: setSession})}> 
-                  <Text>Login</Text>
+                  <Text style={styles.buttonText}>Login</Text>
                 </TouchableOpacity>
             </View>
             )
@@ -181,8 +181,9 @@ function Home({navigation, setMenuVisible}) {
     },
     buttonText: {
       fontSize: 16,
-      color: "black",
-      paddingBottom: 10,
+      color: "black",      
+      textAlign: 'center',
+      textAlignVertical: 'center',
     }, 
     longButtonText: {
       fontSize: 16,
