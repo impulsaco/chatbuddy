@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { OPENAI_API_KEY } from "@env" 
+import { REACT_APP_SERVER_URL } from "@env" 
 import axios from "axios";
 import 'react-native-url-polyfill/auto'
 import { supabase } from '../../lib/supabase';
@@ -16,6 +16,8 @@ const gptChat = (previousMessages, newMessage, setResponse, lang, session) => {
   
   const costPerToken = 0.002/1000;
   console.log("RESPOND is running. SPENDING TOKENS!!")
+
+  const serverUrl = REACT_APP_SERVER_URL;
 
   const prompt = newMessage
   const role = `A helpful AI language model in a voice chat.`;
