@@ -14,7 +14,7 @@ import AddWord from '../components/AddWord';
 import { supabase } from '../lib/supabase';
 import WordRoute from '../lib/WordRoute';
 import { LanguageContext } from '../lib/LanguageContext';
-import SayModal from '../components/SayModal';
+import SayModal from '@app/features/saymodal/components/SayModal';
 
 
 const PAGE_WIDTH = Dimensions.get('window').width;

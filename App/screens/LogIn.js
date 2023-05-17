@@ -123,7 +123,6 @@ const LogIn = ({ navigation, route }) => {
     }
   }, [signupSuccess]);
 
-
   async function signInWithEmail() {
     setLoading(true);
     const { error } = await supabase.auth.signInWithPassword({
@@ -143,83 +142,92 @@ const LogIn = ({ navigation, route }) => {
       email: email,
       password: password,
     });
-  
+
     if (error) {
       alert(error.message);
-      console.log("ERROR")
+      logger.debug(error.message);
     } else {
-      setSignupSuccess("Sign up successful! Check your email for confirmation.");
-      setsignupText("Success!")
+      setSignupSuccess(
+        "Sign up successful! Check your email for confirmation."
+      );
+      setsignupText("Success!");
     }
-  
+
     setLoading(false);
   }
-  
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-    <View style={styles.container}>
-      <LinearGradient
-        colors={["#319CFF", "#319CFF"]}
-        locations={[0, 0.99]}
-        style={styles.linearGradient}
-      />
-      <View style={styles.topContent}>
-        <Text style={styles.mainText}>Log In</Text>
-      </View>
-      <View style={[styles.verticallySpaced, styles.mt20]}>
-        <Input
-          label="Email"
-          onChangeText={(text) => setEmail(text)}
-          value={email}
-          placeholder="email@address.com"
-          autoCapitalize={"none"}
-          inputStyle={{ color: "white" }}
-          inputContainerStyle={{ borderBottomColor: "white" }}
-          labelStyle={{ color: "white" }}
+      <View style={styles.container}>
+        <LinearGradient
+          colors={["#319CFF", "#319CFF"]}
+          locations={[0, 0.99]}
+          style={styles.linearGradient}
         />
-      </View>
-      <View style={styles.verticallySpaced}>
-        <Input
-          label="Password"
-          onChangeText={(text) => setPassword(text)}
-          value={password}
-          secureTextEntry={true}
-          placeholder="********"
-          autoCapitalize={"none"}
-          inputStyle={{ color: "white" }}
-          inputContainerStyle={{ borderBottomColor: "white" }}
-          labelStyle={{ color: "white" }}
-        />
-        {signupSuccess && <Text style={styles.successText}>{signupSuccess}</Text>}
-      </View>
-      <View style={styles.buttons}>        
-        <TouchableOpacity style={styles.loginButton} onPress={() => signInWithEmail()}>
-          <Text style={styles.buttonText}>Sign in</Text>
-        </TouchableOpacity>        
-        {!signupSuccess && 
-          <TouchableOpacity style={styles.signupButton} onPress={() => signUpWithEmail()}>
-            <Text style={{ ...styles.buttonText, color: 'white' }}>
-              Sign up
-            </Text>
-          </TouchableOpacity>
-        }        
-        
-      </View>
-      <View style={styles.bottomContent}>
-        <TouchableOpacity
-          style={styles.googleButton}
-          onPress={() => googleSignIn(session, setSession, navigation)}
-        >
-          <Image
-            style={styles.googleIcon}
-            source={{
-              uri: "https://i.ibb.co/j82DCcR/search.png",
-            }}
+        <View style={styles.topContent}>
+          <Text style={styles.mainText}>Log In</Text>
+        </View>
+        <View style={[styles.verticallySpaced, styles.mt20]}>
+          <Input
+            label="Email"
+            onChangeText={(text) => setEmail(text)}
+            value={email}
+            placeholder="email@address.com"
+            autoCapitalize={"none"}
+            inputStyle={{ color: "white" }}
+            inputContainerStyle={{ borderBottomColor: "white" }}
+            labelStyle={{ color: "white" }}
           />
-          <Text style={styles.googleButtonText}>Sign in with Google</Text>
-        </TouchableOpacity>
+        </View>
+        <View style={styles.verticallySpaced}>
+          <Input
+            label="Password"
+            onChangeText={(text) => setPassword(text)}
+            value={password}
+            secureTextEntry={true}
+            placeholder="********"
+            autoCapitalize={"none"}
+            inputStyle={{ color: "white" }}
+            inputContainerStyle={{ borderBottomColor: "white" }}
+            labelStyle={{ color: "white" }}
+          />
+          {signupSuccess && (
+            <Text style={styles.successText}>{signupSuccess}</Text>
+          )}
+        </View>
+        <View style={styles.buttons}>
+          <TouchableOpacity
+            style={styles.loginButton}
+            onPress={() => signInWithEmail()}
+          >
+            <Text style={styles.buttonText}>Sign in</Text>
+          </TouchableOpacity>
+          {!signupSuccess && (
+            <TouchableOpacity
+              style={styles.signupButton}
+              onPress={() => signUpWithEmail()}
+            >
+              <Text style={{ ...styles.buttonText, color: "white" }}>
+                Sign up
+              </Text>
+            </TouchableOpacity>
+          )}
+        </View>
+        <View style={styles.bottomContent}>
+          <TouchableOpacity
+            style={styles.googleButton}
+            onPress={() => googleSignIn(session, setSession, navigation)}
+          >
+            <Image
+              style={styles.googleIcon}
+              source={{
+                uri: "https://i.ibb.co/j82DCcR/search.png",
+              }}
+            />
+            <Text style={styles.googleButtonText}>Sign in with Google</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
     </TouchableWithoutFeedback>
   );
 };
@@ -229,28 +237,28 @@ const styles = StyleSheet.create({
     height: Dimensions.get("window").height,
     backgroundColor: "black",
   },
-  loginButton: {      
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
+  loginButton: {
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
     padding: 10,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderRadius: 10,
-    width: PAGE_WIDTH*.3,
-    height: PAGE_HEIGHT*.05,
-    marginRight: 10
+    width: PAGE_WIDTH * 0.3,
+    height: PAGE_HEIGHT * 0.05,
+    marginRight: 10,
   },
   signupButton: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
     padding: 10,
-    borderColor: 'white',
+    borderColor: "white",
     borderWidth: 1,
     borderRadius: 10,
-    width: PAGE_WIDTH*.3,
-    height: PAGE_HEIGHT*.05,
-    margin: 10
+    width: PAGE_WIDTH * 0.3,
+    height: PAGE_HEIGHT * 0.05,
+    margin: 10,
   },
   topContent: {
     flex: 1,
@@ -269,10 +277,10 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 16,
-    color: "black",      
-    textAlign: 'center',
-    textAlignVertical: 'center',
-  }, 
+    color: "black",
+    textAlign: "center",
+    textAlignVertical: "center",
+  },
   mainText: {
     fontSize: 54,
     color: "white",
@@ -311,13 +319,13 @@ const styles = StyleSheet.create({
     top: 0,
   },
   successText: {
-    color: 'white',
+    color: "white",
     fontSize: 16,
-    fontWeight: 'bold',
-    alignSelf: 'center',
+    fontWeight: "bold",
+    alignSelf: "center",
     marginTop: 10,
     marginBottom: 10,
-    textAlign: 'center',
+    textAlign: "center",
   },
 });
 
