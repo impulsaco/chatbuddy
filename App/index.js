@@ -27,6 +27,7 @@ import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import { LanguageContext } from './lib/LanguageContext';
 import VoiceGPT from './screens/VoiceGPT';
 import { DrawerNavigationContext } from './lib/DrawerNavigationContext';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 Sentry.init({
   dsn: 'https://5a92132c278b42a79bb122eb9c511e43@o4504618398908416.ingest.sentry.io/4504618595713024',
@@ -352,6 +353,8 @@ export default function App() { // MAIN APP ENTRY POINT
     );
   };
 
+  const Tab = createBottomTabNavigator();
+
   try {
     // your code SENTRY
 
@@ -384,7 +387,7 @@ export default function App() { // MAIN APP ENTRY POINT
           <NavigationContainer linking={linking} fallback={<Text>Loading...</Text>}>       
             <NativeBaseProvider style={styles.container}>
               <LanguageContext.Provider value={{ langCode, setLangCode, lang, setLang }}>                
-                  <Drawer.Navigator
+                  <Tab.Navigator
                     screenOptions={{
                       header: ({ navigation }) => {
                         // const title = getHeaderTitle(route.name);
@@ -396,13 +399,11 @@ export default function App() { // MAIN APP ENTRY POINT
                       headerTransparent: true,
                     }}
                   >                   
-                    <Drawer.Screen name="Home" component={withSetMenuVisible(Home)}/>
-                    <Drawer.Screen name="LogIn" component={LogIn} />
-                    <Drawer.Screen name="Choose" component={withSetMenuVisible(PhraseSelector)}/>
-                    <Drawer.Screen name="Build" component={Words} />
-                    <Drawer.Screen name="Phrasebook" component={withSetMenuVisible(Phrasebook)} />
-                    <Drawer.Screen name="LanguageBuddy" component={VoiceGPT} />
-                  </Drawer.Navigator>                
+                    <Tab.Screen name="Home" component={withSetMenuVisible(Home)}/>
+                    <Tab.Screen name="Choose" component={withSetMenuVisible(PhraseSelector)}/>
+                    <Tab.Screen name="Phrasebook" component={withSetMenuVisible(Phrasebook)} />
+                    <Tab.Screen name="LanguageBuddy" component={VoiceGPT} />
+                  </Tab.Navigator>                
               </LanguageContext.Provider>
             </NativeBaseProvider>
           </NavigationContainer>
@@ -418,6 +419,8 @@ export default function App() { // MAIN APP ENTRY POINT
     Sentry.Native.captureException(error);
   }
 }
+
+// <Tab.Screen name="Build" component={Words} initialParams={{ wordSet: yourWordSetValue }}/>
 
 const styles = StyleSheet.create({
   container: {
