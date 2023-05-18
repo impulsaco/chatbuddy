@@ -5,7 +5,7 @@ import {
   Text,
   TouchableOpacity,
 } from "react-native";
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "react-native-gesture-handler";
 import { LinearGradient } from "expo-linear-gradient";
 import { Button } from "@rneui/themed";
@@ -49,6 +49,33 @@ function Home({ navigation, setMenuVisible }) {
                     </TouchableOpacity>                             
     
     */
+
+  // Get tutorial status
+  const [tutorial, setTutorial] = useState(false)
+
+  const fetchTutorial = async () => {
+    if (session) {
+      console.log("fetching from Supabase tutorial!")
+      const { data, error } = await supabase
+        .from("profiles")
+        .select(
+          "tutorial"
+        )
+        .eq("id", session.user.id) 
+      if (error) alert(error.message);
+
+      if (data) {   
+        console.log("fetched tutorial is", data[0].tutorial)
+        setTutorial(data.tutorial)
+      }
+    }
+  }
+
+
+  useEffect(() => {
+    fetchTutorial();
+  }, [session]);
+
 
   const renderButtons = () => {
     if (!session?.user) {

@@ -200,14 +200,23 @@ const PAGE_WIDTH = Dimensions.get("window").width;
 /// Sentry bugs
 /// Easy UX tweaks DONE
 /// Update to GPT 3.5, tweak prompt (limits) DONE
+/// Delete phrases DONE
+/// Delete shuffle button
+/// Onboarding flow
+//// Backend for tutorial DONE
+//// Survey question screens
+//// Languages to one-word tutorial 
+//// Explanatory modals
+//// Phrasebook to LanguageBuddy
+//// Topic progression
+/// Bottom tab navigator
+/// Supabase leak
+
+// Lower priority
 /// Payment for more phrases?
 /// Saved words
 /// GPT3 sentence coloring
-/// Delete words
-/// Delete phrases DONE
-/// Activate shuffle button
-
-// Lower priority
+/// Delete words 
 /// New word boxes?
 /// New "full modal"?
 /// Phrase categories sliders

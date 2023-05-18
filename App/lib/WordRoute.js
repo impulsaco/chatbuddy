@@ -43,6 +43,17 @@ const WordRoute = (
     }
   };
 
+  /* Shuffle button for the future
+
+  <ShuffleWords
+          type={type}
+          setUserWords={setUserWords}
+          userWords={userWords}
+          langCode={langCode}
+        />
+
+  */
+
   return () => (
     <View style={styles.wordContainer}>
       <View style={styles.dragLimit}>
@@ -93,12 +104,6 @@ const WordRoute = (
         >
           {translationButton()}
         </TouchableOpacity>
-        <ShuffleWords
-          type={type}
-          setUserWords={setUserWords}
-          userWords={userWords}
-          langCode={langCode}
-        />
         <TouchableOpacity onPress={() => resetSentence()}>
           <Refresh />
         </TouchableOpacity>
