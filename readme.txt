@@ -65,3 +65,6 @@ Let’s specify log level, if it’s error, let’s use logger.error(). If it’
 the explanation of log levels is in utils/logger.js
 Let’s gradually change the console.log() to logger(). Otherwise, when we push to production, the app would be slow 
 and we may leak sensitive information by logging to console.
+
+imports:
+Please use absolute import, e.g. "@app/services/gptFixer.js". 

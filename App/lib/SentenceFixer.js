@@ -53,7 +53,7 @@ const SentenceFixer = (
   console.log("sentenceFixInit is ", sentenceFixInit);
 
   // Save sentence and translation to state
-  const saveSentenceText = (input) => {
+  const saveSentenceText = input => {
     setSavedSentence(input);
     setSentenceText(input);
     googleTranslate(input, langCode, setSentenceEn);

@@ -28,7 +28,7 @@ const EmptySentence = ({
   langCode,
   setMenuVisible,
 }) => {
-  const destination = (type) => {
+  const destination = type => {
     if (type === "introduction") {
       return introductionList;
     } else if (type === "hobbies") {

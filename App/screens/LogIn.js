@@ -170,7 +170,7 @@ const LogIn = ({ navigation, route }) => {
         <View style={[styles.verticallySpaced, styles.mt20]}>
           <Input
             label="Email"
-            onChangeText={(text) => setEmail(text)}
+            onChangeText={text => setEmail(text)}
             value={email}
             placeholder="email@address.com"
             autoCapitalize={"none"}
@@ -182,7 +182,7 @@ const LogIn = ({ navigation, route }) => {
         <View style={styles.verticallySpaced}>
           <Input
             label="Password"
-            onChangeText={(text) => setPassword(text)}
+            onChangeText={text => setPassword(text)}
             value={password}
             secureTextEntry={true}
             placeholder="********"

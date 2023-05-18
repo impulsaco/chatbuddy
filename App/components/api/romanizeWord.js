@@ -22,28 +22,24 @@ const romanizeWord = (input, lang, session) => {
     return wordRomanizedTemp;
   };
 
-
-    // Save call to Supabase
-    const saveCall = async () => {  
-        const { error } = await supabase
-        .from('aiUsage')
-        .insert({ 
-            created_at: new Date().toISOString(), 
-            user: session.user.id, 
-            model: "gpt-3.5-turbo",
-            type: "wordRomanizer",
-            chars: role.length + prompt.length,
-            tokens: (role.length + prompt.length)/4,
-            seconds: null,
-            cost: (role.length + prompt.length)/4 * costPerToken,
-            prompt: `${role} ${prompt}`,
-            output: wordRomanizedTemp,
-            api_key: null,
-            }
-        )
-        if (error) alert(error.message)
-    }
-    saveCall()
+  // Save call to Supabase
+  const saveCall = async () => {
+    const { error } = await supabase.from("aiUsage").insert({
+      created_at: new Date().toISOString(),
+      user: session.user.id,
+      model: "gpt-3.5-turbo",
+      type: "wordRomanizer",
+      chars: role.length + prompt.length,
+      tokens: (role.length + prompt.length) / 4,
+      seconds: null,
+      cost: ((role.length + prompt.length) / 4) * costPerToken,
+      prompt: `${role} ${prompt}`,
+      output: wordRomanizedTemp,
+      api_key: null,
+    });
+    if (error) alert(error.message);
+  };
+  saveCall();
 
   return romanizer(input, lang); // Return the promise here
 };

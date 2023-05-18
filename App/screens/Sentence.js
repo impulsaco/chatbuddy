@@ -112,7 +112,7 @@ const Sentence = ({
   // Sentence GPT fix (build with chosen words)
 
   // Prevent sentenceFix from running on initial load
-  const sentenceFix = (sentence) => {
+  const sentenceFix = sentence => {
     logger.debug("sentenceReady FIXER is ", sentenceReady);
     if (sentenceReady === true && sentence !== sentenceInit) {
       SentenceFixer(

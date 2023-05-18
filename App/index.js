@@ -9,7 +9,7 @@ import {
 import React, { useState, useEffect } from "react";
 import Icon from "react-native-vector-icons/Ionicons";
 //import { Button } from '@rneui/base';
-import {PhraseBuilderPanel} from "@app/screens/PhraseBuilderPanel";
+import { PhraseBuilderPanel } from "@app/screens/PhraseBuilderPanel";
 import { NativeBaseProvider } from "native-base";
 import "react-native-gesture-handler";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -374,7 +374,7 @@ export default function App() {
     // transparent header: options={{headerTransparent: true}}
 
     // Higher order component to pass setmenuvisible prop to home
-    const withSetMenuVisible = (Component) => (props) =>
+    const withSetMenuVisible = Component => props =>
       <Component {...props} setMenuVisible={setMenuVisible} />;
 
     if (showRealApp || session) {
@@ -421,7 +421,10 @@ export default function App() {
                       name="Choose"
                       component={withSetMenuVisible(PhraseSelector)}
                     />
-                    <Tab.Screen name="PhraseBuilderPanel" component={PhraseBuilderPanel} />
+                    <Tab.Screen
+                      name="PhraseBuilderPanel"
+                      component={PhraseBuilderPanel}
+                    />
                     <Tab.Screen
                       name="Phrasebook"
                       component={withSetMenuVisible(Phrasebook)}

@@ -6,7 +6,8 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "format": "prettier --write \"./**/*.{js,jsx,json,md}\""
   },
   "dependencies": {
     "@expo/react-native-action-sheet": "^4.0.1",
@@ -72,7 +73,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
-    "babel-plugin-module-resolver": "^5.0.0"
+    "babel-plugin-module-resolver": "^5.0.0",
+    "prettier": "2.8.8"
   },
   "private": true
 }

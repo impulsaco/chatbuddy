@@ -45,7 +45,7 @@ const SentenceCard = ({
 }) => {
   const { showActionSheetWithOptions } = useActionSheet();
 
-  const onDelete = (id) => {
+  const onDelete = id => {
     const options = ["Delete", "Cancel"];
     const destructiveButtonIndex = 0;
     const cancelButtonIndex = 1;
@@ -87,7 +87,7 @@ const SentenceCard = ({
     }
   };
   // You are a language tutor in Spanish. Users will use a sentence from a phrasebook, and you must respond in a realistic way that uses basic beginner-level vocabulary for them to practice receiving responses
-  const gptResponse = (sentence) => {
+  const gptResponse = sentence => {
     console.log("sentence  in GPT-4 is ", sentence);
     openai
       .createCompletion({
@@ -96,7 +96,7 @@ const SentenceCard = ({
         temperature: 0.7,
         max_tokens: 100,
       })
-      .then((response) => alert(response.data.choices[0].text.trim()));
+      .then(response => alert(response.data.choices[0].text.trim()));
   };
 
   // Practice button for later:

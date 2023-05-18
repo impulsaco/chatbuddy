@@ -1,8 +1,7 @@
-import * as React from 'react';
-import { Audio } from 'expo-av';
+import * as React from "react";
+import { Audio } from "expo-av";
 
-const playRecording = (recording) => {
-
+const playRecording = recording => {
   if (!recording) {
     return null;
   }
@@ -12,16 +11,16 @@ const playRecording = (recording) => {
   //const [sound, setSound] = React.useState(null);
 
   async function playSound() {
-    console.log('Loading Sound');
+    console.log("Loading Sound");
     const { sound } = await Audio.Sound.createAsync({ uri: recording });
     //setSound(sound);
 
-    console.log('Playing Sound');
+    console.log("Playing Sound");
     await sound.playAsync();
   }
 
   playSound();
-/*
+  /*
   React.useEffect(() => {
     return sound ? () => {
       console.log('Unloading Sound');
@@ -34,6 +33,6 @@ const playRecording = (recording) => {
   }, []); */
 
   return null;
-}
+};
 
-export default playRecording
+export default playRecording;
