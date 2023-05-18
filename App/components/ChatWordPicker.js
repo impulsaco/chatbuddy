@@ -13,7 +13,7 @@ import { supabase } from "../lib/supabase";
 import VoiceChatWhisper from "../whisper/VoiceChatWhisper";
 import { LanguageContext } from "../lib/LanguageContext";
 import { SessionContext } from "../lib/SessionContext";
-import wordCompare from "./api/wordCompare";
+import wordCompare from "@app/services/wordCompare";
 
 const PAGE_HEIGHT = Dimensions.get("window").height;
 const PAGE_WIDTH = Dimensions.get("window").width;
@@ -40,7 +40,7 @@ const ChatWordPicker = ({
 
   // Retrieve session and phrases
 
-  const { session, setSession } = useContext(SessionContext)
+  const { session, setSession } = useContext(SessionContext);
 
   // Helper to extract words from blocks
 

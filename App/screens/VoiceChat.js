@@ -17,7 +17,7 @@ import { supabase } from '../lib/supabase';
 import {GiftedChat} from 'react-native-gifted-chat';
 import { Keyboard } from 'react-native';
 import { KeyboardAvoidingView } from 'react-native';
-import gptChat from '../components/api/gptChat';
+import gptChat from '@app/services/gptChat';
 import chatSpeak from '../lib/chatSpeak';
 import { LanguageContext } from '../lib/LanguageContext';
 import avatar from '../../assets/avatar.png';

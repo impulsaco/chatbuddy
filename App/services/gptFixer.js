@@ -3,7 +3,7 @@ import { REACT_APP_SERVER_URL } from "@env";
 import axios from "axios";
 import "react-native-url-polyfill/auto";
 import { supabase } from "@app/lib/supabase";
-import romanizer from "@app/components/api/romanizer";
+import romanizer from "@app/services/romanizer";
 
 const gptFixer = (
   lang,

@@ -12,7 +12,7 @@ import Plus from "../../assets/Plus.svg";
 import { Button } from "@rneui/themed";
 import Close from "../../assets/close.svg";
 import googleTranslateWord from "../lib/googleTranslateWord";
-import romanizeWord from "./api/romanizeWord";
+import romanizeWord from "@app/services/romanizeWord";
 import { supabase } from "../lib/supabase";
 import { SessionContext } from "@app/lib/SessionContext";
 
