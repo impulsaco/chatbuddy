@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   TouchableOpacity,
@@ -8,17 +8,15 @@ import {
   StyleSheet,
   Dimensions,
 } from "react-native";
-import Back from "../../assets/Back.svg";
-import { supabase } from "../lib/supabase";
-import SayWhisper from "../whisper/SayWhisper";
-import SaveButton from "./SaveButton";
-import AudioPlayback from "../../assets/audioPlayback.svg";
-import MicrophonePlayback from "../../assets/microphonePlayback.svg";
-import Playback from "../../assets/playback.svg";
-import sentenceSpeak from "../lib/sentenceSpeak";
-import playRecording from "../lib/playRecording";
-import Sound from "../../assets/Sound.svg";
-import { SessionContext } from "@app/lib/SessionContext";
+import Back from "@app/assets/Back.svg";
+import { supabase } from "@app/lib/supabase";
+import SayWhisper from "@app/whisper/SayWhisper";
+import SaveButton from "@app/components/SaveButton";
+import AudioPlayback from "@app/assets/audioPlayback.svg";
+import MicrophonePlayback from "@app/assets/microphonePlayback.svg";
+import Playback from "@app/assets/playback.svg";
+import sentenceSpeak from "@app/lib/sentenceSpeak";
+import playRecording from "@app/lib/playRecording";
 
 const PAGE_HEIGHT = Dimensions.get("window").height;
 const PAGE_WIDTH = Dimensions.get("window").width;
@@ -282,7 +280,17 @@ const SayModal = ({
 
   // Load session
 
-  const { session, setSession } = useContext(SessionContext);
+  const [session, setSession] = useState();
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+    });
+
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+  }, []);
 
   const sayModal = () => {
     if (sayVisible === "record") {

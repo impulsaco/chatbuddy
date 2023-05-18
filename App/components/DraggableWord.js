@@ -23,14 +23,14 @@ const DraggableWord = ({
   setForward,
 }) => {
   // sentence updater for on tap change for Android
-  updateSentence = (wordTapped) => {
+  updateSentence = wordTapped => {
     logger.debug("tapped!", wordTapped);
     let newSentence = [...sentence];
-    let index = sentence.findIndex((item) => item.type === wordTapped.type);
+    let index = sentence.findIndex(item => item.type === wordTapped.type);
     newSentence[index] = wordTapped;
     setSentence(newSentence);
 
-    const wordList = sentence.map((item) => item.type);
+    const wordList = sentence.map(item => item.type);
     // NAVIGATE TO NEXT WORD SET
     logger.debug("wordList Android is ", wordList);
 

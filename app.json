@@ -15,12 +15,10 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.diegosalvatierra.sayapp",      
+      "bundleIdentifier": "com.diegosalvatierra.sayapp"
     },
     "android": {
       "adaptiveIcon": {
@@ -44,9 +42,7 @@
         }
       ]
     },
-    "plugins": [
-      "sentry-expo"
-    ],
+    "plugins": ["sentry-expo"],
     "extra": {
       "eas": {
         "projectId": "6aa1b741-c85e-4b51-9595-b62a6c9659d5"

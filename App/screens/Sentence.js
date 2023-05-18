@@ -16,7 +16,7 @@ import sentenceSpeak from "../lib/sentenceSpeak";
 import Sound from "../../assets/Sound.svg";
 import SentenceTest from "../lib/SentenceTest";
 import SentenceFixer from "../lib/SentenceFixer";
-import SayModal from "../components/SayModal";
+import SayModal from "@app/features/saymodal/components/SayModal";
 import TranslationOn from "../../assets/translationOn.svg";
 import TranslationOff from "../../assets/translationOff.svg";
 import { SessionContext } from "../lib/SessionContext";
@@ -102,7 +102,7 @@ const Sentence = ({
   // Sentence GPT fix (build with chosen words)
 
   // Prevent sentenceFix from running on initial load
-  const sentenceFix = (sentence) => {
+  const sentenceFix = sentence => {
     logger.debug("sentenceReady FIXER is ", sentenceReady);
     if (sentenceReady === true && sentence !== sentenceInit) {
       SentenceFixer(

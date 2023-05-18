@@ -1,58 +1,62 @@
-import React, { useContext } from 'react';
-import { StyleSheet, View, TouchableOpacity } from 'react-native';
-import Logo from "../../assets/logo.svg"
-import Hamburger from "../../assets/hamburger.svg"
-import { DrawerActions } from '@react-navigation/native';
-import { supabase } from '../lib/supabase';
-import { SessionContext } from '../lib/SessionContext';
+import React, { useContext } from "react";
+import { StyleSheet, View, TouchableOpacity } from "react-native";
+import Logo from "../../assets/logo.svg";
+import Hamburger from "../../assets/hamburger.svg";
+import { DrawerActions } from "@react-navigation/native";
+import { supabase } from "../lib/supabase";
+import { SessionContext } from "../lib/SessionContext";
 
-const Header = ({navigation, menuVisible, setMenuVisible}) => {
+const Header = ({ navigation, menuVisible, setMenuVisible }) => {
+  const [login, setLogin] = React.useState(false);
 
-  const [login, setLogin] = React.useState(false)
-
-  const { session, setSession } = useContext(SessionContext)
+  const { session, setSession } = useContext(SessionContext);
 
   React.useEffect(() => {
-      session ? setLogin(true) : setLogin(false)
-  }, [navigation, login])
-  
-  //navigation = navigation.navigation
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      session ? setLogin(true) : setLogin(false);
+    });
 
+    supabase.auth.onAuthStateChange((_event, session) => {
+      session ? setLogin(true) : setLogin(false);
+    });
+  }, [navigation, login]);
+
+  //navigation = navigation.navigation
 
   const header = () => {
     if (login === true && menuVisible === true) {
       return (
-        <TouchableOpacity onPress={() => navigation.dispatch(DrawerActions.openDrawer())}>
-          <Hamburger/>
+        <TouchableOpacity
+          onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
+        >
+          <Hamburger />
         </TouchableOpacity>
-      )
+      );
+    } else {
+      return <View></View>;
     }
-    else {
-      return (
-        <View></View>
-      )
-    }
-  }
-
-
+  };
 
   return (
-    <TouchableOpacity style={styles.container} onPress={() => navigation.navigate('Home')}>
+    <TouchableOpacity
+      style={styles.container}
+      onPress={() => navigation.navigate("Home")}
+    >
       <Logo />
-        {header()}                            
+      {header()}
     </TouchableOpacity>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     padding: 12,
     paddingTop: 70,
     paddingLeft: 20,
-  }
+  },
 });
 
 export default Header;

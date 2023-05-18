@@ -1,130 +1,268 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 // create words dataset
 
-const exclamationsList = (lang) => {
-
+const exclamationsList = lang => {
   var idCounter = 0;
 
   // Sentence structure: subject + verb + adjective + noun
 
   const sentenceStructure = [
     {
-        "id": -1,
-        "type": "word",
-        "word": "WORD",
-    },    
-  ]
-  
+      id: -1,
+      type: "word",
+      word: "WORD",
+    },
+  ];
+
   // Consolidate word sets
 
-function consolidateWordSets(words, wordsTranslations, wordsRomanized) {
-  const wordSet = [];
+  function consolidateWordSets(words, wordsTranslations, wordsRomanized) {
+    const wordSet = [];
 
-  for (let i = 0; i < words.length; i++) {
-    wordSet.push({ id: idCounter++, word: words[i], type: "word", translation: wordsTranslations[i], romanized: wordsRomanized && wordsRomanized[i] });
+    for (let i = 0; i < words.length; i++) {
+      wordSet.push({
+        id: idCounter++,
+        word: words[i],
+        type: "word",
+        translation: wordsTranslations[i],
+        romanized: wordsRomanized && wordsRomanized[i],
+      });
+    }
+
+    return wordSet;
   }
 
-  return wordSet;
-}
+  // English set
 
-// English set
+  var wordsEng = [
+    "Hello",
+    "Yes",
+    "No",
+    "Goodbye",
+    "Please",
+    "Thanks",
+    "Sorry",
+    "Help",
+  ];
 
-var wordsEng = ["Hello", "Yes", "No", "Goodbye", "Please", "Thanks", "Sorry", "Help"];
+  // Spanish set
 
-// Spanish set
+  if (lang === "es-MX") {
+    var wordsEs = [
+      "Hola",
+      "Sí",
+      "No",
+      "Adiós",
+      "Por favor",
+      "Gracias",
+      "Lo siento",
+      "Ayuda",
+    ];
 
-if (lang === 'es-MX') {
+    return [
+      "exclamations",
+      sentenceStructure,
+      consolidateWordSets(wordsEs, wordsEng),
+    ];
+  }
 
-  var wordsEs = ["Hola", "Sí", "No", "Adiós", "Por favor", "Gracias", "Lo siento", "Ayuda"];
+  // Korean set
 
-  return ["exclamations", sentenceStructure, consolidateWordSets(wordsEs, wordsEng)];
+  if (lang === "ko") {
+    var wordsKo = [
+      "안녕하세요",
+      "네",
+      "아니요",
+      "안녕히 가세요",
+      "부탁드립니다",
+      "감사합니다",
+      "미안합니다",
+      "도와주세요",
+    ];
 
-}
+    // Romanized Korean
 
-// Korean set
+    var wordsKoRom = [
+      "annyeonghaseyo",
+      "ne",
+      "aniyo",
+      "annyeonghi gaseyo",
+      "butakdeurimnida",
+      "gamsahamnida",
+      "mianhamnida",
+      "dowajuseyo",
+    ];
 
-if (lang === 'ko') {
+    return [
+      "exclamations",
+      sentenceStructure,
+      consolidateWordSets(wordsKo, wordsEng, wordsKoRom),
+    ];
+  }
 
-  var wordsKo = ["안녕하세요", "네", "아니요", "안녕히 가세요", "부탁드립니다", "감사합니다", "미안합니다", "도와주세요"];
+  // Bulgarian set
 
-  // Romanized Korean
+  if (lang === "bg") {
+    var wordsBg = [
+      "Здравей",
+      "Да",
+      "Не",
+      "Довиждане",
+      "Моля",
+      "Благодаря",
+      "Съжалявам",
+      "Помощ",
+    ];
 
-  var wordsKoRom = ["annyeonghaseyo", "ne", "aniyo", "annyeonghi gaseyo", "butakdeurimnida", "gamsahamnida", "mianhamnida", "dowajuseyo"];
+    // Romanized Bulgarian
 
-  return ["exclamations", sentenceStructure, consolidateWordSets(wordsKo, wordsEng, wordsKoRom)];
+    var wordsBgRom = [
+      "Zdravei",
+      "Da",
+      "Ne",
+      "Dovizhdane",
+      "Molya",
+      "Blagodarya",
+      "Sazhalyavam",
+      "Pomosht",
+    ];
 
-}
+    return [
+      "exclamations",
+      sentenceStructure,
+      consolidateWordSets(wordsBg, wordsEng, wordsBgRom),
+    ];
+  }
 
-// Bulgarian set
+  // German set
 
-if (lang === 'bg') {
+  if (lang === "de") {
+    var wordsDe = [
+      "Hallo",
+      "Ja",
+      "Nein",
+      "Auf Wiedersehen",
+      "Bitte",
+      "Danke",
+      "Es tut mir leid",
+      "Hilfe",
+    ];
 
-  var wordsBg = ["Здравей", "Да", "Не", "Довиждане", "Моля", "Благодаря", "Съжалявам", "Помощ"];
+    return [
+      "exclamations",
+      sentenceStructure,
+      consolidateWordSets(wordsDe, wordsEng),
+    ];
+  }
 
-  // Romanized Bulgarian
+  // Japanese set
 
-  var wordsBgRom = ["Zdravei", "Da", "Ne", "Dovizhdane", "Molya", "Blagodarya", "Sazhalyavam", "Pomosht"];
+  if (lang === "ja") {
+    var wordsJa = [
+      "こんにちは",
+      "はい",
+      "いいえ",
+      "さようなら",
+      "お願いします",
+      "ありがとう",
+      "ごめんなさい",
+      "助けて",
+    ];
 
-  return ["exclamations", sentenceStructure, consolidateWordSets(wordsBg, wordsEng, wordsBgRom)];
+    // Romanized Japanese
 
-}
+    var wordsJaRom = [
+      "konnichiwa",
+      "hai",
+      "iie",
+      "sayounara",
+      "onegaishimasu",
+      "arigatou",
+      "gomennasai",
+      "tasukete",
+    ];
 
-// German set
+    return [
+      "exclamations",
+      sentenceStructure,
+      consolidateWordSets(wordsJa, wordsEng, wordsJaRom),
+    ];
+  }
 
-if (lang === 'de') {
+  // Bengali set
 
-  var wordsDe = ["Hallo", "Ja", "Nein", "Auf Wiedersehen", "Bitte", "Danke", "Es tut mir leid", "Hilfe"];
+  if (lang === "bn") {
+    var wordsBn = [
+      "হ্যালো",
+      "হ্যাঁ",
+      "না",
+      "বিদায়",
+      "অনুগ্রহ করে",
+      "ধন্যবাদ",
+      "দুঃখিত",
+      "সাহায্য",
+    ];
 
-  return ["exclamations", sentenceStructure, consolidateWordSets(wordsDe, wordsEng)];
+    // Romanized Bengali
 
-}
+    var wordsBnRom = [
+      "hyālō",
+      "hyā̃",
+      "nā",
+      "bidāẏ",
+      "anugrha karē",
+      "dhan'yabād",
+      "duḥkhita",
+      "sāhāẏẏa",
+    ];
 
-// Japanese set
+    return [
+      "exclamations",
+      sentenceStructure,
+      consolidateWordSets(wordsBn, wordsEng, wordsBnRom),
+    ];
+  }
 
-if (lang === 'ja') {
+  // French set
+  if (lang === "fr-FR") {
+    var wordsFr = [
+      "Bonjour",
+      "Oui",
+      "Non",
+      "Au revoir",
+      "S'il vous plaît",
+      "Merci",
+      "Désolé",
+      "Aide",
+    ];
 
-  var wordsJa = ["こんにちは", "はい", "いいえ", "さようなら", "お願いします", "ありがとう", "ごめんなさい", "助けて"];
+    return [
+      "exclamations",
+      sentenceStructure,
+      consolidateWordSets(wordsFr, wordsEng),
+    ];
+  }
 
-  // Romanized Japanese
+  // Italian set
+  if (lang === "it") {
+    var wordsIt = [
+      "Ciao",
+      "Sì",
+      "No",
+      "Arrivederci",
+      "Per favore",
+      "Grazie",
+      "Mi dispiace",
+      "Aiuto",
+    ];
 
-  var wordsJaRom = ["konnichiwa", "hai", "iie", "sayounara", "onegaishimasu", "arigatou", "gomennasai", "tasukete"];
-
-  return ["exclamations", sentenceStructure, consolidateWordSets(wordsJa, wordsEng, wordsJaRom)];
-
-}
-
-// Bengali set
-
-if (lang === 'bn') {
-
-  var wordsBn = ["হ্যালো", "হ্যাঁ", "না", "বিদায়", "অনুগ্রহ করে", "ধন্যবাদ", "দুঃখিত", "সাহায্য"];
-
-  // Romanized Bengali
-
-  var wordsBnRom = ["hyālō", "hyā̃", "nā", "bidāẏ", "anugrha karē", "dhan'yabād", "duḥkhita", "sāhāẏẏa"];
-
-  return ["exclamations", sentenceStructure, consolidateWordSets(wordsBn, wordsEng, wordsBnRom)];
-
-}
-
-// French set
-if (lang === 'fr-FR') {
-  var wordsFr = ["Bonjour", "Oui", "Non", "Au revoir", "S'il vous plaît", "Merci", "Désolé", "Aide"];
-
-  return ["exclamations", sentenceStructure, consolidateWordSets(wordsFr, wordsEng)];
-}
-
-// Italian set
-if (lang === 'it') {
-  var wordsIt = ["Ciao", "Sì", "No", "Arrivederci", "Per favore", "Grazie", "Mi dispiace", "Aiuto"];
-
-  return ["exclamations", sentenceStructure, consolidateWordSets(wordsIt, wordsEng)];
-}
-
-
- 
-
-}
+    return [
+      "exclamations",
+      sentenceStructure,
+      consolidateWordSets(wordsIt, wordsEng),
+    ];
+  }
+};
 
 export default exclamationsList;
