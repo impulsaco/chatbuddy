@@ -51,3 +51,17 @@ Functions and Variables: Use camelCase for function and variable names. For exam
 
 Event Handlers: Prefix event handler functions with handle followed by the event or action. For example, handlePress, handleInputChange, or handleSubmit.
 
+
+Formatting:
+Prettier Code Formatter extension: Prettier is a popular code formatter that, by default, formats quotes to double quotes. 
+(How To Setup Prettier: https://www.youtube.com/watch?v=DqfQ4DPnRqI). 
+Let's turn on "Format on save". 
+
+Let's keep this default setting, and use double quotes across the app. Reasons for this is JSON only allows double quotes.
+It's better to keep it consistentant. So let's use double quotes across the app. 
+
+logging:
+Let’s specify log level, if it’s error, let’s use logger.error(). If it’s for debug only, let’s use logger.debug().
+the explanation of log levels is in utils/logger.js
+Let’s gradually change the console.log() to logger(). Otherwise, when we push to production, the app would be slow 
+and we may leak sensitive information by logging to console.
