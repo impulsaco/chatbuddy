@@ -12,6 +12,7 @@ import Close from "../../assets/close.svg";
 import { supabase } from "../lib/supabase";
 import VoiceChatWhisper from "../whisper/VoiceChatWhisper";
 import { LanguageContext } from "../lib/LanguageContext";
+import { SessionContext } from "../lib/SessionContext";
 import wordCompare from "./api/wordCompare";
 
 const PAGE_HEIGHT = Dimensions.get("window").height;
@@ -39,17 +40,7 @@ const ChatWordPicker = ({
 
   // Retrieve session and phrases
 
-  const [session, setSession] = useState();
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-    });
-
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    });
-  }, []);
+  const { session, setSession } = useContext(SessionContext)
 
   // Helper to extract words from blocks
 

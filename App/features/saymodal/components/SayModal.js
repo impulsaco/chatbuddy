@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   View,
   TouchableOpacity,
@@ -17,6 +17,7 @@ import MicrophonePlayback from "@app/assets/microphonePlayback.svg";
 import Playback from "@app/assets/playback.svg";
 import sentenceSpeak from "@app/lib/sentenceSpeak";
 import playRecording from "@app/lib/playRecording";
+import { SessionContext } from "@app/lib/SessionContext";
 
 const PAGE_HEIGHT = Dimensions.get("window").height;
 const PAGE_WIDTH = Dimensions.get("window").width;
@@ -280,17 +281,7 @@ const SayModal = ({
 
   // Load session
 
-  const [session, setSession] = useState();
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-    });
-
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    });
-  }, []);
+  const { session, setSession } = useContext(SessionContext)
 
   const sayModal = () => {
     if (sayVisible === "record") {

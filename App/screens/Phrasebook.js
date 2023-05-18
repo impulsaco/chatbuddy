@@ -241,6 +241,7 @@ const Phrasebook = ({ navigation, route }) => {
     if (type.unfilled > 0) {
       cards.push(
         <EmptySentence
+          key={`${type.name}-unfilled`} // Add a unique key prop
           navigation={navigation}
           type={type.name}
           lang={lang}

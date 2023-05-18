@@ -12,13 +12,7 @@ const Header = ({ navigation, menuVisible, setMenuVisible }) => {
   const { session, setSession } = useContext(SessionContext);
 
   React.useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
       session ? setLogin(true) : setLogin(false);
-    });
-
-    supabase.auth.onAuthStateChange((_event, session) => {
-      session ? setLogin(true) : setLogin(false);
-    });
   }, [navigation, login]);
 
   //navigation = navigation.navigation

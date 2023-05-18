@@ -7,9 +7,10 @@ import { SessionContext } from "../../lib/SessionContext";
 import romanizer from "./romanizer";
 import { LanguageContext } from "../../lib/LanguageContext";
 
-const gptChat = (previousMessages, newMessage, setResponse, lang, session) => {
+const gptChat = (previousMessages, newMessage, response, setResponse, lang, session) => {
 
-  console.log("in GPT chat, lang is ", lang);
+  console.log("lang is ", lang)
+  console.log("in GPT chat, setResponse is: ", setResponse)
 
   const costPerToken = 0.002 / 1000;
   console.log("RESPOND is running. SPENDING TOKENS!!");
@@ -19,18 +20,18 @@ const gptChat = (previousMessages, newMessage, setResponse, lang, session) => {
   const prompt = newMessage;
   const role = `A helpful AI language model in a voice chat.`;
   const structuredMessages = [
+    {
+      "role": "system",
+      "content": `You are a language tutor for a beginner in ${lang}. Respond ONLY in ${lang}, no English, no parentheses. Respond in five words or less, using very simple vocabulary`,
+    },
     ...previousMessages.map(message => ({
-      role: message.user._id === 1 ? "user" : "assistant",
-      content: message.text,
+      "role": message.user._id === 1 ? "user" : "assistant",
+      "content": message.text,
     })),
     {
-      role: "user",
-      content: newMessage,
-    },
-    {
-      role: "system",
-      content: `You are a language tutor for a beginner in ${lang}. Respond ONLY in ${lang}, no English, no parentheses. Respond in five words or less, using very simple vocabulary`,
-    },
+      "role": "user",
+      "content": newMessage,
+    }    
   ];
 
   const messagesString = JSON.stringify(structuredMessages);
@@ -83,16 +84,19 @@ const gptChat = (previousMessages, newMessage, setResponse, lang, session) => {
           user: session.user.id, 
           model: "gpt-3.5-turbo",
           type: "gptChat",
-          chars: role.length + prompt.length,
+          chars: role.length + messagesString.length,
           tokens: messagesString.length/4,
           seconds: null,
           cost: messagesString.length/4 * costPerToken,
-          prompt: `${role} ${prompt}`,
-          output: sentenceText,
-          api_key: OPENAI_API_KEY,
+          output: responseTemp,
+          prompt: structuredMessages,
+          api_key: null,
           }
       )
-      if (error) alert(error.message)
+      if (error) {
+        alert(error.message)
+        console.log("error is", error)
+      }
     }
     saveCall()
   }

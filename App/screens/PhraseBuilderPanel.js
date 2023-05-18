@@ -14,7 +14,9 @@ import AddWord from "../components/AddWord";
 import { supabase } from "../lib/supabase";
 import WordRoute from "../lib/WordRoute";
 import { LanguageContext } from "../lib/LanguageContext";
+import { SessionContext } from "../lib/SessionContext";
 import SayModal from "@app/features/saymodal/components/SayModal";
+import exclamationsList from "@app/wordsets/exclamationsList";
 
 const PAGE_WIDTH = Dimensions.get("window").width;
 const PAGE_HEIGHT = Dimensions.get("window").height;
@@ -34,7 +36,7 @@ export function PhraseBuilderPanel({ navigation, route }) {
 
   const { langCode, setLangCode, lang, setLang } = useContext(LanguageContext);
 
-  const wordSet = route.params.wordSet;
+  const wordSet = (route.params && route.params.wordSet) || exclamationsList;
 
   // set up word lists based on choice
 
@@ -146,17 +148,7 @@ export function PhraseBuilderPanel({ navigation, route }) {
 
   // Retrieve session
 
-  const [session, setSession] = useState();
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-    });
-
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    });
-  }, []);
+  const { session, setSession } = useContext(SessionContext)
 
   // Fetch user-created words based on session
 
