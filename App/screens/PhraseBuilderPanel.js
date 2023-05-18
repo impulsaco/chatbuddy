@@ -16,7 +16,7 @@ import WordRoute from "../lib/WordRoute";
 import { LanguageContext } from "../lib/LanguageContext";
 import { SessionContext } from "../lib/SessionContext";
 import SayModal from "@app/features/saymodal/components/SayModal";
-import exclamationsList from "@app/wordsets/exclamationsList";
+import exclamationsList from "@app/data/wordsets/exclamationsList";
 
 const PAGE_WIDTH = Dimensions.get("window").width;
 const PAGE_HEIGHT = Dimensions.get("window").height;

@@ -8,15 +8,15 @@ import {
   Dimensions,
 } from "react-native";
 import Plus from "@app/assets/Plus.svg";
-import introductionList from "../wordsets/introductionList";
-import hobbiesList from "../wordsets/hobbiesList";
-import basicList from "../wordsets/basicList";
-import familyList from "../wordsets/familyList";
-import hometownList from "../wordsets/hometownList";
-import feelingsList from "../wordsets/feelingsList";
-import placesList from "../wordsets/placesList";
-import freeformList from "../wordsets/freeformList";
-import exclamationsList from "../wordsets/exclamationsList";
+import introductionList from "@app/data/wordsets/introductionList";
+import hobbiesList from "@app/data/wordsets/hobbiesList";
+import basicList from "@app/data/wordsets/basicList";
+import familyList from "@app/data/wordsets/familyList";
+import hometownList from "@app/data/wordsets/hometownList";
+import feelingsList from "@app/data/wordsets/feelingsList";
+import placesList from "@app/data/wordsets/placesList";
+import freeformList from "@app/data/wordsets/freeformList";
+import exclamationsList from "@app/data/wordsets/exclamationsList";
 
 const PAGE_HEIGHT = Dimensions.get("window").height;
 const PAGE_WIDTH = Dimensions.get("window").width;
