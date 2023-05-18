@@ -15,6 +15,7 @@ import { supabase } from '../lib/supabase';
 import WordRoute from '../lib/WordRoute';
 import { LanguageContext } from '../lib/LanguageContext';
 import SayModal from '../components/SayModal';
+import { SessionContext } from '../lib/SessionContext';
 
 
 const PAGE_WIDTH = Dimensions.get('window').width;
@@ -154,17 +155,7 @@ export default ({ navigation, route }) => {
 
     // Retrieve session
 
-  const [session, setSession] = useState()
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session)
-    })
-
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session)
-    })
-  }, [])
+  const { session, setSession } = useContext(SessionContext);
 
   // Fetch user-created words based on session
 

@@ -15,6 +15,7 @@ import BengaliFlag from '../../assets/BengaliFlag.svg';
 import JapaneseFlag from '../../assets/JapaneseFlag.svg';
 import { LanguageContext } from '../lib/LanguageContext';
 import VoiceGPT from './VoiceGPT';
+import { SessionContext } from '../lib/SessionContext';
 
 const PAGE_HEIGHT = Dimensions.get('window').height;
 
@@ -24,20 +25,11 @@ function Home({navigation, setMenuVisible}) {
 
     // Retrieve session
       
-    const [session, setSession] = useState()
+    const { session, setSession } = useContext(SessionContext)
 
     const { langCode, setLangCode, lang, setLang} = useContext(LanguageContext);    
 
-    //console.log("langCode", langCode)
-    //console.log("setLangCode", setLangCode)
-      
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session)
-    })
-  
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session)
-    })
+    
 
     /* 
     To add later:

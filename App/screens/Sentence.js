@@ -68,17 +68,7 @@ const Sentence = ({
 
   // Retrieve session
 
-  const [session, setSession] = useState();
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-    });
-
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    });
-  }, []);
+  const { session, setSession } = useContext(SessionContext);
 
   const gestureRootViewStyle = { flex: 1 };
 

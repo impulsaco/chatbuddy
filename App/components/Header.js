@@ -1,22 +1,19 @@
-import React from "react";
+import React, { useContext } from 'react';
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import Logo from "../../assets/logo.svg"
 import Hamburger from "../../assets/hamburger.svg"
 import { DrawerActions } from '@react-navigation/native';
 import { supabase } from '../lib/supabase';
+import { SessionContext } from '../lib/SessionContext';
 
 const Header = ({navigation, menuVisible, setMenuVisible}) => {
 
   const [login, setLogin] = React.useState(false)
 
-  React.useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      session ? setLogin(true) : setLogin(false)
-    })
+  const { session, setSession } = useContext(SessionContext)
 
-    supabase.auth.onAuthStateChange((_event, session) => {
+  React.useEffect(() => {
       session ? setLogin(true) : setLogin(false)
-    })
   }, [navigation, login])
   
   //navigation = navigation.navigation

@@ -15,6 +15,7 @@ import EmptySentence from '../components/EmptySentence';
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { LanguageContext } from '../lib/LanguageContext';
+import { SessionContext } from '../lib/SessionContext';
 
 const PAGE_HEIGHT = Dimensions.get('window').height;
 const PAGE_WIDTH = Dimensions.get('window').width;
@@ -56,18 +57,7 @@ const Phrasebook = ({navigation, route}) => {
     ])
   // Retrieve session
 
-  const [session, setSession] = useState()
-
-  useEffect(() => {
-
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session)
-    })
-
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session)
-    })
-  }, [])
+  const { session, setSession } = useContext(SessionContext)
   
   // Fetch sentences based on session
 

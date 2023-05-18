@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, TouchableOpacity, TextInput, Modal, Text, StyleSheet, Dimensions} from "react-native";
 import Plus from '../../assets/Plus.svg'
 import { Button } from "@rneui/themed"
@@ -6,6 +6,7 @@ import Close from '../../assets/close.svg'
 import googleTranslateWord from '../lib/googleTranslateWord';
 import romanizeWord from './api/romanizeWord';
 import { supabase } from '../lib/supabase';
+import { SessionContext } from '@app/lib/SessionContext';
 
 const PAGE_HEIGHT = Dimensions.get('window').height;
 const PAGE_WIDTH = Dimensions.get('window').width;
@@ -19,7 +20,7 @@ const AddWord = ({ type, setUserWords, userWords, lang, langCode, style }) => {
 
     // Retrieve user session
 
-    const [session, setSession] = useState()
+    const { session, setSession } = useContext(SessionContext)
 
     let height = 54
 
@@ -30,15 +31,7 @@ const AddWord = ({ type, setUserWords, userWords, lang, langCode, style }) => {
         height = PAGE_HEIGHT*.06
     }
 
-    useEffect(() => {
-        supabase.auth.getSession().then(({ data: { session } }) => {
-        setSession(session)
-        })
-
-        supabase.auth.onAuthStateChange((_event, session) => {
-        setSession(session)
-        })
-    }, []) /*
+    /*
 
     // Update words in backend
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, TouchableOpacity, TextInput, Modal, Text, StyleSheet, Dimensions} from "react-native";
 import Back from '../../assets/Back.svg'
 import { supabase } from '../lib/supabase';
@@ -10,6 +10,7 @@ import Playback from "../../assets/playback.svg"
 import sentenceSpeak from '../lib/sentenceSpeak';
 import playRecording from '../lib/playRecording';
 import Sound from '../../assets/Sound.svg'
+import { SessionContext } from '@app/lib/SessionContext';
 
 const PAGE_HEIGHT = Dimensions.get('window').height;
 const PAGE_WIDTH = Dimensions.get('window').width;
@@ -243,19 +244,7 @@ const SayModal = ({ drawerNavigation,
 
     // Load session
 
-    const [session, setSession] = useState()
-
-    useEffect(() => {
-
-        supabase.auth.getSession().then(({ data: { session } }) => {
-        setSession(session)
-        })
-
-        supabase.auth.onAuthStateChange((_event, session) => {
-        setSession(session)
-        })
-    }, [])
-            
+    const { session, setSession } = useContext(SessionContext)
 
     const sayModal = () => {        
         if (sayVisible==="record") {      

@@ -5,6 +5,7 @@ import { supabase } from '../lib/supabase';
 import VoiceChatWhisper from '../whisper/VoiceChatWhisper';
 import { LanguageContext } from '../lib/LanguageContext';
 import wordCompare from './api/wordCompare';
+import { SessionContext } from '@app/lib/SessionContext';
 
 const PAGE_HEIGHT = Dimensions.get('window').height;
 const PAGE_WIDTH = Dimensions.get('window').width;
@@ -28,18 +29,7 @@ const ChatWordPicker = ({ newMessage, setNewMessage, messages, setChosenWords })
 
   // Retrieve session and phrases
 
-  const [session, setSession] = useState()
-
-  useEffect(() => {
-
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session)
-    })
-
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session)
-    })
-  }, [])
+  const { session, setSession } = useContext(SessionContext)
 
   // Helper to extract words from blocks
 

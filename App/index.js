@@ -25,6 +25,7 @@ import SliderImage3 from './../assets/SliderImage3.svg'
 import SliderImage4 from './../assets/SliderImage4.svg'
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import { LanguageContext } from './lib/LanguageContext';
+import { SessionContext } from './lib/SessionContext';
 import VoiceGPT from './screens/VoiceGPT';
 import { DrawerNavigationContext } from './lib/DrawerNavigationContext';
 
@@ -383,7 +384,8 @@ export default function App() { // MAIN APP ENTRY POINT
         <GestureHandlerRootView style={{ flex: 1 }}>
           <NavigationContainer linking={linking} fallback={<Text>Loading...</Text>}>       
             <NativeBaseProvider style={styles.container}>
-              <LanguageContext.Provider value={{ langCode, setLangCode, lang, setLang }}>                
+              <SessionContext.Provider value={{ session, setSession }}>                
+                <LanguageContext.Provider value={{ langCode, setLangCode, lang, setLang }}>                
                   <Drawer.Navigator
                     screenOptions={{
                       header: ({ navigation }) => {
@@ -404,6 +406,7 @@ export default function App() { // MAIN APP ENTRY POINT
                     <Drawer.Screen name="LanguageBuddy" component={VoiceGPT} />
                   </Drawer.Navigator>                
               </LanguageContext.Provider>
+              </SessionContext.Provider>                
             </NativeBaseProvider>
           </NavigationContainer>
         </GestureHandlerRootView>  

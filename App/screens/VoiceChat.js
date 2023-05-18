@@ -33,16 +33,8 @@ const VoiceChat = ({ newMessage, setNewMessage, messages, setMessages}) => {
 
   // Retrieve session
       
-  const [session, setSession] = useState()
-    
-  supabase.auth.getSession().then(({ data: { session } }) => {
-    setSession(session)
-  })
-
-  supabase.auth.onAuthStateChange((_event, session) => {
-    setSession(session)
-  })
-    
+    const { session, setSession } = useContext(SessionContext);
+      
     const [response, setResponse] = useState(null);
   
     const { langCode, setLangCode, lang, setLang } = useContext(LanguageContext);
@@ -63,7 +55,8 @@ const VoiceChat = ({ newMessage, setNewMessage, messages, setMessages}) => {
       };
   
       setMessages((previousMessages) => GiftedChat.append(previousMessages, newMessageData));
-      gptChat(messages, message, setResponse, lang, session);
+      gptChat(messages, message, response, setResponse, lang, session);
+      console.log("session to send is: ", session)
     };
   
     useEffect(() => {

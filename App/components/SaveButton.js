@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, StyleSheet, Dimensions} from "react-native";
 import { Button } from "@rneui/themed"
 import { supabase, supabaseUrl} from '../lib/supabase';
 import googleTranslate from '../lib/googleTranslate';
 import SaveBanner from "../../assets/saveBanner.svg"
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { SessionContext } from '../lib/SessionContext';
 
 const PAGE_HEIGHT = Dimensions.get('window').height;
 const PAGE_WIDTH = Dimensions.get('window').width;
@@ -14,17 +15,8 @@ const SaveButton = ({sentence, savedSentence, sentenceEn, lang, langCode, senten
     
     // Retrieve user session
 
-    const [session, setSession] = useState()    
+    const { session, setSession } = useContext(SessionContext)
 
-    useEffect(() => {
-        supabase.auth.getSession().then(({ data: { session } }) => {
-        setSession(session)
-        })
-
-        supabase.auth.onAuthStateChange((_event, session) => {
-        setSession(session)
-        })
-    }, [])
 
     console.log("in SaveButton, sentencetype is: ", sentenceType)
 

@@ -7,7 +7,7 @@ import { SessionContext } from '../../lib/SessionContext';
 import romanizer from './romanizer';
 import { LanguageContext } from '../../lib/LanguageContext';
 
-const gptChat = (previousMessages, newMessage, setResponse, lang, session) => {
+const gptChat = (previousMessages, newMessage, response, setResponse, lang, session) => {
 
   console.log("session is", session)
 
@@ -43,6 +43,8 @@ const gptChat = (previousMessages, newMessage, setResponse, lang, session) => {
   
   const respondGpt = async () => {
 
+    let responseTemp = ""
+
     if (tokenCount < 3500) {
       console.log("structuredMessages are", structuredMessages)
       const response = await axios.post(`${serverUrl}/api/gpt-chat`, {        
@@ -57,7 +59,7 @@ const gptChat = (previousMessages, newMessage, setResponse, lang, session) => {
           'Authorization': `Bearer ${OPENAI_API_KEY}`,
         },
       });      */
-      const responseTemp = response.data.choices[0].message.content.trim();
+      responseTemp = response.data.choices[0].message.content.trim();
       setResponse(responseTemp);    
     }
     else {
@@ -70,7 +72,7 @@ const gptChat = (previousMessages, newMessage, setResponse, lang, session) => {
             'Authorization': `Bearer ${OPENAI_API_KEY}`,
           },
         });      
-        const responseTemp = response.data.choices[0].message.content.trim();
+        responseTemp = response.data.choices[0].message.content.trim();
         setResponse(responseTemp);    
     }
     
@@ -88,16 +90,19 @@ const gptChat = (previousMessages, newMessage, setResponse, lang, session) => {
           user: session.user.id, 
           model: "gpt-3.5-turbo",
           type: "gptChat",
-          chars: role.length + prompt.length,
+          chars: role.length + messagesString.length,
           tokens: messagesString.length/4,
           seconds: null,
           cost: messagesString.length/4 * costPerToken,
-          prompt: `${role} ${prompt}`,
-          output: sentenceText,
-          api_key: OPENAI_API_KEY,
+          output: responseTemp,
+          prompt: structuredMessages,
+          api_key: null,
           }
       )
-      if (error) alert(error.message)
+      if (error) {
+        alert(error.message)
+        console.log("error is", error)
+      }
     }
     saveCall()
   }

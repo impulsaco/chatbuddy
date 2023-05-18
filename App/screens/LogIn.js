@@ -119,7 +119,7 @@ const LogIn = ({ navigation, route }) => {
       setTimeout(() => {
         setSignupSuccess("");
         setsignupText("Sign Up");
-      }, 3000);
+      }, 10000);
     }
   }, [signupSuccess]);
 
