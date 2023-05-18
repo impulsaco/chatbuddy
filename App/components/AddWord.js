@@ -8,12 +8,12 @@ import {
   StyleSheet,
   Dimensions,
 } from "react-native";
-import Plus from "../../assets/Plus.svg";
+import Plus from "@app/assets/Plus.svg";
 import { Button } from "@rneui/themed";
-import Close from "../../assets/close.svg";
+import Close from "@app/assets/close.svg";
 import googleTranslateWord from "../lib/googleTranslateWord";
 import romanizeWord from "@app/services/romanizeWord";
-import { supabase } from "../lib/supabase";
+import { supabase } from "@app/lib/supabase";
 import { SessionContext } from "@app/lib/SessionContext";
 
 const PAGE_HEIGHT = Dimensions.get("window").height;

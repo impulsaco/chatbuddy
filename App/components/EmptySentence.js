@@ -7,7 +7,7 @@ import {
   StyleSheet,
   Dimensions,
 } from "react-native";
-import Plus from "../../assets/Plus.svg";
+import Plus from "@app/assets/Plus.svg";
 import introductionList from "../wordsets/introductionList";
 import hobbiesList from "../wordsets/hobbiesList";
 import basicList from "../wordsets/basicList";

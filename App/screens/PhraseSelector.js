@@ -9,7 +9,7 @@ import React, { useState, useEffect } from "react";
 import "react-native-gesture-handler";
 import { LinearGradient } from "expo-linear-gradient";
 import { Button } from "@rneui/themed";
-import { supabase } from "../lib/supabase";
+import { supabase } from "@app/lib/supabase";
 import freeformList from "../wordsets/freeformList";
 import introductionList from "../wordsets/introductionList";
 import hobbiesList from "../wordsets/hobbiesList";

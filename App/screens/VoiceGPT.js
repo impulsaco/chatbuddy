@@ -12,7 +12,7 @@ import WordMenu from "../components/WordMenu";
 import Header from "../components/Header";
 import { LinearGradient } from "expo-linear-gradient";
 import AddWord from "../components/AddWord";
-import { supabase } from "../lib/supabase";
+import { supabase } from "@app/lib/supabase";
 import WordRoute from "../lib/WordRoute";
 import { LanguageContext } from "../lib/LanguageContext";
 

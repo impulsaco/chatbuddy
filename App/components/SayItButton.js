@@ -5,9 +5,9 @@ import React, { useState, useEffect } from "react";
 import SentenceTest from "../lib/SentenceTest";
 import SentenceFixer from "../lib/SentenceFixer";
 import SaveButton from "./SaveButton";
-import SayWhisper from "../whisper/SayWhisper";
+import SayWhisper from "@app/features/whisper/SayWhisper";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import Microphone from "../../assets/microphone.svg";
+import Microphone from "@app/assets/microphone.svg";
 
 // Launches Say It! modal
 

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Dimensions } from "react-native";
 import { Button } from "@rneui/themed";
-import { supabase, supabaseUrl } from "../lib/supabase";
+import { supabase, supabaseUrl } from "@app/lib/supabase";
 import googleTranslate from "../lib/googleTranslate";
-import SaveBanner from "../../assets/saveBanner.svg";
+import SaveBanner from "@app/assets/saveBanner.svg";
 import { SessionContext } from "../lib/SessionContext";
 import { TouchableOpacity } from "react-native-gesture-handler";
 

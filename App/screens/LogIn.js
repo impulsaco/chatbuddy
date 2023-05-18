@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { makeRedirectUri, startAsync } from "expo-auth-session";
-import { supabase } from "../lib/supabase";
+import { supabase } from "@app/lib/supabase";
 import { Button, Input } from "@rneui/themed";
 
 import { logger } from "@app/utils/logger";

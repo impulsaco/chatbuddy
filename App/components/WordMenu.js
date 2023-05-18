@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { View, StyleSheet, Pressable, Text, Dimensions } from "react-native";
-import PersonIcon from "../../assets/person.svg";
-import RunnerIcon from "../../assets/runner.svg";
-import IdentityIcon from "../../assets/identity.svg";
-import AppleIcon from "../../assets/apple.svg";
+import PersonIcon from "@app/assets/person.svg";
+import RunnerIcon from "@app/assets/runner.svg";
+import IdentityIcon from "@app/assets/identity.svg";
+import AppleIcon from "@app/assets/apple.svg";
 import SentenceWord from "./SentenceWord";
 
 const PAGE_HEIGHT = Dimensions.get("window").height;

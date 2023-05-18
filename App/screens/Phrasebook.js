@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { StyleSheet, View, Text, Dimensions } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { supabase } from "../lib/supabase";
+import { supabase } from "@app/lib/supabase";
 import { Switch } from "@rneui/themed";
 import Header from "../components/Header";
 import { DraxProvider, DraxScrollView } from "react-native-drax";

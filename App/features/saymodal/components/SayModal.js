@@ -9,8 +9,7 @@ import {
   Dimensions,
 } from "react-native";
 import Back from "@app/assets/Back.svg";
-import { supabase } from "@app/lib/supabase";
-import SayWhisper from "@app/whisper/SayWhisper";
+import SayWhisper from "@app/features/whisper/SayWhisper";
 import SaveButton from "@app/components/SaveButton";
 import AudioPlayback from "@app/assets/audioPlayback.svg";
 import MicrophonePlayback from "@app/assets/microphonePlayback.svg";

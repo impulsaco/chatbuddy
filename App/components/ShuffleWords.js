@@ -8,11 +8,11 @@ import {
   StyleSheet,
   Dimensions,
 } from "react-native";
-import Shuffle from "../../assets/Shuffle.svg";
+import Shuffle from "@app/assets/Shuffle.svg";
 import { Button } from "@rneui/themed";
-import Close from "../../assets/close.svg";
+import Close from "@app/assets/close.svg";
 import googleTranslateWord from "../lib/googleTranslateWord";
-import { supabase } from "../lib/supabase";
+import { supabase } from "@app/lib/supabase";
 import { Alert } from "react-native";
 
 const PAGE_HEIGHT = Dimensions.get("window").height;

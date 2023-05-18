@@ -5,9 +5,9 @@ import DraggableWord from "../components/DraggableWord";
 import AddWord from "../components/AddWord";
 import ShuffleWords from "../components/ShuffleWords";
 import { LanguageContext } from "../lib/LanguageContext";
-import Refresh from "../../assets/Refresh.svg";
-import TranslationOn from "../../assets/translationOn.svg";
-import TranslationOff from "../../assets/translationOff.svg";
+import Refresh from "@app/assets/Refresh.svg";
+import TranslationOn from "@app/assets/translationOn.svg";
+import TranslationOff from "@app/assets/translationOff.svg";
 
 const PAGE_HEIGHT = Dimensions.get("window").height;
 const PAGE_WIDTH = Dimensions.get("window").width;

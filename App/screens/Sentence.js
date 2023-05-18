@@ -11,16 +11,16 @@ import {
 import SentenceWord from "../components/SentenceWord";
 import SayItButton from "../components/SayItButton";
 import AnalyzeWord from "../components/AnalyzeWord";
-import Refresh from "../../assets/Refresh.svg";
+import Refresh from "@app/assets/Refresh.svg";
 import sentenceSpeak from "../lib/sentenceSpeak";
-import Sound from "../../assets/Sound.svg";
+import Sound from "@app/assets/Sound.svg";
 import SentenceTest from "../lib/SentenceTest";
 import SentenceFixer from "../lib/SentenceFixer";
 import SayModal from "@app/features/saymodal/components/SayModal";
-import TranslationOn from "../../assets/translationOn.svg";
-import TranslationOff from "../../assets/translationOff.svg";
+import TranslationOn from "@app/assets/translationOn.svg";
+import TranslationOff from "@app/assets/translationOff.svg";
 import { SessionContext } from "../lib/SessionContext";
-import { supabase } from "../lib/supabase";
+import { supabase } from "@app/lib/supabase";
 
 import { logger } from "@app/utils/logger";
 

@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import { StyleSheet, View, TouchableOpacity } from "react-native";
-import Logo from "../../assets/logo.svg";
-import Hamburger from "../../assets/hamburger.svg";
+import Logo from "@app/assets/logo.svg";
+import Hamburger from "@app/assets/hamburger.svg";
 import { DrawerActions } from "@react-navigation/native";
-import { supabase } from "../lib/supabase";
+import { supabase } from "@app/lib/supabase";
 import { SessionContext } from "../lib/SessionContext";
 
 const Header = ({ navigation, menuVisible, setMenuVisible }) => {

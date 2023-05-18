@@ -8,9 +8,9 @@ import {
   StyleSheet,
   Dimensions,
 } from "react-native";
-import Close from "../../assets/close.svg";
-import { supabase } from "../lib/supabase";
-import VoiceChatWhisper from "../whisper/VoiceChatWhisper";
+import Close from "@app/assets/close.svg";
+import { supabase } from "@app/lib/supabase";
+import VoiceChatWhisper from "@app/features/whisper/VoiceChatWhisper";
 import { LanguageContext } from "../lib/LanguageContext";
 import { SessionContext } from "../lib/SessionContext";
 import wordCompare from "@app/services/wordCompare";

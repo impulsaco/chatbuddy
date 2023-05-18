@@ -8,16 +8,16 @@ import {
   StyleSheet,
   Dimensions,
 } from "react-native";
-import Close from "../../assets/close.svg";
-import { supabase } from "../lib/supabase";
-import VoiceChatWhisper from "../whisper/VoiceChatWhisper";
+import Close from "@app/assets/close.svg";
+import { supabase } from "@app/lib/supabase";
+import VoiceChatWhisper from "@app/features/whisper/VoiceChatWhisper";
 import SaveButton from "./SaveButton";
 import AudioPlayback from "@app/assets/audioPlayback.svg";
 import MicrophonePlayback from "@app/assets/microphonePlayback.svg";
 import Playback from "@app/assets/playback.svg";
 import sentenceSpeak from "../lib/sentenceSpeak";
 import playRecording from "../lib/playRecording";
-import Sound from "../../assets/Sound.svg";
+import Sound from "@app/assets/Sound.svg";
 import { SessionContext } from "../lib/SessionContext";
 
 const PAGE_HEIGHT = Dimensions.get("window").height;

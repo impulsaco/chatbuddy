@@ -13,8 +13,8 @@ import { Configuration, OpenAIApi } from "openai";
 import { OPENAI_API_KEY } from "@env";
 import AudioPlayback from "@app/assets/audioPlayback.svg";
 import sentenceSpeak from "../lib/sentenceSpeak";
-import TrashBin from "../../assets/TrashBin.svg";
-import { supabase } from "../lib/supabase";
+import TrashBin from "@app/assets/TrashBin.svg";
+import { supabase } from "@app/lib/supabase";
 import { useActionSheet } from "@expo/react-native-action-sheet";
 
 const PAGE_HEIGHT = Dimensions.get("window").height;

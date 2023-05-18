@@ -1,7 +1,7 @@
 import { OPENAI_API_KEY } from "@env";
 import axios from "axios";
 import "react-native-url-polyfill/auto";
-import { supabase } from "../../lib/supabase";
+import { supabase } from "../@app/lib/supabase";
 
 const wordCompare = (words, messages) => {
   //console.log("in wordCompare, words is ", words)
