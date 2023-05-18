@@ -60,8 +60,8 @@ const Phrasebook = ({ navigation, route }) => {
   ]);
   // Retrieve session
 
-  const { session, setSession } = useContext(SessionContext)
-  
+  const { session, setSession } = useContext(SessionContext);
+
   // Fetch sentences based on session
 
   const fetchSentences = async () => {

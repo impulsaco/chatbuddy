@@ -387,54 +387,54 @@ export default function App() {
               fallback={<Text>Loading...</Text>}
             >
               <NativeBaseProvider style={styles.container}>
-              <SessionContext.Provider value={{ session, setSession }}>
-                <LanguageContext.Provider
-                  value={{ langCode, setLangCode, lang, setLang }}
-                >
-                  <Tab.Navigator
-                    screenOptions={{
-                      header: ({ navigation }) => {
-                        // const title = getHeaderTitle(route.name);
-                        return (
+                <SessionContext.Provider value={{ session, setSession }}>
+                  <LanguageContext.Provider
+                    value={{ langCode, setLangCode, lang, setLang }}
+                  >
+                    <Tab.Navigator
+                      screenOptions={{
+                        header: ({ navigation }) => {
+                          // const title = getHeaderTitle(route.name);
+                          return (
+                            <Header
+                              navigation={navigation}
+                              menuVisible={menuVisible}
+                              setMenuVisible={setMenuVisible}
+                            />
+                          );
+                        },
+                        drawerPosition: "left",
+                        headerRight: () => (
                           <Header
                             navigation={navigation}
                             menuVisible={menuVisible}
                             setMenuVisible={setMenuVisible}
                           />
-                        );
-                      },
-                      drawerPosition: "left",
-                      headerRight: () => (
-                        <Header
-                          navigation={navigation}
-                          menuVisible={menuVisible}
-                          setMenuVisible={setMenuVisible}
-                        />
-                      ),
-                      overlayColor: "transparent",
-                      headerTransparent: true,
-                    }}
-                  >
-                    <Tab.Screen
-                      name="Home"
-                      component={withSetMenuVisible(Home)}
-                    />
-                    <Tab.Screen
-                      name="Choose"
-                      component={withSetMenuVisible(PhraseSelector)}
-                    />
-                    <Tab.Screen
-                      name="PhraseBuilderPanel"
-                      component={PhraseBuilderPanel}
-                    />
-                    <Tab.Screen
-                      name="Phrasebook"
-                      component={withSetMenuVisible(Phrasebook)}
-                    />
-                    <Tab.Screen name="LanguageBuddy" component={VoiceGPT} />
-                  </Tab.Navigator>
-                </LanguageContext.Provider>
-                </SessionContext.Provider>           
+                        ),
+                        overlayColor: "transparent",
+                        headerTransparent: true,
+                      }}
+                    >
+                      <Tab.Screen
+                        name="Home"
+                        component={withSetMenuVisible(Home)}
+                      />
+                      <Tab.Screen
+                        name="Choose"
+                        component={withSetMenuVisible(PhraseSelector)}
+                      />
+                      <Tab.Screen
+                        name="PhraseBuilderPanel"
+                        component={PhraseBuilderPanel}
+                      />
+                      <Tab.Screen
+                        name="Phrasebook"
+                        component={withSetMenuVisible(Phrasebook)}
+                      />
+                      <Tab.Screen name="LanguageBuddy" component={VoiceGPT} />
+                    </Tab.Navigator>
+                  </LanguageContext.Provider>
+                </SessionContext.Provider>
               </NativeBaseProvider>
             </NavigationContainer>
           </GestureHandlerRootView>

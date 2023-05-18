@@ -12,7 +12,7 @@ const Header = ({ navigation, menuVisible, setMenuVisible }) => {
   const { session, setSession } = useContext(SessionContext);
 
   React.useEffect(() => {
-      session ? setLogin(true) : setLogin(false);
+    session ? setLogin(true) : setLogin(false);
   }, [navigation, login]);
 
   //navigation = navigation.navigation

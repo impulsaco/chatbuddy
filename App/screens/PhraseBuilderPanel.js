@@ -148,7 +148,7 @@ export function PhraseBuilderPanel({ navigation, route }) {
 
   // Retrieve session
 
-  const { session, setSession } = useContext(SessionContext)
+  const { session, setSession } = useContext(SessionContext);
 
   // Fetch user-created words based on session
 

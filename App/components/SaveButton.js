@@ -23,8 +23,7 @@ const SaveButton = ({
 }) => {
   // Retrieve user session
 
-  const { session, setSession } = useContext(SessionContext)
-
+  const { session, setSession } = useContext(SessionContext);
 
   async function saveSentence() {
     const { error } = await supabase.from("sentences").insert({

@@ -27,8 +27,8 @@ const AddWord = ({ type, setUserWords, userWords, lang, langCode, style }) => {
 
   // Retrieve user session
 
-  const { session, setSession } = useContext(SessionContext)
-  
+  const { session, setSession } = useContext(SessionContext);
+
   let height = 54;
 
   if (langCode === "ko" || langCode === "bg" || langCode === "ja") {
@@ -37,8 +37,7 @@ const AddWord = ({ type, setUserWords, userWords, lang, langCode, style }) => {
     height = PAGE_HEIGHT * 0.06;
   }
 
-
-   /*
+  /*
 
     // Update words in backend
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext} from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   View,
   TouchableOpacity,
@@ -32,8 +32,7 @@ const VoiceRecord = ({ newMessage, setNewMessage }) => {
 
   const [closeVisible, setCloseVisible] = useState(true); // to prevent premature recording end
 
-  const { session, setSession } = useContext(SessionContext)
-
+  const { session, setSession } = useContext(SessionContext);
 
   const closeButton = () => {
     if (closeVisible) {

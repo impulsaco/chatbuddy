@@ -281,7 +281,7 @@ const SayModal = ({
 
   // Load session
 
-  const { session, setSession } = useContext(SessionContext)
+  const { session, setSession } = useContext(SessionContext);
 
   const sayModal = () => {
     if (sayVisible === "record") {

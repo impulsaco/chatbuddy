@@ -30,12 +30,11 @@ const PAGE_WIDTH = Dimensions.get("window").width;
 function Home({ navigation, setMenuVisible }) {
   // Retrieve session
 
-    // Retrieve session
-      
-  const { session, setSession } = useContext(SessionContext)
+  // Retrieve session
+
+  const { session, setSession } = useContext(SessionContext);
 
   const { langCode, setLangCode, lang, setLang } = useContext(LanguageContext);
-
 
   /* 
     To add later:
