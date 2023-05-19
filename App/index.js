@@ -204,18 +204,18 @@ const PAGE_WIDTH = Dimensions.get("window").width;
 /// Delete shuffle button
 /// Onboarding flow
 //// Backend for tutorial DONE
-//// Survey question screens
+//// Survey question screens 
 //// Languages to one-word tutorial 
 //// Explanatory modals
 //// Phrasebook to LanguageBuddy
 //// Topic progression
 /// Bottom tab navigator
 /// Supabase leak
+/// GPT sentence coloring
 
 // Lower priority
 /// Payment for more phrases?
 /// Saved words
-/// GPT3 sentence coloring
 /// Delete words 
 /// New word boxes?
 /// New "full modal"?
