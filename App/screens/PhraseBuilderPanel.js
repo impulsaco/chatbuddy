@@ -17,6 +17,8 @@ import { UserContext } from "../lib/UserContext";
 import SayModal from "@app/features/saymodal/components/SayModal";
 import exclamationsList from "@app/data/wordsets/exclamationsList";
 import InstructionsModal from "@app/components/InstructionsModal";
+import { NavigationContainer } from '@react-navigation/native';
+
 
 const PAGE_WIDTH = Dimensions.get("window").width;
 const PAGE_HEIGHT = Dimensions.get("window").height;
@@ -29,6 +31,7 @@ export function PhraseBuilderPanel({ navigation, route }) {
   
   // set state for instructions modal
   const [isModalVisible, setModalVisible] = useState(false);
+  const [tutorialText, setTutorialText] = useState("Welcome to Say! The first thing we'll do is say 'hello'! \n \n Tap the word from the menu below.");
 
   // activate tutorial modal if tutorial not completed
   useEffect(() => {
@@ -38,9 +41,9 @@ export function PhraseBuilderPanel({ navigation, route }) {
     }
   }, []);
 
-  // Tutorial texts
+  // state for tracking active index on WordRoute
+  const [activeIndex, setActiveIndex] = useState(0);  
 
-  const tutorialText = "Welcome to Say! The first thing we'll do is say 'hello'! \n \n Tap the right word from the menu below."
 
   // set up translations toggle
 
@@ -76,6 +79,25 @@ export function PhraseBuilderPanel({ navigation, route }) {
   const [sentenceInit, setSentenceInit] = useState(createWordList[1]);
 
   const [sentenceType, setSentenceType] = useState(createWordList[0]);
+
+  // Activate tutorial part 2 after first word
+  useEffect(() => {
+    console.log("index is ", activeIndex)
+    if (tutorial === false && sentenceInit.length > 1 && activeIndex === 0) {
+      setTutorialText(`For longer sentences, Say! teaches you the order of words in a language. \n \n You'll start with a ${sentenceInit[activeIndex].type} -- who is this sentence about?`);
+      setModalVisible(true);
+    }
+
+    if (tutorial === false && sentenceInit.length > 1 && activeIndex === 1) {
+      setTutorialText(`Great! Now pick a ${sentenceInit[activeIndex].type}`);
+      setModalVisible(true);
+    }
+
+    if (tutorial === false && sentenceInit.length > 1 && activeIndex === (sentenceInit.length - 1)) {
+      setTutorialText(`Once you pick the last word, Say will make a sentence with those words. \n \n We're taking care of conjugations, articles, and all that good stuff.`);
+      setModalVisible(true);
+    }
+  }, [activeIndex]);
 
   const routeList = sentenceInit.map(item => item.type);
 
@@ -263,8 +285,33 @@ export function PhraseBuilderPanel({ navigation, route }) {
     }
   }, [navigatePhrasebook]);
 
-  const sayModal = drawerNavigation => {
-    if (sayVisible !== "invisible") {
+  // Recording tutorial text
+
+  useEffect(() => {
+    if (sayVisible === "record" && sentenceInit.length === 1) {
+      setTutorialText("Fantastic! Now you'll practice saying the word. Tap the microphone to start recording.");
+      setModalVisible(true);
+    }
+
+    if (sayVisible === "record" && sentenceInit.length > 1) {
+      setTutorialText("Well done! Just like last time, let's practice saying our phrase");
+      setModalVisible(true);
+    }
+
+    if (sayVisible === "success" || sayVisible === "partly" || sayVisible === "none" && sentenceInit.length === 1) {
+      setTutorialText("Now we'll tell you whether we understood you. You can try again if not! \n \n Once you get it right, tap 'Save it!', then 'Go to phrasebook!'");
+      setModalVisible(true);
+    }
+
+    if (sayVisible === "success" && sentenceInit.length > 1) {
+      setTutorialText("Excellent! Keep trying until you get it right \n \n Tap 'Save it!', then 'Go to phrasebook!'");
+      setModalVisible(true);
+    }
+  }, [sayVisible]);
+
+  const sayModal = drawerNavigation => {    
+
+    if (sayVisible !== "invisible") {    
       return (
         <Tab.Screen
           name="SayModal"
@@ -354,42 +401,45 @@ export function PhraseBuilderPanel({ navigation, route }) {
             isVisible={isModalVisible}
             onClose={() => setModalVisible(false)}
             text={tutorialText}
-          />
-          <Tab.Navigator
-            tabBar={props => (
-              <WordMenu
-                {...props}
-                forward={forward}
-                setForward={setForward}
-                words={words}
-                sentence={sentence}
-                setSentence={setSentence}
+          />          
+            <Tab.Navigator
+              tabBar={props => (
+                <WordMenu
+                  {...props}
+                  forward={forward}
+                  setForward={setForward}
+                  words={words}
+                  sentence={sentence}
+                  setSentence={setSentence}
+                />
+              )}
+              initialRouteName={"subject"}
+              sceneContainerStyle={{ backgroundColor: "transparent" }}
+            >
+              {routeList.map((route, index) => (
+                <Tab.Screen
+                  key={`tab-screen-${index}`}
+                  name={route}
+                  component={WordRoute}
+                  initialParams={{
+                    routes: routeList,
+                    route,
+                    setUserWords,
+                    userWords,
+                    words,
+                    translations,
+                    sentence,
+                    setSentence,
+                    setForward,
+                    resetSentence,
+                    toggleTranslations,
+                    setActiveIndex,
+                    key: `tab-screen-${index}`
+                  }}
               />
-            )}
-            initialRouteName={"subject"}
-            sceneContainerStyle={{ backgroundColor: "transparent" }}
-          >
-            {routeList.map((route, index) => (
-              <Tab.Screen
-                key={`tab-screen-${index}`}
-                name={route}
-                component={WordRoute(
-                  route,
-                  setUserWords,
-                  userWords,
-                  words,
-                  translations,
-                  sentence,
-                  setSentence,
-                  setForward,
-                  resetSentence,
-                  toggleTranslations,
-                  `tab-screen-${index}`
-                )}
-              />
-            ))}
-            {sayModal(drawerNavigation)}
-          </Tab.Navigator>
+              ))}
+              {sayModal(drawerNavigation)}
+            </Tab.Navigator>
         </View>
       </DraxProvider>
     </GestureHandlerRootView>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, StyleSheet, Dimensions, TouchableOpacity } from "react-native";
 import { DraxProvider, DraxScrollView } from "react-native-drax";
 import DraggableWord from "../components/DraggableWord";
@@ -8,32 +8,38 @@ import { UserContext } from "./UserContext";
 import Refresh from "@app/assets/Refresh.svg";
 import TranslationOn from "@app/assets/translationOn.svg";
 import TranslationOff from "@app/assets/translationOff.svg";
+import { useFocusEffect } from '@react-navigation/native';
 
 const PAGE_HEIGHT = Dimensions.get("window").height;
 const PAGE_WIDTH = Dimensions.get("window").width;
 
 /// JUST MAKE ONE, THEN MAP ONTO TAB NAVIGATOR
 
-const WordRoute = (
-  type,
-  setUserWords,
-  userWords,
-  words,
-  translations,
-  sentence,
-  setSentence,
-  setForward,
-  resetSentence,
-  toggleTranslations,
-  key
-) => {
+const WordRoute = ({route}) => {
+  const {
+    routes,
+    setUserWords,
+    userWords,
+    words,
+    translations,
+    sentence,
+    setSentence,
+    setForward,
+    resetSentence,
+    toggleTranslations,
+    setActiveIndex,
+    key
+  } = route.params;
+
+  const type = route.params.route
+
   const { langCode, setLangCode, lang, setLang } =
     React.useContext(UserContext);
 
   /*React.useEffect (() => {
     setLangCode(langCode)
     setLang(lang)
-  }, [langCode, lang])*/
+  }, [langCode, lang])*/  
 
   const translationButton = () => {
     if (translations === true) {
@@ -42,6 +48,18 @@ const WordRoute = (
       return <TranslationOff />;
     }
   };
+  
+  // set index for tab navigator
+  useFocusEffect(
+    React.useCallback(() => {
+      // Update the active index when this screen comes into focus.
+      // You may need to modify this line if `type` isn't the same as the route name.
+      const newIndex = routes.findIndex(route => route === type);
+      if (newIndex !== -1) {
+        setActiveIndex(newIndex);
+      }
+    }, [])
+  );
 
   /* Shuffle button for the future
 
@@ -54,7 +72,7 @@ const WordRoute = (
 
   */
 
-  return () => (
+  return (
     <View style={styles.wordContainer}>
       <View style={styles.dragLimit}>
         <DraxScrollView contentContainerStyle={styles.dragContainer}>

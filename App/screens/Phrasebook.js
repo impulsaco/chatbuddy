@@ -10,6 +10,7 @@ import EmptySentence from "../components/EmptySentence";
 import { useActionSheet } from "@expo/react-native-action-sheet";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { UserContext } from "../lib/UserContext";
+import InstructionsModal from "../components/InstructionsModal";
 
 const PAGE_HEIGHT = Dimensions.get("window").height;
 const PAGE_WIDTH = Dimensions.get("window").width;
@@ -29,9 +30,31 @@ const Phrasebook = ({ navigation, route }) => {
 
   const emptySentences = 5;
 
-  // Get selected language and session from context
+  // Import session data
 
-  const { session, langCode, setLangCode, lang, setLang } = useContext(UserContext);
+  const { session, setSession, langCode, setLangCode, lang, setLang, tutorial, setTutorial } = useContext(UserContext);
+  
+  // set state for instructions modal
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [tutorialText, setTutorialText] = useState("");
+
+  useEffect(() => {
+    if (sentences.length < 2 && tutorial === false) {
+      setTutorialText("Welcome to your Phrasebook! You can find your first one-word sentence below. \n \n Now let's make a longer sentence to introduce ourselves. Select 'Tap to add!' right below 'Where we're from'")
+    }
+    if (sentences.length <= 2 && tutorial === false) {
+      setTutorialText("You've completed your first two sentences. Tap one of them to launch the AI bot!")
+    }
+  }, [sentences]);
+
+  // activate tutorial modal if tutorial not completed
+  useEffect(() => {
+    if (tutorial === false) {
+      setModalVisible(true);
+    }
+  }, []);
+
+  // Set up state variables for languages list
 
   const [langs, setLangs] = useState([]);
   const [langCodes, setLangCodes] = useState([]);
@@ -85,15 +108,6 @@ const Phrasebook = ({ navigation, route }) => {
               }).length,
           },
           {
-            name: "introduction",
-            label: "Jobs or studies  💼",
-            unfilled:
-              emptySentences -
-              data.filter(obj => {
-                return obj.type === "introduction" && obj.language === lang;
-              }).length,
-          },
-          {
             name: "hometown",
             label: "Where we're from 🌍",
             unfilled:
@@ -102,6 +116,15 @@ const Phrasebook = ({ navigation, route }) => {
                 return obj.type === "hometown" && obj.language === lang;
               }).length,
           },
+          {
+            name: "introduction",
+            label: "Jobs or studies  💼",
+            unfilled:
+              emptySentences -
+              data.filter(obj => {
+                return obj.type === "introduction" && obj.language === lang;
+              }).length,
+          },          
           {
             name: "feelings",
             label: "Feelings 😃",
@@ -239,9 +262,7 @@ const Phrasebook = ({ navigation, route }) => {
         <EmptySentence
           key={`${type.name}-unfilled`} // Add a unique key prop
           navigation={navigation}
-          type={type.name}
-          lang={lang}
-          langCode={langCode}
+          type={type.name}          
           setMenuVisible={setMenuVisible}
         />
       );
@@ -281,6 +302,11 @@ const Phrasebook = ({ navigation, route }) => {
           style={styles.linearGradient}
         />
         <Header />
+        <InstructionsModal
+            isVisible={isModalVisible}
+            onClose={() => setModalVisible(false)}
+            text={tutorialText}
+        />
         <View style={styles.topContent}>
           <Text style={styles.mainText}>Your phrasebook</Text>
           <View style={styles.topContainer}>

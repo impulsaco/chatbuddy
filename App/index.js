@@ -200,13 +200,13 @@ const PAGE_WIDTH = Dimensions.get("window").width;
 /// Easy UX tweaks DONE
 /// Update to GPT 3.5, tweak prompt (limits) DONE
 /// Delete phrases DONE
-/// Delete shuffle button
+/// Delete shuffle button DONE
 /// Onboarding flow
 //// Backend for tutorial DONE
 //// Survey question screens 
 //// Languages to one-word tutorial DONE
 //// Restructure user state DONE 
-//// Explanatory modals
+//// Explanatory modals IN PROCESS
 //// Phrasebook to LanguageBuddy
 //// Topic progression
 /// Bottom tab navigator

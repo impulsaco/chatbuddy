@@ -8,8 +8,6 @@ const PAGE_WIDTH = Dimensions.get('window').width;
 
 const InstructionsModal = ({ isVisible, onClose, text }) => {
 
-     console.log("isVisible is ", isVisible)
-
     return (
         <Modal 
             isVisible={isVisible}

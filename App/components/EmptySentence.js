@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   View,
   TouchableOpacity,
@@ -17,6 +17,7 @@ import feelingsList from "@app/data/wordsets/feelingsList";
 import placesList from "@app/data/wordsets/placesList";
 import freeformList from "@app/data/wordsets/freeformList";
 import exclamationsList from "@app/data/wordsets/exclamationsList";
+import { UserContext} from "@app/lib/UserContext";
 
 const PAGE_HEIGHT = Dimensions.get("window").height;
 const PAGE_WIDTH = Dimensions.get("window").width;
@@ -24,10 +25,14 @@ const PAGE_WIDTH = Dimensions.get("window").width;
 const EmptySentence = ({
   navigation,
   type,
-  lang,
-  langCode,
   setMenuVisible,
 }) => {
+
+  // Get chosen language state
+
+  const {lang, langCode} = useContext(UserContext)
+
+
   const destination = type => {
     if (type === "introduction") {
       return introductionList;
