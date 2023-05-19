@@ -4,12 +4,12 @@ import Logo from "@app/assets/logo.svg";
 import Hamburger from "@app/assets/hamburger.svg";
 import { DrawerActions } from "@react-navigation/native";
 import { supabase } from "@app/lib/supabase";
-import { SessionContext } from "../lib/SessionContext";
+import { UserContext } from "@app/lib/UserContext";
 
 const Header = ({ navigation, menuVisible, setMenuVisible }) => {
   const [login, setLogin] = React.useState(false);
 
-  const { session, setSession } = useContext(SessionContext);
+  const { session } = useContext(UserContext);
 
   React.useEffect(() => {
     session ? setLogin(true) : setLogin(false);

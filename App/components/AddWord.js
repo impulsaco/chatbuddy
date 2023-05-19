@@ -14,7 +14,7 @@ import Close from "@app/assets/close.svg";
 import googleTranslateWord from "../lib/googleTranslateWord";
 import romanizeWord from "@app/services/romanizeWord";
 import { supabase } from "@app/lib/supabase";
-import { SessionContext } from "@app/lib/SessionContext";
+import { UserContext } from "@app/lib/UserContext";
 
 const PAGE_HEIGHT = Dimensions.get("window").height;
 const PAGE_WIDTH = Dimensions.get("window").width;
@@ -27,7 +27,7 @@ const AddWord = ({ type, setUserWords, userWords, lang, langCode, style }) => {
 
   // Retrieve user session
 
-  const { session, setSession } = useContext(SessionContext);
+  const { session } = useContext(UserContext);
 
   let height = 54;
 

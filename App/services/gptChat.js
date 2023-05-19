@@ -3,9 +3,8 @@ import { REACT_APP_SERVER_URL } from "@env";
 import axios from "axios";
 import "react-native-url-polyfill/auto";
 import { supabase } from "@app/lib/supabase";
-import { SessionContext } from "@app/lib/SessionContext";
 import romanizer from "./romanizer";
-import { LanguageContext } from "@app/lib/LanguageContext";
+import { UserContext } from "@app/lib/UserContext";
 
 const gptChat = (
   previousMessages,

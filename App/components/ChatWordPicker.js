@@ -11,8 +11,7 @@ import {
 import Close from "@app/assets/close.svg";
 import { supabase } from "@app/lib/supabase";
 import VoiceChatWhisper from "@app/features/whisper/VoiceChatWhisper";
-import { LanguageContext } from "../lib/LanguageContext";
-import { SessionContext } from "../lib/SessionContext";
+import { UserContext } from "../lib/UserContext";
 import wordCompare from "@app/services/wordCompare";
 
 const PAGE_HEIGHT = Dimensions.get("window").height;
@@ -34,7 +33,7 @@ const ChatWordPicker = ({
 
   const [sentences, setSentences] = useState([]);
 
-  const { langCode, setLangCode, lang, setLang } = useContext(LanguageContext);
+  const { langCode, setLangCode, lang, setLang } = useContext(UserContext);
 
   const [allWords, setAllWords] = useState([]);
 

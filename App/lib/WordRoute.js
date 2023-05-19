@@ -4,7 +4,7 @@ import { DraxProvider, DraxScrollView } from "react-native-drax";
 import DraggableWord from "../components/DraggableWord";
 import AddWord from "../components/AddWord";
 import ShuffleWords from "../components/ShuffleWords";
-import { LanguageContext } from "../lib/LanguageContext";
+import { UserContext } from "./UserContext";
 import Refresh from "@app/assets/Refresh.svg";
 import TranslationOn from "@app/assets/translationOn.svg";
 import TranslationOff from "@app/assets/translationOff.svg";
@@ -28,7 +28,7 @@ const WordRoute = (
   key
 ) => {
   const { langCode, setLangCode, lang, setLang } =
-    React.useContext(LanguageContext);
+    React.useContext(UserContext);
 
   /*React.useEffect (() => {
     setLangCode(langCode)

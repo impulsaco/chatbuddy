@@ -4,8 +4,8 @@ import { Button } from "@rneui/themed";
 import { supabase, supabaseUrl } from "@app/lib/supabase";
 import googleTranslate from "../lib/googleTranslate";
 import SaveBanner from "@app/assets/saveBanner.svg";
-import { SessionContext } from "../lib/SessionContext";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { UserContext } from "@app/lib/UserContext";
 
 const PAGE_HEIGHT = Dimensions.get("window").height;
 const PAGE_WIDTH = Dimensions.get("window").width;
@@ -23,7 +23,7 @@ const SaveButton = ({
 }) => {
   // Retrieve user session
 
-  const { session, setSession } = useContext(SessionContext);
+  const { session } = useContext(UserContext);
 
   async function saveSentence() {
     const { error } = await supabase.from("sentences").insert({

@@ -19,14 +19,13 @@ import SentenceFixer from "../lib/SentenceFixer";
 import VoiceRecord from "../components/VoiceRecord";
 import TranslationOn from "@app/assets/translationOn.svg";
 import TranslationOff from "@app/assets/translationOff.svg";
-import { SessionContext } from "../lib/SessionContext";
 import { supabase } from "@app/lib/supabase";
 import { GiftedChat } from "react-native-gifted-chat";
 import { Keyboard } from "react-native";
 import { KeyboardAvoidingView } from "react-native";
 import gptChat from "@app/services/gptChat";
 import chatSpeak from "../lib/chatSpeak";
-import { LanguageContext } from "../lib/LanguageContext";
+import { UserContext } from "../lib/UserContext";
 import avatar from "@app/assets/avatar.png";
 import CustomMessage from "../components/CustomMessage";
 import googleTranslateWordEng from "../lib/googleTranslateWordEng";
@@ -36,11 +35,9 @@ const PAGE_WIDTH = Dimensions.get("window").width;
 const VoiceChat = ({ newMessage, setNewMessage, messages, setMessages }) => {
   // Retrieve session
 
-  const { session, setSession } = useContext(SessionContext);
+  const { langCode, setLangCode, lang, setLang, session, setSession } = useContext(UserContext);
 
   const [response, setResponse] = useState(null);
-
-  const { langCode, setLangCode, lang, setLang } = useContext(LanguageContext);
 
   const handleNewMessage = async message => {
     const translatedText = await googleTranslateWordEng(message, langCode);

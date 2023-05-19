@@ -19,12 +19,11 @@ import FrenchFlag from "@app/assets/FrenchFlag.svg";
 import AlbanianFlag from "@app/assets/AlbanianFlag.svg";
 import BengaliFlag from "@app/assets/BengaliFlag.svg";
 import JapaneseFlag from "@app/assets/JapaneseFlag.svg";
-import { LanguageContext } from "../lib/LanguageContext";
-import { SessionContext } from "../lib/SessionContext";
+import { UserContext } from "../lib/UserContext";
+import exclamationsList from "@app/data/wordsets/exclamationsList";
 import VoiceGPT from "./VoiceGPT";
 
 const PAGE_HEIGHT = Dimensions.get("window").height;
-
 const PAGE_WIDTH = Dimensions.get("window").width;
 
 function Home({ navigation, setMenuVisible }) {
@@ -32,9 +31,7 @@ function Home({ navigation, setMenuVisible }) {
 
   // Retrieve session
 
-  const { session, setSession } = useContext(SessionContext);
-
-  const { langCode, setLangCode, lang, setLang } = useContext(LanguageContext);
+  const { langCode, setLangCode, lang, setLang, session, setSession, tutorial, setTutorial } = useContext(UserContext);
 
   /* 
     To add later:
@@ -49,32 +46,6 @@ function Home({ navigation, setMenuVisible }) {
                     </TouchableOpacity>                             
     
     */
-
-  // Get tutorial status
-  const [tutorial, setTutorial] = useState(false)
-
-  const fetchTutorial = async () => {
-    if (session) {
-      console.log("fetching from Supabase tutorial!")
-      const { data, error } = await supabase
-        .from("profiles")
-        .select(
-          "tutorial"
-        )
-        .eq("id", session.user.id) 
-      if (error) alert(error.message);
-
-      if (data) {   
-        console.log("fetched tutorial is", data[0].tutorial)
-        setTutorial(data.tutorial)
-      }
-    }
-  }
-
-
-  useEffect(() => {
-    fetchTutorial();
-  }, [session]);
 
 
   const renderButtons = () => {
@@ -96,21 +67,21 @@ function Home({ navigation, setMenuVisible }) {
       );
     }
 
-    if (session?.user) {
+    if (session?.user && !tutorial) {
       return (
         <View style={styles.container}>
           <View style={styles.textContainer}>
-            <Text style={styles.mainText}>What would you like to learn?</Text>
+            <Text style={styles.mainText}>What language would you like to learn?</Text>
           </View>
           <View style={styles.buttonsContainer}>
             <View style={styles.buttonContainer}>
               <TouchableOpacity
-                style={styles.languageBox}
+                style={styles.languageBox}                
                 onPress={() => {
-                  navigation.navigate("Choose", {
-                    lang: "Korean",
-                    langCode: "ko",
+                  navigation.navigate("PhraseBuilderPanel", {                    
+                    wordSet: exclamationsList,
                   });
+                  setMenuVisible(true);
                   setLangCode("ko");
                   setLang("Korean");
                 }}
@@ -121,10 +92,10 @@ function Home({ navigation, setMenuVisible }) {
               <TouchableOpacity
                 style={styles.languageBox}
                 onPress={() => {
-                  navigation.navigate("Choose", {
-                    lang: "Spanish",
-                    langCode: "es-MX",
+                  navigation.navigate("PhraseBuilderPanel", {                    
+                    wordSet: exclamationsList,
                   });
+                  setMenuVisible(true);
                   setLangCode("es-MX");
                   setLang("Spanish");
                 }}
@@ -135,10 +106,10 @@ function Home({ navigation, setMenuVisible }) {
               <TouchableOpacity
                 style={styles.languageBox}
                 onPress={() => {
-                  navigation.navigate("Choose", {
-                    lang: "German",
-                    langCode: "de",
+                  navigation.navigate("PhraseBuilderPanel", {                    
+                    wordSet: exclamationsList,
                   });
+                  setMenuVisible(true);
                   setLangCode("de");
                   setLang("German");
                 }}
@@ -149,10 +120,10 @@ function Home({ navigation, setMenuVisible }) {
               <TouchableOpacity
                 style={styles.languageBox}
                 onPress={() => {
-                  navigation.navigate("Choose", {
-                    lang: "Italian",
-                    langCode: "it",
+                  navigation.navigate("PhraseBuilderPanel", {                    
+                    wordSet: exclamationsList,
                   });
+                  setMenuVisible(true);
                   setLangCode("it");
                   setLang("Italian");
                 }}
@@ -163,10 +134,10 @@ function Home({ navigation, setMenuVisible }) {
               <TouchableOpacity
                 style={styles.languageBox}
                 onPress={() => {
-                  navigation.navigate("Choose", {
-                    lang: "French",
-                    langCode: "fr-FR",
+                  navigation.navigate("PhraseBuilderPanel", {                    
+                    wordSet: exclamationsList,
                   });
+                  setMenuVisible(true);
                   setLangCode("fr-FR");
                   setLang("French");
                 }}
@@ -177,10 +148,10 @@ function Home({ navigation, setMenuVisible }) {
               <TouchableOpacity
                 style={styles.languageBox}
                 onPress={() => {
-                  navigation.navigate("Choose", {
-                    lang: "Bulgarian",
-                    langCode: "bg",
+                  navigation.navigate("PhraseBuilderPanel", {                    
+                    wordSet: exclamationsList,
                   });
+                  setMenuVisible(true);
                   setLangCode("bg");
                   setLang("Bulgarian");
                 }}
@@ -191,10 +162,10 @@ function Home({ navigation, setMenuVisible }) {
               <TouchableOpacity
                 style={styles.languageBox}
                 onPress={() => {
-                  navigation.navigate("Choose", {
-                    lang: "Japanese",
-                    langCode: "ja",
+                  navigation.navigate("PhraseBuilderPanel", {                    
+                    wordSet: exclamationsList,
                   });
+                  setMenuVisible(true);
                   setLangCode("ja");
                   setLang("Japanese");
                 }}
@@ -204,38 +175,7 @@ function Home({ navigation, setMenuVisible }) {
               </TouchableOpacity>
             </View>
             <View style={styles.lowerContainer}>
-              <View style={styles.phrasebookContainer}>
-                <TouchableOpacity
-                  style={styles.phrasebookButton}
-                  onPress={() =>
-                    navigation.navigate("Phrasebook", {
-                      lang: lang,
-                      setLang: setLang,
-                      langCode: langCode,
-                      setLangCode: setLangCode,
-                      setMenuVisible: setMenuVisible,
-                    })
-                  }
-                >
-                  <Text style={styles.longButtonText}>My phrases</Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.phrasebookContainer}>
-                <TouchableOpacity
-                  style={styles.phrasebookButton}
-                  onPress={() =>
-                    navigation.navigate("LanguageBuddy", {
-                      lang: lang,
-                      setLang: setLang,
-                      langCode: langCode,
-                      setLangCode: setLangCode,
-                      setMenuVisible: setMenuVisible,
-                    })
-                  }
-                >
-                  <Text style={styles.longButtonText}>Language Buddy</Text>
-                </TouchableOpacity>
-              </View>
+              
               <View style={styles.logOutContainer}>
                 <TouchableOpacity
                   style={styles.logoutButton}

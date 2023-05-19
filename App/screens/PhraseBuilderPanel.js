@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Dimensions, View, StyleSheet } from "react-native";
+import { Text, Dimensions, View, StyleSheet } from "react-native";
 import { SceneMap } from "react-native-tab-view";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { DraxProvider, DraxScrollView } from "react-native-drax";
@@ -13,15 +13,35 @@ import { LinearGradient } from "expo-linear-gradient";
 import AddWord from "../components/AddWord";
 import { supabase } from "@app/lib/supabase";
 import WordRoute from "../lib/WordRoute";
-import { LanguageContext } from "../lib/LanguageContext";
-import { SessionContext } from "../lib/SessionContext";
+import { UserContext } from "../lib/UserContext";
 import SayModal from "@app/features/saymodal/components/SayModal";
 import exclamationsList from "@app/data/wordsets/exclamationsList";
+import InstructionsModal from "@app/components/InstructionsModal";
 
 const PAGE_WIDTH = Dimensions.get("window").width;
 const PAGE_HEIGHT = Dimensions.get("window").height;
 
 export function PhraseBuilderPanel({ navigation, route }) {
+
+  // Import session data
+
+  const { langCode, setLangCode, lang, setLang, tutorial, setTutorial } = useContext(UserContext);
+  
+  // set state for instructions modal
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  // activate tutorial modal if tutorial not completed
+  useEffect(() => {
+    console.log("tutorialHERE is", tutorial)
+    if (tutorial === false) {
+      setModalVisible(true);
+    }
+  }, []);
+
+  // Tutorial texts
+
+  const tutorialText = "Welcome to Say! The first thing we'll do is say 'hello'! \n \n Tap the right word from the menu below."
+
   // set up translations toggle
 
   const [translations, setTranslations] = useState(true);
@@ -33,8 +53,6 @@ export function PhraseBuilderPanel({ navigation, route }) {
   // Set styles
 
   // Import params
-
-  const { langCode, setLangCode, lang, setLang } = useContext(LanguageContext);
 
   const wordSet = (route.params && route.params.wordSet) || exclamationsList;
 
@@ -70,7 +88,6 @@ export function PhraseBuilderPanel({ navigation, route }) {
 
   useEffect(() => {
     setSentence(sentenceInit);
-    console.log("SENTENCE INIT", sentenceInit);
   }, [sentenceInit]);
 
   // Set translation placeholder
@@ -148,7 +165,7 @@ export function PhraseBuilderPanel({ navigation, route }) {
 
   // Retrieve session
 
-  const { session, setSession } = useContext(SessionContext);
+  const { session } = useContext(UserContext);
 
   // Fetch user-created words based on session
 
@@ -256,7 +273,7 @@ export function PhraseBuilderPanel({ navigation, route }) {
             tabBarVisible: false, // hide tab bar for this screen
             // swipeEnabled: false,
           }}
-        >
+        >          
           {props => (
             <SayModal
               {...props}
@@ -332,6 +349,11 @@ export function PhraseBuilderPanel({ navigation, route }) {
             setSentenceAnalyzed={setSentenceAnalyzed}
             setSentenceFixed={setSentenceFixed}
             setSavedSentence={setSavedSentence}
+          />
+          <InstructionsModal
+            isVisible={isModalVisible}
+            onClose={() => setModalVisible(false)}
+            text={tutorialText}
           />
           <Tab.Navigator
             tabBar={props => (

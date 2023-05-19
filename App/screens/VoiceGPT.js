@@ -14,7 +14,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import AddWord from "../components/AddWord";
 import { supabase } from "@app/lib/supabase";
 import WordRoute from "../lib/WordRoute";
-import { LanguageContext } from "../lib/LanguageContext";
+import { UserContext } from "../lib/UserContext";
 
 const PAGE_WIDTH = Dimensions.get("window").width;
 const PAGE_HEIGHT = Dimensions.get("window").height;
@@ -36,7 +36,7 @@ const PAGE_HEIGHT = Dimensions.get("window").height;
 /// Push out new sentence to message
 
 export default ({ navigation, route }) => {
-  const { langCode, setLangCode, lang, setLang } = useContext(LanguageContext);
+  const { langCode, setLangCode, lang, setLang } = useContext(UserContext);
 
   const Tab = createMaterialTopTabNavigator();
 

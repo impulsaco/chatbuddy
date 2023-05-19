@@ -18,7 +18,7 @@ import Playback from "@app/assets/playback.svg";
 import sentenceSpeak from "../lib/sentenceSpeak";
 import playRecording from "../lib/playRecording";
 import Sound from "@app/assets/Sound.svg";
-import { SessionContext } from "@app/lib/SessionContext";
+import { UserContext } from "@app/lib/UserContext";
 
 const PAGE_HEIGHT = Dimensions.get("window").height;
 const PAGE_WIDTH = Dimensions.get("window").width;
@@ -282,7 +282,7 @@ const SayModal = ({
 
   // Load session
 
-  const { session, setSession } = useContext(SessionContext);
+  const { session } = useContext(UserContext);
 
   const sayModal = () => {
     if (sayVisible === "record") {

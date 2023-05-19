@@ -31,8 +31,7 @@ import SliderImage2 from "@app/assets/SliderImage2.svg";
 import SliderImage3 from "@app/assets/SliderImage3.svg";
 import SliderImage4 from "@app/assets/SliderImage4.svg";
 import { ActionSheetProvider } from "@expo/react-native-action-sheet";
-import { LanguageContext } from "./lib/LanguageContext";
-import { SessionContext } from "./lib/SessionContext";
+import { UserContext } from "./lib/UserContext";
 import VoiceGPT from "./screens/VoiceGPT";
 import { DrawerNavigationContext } from "./lib/DrawerNavigationContext";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -205,7 +204,8 @@ const PAGE_WIDTH = Dimensions.get("window").width;
 /// Onboarding flow
 //// Backend for tutorial DONE
 //// Survey question screens 
-//// Languages to one-word tutorial 
+//// Languages to one-word tutorial DONE
+//// Restructure user state DONE 
 //// Explanatory modals
 //// Phrasebook to LanguageBuddy
 //// Topic progression
@@ -325,10 +325,52 @@ export default function App() {
 
   const [showRealApp, setShowRealApp] = useState(false);
 
-  // Set up language context state variable
+  // Set up language state
 
   const [langCode, setLangCode] = useState("es-MX"); // careful what you send to phrasebook
   const [lang, setLang] = useState("Spanish"); // default language is Spanish
+
+  // Set session state
+
+  const [session, setSession] = useState();
+
+    useEffect(() => {
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        setSession(session);
+        session ? setShowRealApp(true) : null;
+      });
+
+      supabase.auth.onAuthStateChange((_event, session) => {
+        setSession(session);
+        session ? setShowRealApp(true) : null;
+      });
+    }, []);
+
+  // Set tutorial state (false if NOT completed)
+  const [tutorial, setTutorial] = useState(false)
+
+  const fetchTutorial = async () => {
+    if (session) {
+      console.log("fetching from Supabase tutorial!")
+      const { data, error } = await supabase
+        .from("profiles")
+        .select(
+          "tutorial"
+        )
+        .eq("id", session.user.id) 
+      if (error) alert(error.message);
+
+      if (data) {   
+        console.log("fetched tutorial is", data[0].tutorial)
+        setTutorial(data.tutorial)
+      }
+    }
+  }
+
+
+  useEffect(() => {
+    fetchTutorial();
+  }, []);
 
   // ADD MENU VISIBILITY VARIABLE HERE
 
@@ -367,19 +409,6 @@ export default function App() {
   try {
     // your code SENTRY
 
-    const [session, setSession] = useState();
-
-    useEffect(() => {
-      supabase.auth.getSession().then(({ data: { session } }) => {
-        setSession(session);
-        session ? setShowRealApp(true) : null;
-      });
-
-      supabase.auth.onAuthStateChange((_event, session) => {
-        setSession(session);
-        session ? setShowRealApp(true) : null;
-      });
-    }, []);
 
     // transparent header: options={{headerTransparent: true}}
 
@@ -395,10 +424,9 @@ export default function App() {
               linking={linking}
               fallback={<Text>Loading...</Text>}
             >
-              <NativeBaseProvider style={styles.container}>
-                <SessionContext.Provider value={{ session, setSession }}>
-                  <LanguageContext.Provider
-                    value={{ langCode, setLangCode, lang, setLang }}
+              <NativeBaseProvider style={styles.container}>                
+                  <UserContext.Provider
+                    value={{ langCode, setLangCode, lang, setLang, session, setSession, tutorial, setTutorial }}
                   >
                     <Tab.Navigator
                       screenOptions={{
@@ -443,8 +471,7 @@ export default function App() {
                       <Tab.Screen name="LanguageBuddy" component={VoiceGPT} />
                       <Tab.Screen name="LogIn" component={LogIn} />
                     </Tab.Navigator>
-                  </LanguageContext.Provider>
-                </SessionContext.Provider>
+                  </UserContext.Provider>                
               </NativeBaseProvider>
             </NavigationContainer>
           </GestureHandlerRootView>

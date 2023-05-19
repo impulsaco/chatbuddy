@@ -9,8 +9,7 @@ import SentenceCard from "../components/SentenceCard";
 import EmptySentence from "../components/EmptySentence";
 import { useActionSheet } from "@expo/react-native-action-sheet";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { LanguageContext } from "../lib/LanguageContext";
-import { SessionContext } from "../lib/SessionContext";
+import { UserContext } from "../lib/UserContext";
 
 const PAGE_HEIGHT = Dimensions.get("window").height;
 const PAGE_WIDTH = Dimensions.get("window").width;
@@ -30,9 +29,9 @@ const Phrasebook = ({ navigation, route }) => {
 
   const emptySentences = 5;
 
-  // Get selected language from context
+  // Get selected language and session from context
 
-  const { langCode, setLangCode, lang, setLang } = useContext(LanguageContext);
+  const { session, langCode, setLangCode, lang, setLang } = useContext(UserContext);
 
   const [langs, setLangs] = useState([]);
   const [langCodes, setLangCodes] = useState([]);
@@ -58,9 +57,6 @@ const Phrasebook = ({ navigation, route }) => {
     { name: "hobbies", label: "Hobbies 🎨", unfilled: emptySentences },
     { name: "places", label: "Places 📍", unfilled: emptySentences },
   ]);
-  // Retrieve session
-
-  const { session, setSession } = useContext(SessionContext);
 
   // Fetch sentences based on session
 

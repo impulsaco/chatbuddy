@@ -19,10 +19,10 @@ import SentenceFixer from "../lib/SentenceFixer";
 import SayModal from "@app/features/saymodal/components/SayModal";
 import TranslationOn from "@app/assets/translationOn.svg";
 import TranslationOff from "@app/assets/translationOff.svg";
-import { SessionContext } from "../lib/SessionContext";
 import { supabase } from "@app/lib/supabase";
 
 import { logger } from "@app/utils/logger";
+import { UserContext } from "@app/lib/UserContext";
 
 const PAGE_HEIGHT = Dimensions.get("window").height;
 const PAGE_WIDTH = Dimensions.get("window").width;
@@ -68,7 +68,7 @@ const Sentence = ({
 
   // Retrieve session
 
-  const { session, setSession } = useContext(SessionContext);
+  const { session } = useContext(UserContext);
 
   const gestureRootViewStyle = { flex: 1 };
 
