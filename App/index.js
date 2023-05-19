@@ -432,6 +432,7 @@ export default function App() {
                         component={withSetMenuVisible(Phrasebook)}
                       />
                       <Tab.Screen name="LanguageBuddy" component={VoiceGPT} />
+                      <Tab.Screen name="LogIn" component={LogIn} />
                     </Tab.Navigator>
                   </LanguageContext.Provider>
                 </SessionContext.Provider>
