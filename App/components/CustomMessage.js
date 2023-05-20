@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { MessageText, Time, Avatar } from "react-native-gifted-chat";
 import Color from "color";
+import he from 'he';
 
 const CustomMessage = props => {
   const { currentMessage, position } = props;
@@ -42,7 +43,7 @@ const CustomMessage = props => {
                   { color: textColor, marginLeft: 8 },
                 ]}
               >
-                {translation}
+                {he.decode(translation)}
               </Text>
             )}
           </View>

@@ -15,6 +15,7 @@ import AddWord from "../components/AddWord";
 import { supabase } from "@app/lib/supabase";
 import WordRoute from "../lib/WordRoute";
 import { UserContext } from "../lib/UserContext";
+import InstructionsModal from "@app/components/InstructionsModal";
 
 const PAGE_WIDTH = Dimensions.get("window").width;
 const PAGE_HEIGHT = Dimensions.get("window").height;
@@ -36,15 +37,43 @@ const PAGE_HEIGHT = Dimensions.get("window").height;
 /// Push out new sentence to message
 
 export default ({ navigation, route }) => {
-  const { langCode, setLangCode, lang, setLang } = useContext(UserContext);
+
+  console.log("route.params is ", route.params?.launchPhrase);
+
+  // Import session data
+
+  const { session, setSession, langCode, setLangCode, lang, setLang, tutorial, setTutorial } = useContext(UserContext);
+  
+  // set state for instructions modal
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [tutorialText, setTutorialText] = useState("Welcome to the AI LanguageBuddy! Practice your phrases with a friendly local. \n \n We'll help you pronounce your message, and give you options to choose from if you get stuck. \n \n You can also tap phrases from the Buddy to save them to your phrasebook. \n \n Let's get started!");
+
+  // activate tutorial modal if tutorial not completed
+  useEffect(() => {
+    if (tutorial === false) {
+      setModalVisible(true);
+    }
+  }, []);
+  
 
   const Tab = createMaterialTopTabNavigator();
+  
 
-  const [newMessage, setNewMessage] = useState("Hello World");
+  const [newMessage, setNewMessage] = useState(route.params?.launchPhrase || '');
 
   const [messages, setMessages] = useState([]);
 
   const [chosenWords, setChosenWords] = useState([]);
+
+  // activate new modal if second message said
+
+  useEffect(() => {
+    console.log("messages length is ", messages.length);
+    if (tutorial === false && messages.length > 3 ) {
+      setModalVisible(true);
+      setTutorialText("Great job! The Buddy likes you. \n \n One last thing: let's check your progress on the Home page. \n \n Tap 'Home' on the menu below' \n \n You can always come back to the Buddy to practice.");
+    }
+  }, [messages]);
 
   // Navigation handler
 
@@ -113,6 +142,11 @@ export default ({ navigation, route }) => {
           style={styles.linearGradient}
         />
         <Header />
+        <InstructionsModal
+            isVisible={isModalVisible}
+            onClose={() => setModalVisible(false)}
+            text={tutorialText}
+        />
         <VoiceChat
           newMessage={newMessage}
           setNewMessage={setNewMessage}

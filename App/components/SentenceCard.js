@@ -16,6 +16,7 @@ import sentenceSpeak from "../lib/sentenceSpeak";
 import TrashBin from "@app/assets/TrashBin.svg";
 import { supabase } from "@app/lib/supabase";
 import { useActionSheet } from "@expo/react-native-action-sheet";
+import ChatIcon from "@app/assets/chatIcon.svg";
 
 const PAGE_HEIGHT = Dimensions.get("window").height;
 const PAGE_WIDTH = Dimensions.get("window").width;
@@ -34,6 +35,7 @@ const openai = new OpenAIApi(configuration);
 
 const SentenceCard = ({
   id,
+  navigation,
   sentence,
   translation,
   translations,
@@ -120,7 +122,11 @@ const SentenceCard = ({
 
   return (
     <View style={{ width: "100%" }}>
-      <View style={styles.sentenceCard}>
+      <TouchableOpacity style={styles.sentenceCard} onPress={() =>
+            navigation.navigate("LanguageBuddy", {
+              launchPhrase: sentence,              
+            })
+          }>
         <TouchableOpacity onPress={() => sentenceSpeak(sentence, langCode)}>
           <AudioPlayback />
         </TouchableOpacity>
@@ -128,14 +134,14 @@ const SentenceCard = ({
           <Text style={styles.text}>{sentence}</Text>
           {sentenceRomanization()}
           {sentenceTranslation()}
-        </View>
-        <TouchableOpacity
-          style={styles.trashContainer}
-          onPress={() => onDelete(id)}
-        >
-          <TrashBin style={[{ fill: "red" }]} />
-        </TouchableOpacity>
-      </View>
+        </View>          
+          <TouchableOpacity
+            style={styles.trashContainer}
+            onPress={() => onDelete(id)}
+          >
+            <TrashBin style={[{ fill: "red" }]} />
+          </TouchableOpacity>
+      </TouchableOpacity>
     </View>
   );
 };

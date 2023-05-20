@@ -31,7 +31,7 @@ export function PhraseBuilderPanel({ navigation, route }) {
   
   // set state for instructions modal
   const [isModalVisible, setModalVisible] = useState(false);
-  const [tutorialText, setTutorialText] = useState("Welcome to Say! The first thing we'll do is say 'hello'! \n \n Tap the word from the menu below.");
+  const [tutorialText, setTutorialText] = useState("Welcome to Say! This is the Playground, where we practice and learn new phrases. \n \n The first thing we'll do is say 'hello'! \n \n Tap the word from the menu below.");
 
   // activate tutorial modal if tutorial not completed
   useEffect(() => {
@@ -304,7 +304,7 @@ export function PhraseBuilderPanel({ navigation, route }) {
     }
 
     if (sayVisible === "success" && sentenceInit.length > 1) {
-      setTutorialText("Excellent! Keep trying until you get it right \n \n Tap 'Save it!', then 'Go to phrasebook!'");
+      setTutorialText("Excellent! Keep trying until you get it right. \n \n Tap 'Save it!', then 'Go to phrasebook!'");
       setModalVisible(true);
     }
   }, [sayVisible]);

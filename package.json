@@ -39,6 +39,7 @@
     "expo-updates": "~0.15.6",
     "form-data": "^4.0.0",
     "fs": "^0.0.1-security",
+    "he": "^1.2.0",
     "html-entities": "^2.3.3",
     "native-base": "^3.4.25",
     "nmap": "^1.1.0",

@@ -33,13 +33,11 @@ const ChatWordPicker = ({
 
   const [sentences, setSentences] = useState([]);
 
-  const { langCode, setLangCode, lang, setLang } = useContext(UserContext);
+  const { langCode, session } = useContext(UserContext);
 
   const [allWords, setAllWords] = useState([]);
 
   // Retrieve session and phrases
-
-  const { session, setSession } = useContext(SessionContext);
 
   // Helper to extract words from blocks
 

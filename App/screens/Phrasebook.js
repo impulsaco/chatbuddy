@@ -43,7 +43,7 @@ const Phrasebook = ({ navigation, route }) => {
       setTutorialText("Welcome to your Phrasebook! You can find your first one-word sentence below. \n \n Now let's make a longer sentence to introduce ourselves. Select 'Tap to add!' right below 'Where we're from'")
     }
     if (sentences.length <= 2 && tutorial === false) {
-      setTutorialText("You've completed your first two sentences. Tap one of them to launch the AI bot!")
+      setTutorialText("You've completed your first two sentences \n \n 🎉 \n \n Tap one of them to launch the AI bot!")
     }
   }, [sentences]);
 
@@ -239,6 +239,7 @@ const Phrasebook = ({ navigation, route }) => {
           .map(sentence => (
             <SentenceCard
               key={sentence.id}
+              navigation={navigation}
               id={sentence.id}
               sentence={sentence.sentence}
               translation={sentence.translation}
