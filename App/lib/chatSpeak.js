@@ -4,7 +4,7 @@ const chatSpeak = (say, langCode) => {
   console.log("speaking: " + say + " in " + langCode);
   Speech.speak(say, {
     language: langCode,
-    rate: 0.7,
+    rate: 0.85,
     quality: "VoiceQuality.Enhanced",
   });
 };

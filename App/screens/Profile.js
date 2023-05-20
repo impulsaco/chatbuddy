@@ -227,7 +227,7 @@ import {
                   <TouchableOpacity
                     style={styles.phrasebookButton}
                     onPress={() =>
-                      navigation.navigate("LanguageBuddy", {
+                      navigation.navigate("ChatBuddy", {
                         lang: lang,
                         setLang: setLang,
                         langCode: langCode,

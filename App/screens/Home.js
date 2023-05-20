@@ -8,19 +8,9 @@ import {
 import React, { useState, useEffect, useContext } from "react";
 import "react-native-gesture-handler";
 import { LinearGradient } from "expo-linear-gradient";
-import { Button } from "@rneui/themed";
 import { supabase } from "@app/lib/supabase";
 import KoreanFlag from "@app/assets/KoreanFlag.svg";
-import SpanishFlag from "@app/assets/SpanishFlag.svg";
-import BulgarianFlag from "@app/assets/BulgarianFlag.svg";
-import GermanFlag from "@app/assets/GermanFlag.svg";
-import ItalianFlag from "@app/assets/ItalianFlag.svg";
-import FrenchFlag from "@app/assets/FrenchFlag.svg";
-import AlbanianFlag from "@app/assets/AlbanianFlag.svg";
-import BengaliFlag from "@app/assets/BengaliFlag.svg";
-import JapaneseFlag from "@app/assets/JapaneseFlag.svg";
 import { UserContext } from "../lib/UserContext";
-import exclamationsList from "@app/data/wordsets/exclamationsList";
 import VoiceGPT from "./VoiceGPT";
 
 const PAGE_HEIGHT = Dimensions.get("window").height;
@@ -71,108 +61,20 @@ function Home({ navigation, setMenuVisible }) {
       return (
         <View style={styles.container}>
           <View style={styles.textContainer}>
-            <Text style={styles.mainText}>What language would you like to learn?</Text>
+            <Text style={styles.mainText}>Welcome to ChatBuddy</Text>
           </View>
           <View style={styles.buttonsContainer}>
             <View style={styles.buttonContainer}>
               <TouchableOpacity
                 style={styles.languageBox}                
-                onPress={() => {
-                  navigation.navigate("PhraseBuilderPanel", {                    
-                    wordSet: exclamationsList,
-                  });
-                  setMenuVisible(true);
-                  setLangCode("ko");
-                  setLang("Korean");
-                }}
+                onPress={() =>
+                  navigation.navigate("ChatBuddy", {
+                    launchPhrase: "Hello World",                    
+                  })
+                }
               >
-                <Text style={styles.buttonText}>Korean</Text>
-                <KoreanFlag width={55} />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.languageBox}
-                onPress={() => {
-                  navigation.navigate("PhraseBuilderPanel", {                    
-                    wordSet: exclamationsList,
-                  });
-                  setMenuVisible(true);
-                  setLangCode("es-MX");
-                  setLang("Spanish");
-                }}
-              >
-                <Text style={styles.buttonText}>Spanish</Text>
-                <SpanishFlag width={55} />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.languageBox}
-                onPress={() => {
-                  navigation.navigate("PhraseBuilderPanel", {                    
-                    wordSet: exclamationsList,
-                  });
-                  setMenuVisible(true);
-                  setLangCode("de");
-                  setLang("German");
-                }}
-              >
-                <Text style={styles.buttonText}>German</Text>
-                <GermanFlag width={55} />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.languageBox}
-                onPress={() => {
-                  navigation.navigate("PhraseBuilderPanel", {                    
-                    wordSet: exclamationsList,
-                  });
-                  setMenuVisible(true);
-                  setLangCode("it");
-                  setLang("Italian");
-                }}
-              >
-                <Text style={styles.buttonText}>Italian</Text>
-                <ItalianFlag width={55} />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.languageBox}
-                onPress={() => {
-                  navigation.navigate("PhraseBuilderPanel", {                    
-                    wordSet: exclamationsList,
-                  });
-                  setMenuVisible(true);
-                  setLangCode("fr-FR");
-                  setLang("French");
-                }}
-              >
-                <Text style={styles.buttonText}>French</Text>
-                <FrenchFlag width={55} />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.languageBox}
-                onPress={() => {
-                  navigation.navigate("PhraseBuilderPanel", {                    
-                    wordSet: exclamationsList,
-                  });
-                  setMenuVisible(true);
-                  setLangCode("bg");
-                  setLang("Bulgarian");
-                }}
-              >
-                <Text style={styles.buttonText}>Bulgarian</Text>
-                <BulgarianFlag width={55} />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.languageBox}
-                onPress={() => {
-                  navigation.navigate("PhraseBuilderPanel", {                    
-                    wordSet: exclamationsList,
-                  });
-                  setMenuVisible(true);
-                  setLangCode("ja");
-                  setLang("Japanese");
-                }}
-              >
-                <Text style={styles.buttonText}>Japanese</Text>
-                <JapaneseFlag width={55} />
-              </TouchableOpacity>
+                <Text style={styles.buttonText}>Hello World</Text>
+              </TouchableOpacity>              
             </View>
             <View style={styles.lowerContainer}>
               

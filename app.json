@@ -1,31 +1,34 @@
 {
   "expo": {
-    "name": "say-app",
-    "slug": "say-app",
-    "version": "1.2.6",
+    "name": "chatbuddy",
+    "slug": "chatbuddy",
+    "version": "0.0.1",
     "orientation": "portrait",
     "icon": "App/assets/icon.png",
     "userInterfaceStyle": "light",
-    "scheme": "sayapp",
+    "scheme": "chatbuddy",
     "splash": {
       "image": "App/assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/f82d6a91-7b5e-44af-9f73-7725aac105ae"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.diegosalvatierra.sayapp"
+      "bundleIdentifier": "com.diegosalvatierra.chatbuddy"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "App/assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.diegosalvatierra.sayapp"
+      "package": "com.diegosalvatierra.chatbuddy"
     },
     "web": {
       "favicon": "App/assets/favicon.png"
@@ -42,11 +45,16 @@
         }
       ]
     },
-    "plugins": ["sentry-expo"],
+    "plugins": [
+      "sentry-expo"
+    ],
     "extra": {
       "eas": {
-        "projectId": "6aa1b741-c85e-4b51-9595-b62a6c9659d5"
+        "projectId": "f82d6a91-7b5e-44af-9f73-7725aac105ae"
       }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
     }
   }
 }

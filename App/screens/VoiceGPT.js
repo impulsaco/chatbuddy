@@ -1,19 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Dimensions, View, StyleSheet } from "react-native";
-import { SceneMap } from "react-native-tab-view";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { DraxProvider, DraxScrollView } from "react-native-drax";
 import VoiceChat from "./VoiceChat";
 import VoiceRecord from "../components/VoiceRecord";
 import ChatWordPicker from "../components/ChatWordPicker";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import DraggableWord from "../components/DraggableWord";
-import WordMenu from "../components/WordMenu";
 import Header from "../components/Header";
 import { LinearGradient } from "expo-linear-gradient";
-import AddWord from "../components/AddWord";
-import { supabase } from "@app/lib/supabase";
-import WordRoute from "../lib/WordRoute";
 import { UserContext } from "../lib/UserContext";
 import InstructionsModal from "@app/components/InstructionsModal";
 
@@ -46,7 +39,7 @@ export default ({ navigation, route }) => {
   
   // set state for instructions modal
   const [isModalVisible, setModalVisible] = useState(false);
-  const [tutorialText, setTutorialText] = useState("Welcome to the AI LanguageBuddy! Practice your phrases with a friendly local. \n \n We'll help you pronounce your message, and give you options to choose from if you get stuck. \n \n You can also tap the Buddy's replies to save them to your phrasebook. \n \n Let's get started!");
+  const [tutorialText, setTutorialText] = useState("Welcome to the Chat Buddy! Talk with your friend. \n \n You can speak out loud by pressing the microphone, or type in the texbox \n \n Ask the buddy anything! \n \n Let's get started!");
 
   // activate tutorial modal if tutorial not completed
   useEffect(() => {
@@ -71,7 +64,7 @@ export default ({ navigation, route }) => {
     console.log("messages length is ", messages.length);
     if (tutorial === false && messages.length > 3 ) {
       setModalVisible(true);
-      setTutorialText("Great job! The Buddy likes you. \n \n One last thing: let's check your progress on the Home page. \n \n Tap 'Home' on the menu below' \n \n You can always come back to the Buddy to practice.");
+      setTutorialText("Great! The Buddy likes you. \n \n You can try new topics on the homepage if you want. \n \n And you can always come back to the Buddy to chit chat.");
     }
   }, [messages]);
 

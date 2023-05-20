@@ -35,17 +35,7 @@ const CustomMessage = props => {
                 left: { color: textColor },
                 right: { color: textColor },
               }}
-            />
-            {translation && (
-              <Text
-                style={[
-                  styles.translation,
-                  { color: textColor, marginLeft: 8 },
-                ]}
-              >
-                {he.decode(translation)}
-              </Text>
-            )}
+            />            
           </View>
           <View style={{ alignSelf: containerAlignment }}>
             <Time {...props} />

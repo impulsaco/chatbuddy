@@ -1,25 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Switch } from "@rneui/themed";
 import {
-  View,
-  Text,
-  TouchableOpacity,
-  ScrollView,
   StyleSheet,
   Dimensions,
 } from "react-native";
-import SentenceWord from "../components/SentenceWord";
-import SayItButton from "../components/SayItButton";
-import AnalyzeWord from "../components/AnalyzeWord";
-import Refresh from "@app/assets/Refresh.svg";
-import sentenceSpeak from "../lib/sentenceSpeak";
-import Sound from "@app/assets/Sound.svg";
-import SentenceTest from "../lib/SentenceTest";
-import SentenceFixer from "../lib/SentenceFixer";
-import VoiceRecord from "../components/VoiceRecord";
-import TranslationOn from "@app/assets/translationOn.svg";
-import TranslationOff from "@app/assets/translationOff.svg";
-import { supabase } from "@app/lib/supabase";
 import { GiftedChat } from "react-native-gifted-chat";
 import { Keyboard } from "react-native";
 import { KeyboardAvoidingView } from "react-native";

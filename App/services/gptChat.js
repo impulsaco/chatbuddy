@@ -27,7 +27,7 @@ const gptChat = (
   const structuredMessages = [
     {
       role: "system",
-      content: `You are a friendly local helping a beginner in ${lang} trying to get real responses to phrases. Respond ONLY in ${lang}, no English, no parentheses. Respond in six words or less, using very simple vocabulary`,
+      content: `You are a friendly chat buddy who speaks in ${lang}. Respond ONLY in ${lang}, without parentheses or long-winded explanations. Respond in five words or less, unless REALLY needed to answer the question. People don't like long text messages. Use flowery, fun language`,
     },
     ...previousMessages.map(message => ({
       role: message.user._id === 1 ? "user" : "assistant",
