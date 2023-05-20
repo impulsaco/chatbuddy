@@ -206,10 +206,11 @@ const PAGE_WIDTH = Dimensions.get("window").width;
 //// Survey question screens 
 //// Languages to one-word tutorial DONE
 //// Restructure user state DONE 
-//// Explanatory modals IN PROCESS
-//// Phrasebook to LanguageBuddy
+//// Explanatory modals DONE
+//// Phrasebook to LanguageBuddy DONE
 //// Topic progression
 /// Bottom tab navigator
+/// Phrase testing to say
 /// Supabase leak
 /// GPT sentence coloring
 
@@ -367,10 +368,35 @@ export default function App() {
     }
   }
 
-
   useEffect(() => {
     fetchTutorial();
   }, []);
+
+  // Fetch sentences
+
+  const [sentences, setSentences] = useState([])
+
+  const fetchSentences = async () => {
+      console.log("SUPABASE CALL")
+      const { data, error } = await supabase
+        .from("sentences")
+        .select(
+          "id, sentence, language, lang_code, type, translation, blocks, romanization"
+        )
+        .eq("user", session.user.id)
+        .not("translation", "is", null);
+
+      if (error) alert(error.message);
+
+      if (data) {
+        console.log("fetched sentences are", data)
+        setSentences(data);        
+      }
+  };
+
+  useEffect(() => {
+    fetchSentences();
+  }, [session]);
 
   // ADD MENU VISIBILITY VARIABLE HERE
 
@@ -426,7 +452,7 @@ export default function App() {
             >
               <NativeBaseProvider style={styles.container}>                
                   <UserContext.Provider
-                    value={{ langCode, setLangCode, lang, setLang, session, setSession, tutorial, setTutorial }}
+                    value={{ langCode, setLangCode, lang, setLang, session, setSession, tutorial, setTutorial, sentences, setSentences }}
                   >
                     <Tab.Navigator
                       screenOptions={{

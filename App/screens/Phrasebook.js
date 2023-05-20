@@ -24,15 +24,18 @@ const Phrasebook = ({ navigation, route }) => {
 
   // State for phrases
 
-  const [sentences, setSentences] = useState([]);
-
   const [translations, setTranslations] = useState(true);
 
   const emptySentences = 5;
 
   // Import session data
 
-  const { session, setSession, langCode, setLangCode, lang, setLang, tutorial, setTutorial } = useContext(UserContext);
+  const { session, setSession, langCode, setLangCode, lang, setLang, tutorial, setTutorial, sentences, setSentences } = useContext(UserContext);
+
+  // make sure to update sentences 
+  useEffect(() => {
+    console.log("UPDATING!!")
+  }, [sentences]);
   
   // set state for instructions modal
   const [isModalVisible, setModalVisible] = useState(false);
@@ -83,27 +86,16 @@ const Phrasebook = ({ navigation, route }) => {
 
   // Fetch sentences based on session
 
-  const fetchSentences = async () => {
-    if (session) {
-      const { data, error } = await supabase
-        .from("sentences")
-        .select(
-          "id, sentence, language, lang_code, type, translation, blocks, romanization"
-        )
-        .eq("user", session.user.id)
-        .not("translation", "is", null);
-
-      if (error) alert(error.message);
-
-      if (data) {
-        setSentences(data);
+  const layoutSentences = async () => {
+    
+      if (sentences) {
         setTypes([
           {
             name: "exclamations",
             label: "One word basics 🚀",
             unfilled:
               emptySentences -
-              data.filter(obj => {
+              sentences.filter(obj => {
                 return obj.type === "exclamations" && obj.language === lang;
               }).length,
           },
@@ -112,7 +104,7 @@ const Phrasebook = ({ navigation, route }) => {
             label: "Where we're from 🌍",
             unfilled:
               emptySentences -
-              data.filter(obj => {
+              sentences.filter(obj => {
                 return obj.type === "hometown" && obj.language === lang;
               }).length,
           },
@@ -121,7 +113,7 @@ const Phrasebook = ({ navigation, route }) => {
             label: "Jobs or studies  💼",
             unfilled:
               emptySentences -
-              data.filter(obj => {
+              sentences.filter(obj => {
                 return obj.type === "introduction" && obj.language === lang;
               }).length,
           },          
@@ -130,7 +122,7 @@ const Phrasebook = ({ navigation, route }) => {
             label: "Feelings 😃",
             unfilled:
               emptySentences -
-              data.filter(obj => {
+              sentences.filter(obj => {
                 return obj.type === "feelings" && obj.language === lang;
               }).length,
           },
@@ -139,7 +131,7 @@ const Phrasebook = ({ navigation, route }) => {
             label: "My family 🏡",
             unfilled:
               emptySentences -
-              data.filter(obj => {
+              sentences.filter(obj => {
                 return obj.type === "family" && obj.language === lang;
               }).length,
           },
@@ -148,7 +140,7 @@ const Phrasebook = ({ navigation, route }) => {
             label: "Hobbies 🎨",
             unfilled:
               emptySentences -
-              data.filter(obj => {
+              sentences.filter(obj => {
                 return obj.type === "hobbies" && obj.language === lang;
               }).length,
           },
@@ -157,21 +149,20 @@ const Phrasebook = ({ navigation, route }) => {
             label: "Places 📍",
             unfilled:
               emptySentences -
-              data.filter(obj => {
+              sentences.filter(obj => {
                 return obj.type === "places" && obj.language === lang;
               }).length,
           },
         ]);
-        setLangs(Array.from(new Set(data.map(({ language }) => language))));
+        setLangs(Array.from(new Set(sentences.map(({ language }) => language))));
         setLangCodes(
-          Array.from(new Set(data.map(({ lang_code }) => lang_code)))
+          Array.from(new Set(sentences.map(({ lang_code }) => lang_code)))
         );
       }
     }
-  };
 
   useEffect(() => {
-    fetchSentences();
+    layoutSentences();
   }, [session, sentences, lang, langCode]);
 
   // Count types of each sentence
