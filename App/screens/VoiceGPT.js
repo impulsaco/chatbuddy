@@ -46,7 +46,7 @@ export default ({ navigation, route }) => {
   
   // set state for instructions modal
   const [isModalVisible, setModalVisible] = useState(false);
-  const [tutorialText, setTutorialText] = useState("Welcome to the AI LanguageBuddy! Practice your phrases with a friendly local. \n \n We'll help you pronounce your message, and give you options to choose from if you get stuck. \n \n You can also tap phrases from the Buddy to save them to your phrasebook. \n \n Let's get started!");
+  const [tutorialText, setTutorialText] = useState("Welcome to the AI LanguageBuddy! Practice your phrases with a friendly local. \n \n We'll help you pronounce your message, and give you options to choose from if you get stuck. \n \n You can also tap the Buddy's replies to save them to your phrasebook. \n \n Let's get started!");
 
   // activate tutorial modal if tutorial not completed
   useEffect(() => {

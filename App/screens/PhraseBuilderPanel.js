@@ -35,7 +35,6 @@ export function PhraseBuilderPanel({ navigation, route }) {
 
   // activate tutorial modal if tutorial not completed
   useEffect(() => {
-    console.log("tutorialHERE is", tutorial)
     if (tutorial === false) {
       setModalVisible(true);
     }

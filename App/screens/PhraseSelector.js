@@ -5,7 +5,7 @@ import {
   Text,
   TouchableOpacity,
 } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext} from "react";
 import "react-native-gesture-handler";
 import { LinearGradient } from "expo-linear-gradient";
 import { Button } from "@rneui/themed";
@@ -20,6 +20,7 @@ import feelingsList from "@app/data/wordsets/feelingsList";
 import exclamationsList from "@app/data/wordsets/exclamationsList";
 import { border } from "native-base/lib/typescript/theme/styled-system";
 import placesList from "@app/data/wordsets/placesList";
+import { UserContext } from "@app/lib/UserContext";
 
 const PAGE_HEIGHT = Dimensions.get("window").height;
 const PAGE_WIDTH = Dimensions.get("window").width;
@@ -39,7 +40,78 @@ function PhraseSelector({ navigation, setMenuVisible, route }) {
         setLangCode(route.params.langCode)
     }, [route.params]) */
 
-  // Set up state for sentence
+  // Set up state for topic tracking
+
+  const { tutorial, setTutorial, sentences, setSentences } = useContext(UserContext);
+
+  const [topicsProgress, setTopicsProgress] = useState({
+    "One word basics 🚀": false,
+    "Where you're from 🌍": false,
+    "Jobs & studies 💼": false,
+    "Feelings 😃": false,
+    "Family 🏡": false,
+    "Hobbies 🎨": false,
+    "Places📍": false,
+  });
+
+  const getNextTopic = () => {
+    for (const topic in topicsProgress) {
+      if (!topicsProgress[topic]) {
+        return topic;
+      }
+    }
+    return null;
+  };
+  
+
+  const nextTopic = getNextTopic();
+
+  useEffect(() => {
+    fetchCompletedTopics();
+  }, [sentences]); // fetchCompletedTopics is called every time 'sentences' change
+
+  // This object holds the topic - database type mapping
+  const topicTypeMap = {
+    "One word basics 🚀": "exclamations",
+    "Where you're from 🌍": "hometown",
+    "Jobs & studies 💼": "jobs_studies",
+    "Feelings 😃": "feelings",
+    "Family 🏡": "family",
+    "Hobbies 🎨": "hobbies",
+    "Places📍": "places",
+  };
+
+  const fetchCompletedTopics = () => {
+    let newTopicsProgress = { ...topicsProgress };
+  
+    // Go through all sentences
+    for (let sentence of sentences) {
+      // Get the corresponding topic for the sentence's type
+      for (const topic in topicTypeMap) {
+        if (topicTypeMap[topic] === sentence.type) {
+          newTopicsProgress[topic] = true;
+          break;
+        }
+      }
+    }
+  
+    // Update the topicsProgress state
+    setTopicsProgress(newTopicsProgress);
+  };
+
+  // Set up styles
+
+  // Define a triangle component
+
+  function Triangle({ direction }) {
+    const base = { width: 0, height: 0, borderStyle: 'solid' };
+    const styles = {
+      left: { ...base, borderTopWidth: 10, borderBottomWidth: 10, borderRightWidth: 20, borderLeftColor: 'transparent', borderTopColor: 'transparent', borderBottomColor: 'transparent', borderRightColor: 'green' },
+      right: { ...base, borderTopWidth: 10, borderBottomWidth: 10, borderLeftWidth: 20, borderRightColor: 'transparent', borderTopColor: 'transparent', borderBottomColor: 'transparent', borderLeftColor: 'green' }
+    };
+
+    return <View style={styles[direction]} />;
+  }
 
   const renderButtons = () => {
     return (

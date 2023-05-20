@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   View,
   TouchableOpacity,
@@ -17,6 +17,8 @@ import TrashBin from "@app/assets/TrashBin.svg";
 import { supabase } from "@app/lib/supabase";
 import { useActionSheet } from "@expo/react-native-action-sheet";
 import ChatIcon from "@app/assets/chatIcon.svg";
+import deleteSentence from "@app/lib/deleteSentence";
+import { UserContext } from "@app/lib/UserContext";
 
 const PAGE_HEIGHT = Dimensions.get("window").height;
 const PAGE_WIDTH = Dimensions.get("window").width;
@@ -39,13 +41,13 @@ const SentenceCard = ({
   sentence,
   translation,
   translations,
-  langCode,
   blocks,
   type,
-  session,
   romanization,
 }) => {
   const { showActionSheetWithOptions } = useActionSheet();
+
+  const { session, langCode, sentences, setSentences } = useContext(UserContext);
 
   const onDelete = id => {
     const options = ["Delete", "Cancel"];
@@ -62,7 +64,7 @@ const SentenceCard = ({
         switch (selectedIndex) {
           case destructiveButtonIndex:
             // Delete
-            deleteSentence(id);
+            deleteSentenceState(id);
             break;
 
           case cancelButtonIndex:
@@ -73,10 +75,14 @@ const SentenceCard = ({
     );
   };
 
-  async function deleteSentence(id) {
-    const { error } = await supabase.from("sentences").delete().eq("id", id);
-
-    if (error) alert(error.message);
+  // Deletion function
+  const deleteSentenceState = async (id) => {
+    const deletedId = await deleteSentence(id);
+    console.log("deletedId is ", deletedId)
+    if (deletedId) {
+      console.log("setting deleted state ", deletedId)
+      setSentences(sentences.filter(sentence => sentence.id !== deletedId));
+    }
   }
 
   // For translations
@@ -122,25 +128,25 @@ const SentenceCard = ({
 
   return (
     <View style={{ width: "100%" }}>
-      <TouchableOpacity style={styles.sentenceCard} onPress={() =>
-            navigation.navigate("LanguageBuddy", {
-              launchPhrase: sentence,              
-            })
-          }>
-        <TouchableOpacity onPress={() => sentenceSpeak(sentence, langCode)}>
-          <AudioPlayback />
-        </TouchableOpacity>
-        <View style={styles.sentenceContainer}>
-          <Text style={styles.text}>{sentence}</Text>
-          {sentenceRomanization()}
-          {sentenceTranslation()}
-        </View>          
-          <TouchableOpacity
-            style={styles.trashContainer}
-            onPress={() => onDelete(id)}
-          >
-            <TrashBin style={[{ fill: "red" }]} />
+        <TouchableOpacity style={styles.sentenceCard} onPress={() =>
+              navigation.navigate("LanguageBuddy", {
+                launchPhrase: sentence,              
+              })
+            }>
+          <TouchableOpacity onPress={() => sentenceSpeak(sentence, langCode)}>
+            <AudioPlayback />
           </TouchableOpacity>
+          <View style={styles.sentenceContainer}>
+            <Text style={styles.text}>{sentence}</Text>
+            {sentenceRomanization()}
+            {sentenceTranslation()}
+          </View>          
+            <TouchableOpacity
+              style={styles.trashContainer}
+              onPress={() => onDelete(id)}
+            >
+              <TrashBin style={[{ fill: "red" }]} />
+            </TouchableOpacity>
       </TouchableOpacity>
     </View>
   );

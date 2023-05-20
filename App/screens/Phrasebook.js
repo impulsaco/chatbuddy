@@ -26,7 +26,7 @@ const Phrasebook = ({ navigation, route }) => {
 
   const [translations, setTranslations] = useState(true);
 
-  const emptySentences = 5;
+  const emptySentences = 5;  
 
   // Import session data
 
@@ -45,10 +45,11 @@ const Phrasebook = ({ navigation, route }) => {
     if (sentences.length < 2 && tutorial === false) {
       setTutorialText("Welcome to your Phrasebook! You can find your first one-word sentence below. \n \n Now let's make a longer sentence to introduce ourselves. Select 'Tap to add!' right below 'Where we're from'")
     }
-    if (sentences.length <= 2 && tutorial === false) {
+    if (sentences.length >= 2 && tutorial === false) {
       setTutorialText("You've completed your first two sentences \n \n 🎉 \n \n Tap one of them to launch the AI bot!")
     }
   }, [sentences]);
+  
 
   // activate tutorial modal if tutorial not completed
   useEffect(() => {

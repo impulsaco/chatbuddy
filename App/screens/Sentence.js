@@ -61,6 +61,7 @@ const Sentence = ({
   setSentenceAnalyzed,
   setSentenceFixed,
   setSavedSentence,
+  setTopTabIndex,
 }) => {
   // Set instructions and sentence placeholder
 

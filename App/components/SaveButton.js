@@ -14,8 +14,6 @@ const SaveButton = ({
   sentence,
   savedSentence,
   sentenceEn,
-  lang,
-  langCode,
   sentenceType,
   sentenceSaved,
   setSentenceSaved,
@@ -23,10 +21,10 @@ const SaveButton = ({
 }) => {
   // Retrieve user session
 
-  const { session } = useContext(UserContext);
+  const { lang, langCode, session, setSentences } = useContext(UserContext);
 
   async function saveSentence() {
-    const { error } = await supabase.from("sentences").insert({
+    const { data, error } = await supabase.from("sentences").insert({
       created_at: new Date().toISOString(),
       user: session.user.id,
       sentence: savedSentence,
@@ -38,9 +36,14 @@ const SaveButton = ({
       romanization: sentenceRomanized,
     });
 
-    if (error) alert(error.message);
-
-    setSentenceSaved(true);
+    if (error) {
+      alert(error.message) 
+    } else {
+      // Assuming sentences is an array. This will add the new sentence to the end of the array.
+      console.log("data is ", data)
+      //setSentences(prevSentences => [...prevSentences, { ...newSentence, id: data[0].id }]);
+      setSentenceSaved(true);
+    }
   }
 
   const saveBanner = () => {
